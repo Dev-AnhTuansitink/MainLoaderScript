@@ -1,3 +1,8160 @@
---// This file was created by XHider https://discord.com/invite/E2N7w35zkt
+if not game:IsLoaded() then
+    game.Loaded:Wait()
+end
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local VirtualUser = game:GetService("VirtualUser")
+local RunService = game:GetService("RunService")
+local HttpService = game:GetService("HttpService")
+local Player = Players.LocalPlayer
+local Remotes = ReplicatedStorage:WaitForChild("Remotes", 5)
+local CommF = Remotes:WaitForChild("CommF_", 5) 
+local PlayerGui = Player:WaitForChild("PlayerGui", 5)
+local MainGui = PlayerGui:WaitForChild("Main", 5)
+local lastNotificationTime = 0
+local notificationCooldown = 10
+local currentTime = tick()
+if currentTime - lastNotificationTime >= notificationCooldown then
+    lastNotificationTime = currentTime
+end
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local EffectContainer = ReplicatedStorage:FindFirstChild("Effect") and ReplicatedStorage.Effect:FindFirstChild("Container")
+if EffectContainer then
+    local Death = EffectContainer:FindFirstChild("Death")
+    if Death then
+        local success, result = pcall(require, Death)
+        if success and type(result) == "function" then
+            hookfunction(result, function() end)
+        end
+    end
+    local Respawn = EffectContainer:FindFirstChild("Respawn")
+    if Respawn then
+        local success, result = pcall(require, Respawn)
+        if success and type(result) == "function" then
+            hookfunction(result, function() end)
+        end
+    end
+end
+local GuideModule = ReplicatedStorage:FindFirstChild("GuideModule")
+if GuideModule then
+    local success, module = pcall(require, GuideModule)
+    if success and module and type(module.ChangeDisplayedNPC) == "function" then
+        hookfunction(module.ChangeDisplayedNPC, function() end)
+    end
+end
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Util = ReplicatedStorage:WaitForChild("Util", 5)
+if Util then
+    local CameraShaker = Util:FindFirstChild("CameraShaker")
+    if CameraShaker then
+        require(CameraShaker):Stop()
+    end
+end
+local placeId = game.PlaceId
+local worldMap = {
+    [2753915549] = true,
+    [4442272183] = true,
+    [7449423635] = true
+}
+if worldMap[placeId] then
+    if placeId == 2753915549 then
+        World1 = true
+    elseif placeId == 4442272183 then
+        World2 = true
+    elseif placeId == 7449423635 then
+        World3 = true
+    end
+else
+    game.Players.LocalPlayer:Kick("Unsupported Game")
+end
+repeat
+    wait()
+until game.Players.LocalPlayer.Character
+function CheckQuest() 
+    MyLevel = game:GetService("Players").LocalPlayer.Data.Level.Value
+    if World1 then
+        if MyLevel >= 1 and MyLevel <= 9 then
+            Mon = "Bandit"
+            LevelQuest = 1
+            NameQuest = "BanditQuest1"
+            NameMon = "Bandit"
+            CFrameQuest = CFrame.new(1059.37195, 15.4495068, 1550.4231, 0.939700544, -0, -0.341998369, 0, 1, -0, 0.341998369, 0, 0.939700544)
+            CFrameMon = CFrame.new(1045.962646484375, 27.00250816345215, 1560.8203125)
+        elseif MyLevel >= 10 and MyLevel <= 14 then
+            Mon = "Monkey"
+            LevelQuest = 1
+            NameQuest = "JungleQuest"
+            NameMon = "Monkey"
+            CFrameQuest = CFrame.new(-1598.08911, 35.5501175, 153.377838, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            CFrameMon = CFrame.new(-1448.51806640625, 67.85301208496094, 11.46579647064209)
+        elseif MyLevel >= 15 and MyLevel <= 29 then
+            Mon = "Gorilla"
+            LevelQuest = 2
+            NameQuest = "JungleQuest"
+            NameMon = "Gorilla"
+            CFrameQuest = CFrame.new(-1598.08911, 35.5501175, 153.377838, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            CFrameMon = CFrame.new(-1129.8836669921875, 40.46354675292969, -525.4237060546875)
+        elseif MyLevel >= 30 and MyLevel <= 39 then
+            Mon = "Pirate"
+            LevelQuest = 1
+            NameQuest = "BuggyQuest1"
+            NameMon = "Pirate"
+            CFrameQuest = CFrame.new(-1141.07483, 4.10001802, 3831.5498, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
+            CFrameMon = CFrame.new(-1103.513427734375, 13.752052307128906, 3896.091064453125)
+        elseif MyLevel >= 40 and MyLevel <= 59 then
+            Mon = "Brute"
+            LevelQuest = 2
+            NameQuest = "BuggyQuest1"
+            NameMon = "Brute"
+            CFrameQuest = CFrame.new(-1141.07483, 4.10001802, 3831.5498, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
+            CFrameMon = CFrame.new(-1140.083740234375, 14.809885025024414, 4322.92138671875)
+        elseif MyLevel >= 60 and MyLevel <= 74 then
+            Mon = "Desert Bandit"
+            LevelQuest = 1
+            NameQuest = "DesertQuest"
+            NameMon = "Desert Bandit"
+            CFrameQuest = CFrame.new(894.488647, 5.14000702, 4392.43359, 0.819155693, -0, -0.573571265, 0, 1, -0, 0.573571265, 0, 0.819155693)
+            CFrameMon = CFrame.new(924.7998046875, 6.44867467880249, 4481.5859375)
+        elseif MyLevel >= 75 and MyLevel <= 89 then
+            Mon = "Desert Officer"
+            LevelQuest = 2
+            NameQuest = "DesertQuest"
+            NameMon = "Desert Officer"
+            CFrameQuest = CFrame.new(894.488647, 5.14000702, 4392.43359, 0.819155693, -0, -0.573571265, 0, 1, -0, 0.573571265, 0, 0.819155693)
+            CFrameMon = CFrame.new(1608.2822265625, 8.614224433898926, 4371.00732421875)
+        elseif MyLevel >= 90 and MyLevel <= 99 then
+            Mon = "Snow Bandit"
+            LevelQuest = 1
+            NameQuest = "SnowQuest"
+            NameMon = "Snow Bandit"
+            CFrameQuest = CFrame.new(1389.74451, 88.1519318, -1298.90796, -0.342042685, 0, 0.939684391, 0, 1, 0, -0.939684391, 0, -0.342042685)
+            CFrameMon = CFrame.new(1354.347900390625, 87.27277374267578, -1393.946533203125)
+        elseif MyLevel >= 100 and MyLevel <= 119 then
+            Mon = "Snowman"
+            LevelQuest = 2
+            NameQuest = "SnowQuest"
+            NameMon = "Snowman"
+            CFrameQuest = CFrame.new(1389.74451, 88.1519318, -1298.90796, -0.342042685, 0, 0.939684391, 0, 1, 0, -0.939684391, 0, -0.342042685)
+            CFrameMon = CFrame.new(1201.6412353515625, 144.57958984375, -1550.0670166015625)
+        elseif MyLevel >= 120 and MyLevel <= 149 then
+            Mon = "Chief Petty Officer"
+            LevelQuest = 1
+            NameQuest = "MarineQuest2"
+            NameMon = "Chief Petty Officer"
+            CFrameQuest = CFrame.new(-5039.58643, 27.3500385, 4324.68018, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            CFrameMon = CFrame.new(-4881.23095703125, 22.65204429626465, 4273.75244140625)
+        elseif MyLevel >= 150 and MyLevel <= 174 then
+            Mon = "Sky Bandit"
+            LevelQuest = 1
+            NameQuest = "SkyQuest"
+            NameMon = "Sky Bandit"
+            CFrameQuest = CFrame.new(-4839.53027, 716.368591, -2619.44165, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
+            CFrameMon = CFrame.new(-4953.20703125, 295.74420166015625, -2899.22900390625)
+        elseif MyLevel >= 175 and MyLevel <= 189 then
+            Mon = "Dark Master"
+            LevelQuest = 2
+            NameQuest = "SkyQuest"
+            NameMon = "Dark Master"
+            CFrameQuest = CFrame.new(-4839.53027, 716.368591, -2619.44165, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
+            CFrameMon = CFrame.new(-5259.8447265625, 391.3976745605469, -2229.035400390625)
+        elseif MyLevel >= 190 and MyLevel <= 209 then
+            Mon = "Prisoner"
+            LevelQuest = 1
+            NameQuest = "PrisonerQuest"
+            NameMon = "Prisoner"
+            CFrameQuest = CFrame.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
+            CFrameMon = CFrame.new(5098.9736328125, -0.3204058110713959, 474.2373352050781)
+        elseif MyLevel >= 210 and MyLevel <= 249 then
+            Mon = "Dangerous Prisoner"
+            LevelQuest = 2
+            NameQuest = "PrisonerQuest"
+            NameMon = "Dangerous Prisoner"
+            CFrameQuest = CFrame.new(5308.93115, 1.65517521, 475.120514, -0.0894274712, -5.00292918e-09, -0.995993316, 1.60817859e-09, 1, -5.16744869e-09, 0.995993316, -2.06384709e-09, -0.0894274712)
+            CFrameMon = CFrame.new(5654.5634765625, 15.633401870727539, 866.2991943359375)
+        elseif MyLevel >= 250 and MyLevel <= 274 then
+            Mon = "Toga Warrior"
+            LevelQuest = 1
+            NameQuest = "ColosseumQuest"
+            NameMon = "Toga Warrior"
+            CFrameQuest = CFrame.new(-1580.04663, 6.35000277, -2986.47534, -0.515037298, 0, -0.857167721, 0, 1, 0, 0.857167721, 0, -0.515037298)
+            CFrameMon = CFrame.new(-1820.21484375, 51.68385696411133, -2740.6650390625)
+        elseif MyLevel >= 275 and MyLevel <= 299 then
+            Mon = "Gladiator"
+            LevelQuest = 2
+            NameQuest = "ColosseumQuest"
+            NameMon = "Gladiator"
+            CFrameQuest = CFrame.new(-1580.04663, 6.35000277, -2986.47534, -0.515037298, 0, -0.857167721, 0, 1, 0, 0.857167721, 0, -0.515037298)
+            CFrameMon = CFrame.new(-1292.838134765625, 56.380882263183594, -3339.031494140625)
+        elseif MyLevel >= 300 and MyLevel <= 324 then
+            Mon = "Military Soldier"
+            LevelQuest = 1
+            NameQuest = "MagmaQuest"
+            NameMon = "Military Soldier"
+            CFrameQuest = CFrame.new(-5313.37012, 10.9500084, 8515.29395, -0.499959469, 0, 0.866048813, 0, 1, 0, -0.866048813, 0, -0.499959469)
+            CFrameMon = CFrame.new(-5411.16455078125, 11.081554412841797, 8454.29296875)
+        elseif MyLevel >= 325 and MyLevel <= 374 then
+            Mon = "Military Spy"
+            LevelQuest = 2
+            NameQuest = "MagmaQuest"
+            NameMon = "Military Spy"
+            CFrameQuest = CFrame.new(-5313.37012, 10.9500084, 8515.29395, -0.499959469, 0, 0.866048813, 0, 1, 0, -0.866048813, 0, -0.499959469)
+            CFrameMon = CFrame.new(-5802.8681640625, 86.26241302490234, 8828.859375)
+        elseif MyLevel >= 375 and MyLevel <= 399 then
+            Mon = "Fishman Warrior"
+            LevelQuest = 1
+            NameQuest = "FishmanQuest"
+            NameMon = "Fishman Warrior"
+            CFrameQuest = CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734)
+            CFrameMon = CFrame.new(60878.30078125, 18.482830047607422, 1543.7574462890625)
+            if getgenv().AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+            end
+        elseif MyLevel >= 400 and MyLevel <= 449 then
+            Mon = "Fishman Commando"
+            LevelQuest = 2
+            NameQuest = "FishmanQuest"
+            NameMon = "Fishman Commando"
+            CFrameQuest = CFrame.new(61122.65234375, 18.497442245483, 1569.3997802734)
+            CFrameMon = CFrame.new(61922.6328125, 18.482830047607422, 1493.934326171875)
+            if getgenv().AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+            end
+        elseif MyLevel >= 450 and MyLevel <= 474 then
+            Mon = "God's Guard"
+            LevelQuest = 1
+            NameQuest = "SkyExp1Quest"
+            NameMon = "God's Guard"
+            CFrameQuest = CFrame.new(-4721.88867, 843.874695, -1949.96643, 0.996191859, -0, -0.0871884301, 0, 1, -0, 0.0871884301, 0, 0.996191859)
+            CFrameMon = CFrame.new(-4710.04296875, 845.2769775390625, -1927.3079833984375)
+            if getgenv().AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-4607.82275, 872.54248, -1667.55688))
+            end
+        elseif MyLevel >= 475 and MyLevel <= 524 then
+            Mon = "Shanda"
+            LevelQuest = 2
+            NameQuest = "SkyExp1Quest"
+            NameMon = "Shanda"
+            CFrameQuest = CFrame.new(-7859.09814, 5544.19043, -381.476196, -0.422592998, 0, 0.906319618, 0, 1, 0, -0.906319618, 0, -0.422592998)
+            CFrameMon = CFrame.new(-7678.48974609375, 5566.40380859375, -497.2156066894531)
+            if getgenv().AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+            end
+        elseif MyLevel >= 525 and MyLevel <= 549 then
+            Mon = "Royal Squad"
+            LevelQuest = 1
+            NameQuest = "SkyExp2Quest"
+            NameMon = "Royal Squad"
+            CFrameQuest = CFrame.new(-7906.81592, 5634.6626, -1411.99194, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            CFrameMon = CFrame.new(-7624.25244140625, 5658.13330078125, -1467.354248046875)
+        elseif MyLevel >= 550 and MyLevel <= 624 then
+            Mon = "Royal Soldier"
+            LevelQuest = 2
+            NameQuest = "SkyExp2Quest"
+            NameMon = "Royal Soldier"
+            CFrameQuest = CFrame.new(-7906.81592, 5634.6626, -1411.99194, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            CFrameMon = CFrame.new(-7836.75341796875, 5645.6640625, -1790.6236572265625)
+        elseif MyLevel >= 625 and MyLevel <= 649 then
+            Mon = "Galley Pirate"
+            LevelQuest = 1
+            NameQuest = "FountainQuest"
+            NameMon = "Galley Pirate"
+            CFrameQuest = CFrame.new(5259.81982, 37.3500175, 4050.0293, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
+            CFrameMon = CFrame.new(5551.02197265625, 78.90135192871094, 3930.412841796875)
+        elseif MyLevel >= 650 then
+            Mon = "Galley Captain"
+            LevelQuest = 2
+            NameQuest = "FountainQuest"
+            NameMon = "Galley Captain"
+            CFrameQuest = CFrame.new(5259.81982, 37.3500175, 4050.0293, 0.087131381, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, 0.087131381)
+            CFrameMon = CFrame.new(5441.95166015625, 42.50205993652344, 4950.09375)
+        end
+    elseif World2 then
+        if MyLevel >= 700 and MyLevel <= 724 then
+            Mon = "Raider"
+            LevelQuest = 1
+            NameQuest = "Area1Quest"
+            NameMon = "Raider"
+            CFrameQuest = CFrame.new(-429.543518, 71.7699966, 1836.18188, -0.22495985, 0, -0.974368095, 0, 1, 0, 0.974368095, 0, -0.22495985)
+            CFrameMon = CFrame.new(-728.3267211914062, 52.779319763183594, 2345.7705078125)
+        elseif MyLevel >= 725 and MyLevel <= 774 then
+            Mon = "Mercenary"
+            LevelQuest = 2
+            NameQuest = "Area1Quest"
+            NameMon = "Mercenary"
+            CFrameQuest = CFrame.new(-429.543518, 71.7699966, 1836.18188, -0.22495985, 0, -0.974368095, 0, 1, 0, 0.974368095, 0, -0.22495985)
+            CFrameMon = CFrame.new(-1004.3244018554688, 80.15886688232422, 1424.619384765625)
+        elseif MyLevel >= 775 and MyLevel <= 799 then
+            Mon = "Swan Pirate"
+            LevelQuest = 1
+            NameQuest = "Area2Quest"
+            NameMon = "Swan Pirate"
+            CFrameQuest = CFrame.new(638.43811, 71.769989, 918.282898, 0.139203906, 0, 0.99026376, 0, 1, 0, -0.99026376, 0, 0.139203906)
+            CFrameMon = CFrame.new(1068.664306640625, 137.61428833007812, 1322.1060791015625)
+        elseif MyLevel >= 800 and MyLevel <= 874 then
+            Mon = "Factory Staff"
+            NameQuest = "Area2Quest"
+            LevelQuest = 2
+            NameMon = "Factory Staff"
+            CFrameQuest = CFrame.new(632.698608, 73.1055908, 918.666321, -0.0319722369, 8.96074881e-10, -0.999488771, 1.36326533e-10, 1, 8.92172336e-10, 0.999488771, -1.07732087e-10, -0.0319722369)
+            CFrameMon = CFrame.new(73.07867431640625, 81.86344146728516, -27.470672607421875)
+        elseif MyLevel >= 875 and MyLevel <= 899 then
+            Mon = "Marine Lieutenant"
+            LevelQuest = 1
+            NameQuest = "MarineQuest3"
+            NameMon = "Marine Lieutenant"
+            CFrameQuest = CFrame.new(-2440.79639, 71.7140732, -3216.06812, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
+            CFrameMon = CFrame.new(-2821.372314453125, 75.89727783203125, -3070.089111328125)
+        elseif MyLevel >= 900 and MyLevel <= 949 then
+            Mon = "Marine Captain"
+            LevelQuest = 2
+            NameQuest = "MarineQuest3"
+            NameMon = "Marine Captain"
+            CFrameQuest = CFrame.new(-2440.79639, 71.7140732, -3216.06812, 0.866007268, 0, 0.500031412, 0, 1, 0, -0.500031412, 0, 0.866007268)
+            CFrameMon = CFrame.new(-1861.2310791015625, 80.17658233642578, -3254.697509765625)
+        elseif MyLevel >= 950 and MyLevel <= 974 then
+            Mon = "Zombie"
+            LevelQuest = 1
+            NameQuest = "ZombieQuest"
+            NameMon = "Zombie"
+            CFrameQuest = CFrame.new(-5497.06152, 47.5923004, -795.237061, -0.29242146, 0, -0.95628953, 0, 1, 0, 0.95628953, 0, -0.29242146)
+            CFrameMon = CFrame.new(-5657.77685546875, 78.96973419189453, -928.68701171875)
+        elseif MyLevel >= 975 and MyLevel <= 999 then
+            Mon = "Vampire"
+            LevelQuest = 2
+            NameQuest = "ZombieQuest"
+            NameMon = "Vampire"
+            CFrameQuest = CFrame.new(-5497.06152, 47.5923004, -795.237061, -0.29242146, 0, -0.95628953, 0, 1, 0, 0.95628953, 0, -0.29242146)
+            CFrameMon = CFrame.new(-6037.66796875, 32.18463897705078, -1340.6597900390625)
+        elseif MyLevel >= 1000 and MyLevel <= 1049 then
+            Mon = "Snow Trooper"
+            LevelQuest = 1
+            NameQuest = "SnowMountainQuest"
+            NameMon = "Snow Trooper"
+            CFrameQuest = CFrame.new(609.858826, 400.119904, -5372.25928, -0.374604106, 0, 0.92718488, 0, 1, 0, -0.92718488, 0, -0.374604106)
+            CFrameMon = CFrame.new(549.1473388671875, 427.3870544433594, -5563.69873046875)
+        elseif MyLevel >= 1050 and MyLevel <= 1099 then
+            Mon = "Winter Warrior"
+            LevelQuest = 2
+            NameQuest = "SnowMountainQuest"
+            NameMon = "Winter Warrior"
+            CFrameQuest = CFrame.new(609.858826, 400.119904, -5372.25928, -0.374604106, 0, 0.92718488, 0, 1, 0, -0.92718488, 0, -0.374604106)
+            CFrameMon = CFrame.new(1142.7451171875, 475.6398010253906, -5199.41650390625)
+        elseif MyLevel >= 1100 and MyLevel <= 1124 then
+            Mon = "Lab Subordinate"
+            LevelQuest = 1
+            NameQuest = "IceSideQuest"
+            NameMon = "Lab Subordinate"
+            CFrameQuest = CFrame.new(-6064.06885, 15.2422857, -4902.97852, 0.453972578, -0, -0.891015649, 0, 1, -0, 0.891015649, 0, 0.453972578)
+            CFrameMon = CFrame.new(-5707.4716796875, 15.951709747314453, -4513.39208984375)
+        elseif MyLevel >= 1125 and MyLevel <= 1174 then
+            Mon = "Horned Warrior"
+            LevelQuest = 2
+            NameQuest = "IceSideQuest"
+            NameMon = "Horned Warrior"
+            CFrameQuest = CFrame.new(-6064.06885, 15.2422857, -4902.97852, 0.453972578, -0, -0.891015649, 0, 1, -0, 0.891015649, 0, 0.453972578)
+            CFrameMon = CFrame.new(-6341.36669921875, 15.951770782470703, -5723.162109375)
+        elseif MyLevel >= 1175 and MyLevel <= 1199 then
+            Mon = "Magma Ninja"
+            LevelQuest = 1
+            NameQuest = "FireSideQuest"
+            NameMon = "Magma Ninja"
+            CFrameQuest = CFrame.new(-5428.03174, 15.0622921, -5299.43457, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)
+            CFrameMon = CFrame.new(-5449.6728515625, 76.65874481201172, -5808.20068359375)
+        elseif MyLevel >= 1200 and MyLevel <= 1249 then
+            Mon = "Lava Pirate"
+            LevelQuest = 2
+            NameQuest = "FireSideQuest"
+            NameMon = "Lava Pirate"
+            CFrameQuest = CFrame.new(-5428.03174, 15.0622921, -5299.43457, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)
+            CFrameMon = CFrame.new(-5213.33154296875, 49.73788070678711, -4701.451171875)
+        elseif MyLevel >= 1250 and MyLevel <= 1274 then
+            Mon = "Ship Deckhand"
+            LevelQuest = 1
+            NameQuest = "ShipQuest1"
+            NameMon = "Ship Deckhand"
+            CFrameQuest = CFrame.new(1037.80127, 125.092171, 32911.6016)         
+            CFrameMon = CFrame.new(1212.0111083984375, 150.79205322265625, 33059.24609375)    
+            if getgenv().AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+            end
+        elseif MyLevel >= 1275 and MyLevel <= 1299 then
+            Mon = "Ship Engineer"
+            LevelQuest = 2
+            NameQuest = "ShipQuest1"
+            NameMon = "Ship Engineer"
+            CFrameQuest = CFrame.new(1037.80127, 125.092171, 32911.6016)   
+            CFrameMon = CFrame.new(919.4786376953125, 43.54401397705078, 32779.96875)   
+            if getgenv().AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+            end             
+        elseif MyLevel >= 1300 and MyLevel <= 1324 then
+            Mon = "Ship Steward"
+            LevelQuest = 1
+            NameQuest = "ShipQuest2"
+            NameMon = "Ship Steward"
+            CFrameQuest = CFrame.new(968.80957, 125.092171, 33244.125)         
+            CFrameMon = CFrame.new(919.4385375976562, 129.55599975585938, 33436.03515625)      
+            if getgenv().AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+            end
+        elseif MyLevel >= 1325 and MyLevel <= 1349 then
+            Mon = "Ship Officer"
+            LevelQuest = 2
+            NameQuest = "ShipQuest2"
+            NameMon = "Ship Officer"
+            CFrameQuest = CFrame.new(968.80957, 125.092171, 33244.125)
+            CFrameMon = CFrame.new(1036.0179443359375, 181.4390411376953, 33315.7265625)
+            if getgenv().AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(923.21252441406, 126.9760055542, 32852.83203125))
+            end
+        elseif MyLevel >= 1350 and MyLevel <= 1374 then
+            Mon = "Arctic Warrior"
+            LevelQuest = 1
+            NameQuest = "FrostQuest"
+            NameMon = "Arctic Warrior"
+            CFrameQuest = CFrame.new(5667.6582, 26.7997818, -6486.08984, -0.933587909, 0, -0.358349502, 0, 1, 0, 0.358349502, 0, -0.933587909)
+            CFrameMon = CFrame.new(5966.24609375, 62.97002029418945, -6179.3828125)
+            if getgenv().AutoFarm and (CFrameQuest.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 10000 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance",Vector3.new(-6508.5581054688, 5000.034996032715, -132.83953857422))
+            end
+        elseif MyLevel >= 1375 and MyLevel <= 1424 then
+            Mon = "Snow Lurker"
+            LevelQuest = 2
+            NameQuest = "FrostQuest"
+            NameMon = "Snow Lurker"
+            CFrameQuest = CFrame.new(5667.6582, 26.7997818, -6486.08984, -0.933587909, 0, -0.358349502, 0, 1, 0, 0.358349502, 0, -0.933587909)
+            CFrameMon = CFrame.new(5407.07373046875, 69.19437408447266, -6880.88037109375)
+        elseif MyLevel >= 1425 and MyLevel <= 1449 then
+            Mon = "Sea Soldier"
+            LevelQuest = 1
+            NameQuest = "ForgottenQuest"
+            NameMon = "Sea Soldier"
+            CFrameQuest = CFrame.new(-3054.44458, 235.544281, -10142.8193, 0.990270376, -0, -0.13915664, 0, 1, -0, 0.13915664, 0, 0.990270376)
+            CFrameMon = CFrame.new(-3028.2236328125, 64.67451477050781, -9775.4267578125)
+        elseif MyLevel >= 1450 then
+            Mon = "Water Fighter"
+            LevelQuest = 2
+            NameQuest = "ForgottenQuest"
+            NameMon = "Water Fighter"
+            CFrameQuest = CFrame.new(-3054, 240, -10146)
+            CFrameMon = CFrame.new(-3291, 252, -10501)
+        end
+    elseif World3 then
+        if MyLevel >= 1500 and MyLevel <= 1524 then
+            Mon = "Pirate Millionaire"
+            LevelQuest = 1
+            NameQuest = "PiratePortQuest"
+            NameMon = "Pirate Millionaire"
+            CFrameQuest = CFrame.new(-290.074677, 42.9034653, 5581.58984, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
+            CFrameMon = CFrame.new(-245.9963836669922, 47.30615234375, 5584.1005859375)
+        elseif MyLevel >= 1525 and MyLevel <= 1574 then
+            Mon = "Pistol Billionaire"
+            LevelQuest = 2
+            NameQuest = "PiratePortQuest"
+            NameMon = "Pistol Billionaire"
+            CFrameQuest = CFrame.new(-290.074677, 42.9034653, 5581.58984, 0.965929627, -0, -0.258804798, 0, 1, -0, 0.258804798, 0, 0.965929627)
+            CFrameMon = CFrame.new(-187.3301544189453, 86.23987579345703, 6013.513671875)
+        elseif MyLevel >= 1575 and MyLevel <= 1599 then
+            Mon = "Dragon Crew Warrior"
+            LevelQuest = 1
+            NameQuest = "DragonCrewQuest"
+            NameMon = "Dragon Crew Warrior"
+            CFrameQuest = CFrame.new(6738.96142578125, 127.81645965576172, -713.511474609375)
+            CFrameMon = CFrame.new(6920.71435546875, 56.15597152709961, -942.5044555664062)
+        elseif MyLevel >= 1600 and MyLevel <= 1624 then 
+            Mon = "Dragon Crew Archer"
+            NameQuest = "DragonCrewQuest"
+            LevelQuest = 2
+            NameMon = "Dragon Crew Archer"
+            CFrameQuest = CFrame.new(6738.96142578125, 127.81645965576172, -713.511474609375)
+            CFrameMon = CFrame.new(6817.91259765625, 484.804443359375, 513.4141235351562)
+        elseif MyLevel >= 1625 and MyLevel <= 1649 then
+            Mon = "Hydra Enforcer"
+            NameQuest = "VenomCrewQuest"
+            LevelQuest = 1
+            NameMon = "Hydra Enforcer"
+            CFrameQuest = CFrame.new(5213.8740234375, 1004.5042724609375, 758.6944580078125)
+            CFrameMon = CFrame.new(4584.69287109375, 1002.6435546875, 705.7958984375)
+        elseif MyLevel >= 1650 and MyLevel <= 1699 then 
+            Mon = "Venomous Assailant"
+            NameQuest = "VenomCrewQuest"
+            LevelQuest = 2
+            NameMon = "Venomous Assailant"
+            CFrameQuest = CFrame.new(5213.8740234375, 1004.5042724609375, 758.6944580078125)
+            CFrameMon = CFrame.new(4638.78564453125, 1078.94091796875, 881.8002319335938)        
+        elseif MyLevel >= 1700 and MyLevel <= 1724 then
+            Mon = "Marine Commodore"
+            LevelQuest = 1
+            NameQuest = "MarineTreeIsland"
+            NameMon = "Marine Commodore"
+            CFrameQuest = CFrame.new(2180.54126, 27.8156815, -6741.5498, -0.965929747, 0, 0.258804798, 0, 1, 0, -0.258804798, 0, -0.965929747)
+            CFrameMon = CFrame.new(2286.0078125, 73.13391876220703, -7159.80908203125)
+        elseif MyLevel >= 1725 and MyLevel <= 1774 then
+            Mon = "Marine Rear Admiral"
+            NameMon = "Marine Rear Admiral"
+            NameQuest = "MarineTreeIsland"
+            LevelQuest = 2
+            CFrameQuest = CFrame.new(2179.98828125, 28.731239318848, -6740.0551757813)
+            CFrameMon = CFrame.new(3656.773681640625, 160.52406311035156, -7001.5986328125)
+        elseif MyLevel >= 1775 and MyLevel <= 1799 then
+            Mon = "Fishman Raider"
+            LevelQuest = 1
+            NameQuest = "DeepForestIsland3"
+            NameMon = "Fishman Raider"
+            CFrameQuest = CFrame.new(-10581.6563, 330.872955, -8761.18652, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)   
+            CFrameMon = CFrame.new(-10407.5263671875, 331.76263427734375, -8368.5166015625)
+        elseif MyLevel >= 1800 and MyLevel <= 1824 then
+            Mon = "Fishman Captain"
+            LevelQuest = 2
+            NameQuest = "DeepForestIsland3"
+            NameMon = "Fishman Captain"
+            CFrameQuest = CFrame.new(-10581.6563, 330.872955, -8761.18652, -0.882952213, 0, 0.469463557, 0, 1, 0, -0.469463557, 0, -0.882952213)   
+            CFrameMon = CFrame.new(-10994.701171875, 352.38140869140625, -9002.1103515625) 
+        elseif MyLevel >= 1825 and MyLevel <= 1849 then
+            Mon = "Forest Pirate"
+            LevelQuest = 1
+            NameQuest = "DeepForestIsland"
+            NameMon = "Forest Pirate"
+            CFrameQuest = CFrame.new(-13234.04, 331.488495, -7625.40137, 0.707134247, -0, -0.707079291, 0, 1, -0, 0.707079291, 0, 0.707134247)
+            CFrameMon = CFrame.new(-13274.478515625, 332.3781433105469, -7769.58056640625)
+        elseif MyLevel >= 1850 and MyLevel <= 1899 then
+            Mon = "Mythological Pirate"
+            LevelQuest = 2
+            NameQuest = "DeepForestIsland"
+            NameMon = "Mythological Pirate"
+            CFrameQuest = CFrame.new(-13234.04, 331.488495, -7625.40137, 0.707134247, -0, -0.707079291, 0, 1, -0, 0.707079291, 0, 0.707134247)   
+            CFrameMon = CFrame.new(-13680.607421875, 501.08154296875, -6991.189453125)
+        elseif MyLevel >= 1900 and MyLevel <= 1924 then
+            Mon = "Jungle Pirate"
+            LevelQuest = 1
+            NameQuest = "DeepForestIsland2"
+            NameMon = "Jungle Pirate"
+            CFrameQuest = CFrame.new(-12680.3818, 389.971039, -9902.01953, -0.0871315002, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, -0.0871315002)
+            CFrameMon = CFrame.new(-12256.16015625, 331.73828125, -10485.8369140625)
+        elseif MyLevel >= 1925 and MyLevel <= 1974 then
+            Mon = "Musketeer Pirate"
+            LevelQuest = 2
+            NameQuest = "DeepForestIsland2"
+            NameMon = "Musketeer Pirate"
+            CFrameQuest = CFrame.new(-12680.3818, 389.971039, -9902.01953, -0.0871315002, 0, 0.996196866, 0, 1, 0, -0.996196866, 0, -0.0871315002)
+            CFrameMon = CFrame.new(-13457.904296875, 391.545654296875, -9859.177734375)
+        elseif MyLevel >= 1975 and MyLevel <= 1999 then
+            Mon = "Reborn Skeleton"
+            LevelQuest = 1
+            NameQuest = "HauntedQuest1"
+            NameMon = "Reborn Skeleton"
+            CFrameQuest = CFrame.new(-9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            CFrameMon = CFrame.new(-8763.7236328125, 165.72299194335938, 6159.86181640625)
+        elseif MyLevel >= 2000 and MyLevel <= 2024 then
+            Mon = "Living Zombie"
+            LevelQuest = 2
+            NameQuest = "HauntedQuest1"
+            NameMon = "Living Zombie"
+            CFrameQuest = CFrame.new(-9479.2168, 141.215088, 5566.09277, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+            CFrameMon = CFrame.new(-10144.1318359375, 138.62667846679688, 5838.0888671875)
+        elseif MyLevel >= 2025 and MyLevel <= 2049 then
+            Mon = "Demonic Soul"
+            LevelQuest = 1
+            NameQuest = "HauntedQuest2"
+            NameMon = "Demonic Soul"
+            CFrameQuest = CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0) 
+            CFrameMon = CFrame.new(-9505.8720703125, 172.10482788085938, 6158.9931640625)
+        elseif MyLevel >= 2050 and MyLevel <= 2074 then
+            Mon = "Posessed Mummy"
+            LevelQuest = 2
+            NameQuest = "HauntedQuest2"
+            NameMon = "Posessed Mummy"
+            CFrameQuest = CFrame.new(-9516.99316, 172.017181, 6078.46533, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            CFrameMon = CFrame.new(-9582.0224609375, 6.251527309417725, 6205.478515625)
+        elseif MyLevel >= 2075 and MyLevel <= 2099 then
+            Mon = "Peanut Scout"
+            LevelQuest = 1
+            NameQuest = "NutsIslandQuest"
+            NameMon = "Peanut Scout"
+            CFrameQuest = CFrame.new(-2104.3908691406, 38.104167938232, -10194.21875, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            CFrameMon = CFrame.new(-2143.241943359375, 47.72198486328125, -10029.9951171875)
+        elseif MyLevel >= 2100 and MyLevel <= 2124 then
+            Mon = "Peanut President"
+            LevelQuest = 2
+            NameQuest = "NutsIslandQuest"
+            NameMon = "Peanut President"
+            CFrameQuest = CFrame.new(-2104.3908691406, 38.104167938232, -10194.21875, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            CFrameMon = CFrame.new(-1859.35400390625, 38.10316848754883, -10422.4296875)
+        elseif MyLevel >= 2125 and MyLevel <= 2149 then
+            Mon = "Ice Cream Chef"
+            LevelQuest = 1
+            NameQuest = "IceCreamIslandQuest"
+            NameMon = "Ice Cream Chef"
+            CFrameQuest = CFrame.new(-820.64825439453, 65.819526672363, -10965.795898438, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            CFrameMon = CFrame.new(-872.24658203125, 65.81957244873047, -10919.95703125)
+        elseif MyLevel >= 2150 and MyLevel <= 2199 then
+            Mon = "Ice Cream Commander"
+            LevelQuest = 2
+            NameQuest = "IceCreamIslandQuest"
+            NameMon = "Ice Cream Commander"
+            CFrameQuest = CFrame.new(-820.64825439453, 65.819526672363, -10965.795898438, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+            CFrameMon = CFrame.new(-558.06103515625, 112.04895782470703, -11290.7744140625)
+        elseif MyLevel >= 2200 and MyLevel <= 2224 then
+            Mon = "Cookie Crafter"
+            LevelQuest = 1
+            NameQuest = "CakeQuest1"
+            NameMon = "Cookie Crafter"
+            CFrameQuest = CFrame.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
+            CFrameMon = CFrame.new(-2374.13671875, 37.79826354980469, -12125.30859375)
+        elseif MyLevel >= 2225 and MyLevel <= 2249 then
+            Mon = "Cake Guard"
+            LevelQuest = 2
+            NameQuest = "CakeQuest1"
+            NameMon = "Cake Guard"
+            CFrameQuest = CFrame.new(-2021.32007, 37.7982254, -12028.7295, 0.957576931, -8.80302053e-08, 0.288177818, 6.9301187e-08, 1, 7.51931211e-08, -0.288177818, -5.2032135e-08, 0.957576931)
+            CFrameMon = CFrame.new(-1598.3070068359375, 43.773197174072266, -12244.5810546875)
+        elseif MyLevel >= 2250 and MyLevel <= 2274 then
+            Mon = "Baking Staff"
+            LevelQuest = 1
+            NameQuest = "CakeQuest2"
+            NameMon = "Baking Staff"
+            CFrameQuest = CFrame.new(-1927.91602, 37.7981339, -12842.5391, -0.96804446, 4.22142143e-08, 0.250778586, 4.74911062e-08, 1, 1.49904711e-08, -0.250778586, 2.64211941e-08, -0.96804446)
+            CFrameMon = CFrame.new(-1887.8099365234375, 77.6185073852539, -12998.3505859375)
+        elseif MyLevel >= 2275 and MyLevel <= 2299 then
+            Mon = "Head Baker"
+            LevelQuest = 2
+            NameQuest = "CakeQuest2"
+            NameMon = "Head Baker"
+            CFrameQuest = CFrame.new(-1927.91602, 37.7981339, -12842.5391, -0.96804446, 4.22142143e-08, 0.250778586, 4.74911062e-08, 1, 1.49904711e-08, -0.250778586, 2.64211941e-08, -0.96804446)
+            CFrameMon = CFrame.new(-2216.188232421875, 82.884521484375, -12869.2939453125)
+        elseif MyLevel >= 2300 and MyLevel <= 2324 then
+            Mon = "Cocoa Warrior"
+            LevelQuest = 1
+            NameQuest = "ChocQuest1"
+            NameMon = "Cocoa Warrior"
+            CFrameQuest = CFrame.new(233.22836303710938, 29.876001358032227, -12201.2333984375)
+            CFrameMon = CFrame.new(-21.55328369140625, 80.57499694824219, -12352.3876953125)
+        elseif MyLevel >= 2325 and MyLevel <= 2349 then
+            Mon = "Chocolate Bar Battler"
+            LevelQuest = 2
+            NameQuest = "ChocQuest1"
+            NameMon = "Chocolate Bar Battler"
+            CFrameQuest = CFrame.new(233.22836303710938, 29.876001358032227, -12201.2333984375)
+            CFrameMon = CFrame.new(582.590576171875, 77.18809509277344, -12463.162109375)
+        elseif MyLevel >= 2350 and MyLevel <= 2374 then
+            Mon = "Sweet Thief"
+            LevelQuest = 1
+            NameQuest = "ChocQuest2"
+            NameMon = "Sweet Thief"
+            CFrameQuest = CFrame.new(150.5066375732422, 30.693693161010742, -12774.5029296875)
+            CFrameMon = CFrame.new(165.1884765625, 76.05885314941406, -12600.8369140625)
+        elseif MyLevel >= 2375 and MyLevel <= 2399 then
+            Mon = "Candy Rebel"
+            LevelQuest = 2
+            NameQuest = "ChocQuest2"
+            NameMon = "Candy Rebel"
+            CFrameQuest = CFrame.new(150.5066375732422, 30.693693161010742, -12774.5029296875)
+            CFrameMon = CFrame.new(134.86563110351562, 77.2476806640625, -12876.5478515625)
+        elseif MyLevel >= 2400 and MyLevel <= 2424 then
+            Mon = "Candy Pirate"
+            LevelQuest = 1
+            NameQuest = "CandyQuest1"
+            NameMon = "Candy Pirate"
+            CFrameQuest = CFrame.new(-1150.0400390625, 20.378934860229492, -14446.3349609375)
+            CFrameMon = CFrame.new(-1310.5003662109375, 26.016523361206055, -14562.404296875)
+        elseif MyLevel >= 2425 and MyLevel <= 2449 then
+            Mon = "Snow Demon"
+            LevelQuest = 2
+            NameQuest = "CandyQuest1"
+            NameMon = "Snow Demon"
+            CFrameQuest = CFrame.new(-1150.0400390625, 20.378934860229492, -14446.3349609375)
+            CFrameMon = CFrame.new(-880.2006225585938, 71.24776458740234, -14538.609375)            
+        elseif MyLevel >= 2450 and MyLevel <= 2474 then
+            Mon = "Isle Outlaw"
+            LevelQuest = 1
+            NameQuest = "TikiQuest1"
+            NameMon = "Isle Outlaw"
+            CFrameQuest = CFrame.new(-16547.748046875, 61.13533401489258, -173.41360473632812)
+            CFrameMon = CFrame.new(-16442.814453125, 116.13899993896484, -264.4637756347656)
+        elseif MyLevel >= 2475 and MyLevel <= 2524 then
+            Mon = "Island Boy"
+            LevelQuest = 2
+            NameQuest = "TikiQuest1"
+            NameMon = "Island Boy"
+            CFrameQuest = CFrame.new(-16547.748046875, 61.13533401489258, -173.41360473632812)
+            CFrameMon = CFrame.new(-16901.26171875, 84.06756591796875, -192.88906860351562)
+        elseif MyLevel >= 2525 and MyLevel <= 2550 then
+            Mon = "Isle Champion"
+            LevelQuest = 2
+            NameQuest = "TikiQuest2"
+            NameMon = "Isle Champion"
+            CFrameQuest = CFrame.new(-16539.078125, 55.68632888793945, 1051.5738525390625)
+            CFrameMon = CFrame.new(-16641.6796875, 235.7825469970703, 1031.282958984375)
+        elseif MyLevel >= 2550 and MyLevel <= 2574 then
+            Mon = "Serpent Hunter"
+            LevelQuest = 1
+            NameQuest = "TikiQuest3"
+            NameMon = "Serpent Hunter"
+            CFrameQuest = CFrame.new(-16665.1914, 104.596405, 1579.69434, 0.951068401, -0, -0.308980465, 0, 1, -0, 0.308980465, 0, 0.951068401)
+            CFrameMon = CFrame.new(-16521.0625, 106.09285, 1488.78467, 0.469467044, 0, 0.882950008, 0, 1, 0, -0.882950008, 0, 0.469467044)
+        elseif MyLevel >= 2575 then
+            Mon = "Skull Slayer"
+            LevelQuest = 2
+            NameQuest = "TikiQuest3"
+            NameMon = "Skull Slayer"
+            CFrameQuest = CFrame.new(-16665.1914, 104.596405, 1579.69434, 0.951068401, -0, -0.308980465, 0, 1, -0, 0.308980465, 0, 0.951068401)
+            CFrameMon = CFrame.new(-16855.043, 122.457253, 1478.15308, -0.999392271, 0, -0.0348687991, 0, 1, 0, 0.0348687991, 0, -0.999392271)
+        end
+    end
+end
+function MaterialMon()
+    local player = game.Players.LocalPlayer
+    local humanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+    if not humanoidRootPart then return end
+    local function shouldRequestEntrance(targetPosition, distanceThreshold)
+        local distance = (humanoidRootPart.Position - targetPosition).Magnitude
+        if distance >= distanceThreshold then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", targetPosition)
+        end
+    end
+    if World1 then
+        if SelectMaterial == "Angel Wings" then
+            MMon = { "Shanda", "Royal Squad", "Royal Soldier", "Wysper", "Thunder God" }
+            MPos = CFrame.new(-4698, 845, -1912)
+            SP = "Default"
+            local targetPosition = Vector3.new(-4607.82275, 872.54248, -1667.55688)
+            shouldRequestEntrance(targetPosition, 10000)
+        elseif SelectMaterial == "Leather + Scrap Metal" then
+            MMon = { "Brute", "Pirate" }
+            MPos = CFrame.new(-1145, 15, 4350)
+            SP = "Default"
+        elseif SelectMaterial == "Magma Ore" then
+            MMon = { "Military Soldier", "Military Spy", "Magma Admiral" }
+            MPos = CFrame.new(-5815, 84, 8820)
+            SP = "Default"
+        elseif SelectMaterial == "Fish Tail" then
+            MMon = { "Fishman Warrior", "Fishman Commando", "Fishman Lord" }
+            MPos = CFrame.new(61123, 19, 1569)
+            SP = "Default"
+            local targetPosition = Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875)
+            shouldRequestEntrance(targetPosition, 17000)
+        end
+    elseif World2 then
+        if SelectMaterial == "Leather + Scrap Metal" then
+            MMon = { "Marine Captain" }
+            MPos = CFrame.new(-2010.5059814453125, 73.00115966796875, -3326.620849609375)
+            SP = "Default"
+        elseif SelectMaterial == "Magma Ore" then
+            MMon = { "Magma Ninja", "Lava Pirate" }
+            MPos = CFrame.new(-5428, 78, -5959)
+            SP = "Default"
+        elseif SelectMaterial == "Ectoplasm" then
+            MMon = { "Ship Deckhand", "Ship Engineer", "Ship Steward", "Ship Officer" }
+            MPos = CFrame.new(911.35827636719, 125.95812988281, 33159.5390625)
+            SP = "Default"
+            local targetPosition = Vector3.new(61163.8515625, 5.342342376708984, 1819.7841796875)
+            shouldRequestEntrance(targetPosition, 18000)
+        elseif SelectMaterial == "Mystic Droplet" then
+            MMon = { "Water Fighter" }
+            MPos = CFrame.new(-3385, 239, -10542)
+            SP = "Default"
+        elseif SelectMaterial == "Radioactive Material" then
+            MMon = { "Factory Staff" }
+            MPos = CFrame.new(295, 73, -56)
+            SP = "Default"
+        elseif SelectMaterial == "Vampire Fang" then
+            MMon = { "Vampire" }
+            MPos = CFrame.new(-6033, 7, -1317)
+            SP = "Default"
+        end
+    elseif World3 then
+        if SelectMaterial == "Leather + Scrap Metal" then
+            MMon = { "Jungle Pirate", "Forest Pirate" }
+            MPos = CFrame.new(-11975.78515625, 331.7734069824219, -10620.0302734375)
+            SP = "Default"
+        elseif SelectMaterial == "Fish Tail" then
+            MMon = { "Fishman Raider", "Fishman Captain" }
+            MPos = CFrame.new(-10993, 332, -8940)
+            SP = "Default"
+        elseif SelectMaterial == "Conjured Cocoa" then
+            MMon = { "Chocolate Bar Battler", "Cocoa Warrior" }
+            MPos = CFrame.new(620.6344604492188, 78.93644714355469, -12581.369140625)
+            SP = "Default"
+        elseif SelectMaterial == "Dragon Scale" then
+            MMon = { "Dragon Crew Warrior" }
+            MPos = CFrame.new(6594, 383, 139)
+            SP = "Default"
+        elseif SelectMaterial == "Gunpowder" then
+            MMon = { "Pistol Billionaire" }
+            MPos = CFrame.new(-469, 74, 5904)
+            SP = "Default"
+        elseif SelectMaterial == "Mini Tusk" then
+            MMon = { "Mythological Pirate" }
+            MPos = CFrame.new(-13545, 470, -6917)
+            SP = "Default"
+        end
+    end
+end
+local lastHakiTime = 0
+local hakiCooldown = 1
+function AutoHaki()
+    if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("HasBuso") then
+        local currentTime = tick()
+        if currentTime - lastHakiTime >= hakiCooldown then
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+            lastHakiTime = currentTime
+        end
+    end
+end
+local lastUnEquipTime = 0
+local unEquipCooldown = 0.5
+function UnEquipWeapon(Weapon)
+    local currentTime = tick()
+    if currentTime - lastUnEquipTime >= unEquipCooldown then
+        if game.Players.LocalPlayer.Character:FindFirstChild(Weapon) then
+            getgenv().NotAutoEquip = true
+            game.Players.LocalPlayer.Character[Weapon].Parent = game.Players.LocalPlayer.Backpack
+            getgenv().NotAutoEquip = false
+        end
+        lastUnEquipTime = currentTime
+    end
+end
+local lastEquipTime = 0
+local equipCooldown = 0.5
+function EquipWeapon(ToolSe)
+    local currentTime = tick()
+    if currentTime - lastEquipTime >= equipCooldown then        
+        if not getgenv().NotAutoEquip then
+            local tool = game.Players.LocalPlayer.Backpack:FindFirstChild(ToolSe)
+            if tool then
+                game.Players.LocalPlayer.Character.Humanoid:EquipTool(tool)
+            end
+        end
+        lastEquipTime = currentTime
+    end
+end
+function BTP(p)
+    local player = game.Players.LocalPlayer
+    local humanoidRootPart = player.Character.HumanoidRootPart
+    local humanoid = player.Character.Humanoid
+    local playerGui = player.PlayerGui.Main
+    local targetPosition = p.Position
+    local lastPosition = humanoidRootPart.Position
+    repeat
+        humanoid.Health = 0
+        humanoidRootPart.CFrame = p
+        playerGui.Quest.Visible = false
+        if (humanoidRootPart.Position - lastPosition).Magnitude > 1 then
+            lastPosition = humanoidRootPart.Position
+            humanoidRootPart.CFrame = p
+        end
+        task.wait(0.5)
+    until (p.Position - humanoidRootPart.Position).Magnitude <= 2000
+end
+function BTPZ(v209)
+    local player = game.Players.LocalPlayer
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        local rootPart = player.Character.HumanoidRootPart
+        rootPart.CFrame = v209
+    end
+end
+local lastTweenTime = 0
+local tweenCooldown = 0.5
+function fastpos(Pos)
+    local currentTime = tick()
+    if currentTime - lastTweenTime >= tweenCooldown then
+        local Distance = (Pos.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+        local Speed = 1000        
+        local tween = game:GetService("TweenService"):Create(
+            game:GetService("Players").LocalPlayer.Character.HumanoidRootPart,
+            TweenInfo.new(Distance / Speed, Enum.EasingStyle.Linear),
+            { CFrame = Pos }
+        )
+        tween:Play()
+        lastTweenTime = currentTime
+    end
+end
+local lastTPBTime = 0
+local tpbCooldown = 0.5
+function TPB(pos, boat)
+    local currentTime = tick()
+    if currentTime - lastTPBTime >= tpbCooldown then
+        local tween_s = game:GetService("TweenService")
+        local distance = (boat.CFrame.Position - pos.Position).Magnitude
+        local speed = getgenv().SpeedBoat
+        local info = TweenInfo.new(distance / speed, Enum.EasingStyle.Linear)
+        if distance <= 25 then
+            return {Stop = function() end}
+        else
+            local tween = tween_s:Create(boat, info, {CFrame = pos})
+            tween:Play()
+            lastTPBTime = currentTime
+            return {
+                Stop = function()
+                    tween:Cancel()
+                end
+            }
+        end
+    end
+end
+local lastEquipTime = 0
+local equipCooldown = 0.2
+function EquipAllWeapon()
+    pcall(function()
+        local currentTime = tick()
+        if currentTime - lastEquipTime >= equipCooldown then
+            for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                if v:IsA('Tool') and not (v.Name == "Summon Sea Beast" or v.Name == "Water Body" or v.Name == "Awakening") then
+                    local ToolHumanoid = game.Players.LocalPlayer.Backpack:FindFirstChild(v.Name)
+                    if ToolHumanoid then
+                        game.Players.LocalPlayer.Character.Humanoid:EquipTool(ToolHumanoid)
+                    end
+                end
+            end
+            lastEquipTime = currentTime
+        end
+    end)
+end
+function CheckNearestTeleporter(aI)
+    local MyLevel = game.Players.LocalPlayer.Data.Level.Value
+    local vcspos = aI.Position
+    local min = math.huge
+    local min2 = math.huge
+    local y = game.PlaceId
+    local World1, World2, World3
+    if y == 2753915549 then
+        World1 = true
+    elseif y == 4442272183 then
+        World2 = true
+    elseif y == 7449423635 then
+        World3 = true
+    end
+    local TableLocations = {}
+    if World3 then
+        TableLocations = {
+            ["Mansion"] = Vector3.new(-12471, 374, -7551),
+            ["Hydra"] = Vector3.new(5659, 1013, -341),
+            ["Caslte On The Sea"] = Vector3.new(-5092, 315, -3130),
+            ["Floating Turtle"] = Vector3.new(-12001, 332, -8861),
+            ["Beautiful Pirate"] = Vector3.new(5319, 23, -93),
+            ["Temple Of Time"] = Vector3.new(28286, 14897, 103)
+        }
+    elseif World2 then
+        TableLocations = {
+            ["Flamingo Mansion"] = Vector3.new(-317, 331, 597),
+            ["Flamingo Room"] = Vector3.new(2283, 15, 867),
+            ["Cursed Ship"] = Vector3.new(923, 125, 32853),
+            ["Zombie Island"] = Vector3.new(-6509, 83, -133)
+        }
+    elseif World1 then
+        TableLocations = {
+            ["Sky Island 1"] = Vector3.new(-4652, 873, -1754),
+            ["Sky Island 2"] = Vector3.new(-7895, 5547, -380),
+            ["Under Water Island"] = Vector3.new(61164, 5, 1820),
+            ["Under Water Island Entrace"] = Vector3.new(3865, 5, -1926)
+        }
+    end
+    local TableLocations2 = {}
+    for r, v in pairs(TableLocations) do
+        TableLocations2[r] = (v - vcspos).Magnitude
+    end
+    for r, v in pairs(TableLocations2) do
+        if v < min then
+            min = v
+            min2 = v
+        end
+    end
+    local choose
+    for r, v in pairs(TableLocations2) do
+        if v <= min then
+            choose = TableLocations[r]
+        end
+    end
+    local min3 = (vcspos - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+    if min2 <= min3 then
+        return choose
+    end
+end    
+function requestEntrance(aJ)
+    local args = {"requestEntrance", aJ}
+    game.ReplicatedStorage.Remotes.CommF_:InvokeServer(unpack(args))    
+    local oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+    local char = game.Players.LocalPlayer.Character.HumanoidRootPart
+    char.CFrame = CFrame.new(oldcframe.X, oldcframe.Y + 50, oldcframe.Z)    
+    task.wait(0.5)
+end   
+function topos(Tween_Pos)
+    pcall(function()
+        if game:GetService("Players").LocalPlayer 
+            and game:GetService("Players").LocalPlayer.Character 
+            and game:GetService("Players").LocalPlayer.Character:FindFirstChild("Humanoid") 
+            and game:GetService("Players").LocalPlayer.Character:FindFirstChild("HumanoidRootPart") 
+            and game:GetService("Players").LocalPlayer.Character.Humanoid.Health > 0 
+            and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart then
+            if not TweenSpeed then
+                TweenSpeed = 350
+            end
+            DefualtY = Tween_Pos.Y
+            TargetY = Tween_Pos.Y
+            targetCFrameWithDefualtY = CFrame.new(Tween_Pos.X, DefualtY, Tween_Pos.Z)
+            targetPos = Tween_Pos.Position
+            oldcframe = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+            Distance = (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).Magnitude
+            if Distance <= 300 then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Tween_Pos
+            end
+            local aM = CheckNearestTeleporter(Tween_Pos)
+            if aM then
+                pcall(function()
+                    tween:Cancel()
+                end)
+                requestEntrance(aM)
+            end
+            b1 = CFrame.new(
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
+                DefualtY,
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
+            )
+            IngoreY = true
+            if IngoreY and (b1.Position - targetCFrameWithDefualtY.Position).Magnitude > 5 then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
+                    DefualtY,
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
+                )
+                local tweenfunc = {}
+                local aN = game:GetService("TweenService")
+                local aO = TweenInfo.new(
+                    (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).Magnitude / TweenSpeed,
+                    Enum.EasingStyle.Linear
+                )
+                tween = aN:Create(
+                    game:GetService("Players").LocalPlayer.Character["HumanoidRootPart"],
+                    aO,
+                    {CFrame = targetCFrameWithDefualtY}
+                )
+                tween:Play()
+                function tweenfunc:Stop()
+                    tween:Cancel()
+                end
+                tween.Completed:Wait()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
+                    TargetY,
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
+                )
+            else
+                local tweenfunc = {}
+                local aN = game:GetService("TweenService")
+                local aO = TweenInfo.new(
+                    (targetPos - game:GetService("Players").LocalPlayer.Character:WaitForChild("HumanoidRootPart").Position).Magnitude / TweenSpeed,
+                    Enum.EasingStyle.Linear
+                )
+                tween = aN:Create(
+                    game:GetService("Players").LocalPlayer.Character["HumanoidRootPart"],
+                    aO,
+                    {CFrame = Tween_Pos}
+                )
+                tween:Play()
+                function tweenfunc:Stop()
+                    tween:Cancel()
+                end
+                tween.Completed:Wait()
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X,
+                    TargetY,
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z
+                )
+            end
+            if not tween then
+                return tween
+            end
+            return tweenfunc
+        end
+    end)
+end
+function StopTween(target)
+    pcall(function()
+        if not target then
+            getgenv().StopTween = true            
+            if tween then
+                tween:Cancel()
+                tween = nil
+            end            
+            local player = game:GetService("Players").LocalPlayer
+            local character = player and player.Character
+            local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+            if humanoidRootPart then
+                humanoidRootPart.Anchored = true
+                task.wait(0.1)
+                humanoidRootPart.CFrame = humanoidRootPart.CFrame
+                humanoidRootPart.Anchored = false
+            end
+            local bodyClip = humanoidRootPart and humanoidRootPart:FindFirstChild("BodyClip")
+            if bodyClip then
+                bodyClip:Destroy()
+            end
+            getgenv().StopTween = false
+            getgenv().Clip = false
+        end
+    end)
+end
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if getgenv().TeleportIsland or 
+               getgenv().AutoFarm or 
+               getgenv().AutoMaterial or 
+               getgenv().MasteryFarm or 
+               getgenv().AutoGetMelee or 
+               getgenv().TeleportToFruit or 
+               getgenv().AutoNewWorld or 
+               getgenv().AutoThirdSea or 
+               getgenv().AutoFactory or 
+               getgenv().AutoPirateRaid or 
+               getgenv().AutoEliteHunter or 
+               getgenv().AutoTouchPadHaki or 
+               getgenv().AutoRipIndra or 
+               getgenv().AutoSoulReaper or 
+               getgenv().AutoDoughKing or 
+               getgenv().AutoDarkbeard or 
+               getgenv().DojoClaimQuest or 
+               getgenv().DragonTalonUpgrade or 
+               getgenv().BlazeEmberFarm or 
+               getgenv().AutoObservationHakiV2 or 
+               getgenv().AutoObservation or 
+               getgenv().AutoFarmBoss or 
+               getgenv().AutoFarmAllBoss or 
+               getgenv().Auto_Dungeon or 
+               getgenv().SailBoat or 
+               getgenv().RelzFishBoat or 
+               getgenv().RelzPirateBrigade or 
+               getgenv().RelzPirateGrandBrigade or 
+               getgenv().AutoTerrorshark or 
+               getgenv().AutoSeaBest or 
+               getgenv().AutoFrozenDimension or 
+               getgenv().KillLevi or
+               getgenv().UpgradeRaceV2 or
+               getgenv().AutoCyborg or
+               getgenv().AutoGhoul or
+               getgenv().QuestTrain_2 or
+               getgenv().TeleportMigare or
+               getgenv().Tweentohighestpoint or
+               getgenv().TeleportToGear or
+               getgenv().AutoTrialRace or
+               getgenv().AutoKillPlayerAfterTrial or
+               getgenv().AutoRainbowHaki or
+               getgenv().AutoSkullGuitar or
+               getgenv().AutoGetCDK or
+               getgenv().AutoTushita or
+               getgenv().AutoSaber or
+               getgenv().TeleportPlayer
+            then
+                if not game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip") then
+                    local Noclip = Instance.new("BodyVelocity")
+                    Noclip.Name = "BodyClip"
+                    Noclip.Parent = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
+                    Noclip.MaxForce = Vector3.new(100000, 100000, 100000)
+                    Noclip.Velocity = Vector3.new(0, 0, 0)
+                end
+            else
+                local bodyClip = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart:FindFirstChild("BodyClip")
+                if bodyClip then
+                    bodyClip:Destroy()
+                end
+            end
+        end)
+    end
+end)
+spawn(function()
+    pcall(function()
+        game:GetService("RunService").Stepped:Connect(function()
+            if getgenv().TeleportIsland or 
+               getgenv().AutoFarm or 
+               getgenv().AutoMaterial or 
+               getgenv().MasteryFarm or 
+               getgenv().AutoGetMelee or 
+               getgenv().TeleportToFruit or 
+               getgenv().AutoNewWorld or 
+               getgenv().AutoThirdSea or 
+               getgenv().AutoFactory or 
+               getgenv().AutoPirateRaid or 
+               getgenv().AutoEliteHunter or 
+               getgenv().AutoTouchPadHaki or 
+               getgenv().AutoRipIndra or 
+               getgenv().AutoSoulReaper or 
+               getgenv().AutoDoughKing or 
+               getgenv().AutoDarkbeard or 
+               getgenv().DojoClaimQuest or 
+               getgenv().DragonTalonUpgrade or 
+               getgenv().BlazeEmberFarm or 
+               getgenv().AutoObservationHakiV2 or 
+               getgenv().AutoObservation or 
+               getgenv().AutoFarmBoss or 
+               getgenv().AutoFarmAllBoss or 
+               getgenv().Auto_Dungeon or 
+               getgenv().SailBoat or 
+               getgenv().RelzFishBoat or 
+               getgenv().RelzPirateBrigade or 
+               getgenv().RelzPirateGrandBrigade or 
+               getgenv().AutoTerrorshark or 
+               getgenv().AutoSeaBest or 
+               getgenv().AutoFrozenDimension or 
+               getgenv().KillLevi or
+               getgenv().UpgradeRaceV2 or
+               getgenv().AutoCyborg or
+               getgenv().AutoGhoul or
+               getgenv().QuestTrain_2 or
+               getgenv().TeleportMigare or
+               getgenv().Tweentohighestpoint or
+               getgenv().TeleportToGear or
+               getgenv().AutoTrialRace or
+               getgenv().AutoKillPlayerAfterTrial or
+               getgenv().AutoRainbowHaki or
+               getgenv().AutoSkullGuitar or
+               getgenv().AutoGetCDK or
+               getgenv().AutoTushita or
+               getgenv().AutoSaber or
+               getgenv().TeleportPlayer
+            then
+                for _, v in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+                    if v:IsA("BasePart") then
+                        v.CanCollide = false
+                    end
+                end
+            end
+        end)
+    end)
+end)
+spawn(function()
+    local lastCall = 0
+    local callInterval = 1
+    while wait() do
+        if (getgenv().AutoFarm or getgenv().Kill_Trial_V4) and tick() - lastCall > callInterval then
+            pcall(function()
+                game:GetService("ReplicatedStorage").Remotes.CommE:FireServer("Ken", true)
+            end)
+            lastCall = tick()
+        end
+    end
+end)
+spawn(function()
+    local lastPosUpdate = tick()
+    while task.wait(0.1) do
+        if getgenv().AutoSeaBest and CheckSeaBeast() then
+            local currentTime = tick()
+            if currentTime - lastPosUpdate >= 0.5 then
+                Pos = CFrame.new(math.random(-600, 600), math.random(0, 300), math.random(-600, 600))
+                lastPosUpdate = currentTime
+            end
+        end
+    end
+end)
+local player = game.Players.LocalPlayer
+local function IsEntityAlive(entity)
+    if not entity then return false end
+    local humanoid = entity:FindFirstChild("Humanoid")
+    return humanoid and humanoid.Health > 0
+end
+local function GetEnemiesInRange(character, range)
+    local enemies = game:GetService("Workspace").Enemies:GetChildren()
+    local players = game:GetService("Players"):GetPlayers()
+    local targets = {}
+    local playerPos = character:GetPivot().Position
+    for _, enemy in ipairs(enemies) do
+        local rootPart = enemy:FindFirstChild("HumanoidRootPart")
+        if rootPart and IsEntityAlive(enemy) then
+            local distance = (rootPart.Position - playerPos).Magnitude
+            if distance <= range then
+                table.insert(targets, enemy)
+            end
+        end
+    end
+    for _, otherPlayer in ipairs(players) do
+        if otherPlayer ~= player and otherPlayer.Character then
+            local rootPart = otherPlayer.Character:FindFirstChild("HumanoidRootPart")
+            if rootPart and IsEntityAlive(otherPlayer.Character) then
+                local distance = (rootPart.Position - playerPos).Magnitude
+                if distance <= range then
+                    table.insert(targets, otherPlayer.Character)
+                end
+            end
+        end
+    end
+    return targets
+end
+function AttackNoCoolDown()
+    local character = player.Character
+    if not character then return end
+    local equippedWeapon
+    for _, item in ipairs(character:GetChildren()) do
+        if item:IsA("Tool") then
+            equippedWeapon = item
+            break
+        end
+    end
+    if not equippedWeapon then return end
+    local enemiesInRange = GetEnemiesInRange(character, 60)
+    if equippedWeapon:FindFirstChild("LeftClickRemote") then
+        local attackCount = 1  
+        for _, enemy in ipairs(enemiesInRange) do
+            local rootPart = enemy:FindFirstChild("HumanoidRootPart")
+            if rootPart then
+                local direction = (rootPart.Position - character:GetPivot().Position).Unit
+                equippedWeapon.LeftClickRemote:FireServer(direction, attackCount)
+                attackCount = attackCount + 1
+            end
+        end
+    else
+        local targets, mainTarget = {}, nil
+        for _, enemy in ipairs(enemiesInRange) do
+            if not enemy:GetAttribute("IsBoat") then
+                local head = enemy:FindFirstChild("Head")
+                if head then
+                    table.insert(targets, { enemy, head })
+                    mainTarget = head
+                end
+            end
+        end
+        if mainTarget then
+            local storage = game:GetService("ReplicatedStorage")
+            local attackEvent = storage:WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterAttack")
+            local hitEvent = storage:WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RE/RegisterHit")
+            pcall(function()
+                attackEvent:FireServer(0.1)
+                hitEvent:FireServer(mainTarget, targets)
+            end)
+        end
+    end
+end
+print("--[[Loaded UI]]--")
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+Window = Fluent:CreateWindow({
+    Title = "Banana Cat Hub-Blox Fruit [ Free ] By tuananhiosdzzzz",
+    SubTitle = "",
+    TabWidth = 155,
+    Size = UDim2.fromOffset(500, 350),
+    Acrylic = false, 
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl 
+})
+Shop = Window:AddTab({ Title = "Tab Shop", Icon = "" })
+sex = {
+    "WildDares",
+    "BossBuild",
+    "GetPranked",
+    "Sub2OfficialNoobie",
+    "Sub2Daigrock",
+    "Sub2NoobMaster123",
+    "Bluxxy",
+    "JCWK",
+    "Enyu_is_Pro",
+    "Sub2Fer999",
+    "kittgaming",
+    "TheGreatAce",
+    "StrawHatMaine",
+    "TantaiGaming",
+    "Axiore",
+    "SUB2GAMERROBOT_EXP1",
+    "MagicBus",
+    "StarcodeHEO",
+    "Sub2CaptainMaui",
+    "FIGHT4FRUIT",
+    "EARN_FRUITS",
+}
+Shop:AddButton({
+    Title = "Redeem Code",
+    Callback = function()
+        function RedeemCode(Value)
+            game:GetService("ReplicatedStorage").Remotes.Redeem:InvokeServer(Value)
+        end
+        local delayBetweenRequests = 0.5
+        for i, v in pairs(sex) do
+            spawn(function()
+                RedeemCode(v)
+                wait(delayBetweenRequests)
+            end)
+        end
+    end
+})
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local CommF_Remote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("CommF_")
+Shop:AddButton({
+    Title = "Teleport Old World",
+    Callback = function()
+        local success, result = pcall(function()
+            return CommF_Remote:InvokeServer("TravelMain")
+        end)
+        if not success then
+        end
+    end
+})
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+local CommF_Remote = Remotes:WaitForChild("CommF_")
+Shop:AddButton({
+    Title = "Teleport New World",
+    Callback = function()
+        local success, result = pcall(function()
+            return CommF_Remote:InvokeServer("TravelDressrosa")
+        end)
+        if not success then            
+        end
+    end
+})
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+local CommF_Remote = Remotes:WaitForChild("CommF_")
+Shop:AddButton({
+    Title = "Teleport Third Sea",
+    Callback = function()
+        local success, result = pcall(function()
+            return CommF_Remote:InvokeServer("TravelZou")
+        end)
+        if not success then
+        end
+    end
+})
+Shop:AddParagraph({
+    Title = "Fighting Shop",
+    Content = string.rep("-", 21)
+})
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+local CommF_Remote = Remotes:WaitForChild("CommF_")
+Shop:AddButton({
+    Title = "Black Leg",
+    Callback = function()
+        local success, result = pcall(function()
+            return CommF_Remote:InvokeServer("BuyBlackLeg")
+        end)
+        if not success then            
+        end
+    end
+})
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+local CommF_Remote = Remotes:WaitForChild("CommF_")
+Shop:AddButton({
+    Title = "Fishman Karate",
+    Callback = function()
+        local success, result = pcall(function()
+            return CommF_Remote:InvokeServer("BuyFishmanKarate")
+        end)
+        if not success then            
+        end
+    end
+})
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+local CommF_Remote = Remotes:WaitForChild("CommF_")
+Shop:AddButton({
+    Title = "Electro",
+    Callback = function()
+        local success, result = pcall(function()
+            return CommF_Remote:InvokeServer("BuyElectro")
+        end)
+        if not success then            
+        end
+    end
+})
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+local CommF_Remote = Remotes:WaitForChild("CommF_")
+Shop:AddButton({
+    Title = "Dragon Breath",
+    Callback = function()
+        local success1, result1 = pcall(function()
+            return CommF_Remote:InvokeServer("BlackbeardReward", "DragonClaw", "1")
+        end)
+        if not success1 then
+            return
+        end
+        local success2, result2 = pcall(function()
+            return CommF_Remote:InvokeServer("BlackbeardReward", "DragonClaw", "2")
+        end)
+        if not success2 then
+            return
+        end
+    end
+})
+Shop:AddButton({
+    Title = "SuperHuman",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local CommF_ = ReplicatedStorage.Remotes.CommF_
+        CommF_:InvokeServer("BuySuperhuman")
+    end
+})
+Shop:AddButton({
+    Title = "Death Step",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local CommF_ = ReplicatedStorage.Remotes.CommF_
+        CommF_:InvokeServer("BuyDeathStep")
+    end
+})
+Shop:AddButton({
+    Title = "Sharkman Karate",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local CommF_ = ReplicatedStorage.Remotes.CommF_
+        CommF_:InvokeServer("BuySharkmanKarate", true)
+        wait(0.2)
+        CommF_:InvokeServer("BuySharkmanKarate")
+    end
+})
+Shop:AddButton({
+    Title = "Electric Claw",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local CommF_ = ReplicatedStorage.Remotes.CommF_
+        CommF_:InvokeServer("BuyElectricClaw")
+    end
+})
+Shop:AddButton({
+    Title = "Dragon Talon",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local CommF_ = ReplicatedStorage.Remotes.CommF_
+        CommF_:InvokeServer("BuyDragonTalon")
+    end
+})
+Shop:AddButton({
+    Title = "God Human",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local CommF_ = ReplicatedStorage.Remotes.CommF_
+        CommF_:InvokeServer("BuyGodhuman")
+    end
+})
+Shop:AddButton({
+    Title = "Sanguine Art",
+    Callback = function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local CommF_ = ReplicatedStorage.Remotes.CommF_
+        CommF_:InvokeServer("BuySanguineArt", true)
+        wait(0.2)
+        CommF_:InvokeServer("BuySanguineArt")
+    end
+})
+Shop:AddParagraph({
+    Title = "Abilities Shop",
+    Content = string.rep("-", 21)
+})
+Shop:AddButton({
+	Title = "Skyjump [ $10,000 Beli ]",
+	Callback = function()
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Geppo")
+	end
+})
+Shop:AddButton({
+	Title = "Buso Haki [ $25,000 Beli ]",
+	Callback = function()
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Buso")
+	end
+})
+Shop:AddButton({
+	Title = "Observation haki [ $750,000 Beli ]",
+	Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk","Buy")
+	end
+})
+Shop:AddButton({
+	Title = "Soru [ $100,000 Beli ]",
+	Callback = function()
+		game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyHaki","Soru")
+	end
+})
+Shop:AddParagraph({
+    Title = "Misc Shop",
+    Content = string.rep("-", 21)
+})
+Shop:AddButton({
+     Title = "Buy Refund Stat (2500F)",
+     Callback = function()            
+         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","1")
+         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Refund","2")
+     end
+})
+Shop:AddButton({
+     Title = "Buy Reroll Race (3000F)",
+     Callback = function()            
+         game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","1")
+	     game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward","Reroll","2")
+     end
+})
+Shop:AddButton({
+    Title = "Buy Ghoul Race",
+    Callback = function()
+        local args1 = {[1] = "Ectoplasm", [2] = "BuyCheck", [3] = 4}
+        local args2 = {[1] = "Ectoplasm", [2] = "Change", [3] = 4}
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args1))        
+        wait(0.5)
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args2))
+    end
+})
+Shop:AddButton({
+    Title = "Buy Cyborg Race (2500F)",
+    Callback = function()
+        if not isBuying then
+            isBuying = true
+            local args = {[1] = "CyborgTrainer", [2] = "Buy"}
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))                        
+            wait(0.5)
+            isBuying = false
+        end
+    end
+})
+Server = Window:AddTab({ Title = "Tab Status And Server", Icon = "" })
+Time = Server:AddParagraph({
+    Title = "Time Zone",
+    Content = ""
+})
+function UpdateOS()
+    local date = os.date("*t")
+    local hour = (date.hour) % 24
+    local ampm = hour < 12 and "AM" or "PM"
+    local timezone = string.format("%02i:%02i:%02i %s", ((hour - 1) % 12) + 1, date.min, date.sec, ampm)
+    local datetime = string.format("%02d/%02d/%04d", date.day, date.month, date.year)    
+    local LocalizationService = game:GetService("LocalizationService")
+    local Players = game:GetService("Players")
+    local player = Players.LocalPlayer
+    local name = player.Name
+    local result, code    
+    if not getgenv().countryRegionCode then
+        result, code = pcall(function()
+            return LocalizationService:GetCountryRegionForPlayerAsync(player)
+        end)
+        if result then
+            getgenv().countryRegionCode = code
+        else
+            getgenv().countryRegionCode = "Unknown"
+        end
+    else
+        code = getgenv().countryRegionCode
+    end
+    Time:SetDesc(datetime.." - "..timezone.." [ " .. code .. " ]")
+end
+spawn(function()
+    while true do
+        UpdateOS()
+        wait(1)
+    end
+end)
+Timmessss = Server:AddParagraph({
+    Title = "Time",
+    Content = ""
+})
+function UpdateTime()
+    local GameTime = math.floor(workspace.DistributedGameTime + 0.5)
+    local Hour = math.floor(GameTime / (60^2)) % 24
+    local Minute = math.floor(GameTime / (60^1)) % 60
+    local Second = math.floor(GameTime / (60^0)) % 60
+    Timmessss:SetDesc(Hour.." Hour (h) "..Minute.." Minute (m) "..Second.." Second (s) ")
+end
+spawn(function()
+    while true do
+        UpdateTime()
+        wait(1)
+    end
+end)
+Miragecheck = Server:AddParagraph({
+    Title = "Mirage Island",
+    Content = "Status: "
+})
+local previousStatus = ""
+spawn(function()
+    pcall(function()
+        while true do
+            wait(1)            
+            local mirageIslandExists = game.Workspace._WorldOrigin.Locations:FindFirstChild('Mirage Island') ~= nil
+            local currentStatus = mirageIslandExists and '✅️' or '❌️'
+            if currentStatus ~= previousStatus then
+                Miragecheck:SetDesc('Status: ' .. currentStatus)
+                previousStatus = currentStatus
+            end
+        end
+    end)
+end)
+Kitsunecheck = Server:AddParagraph({
+    Title = "Kitsune Island",
+    Content = "Status: "
+})
+spawn(function()
+    local previousStatus = ""
+    while task.wait(1) do
+        local currentStatus = game:GetService("Workspace").Map:FindFirstChild("KitsuneIsland") and '✅️' or '❌️'
+        if currentStatus ~= previousStatus then
+            Kitsunecheck:SetDesc('Status: ' .. currentStatus)
+            previousStatus = currentStatus
+        end
+    end
+end)
+CPrehistoriccheck = Server:AddParagraph({
+    Title = "Prehistoric Island",
+    Desc = "Status: "
+})
+task.spawn(function()
+    local previousStatus = ""
+    while task.wait(1) do
+        local currentStatus = game.Workspace._WorldOrigin.Locations:FindFirstChild("Prehistoric Island") and '✅️' or '❌️'
+        if currentStatus ~= previousStatus then
+            CPrehistoriccheck:SetDesc("Status: " .. currentStatus)
+            previousStatus = currentStatus
+        end
+    end
+end)
+FrozenIsland = Server:AddParagraph({
+    Title = "Frozen Dimension",
+    Content = "Status: "
+})
+spawn(function()
+    local previousStatus = ""
+    while wait(1) do
+        local currentStatus = game.Workspace._WorldOrigin.Locations:FindFirstChild('Frozen Dimension') and '✅️' or '❌️'
+        if currentStatus ~= previousStatus then
+            FrozenIsland:SetDesc('Status: ' .. currentStatus)
+            previousStatus = currentStatus
+        end
+    end
+end)
+MobCakePrince = Server:AddParagraph({
+    Title = "Dimension Killed",
+    Content = ""
+})
+spawn(function()
+    while wait(1) do
+        local cakePrince = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
+        local killStatus = "Cake Prince: ✅️"
+        if string.len(cakePrince) >= 86 then
+            local killCount = string.sub(cakePrince, 39, 41)
+            killStatus = "Kill: " .. killCount
+        end
+        MobCakePrince:SetDesc(killStatus)
+    end
+end)
+CheckRip = Server:AddParagraph({
+    Title = "Rip_Indra",
+    Content = "Status: "
+})
+spawn(function()
+    local previousStatus = ""
+    while wait(1) do
+        local currentStatus = game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") or game:GetService("Workspace").Enemies:FindFirstChild("rip_indra") and '✅️' or '❌️'
+        if currentStatus ~= previousStatus then
+            CheckRip:SetDesc("Status: " .. currentStatus)
+            previousStatus = currentStatus
+        end
+    end
+end)
+CheckDoughKing = Server:AddParagraph({
+    Title = "Dough King",
+    Content = "Status: "
+})
+spawn(function()
+    local previousStatus = ""
+    while wait(1) do
+        local currentStatus = game:GetService("ReplicatedStorage"):FindFirstChild("Dough King") or game:GetService("Workspace").Enemies:FindFirstChild("Dough King") and '✅️' or '❌️'
+        if currentStatus ~= previousStatus then
+            CheckDoughKing:SetDesc("Status: " .. currentStatus)
+            previousStatus = currentStatus
+        end
+    end
+end)
+EliteHunter = Server:AddParagraph({
+    Title = "Elite Hunter",
+    Content = "Status: "
+})
+spawn(function()
+    local previousStatus = ""
+    while wait(1) do
+        local currentStatus = (game:GetService("ReplicatedStorage"):FindFirstChild("Diablo") or game:GetService("ReplicatedStorage"):FindFirstChild("Deandre") or game:GetService("ReplicatedStorage"):FindFirstChild("Urban") or game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or game:GetService("Workspace").Enemies:FindFirstChild("Urban")) and '✅️' or '❌️'
+        local progress = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter","Progress")
+        if currentStatus ~= previousStatus then
+            EliteHunter:SetDesc("Status: " .. currentStatus .. " | Killed: " .. progress)
+            previousStatus = currentStatus
+        end
+    end
+end)
+FM = Server:AddParagraph({
+    Title = "Full Moon",
+    Content = ""
+})
+task.spawn(function()
+    while task.wait(1) do
+        local moonTextureId = game:GetService("Lighting").Sky.MoonTextureId
+        local moonStatus = "Moon: 0/5"
+        if moonTextureId == "http://www.roblox.com/asset/?id=9709149431" then
+            moonStatus = "Moon: 5/5"
+        elseif moonTextureId == "http://www.roblox.com/asset/?id=9709149052" then
+            moonStatus = "Moon: 4/5"
+        elseif moonTextureId == "http://www.roblox.com/asset/?id=9709143733" then
+            moonStatus = "Moon: 3/5"
+        elseif moonTextureId == "http://www.roblox.com/asset/?id=9709150401" then
+            moonStatus = "Moon: 2/5"
+        elseif moonTextureId == "http://www.roblox.com/asset/?id=9709149680" then
+            moonStatus = "Moon: 1/5"
+        end
+        FM:SetDesc(moonStatus)
+    end
+end)
+LegendarySword = Server:AddParagraph({
+    Title = "Legendary Sword",
+    Content = "Status: "
+})
+spawn(function()
+    local previousStatus = ""
+    while wait(1) do
+        local swordStatus = "Not Found Legend Swords"
+        if game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "1") then
+            swordStatus = "Shisui"
+        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "2") then
+            swordStatus = "Wando"
+        elseif game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("LegendarySwordDealer", "3") then
+            swordStatus = "Saddi"
+        end
+        LegendarySword:SetDesc(swordStatus)
+    end
+end)
+StatusBone = Server:AddParagraph({
+    Title = "Bone",
+    Content = ""
+})
+spawn(function()
+    while wait(1) do
+        StatusBone:SetDesc("You Have: " .. tostring(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Bones", "Check")) .. " Bones")
+    end
+end)	        
+Input = Server:AddInput("Input", {
+     Title = "Input Job Id",
+     Default = "",
+     Placeholder = "Paste Job Id",
+     Numeric = false,
+     Finished = false,
+     Callback = function(Value)
+         getgenv().Job = Value
+     end
+})    
+Toggle = Server:AddToggle("Toggle", {Title = "Spam Join", Default = false })
+Toggle:OnChanged(function(Value)
+getgenv().Join = Value
+end)
+spawn(function()
+    local lastTeleportTime = 0
+    local teleportCooldown = 1    
+    while task.wait() do
+        if getgenv().Join and tick() - lastTeleportTime >= teleportCooldown then
+            lastTeleportTime = tick()
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId, getgenv().Job, game.Players.LocalPlayer)
+        end
+    end
+end)
+local lastTeleportTime = 0
+local teleportCooldown = 5
+Server:AddButton({
+    Title = "Join Server",
+    Callback = function()
+        if tick() - lastTeleportTime >= teleportCooldown then
+            lastTeleportTime = tick()
+            game:GetService("TeleportService"):TeleportToPlaceInstance(game.placeId, getgenv().Job, game.Players.LocalPlayer)        
+        end
+    end
+})
+local lastCopyTime = 0
+local copyCooldown = 2
+Server:AddButton({
+    Title = "Copy JobId",
+    Callback = function()
+        if tick() - lastCopyTime >= copyCooldown then
+            lastCopyTime = tick()
+            setclipboard(tostring(game.JobId))
+            print("JobId Copied!")
+        else
+            print("Please try again in a moment!")
+        end
+    end
+})
+local lastTeleportTime = 0
+local teleportCooldown = 3
+Server:AddButton({
+    Title = "Rejoin Server",
+    Callback = function()
+        if tick() - lastTeleportTime >= teleportCooldown then
+            lastTeleportTime = tick()
+            game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)        
+        end
+    end
+})
+Server:AddButton({
+	  Title = "Hop Server",
+	  Callback = function()
+          Hop()
+      end
+})
+function Hop()
+    local PlaceID = game.PlaceId
+    local AllIDs = {}
+    local foundAnything = ""
+    local actualHour = os.date("!*t").hour
+    local Deleted = false
+    function TPReturner()
+        local Site;
+        if foundAnything == "" then
+            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100'))
+        else
+            Site = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. PlaceID .. '/servers/Public?sortOrder=Asc&limit=100&cursor=' .. foundAnything))
+        end        
+        local ID = ""
+        if Site.nextPageCursor and Site.nextPageCursor ~= "null" and Site.nextPageCursor ~= nil then
+            foundAnything = Site.nextPageCursor
+        end        
+        local num = 0
+        for i,v in pairs(Site.data) do
+            local Possible = true
+            ID = tostring(v.id)            
+            if tonumber(v.maxPlayers) > tonumber(v.playing) then
+                for _,Existing in pairs(AllIDs) do
+                    if num ~= 0 then
+                        if ID == tostring(Existing) then
+                            Possible = false
+                        end
+                    else
+                        if tonumber(actualHour) ~= tonumber(Existing) then
+                            local delFile = pcall(function()
+                                AllIDs = {}
+                                table.insert(AllIDs, actualHour)
+                            end)
+                        end
+                    end
+                    num = num + 1
+                end
+                if Possible == true then
+                    table.insert(AllIDs, ID)
+                    wait(0.1)
+                    pcall(function()
+                        game:GetService("TeleportService"):TeleportToPlaceInstance(PlaceID, ID, game.Players.LocalPlayer)
+                    end)
+                    wait(1)
+                    break
+                end
+            end
+        end
+    end
+    function Teleport() 
+        while true do
+            pcall(function()
+                TPReturner()
+                if foundAnything ~= "" then
+                    TPReturner()
+                end
+            end)
+            wait(2)
+        end
+    end
+    Teleport()
+end
+LGa = Window:AddTab({ Title = "Tab Local Player", Icon = "" })
+LGa:AddButton({
+    Title = "Stop Tween",
+    Callback = function()
+        StopTween()
+    end
+})
+LGa:AddButton({
+	Title = "Show Item",
+	Description = "I'm Still Fixing....",
+	Callback = function()	
+	end
+})
+LGa:AddButton({
+    Title = "Open Devil Fruit Shop [ Mirage ]",
+    Description = "I'm Still Fixing....",
+    Callback = function()     
+    end
+})
+LGa:AddButton({
+    Title = "Open Devil Fruit Shop",
+    Description = "I'm Still Fixing....",
+    Callback = function()            
+    end
+})
+LGa:AddButton({
+    Title = "Open Title",
+    Callback = function()
+        local args = {"getTitles"}
+        local success, result = pcall(function()
+            return game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+        end)
+        if success then
+            game.Players.LocalPlayer.PlayerGui.Main.Titles.Visible = true
+        end
+    end
+})
+local lastButtonPressTime = 0
+local buttonCooldown = 2
+LGa:AddButton({
+    Title = "Open Color",
+    Callback = function()
+        if tick() - lastButtonPressTime >= buttonCooldown then
+            lastButtonPressTime = tick()
+            local colorsGui = game.Players.LocalPlayer.PlayerGui.Main:FindFirstChild("Colors")
+            if colorsGui then
+                colorsGui.Visible = true
+            end
+        end
+    end
+})
+LGa:AddButton({
+    Title = "Boost FPS",
+    Callback = function()
+        FPSBooster()
+    end
+})
+function FPSBooster()
+    local decalsyeeted = true
+    local g = game
+    local w = g.Workspace
+    local l = g.Lighting
+    local t = w.Terrain    
+    sethiddenproperty(l, "Technology", 2)
+    sethiddenproperty(t, "Decoration", false)
+    t.WaterWaveSize = 0
+    t.WaterWaveSpeed = 0
+    t.WaterReflectance = 0
+    t.WaterTransparency = 0
+    l.GlobalShadows = false
+    l.FogEnd = 9e9
+    l.Brightness = 0
+    settings().Rendering.QualityLevel = "Level01"    
+    local function optimizePart(v)
+        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+        elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
+            v.Transparency = 1
+        elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
+            v.Lifetime = NumberRange.new(0)
+        elseif v:IsA("Explosion") then
+            v.BlastPressure = 1
+            v.BlastRadius = 1
+        elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
+            v.Enabled = false
+        elseif v:IsA("MeshPart") then
+            v.Material = "Plastic"
+            v.Reflectance = 0
+            v.TextureID = 10385902758728957
+        end
+    end    
+    for i, v in pairs(w:GetDescendants()) do
+        if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") or v:IsA("MeshPart") then
+            optimizePart(v)
+        end
+    end
+    for i, e in pairs(l:GetChildren()) do
+        if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
+            e.Enabled = false
+        end
+    end
+end
+Dropdown = LGa:AddDropdown("Dropdown", {
+    Title = "Select Stats",
+    Values = {"Melee", "Defense", "Sword", "Gun", "Fruit"},
+    Multi = false,
+})
+Dropdown:SetValue("")
+Dropdown:OnChanged(function(Value)
+StatsMode = Value
+end)
+spawn(function()
+    while true do
+        wait(0.5)
+        local player = game.Players.LocalPlayer
+        if player and player:FindFirstChild("Data") and player.Data:FindFirstChild("Points") then
+            if player.Data.Points.Value >= PointStats and getgenv().AutoStats then
+                local statTypes = {
+                    Melee = "Melee",
+                    Defense = "Defense",
+                    Sword = "Sword",
+                    Gun = "Gun",
+                    Fruit = "Demon Fruit"
+                }                
+                local selectedStat = statTypes[StatsMode]
+                if selectedStat then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AddPoint", selectedStat, PointStats)
+                end
+            end
+        end
+    end
+end)
+Slider = LGa:AddSlider("Slider", {
+        Title = "Point Stats",
+        Description = "",
+        Default = 1,
+        Min = 1,
+        Max = 1000,
+        Rounding = 0,
+        Callback = function(value)
+        PointStats = value
+    end
+})
+Toggle = LGa:AddToggle("Toggle", { Title = "Auto Stats", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoStats = Value
+end)
+local canChangeTeam = true
+local debounceTime = 2
+LGa:AddButton({
+    Title = "Change Team To Pirates",
+    Callback = function()
+        if not canChangeTeam then
+            return
+        end
+        canChangeTeam = false
+        task.wait(debounceTime)
+        pcall(function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Pirates")
+        end)
+        canChangeTeam = true
+    end
+})
+local canChangeTeam = true
+local debounceTime = 2
+LGa:AddButton({
+    Title = "Change Team To Marines",
+    Callback = function()
+        if not canChangeTeam then
+            return
+        end
+        canChangeTeam = false
+        task.wait(debounceTime)
+        pcall(function()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Marines")
+        end)
+        canChangeTeam = true
+    end
+})
+Toggle = LGa:AddToggle("Toggle", { Title = "Auto Summon Cake Prince", Description = "When you attack 500 monsters, you will automatically summon Cake Prince", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoSpawnCP = Value
+end)
+local lastSpawnTime = 0
+local spawnCooldown = 1
+spawn(function() 
+    while task.wait() do
+        if getgenv().AutoSpawnCP and tick() - lastSpawnTime >= spawnCooldown then
+            lastSpawnTime = tick()
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner", true)
+        end
+    end
+end)
+Toggle = LGa:AddToggle("Toggle", {Title = "Black Screen", Default = false })
+Toggle:OnChanged(function(Value)
+	getgenv().StartBlackScreen = Value
+end)
+local lastUpdateTime = 0
+local updateCooldown = 0.5
+spawn(function()
+    while task.wait() do
+        if tick() - lastUpdateTime >= updateCooldown then
+            lastUpdateTime = tick()
+            if getgenv().StartBlackScreen then
+                game:GetService("Players").LocalPlayer.PlayerGui.Main.Blackscreen.Size = UDim2.new(500, 0, 500, 500)
+            else
+                game:GetService("Players").LocalPlayer.PlayerGui.Main.Blackscreen.Size = UDim2.new(1, 0, 500, 500)
+            end
+        end
+    end
+end)
+Toggle = LGa:AddToggle("Toggle", {Title = "White Screen", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().WhiteScreen = Value
+    if getgenv().WhiteScreen == true then
+        game:GetService("RunService"):Set3dRenderingEnabled(false)
+    elseif getgenv().WhiteScreen == false then
+        game:GetService("RunService"):Set3dRenderingEnabled(true)
+    end
+end)
+Toggle = LGa:AddToggle("Toggle", {Title = "Hide Mob", Default = false })
+Toggle:OnChanged(function(Value)
+     getgenv().HideMob = Value		
+end)
+spawn(function()
+    while task.wait() do
+        if getgenv().HideMob then
+            pcall(function()
+                for i, v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
+                    if v.ClassName == "MeshPart" then
+                        v.Transparency = 1
+                    end
+                end
+                for i, v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
+                    if v.Name == "Head" then
+                        v.Transparency = 1
+                    end
+                end
+                for i, v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
+                    if v.ClassName == "Accessory" then
+                        v.Handle.Transparency = 1
+                    end
+                end
+                for i, v in pairs(game:GetService("Workspace").Enemies:GetDescendants()) do
+                    if v.ClassName == "Decal" then
+                        v.Transparency = 1
+                    end
+                end
+            end)
+        end
+    end
+end)
+Toggle = LGa:AddToggle("Toggle", {Title = "Remove Dame Text", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().RemoveText = Value
+    game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = not getgenv().RemoveText
+end)
+Toggle = LGa:AddToggle("Toggle", {Title = "Remove Notification", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().RemoveNotification = Value
+    game.Players.LocalPlayer.PlayerGui.Notifications.Enabled = not getgenv().RemoveNotification
+end)
+Toggle = LGa:AddToggle("Toggle", {Title = "Auto Rejoin On Kick", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoRejoinKick = Value
+    if Value then
+        getgenv().rejoin = game:GetService("CoreGui").RobloxPromptGui.promptOverlay.ChildAdded:Connect(function(child)
+            if child.Name == 'ErrorPrompt' and child:FindFirstChild('MessageArea') and child.MessageArea:FindFirstChild("ErrorFrame") then
+                game:GetService("TeleportService"):Teleport(game.PlaceId)
+            end
+        end)
+    else
+        if getgenv().rejoin then
+            getgenv().rejoin:Disconnect()
+            getgenv().rejoin = nil
+        end
+    end
+end)
+LGa:AddButton({
+    Title = "Rain Fruit",
+    Callback = function()
+        local fruitObjects = game:GetObjects("rbxassetid://14759368201")[1]:GetChildren()
+        local maxFruits = 10
+        local count = 0
+        for i, v in pairs(fruitObjects) do
+            if count >= maxFruits then break end
+            count = count + 1
+            v.Parent = game.Workspace.Map
+            v:MoveTo(game.Players.LocalPlayer.Character.PrimaryPart.Position + Vector3.new(math.random(-50, 50), 100, math.random(-50, 50)))            
+            local fruitAnimationController = v.Fruit:FindFirstChild("AnimationController")
+            if fruitAnimationController then
+                local idleAnimation = fruitAnimationController:FindFirstChild("Idle")
+                if idleAnimation then
+                    idleAnimation:Play()
+                end
+            end
+            v.Handle.Touched:Connect(function(otherPart)
+                if otherPart.Parent == game.Players.LocalPlayer.Character then
+                    v.Parent = game.Players.LocalPlayer.Backpack
+                    game.Players.LocalPlayer.Character.Humanoid:EquipTool(v)
+                end
+            end)
+        end
+    end
+})
+if World1 then
+    Dropdown = LGa:AddDropdown("Dropdown", {
+        Title = "Select Island",
+        Values = {
+            "WindMill", "Marine", "Middle Town", "Jungle", "Pirate Village", 
+            "Desert", "Snow Island", "MarineFord", "Colosseum", "Sky Island 1", 
+            "Sky Island 2", "Sky Island 3", "Prison", "Magma Village", 
+            "Under Water Island", "Fountain City", "Shank Room", "Mob Island"
+        },
+        Multi = false,
+        Default = false,
+    })
+    Dropdown:SetValue("0.15")
+    Dropdown:OnChanged(function(Value)
+        getgenv().SelectIsland = Value
+    end)
+end
+if World2 then
+    Dropdown = LGa:AddDropdown("Dropdown", {
+        Title = "Select Island",
+        Values = {
+            "The Cafe", "Frist Spot", "Dark Area", "Flamingo Mansion", "Flamingo Room", 
+            "Green Zone", "Factory", "Colossuim", "Zombie Island", "Two Snow Mountain", 
+            "Punk Hazard", "Cursed Ship", "Ice Castle", "Forgotten Island", 
+            "Ussop Island", "Mini Sky Island"
+        },
+        Multi = false,
+        Default = false,
+    })
+    Dropdown:SetValue("0.15")
+    Dropdown:OnChanged(function(Value)
+        getgenv().SelectIsland = Value
+    end)
+end
+if World3 then
+    Dropdown = LGa:AddDropdown("Dropdown", {
+        Title = "Select Island",
+        Values = {
+            "Mansion", "Port Town", "Great Tree", "Castle On The Sea", "MiniSky", 
+            "Hydra Island", "Floating Turtle", "Haunted Castle", "Ice Cream Island", 
+            "Peanut Island", "Cake Island", "Cocoa Island", "Candy Island", "Tiki Outpost"
+        },
+        Multi = false,
+        Default = false,
+    })
+    Dropdown:SetValue("0.15")
+    Dropdown:OnChanged(function(Value)
+        getgenv().SelectIsland = Value
+    end)
+end    
+Toggle = LGa:AddToggle("Toggle", {Title = "Teleport Island", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().TeleportIsland = Value
+    if getgenv().TeleportIsland == true then
+        repeat task.wait()
+            if getgenv().SelectIsland == "WindMill" then
+                topos(CFrame.new(979.79895019531, 16.516613006592, 1429.0466308594))
+            elseif getgenv().SelectIsland == "Marine" then
+                topos(CFrame.new(-2566.4296875, 6.8556680679321, 2045.2561035156))
+            elseif getgenv().SelectIsland == "Middle Town" then
+                topos(CFrame.new(-690.33081054688, 15.09425163269, 1582.2380371094))
+            elseif getgenv().SelectIsland == "Jungle" then
+                topos(CFrame.new(-1612.7957763672, 36.852081298828, 149.12843322754))
+            elseif getgenv().SelectIsland == "Pirate Village" then
+                topos(CFrame.new(-1181.3093261719, 4.7514905929565, 3803.5456542969))
+            elseif getgenv().SelectIsland == "Desert" then
+                topos(CFrame.new(944.15789794922, 20.919729232788, 4373.3002929688))
+            elseif getgenv().SelectIsland == "Snow Island" then
+                topos(CFrame.new(1347.8067626953, 104.66806030273, -1319.7370605469))
+            elseif getgenv().SelectIsland == "MarineFord" then
+                topos(CFrame.new(-4914.8212890625, 50.963626861572, 4281.0278320313))
+            elseif getgenv().SelectIsland == "Colosseum" then
+                topos(CFrame.new(-1427.6203613281, 7.2881078720093, -2792.7722167969))
+            elseif getgenv().SelectIsland == "Sky Island 1" then
+                topos(CFrame.new(-4869.1025390625, 733.46051025391, -2667.0180664063))
+            elseif getgenv().SelectIsland == "Sky Island 2" then  
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(-4607.82275, 872.54248, -1667.55688))
+            elseif getgenv().SelectIsland == "Sky Island 3" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(-7894.6176757813, 5547.1416015625, -380.29119873047))
+            elseif getgenv().SelectIsland == "Prison" then
+                topos(CFrame.new(4875.330078125, 5.6519818305969, 734.85021972656))
+            elseif getgenv().SelectIsland == "Magma Village" then
+                topos(CFrame.new(-5247.7163085938, 12.883934020996, 8504.96875))
+            elseif getgenv().SelectIsland == "Under Water Island" then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(61163.8515625, 11.6796875, 1819.7841796875))
+            elseif getgenv().SelectIsland == "Fountain City" then
+                topos(CFrame.new(5127.1284179688, 59.501365661621, 4105.4458007813))
+            elseif getgenv().SelectIsland == "Shank Room" then
+                topos(CFrame.new(-1442.16553, 29.8788261, -28.3547478))
+            elseif getgenv().SelectIsland == "Mob Island" then
+                topos(CFrame.new(-2850.20068, 7.39224768, 5354.99268))
+            elseif getgenv().SelectIsland == "The Cafe" then
+                topos(CFrame.new(-380.47927856445, 77.220390319824, 255.82550048828))
+            elseif getgenv().SelectIsland == "Frist Spot" then
+                topos(CFrame.new(-11.311455726624, 29.276733398438, 2771.5224609375))
+            elseif getgenv().SelectIsland == "Dark Area" then
+                topos(CFrame.new(3780.0302734375, 22.652164459229, -3498.5859375))
+            elseif getgenv().SelectIsland == "Flamingo Mansion" then
+                topos(CFrame.new(-483.73370361328, 332.0383605957, 595.32708740234))
+            elseif getgenv().SelectIsland == "Flamingo Room" then
+                topos(CFrame.new(2284.4140625, 15.152037620544, 875.72534179688))
+            elseif getgenv().SelectIsland == "Green Zone" then
+                topos(CFrame.new(-2448.5300292969, 73.016105651855, -3210.6306152344))
+            elseif getgenv().SelectIsland == "Factory" then
+                topos(CFrame.new(424.12698364258, 211.16171264648, -427.54049682617))
+            elseif getgenv().SelectIsland == "Colossuim" then
+                topos(CFrame.new(-1503.6224365234, 219.7956237793, 1369.3101806641))
+            elseif getgenv().SelectIsland == "Zombie Island" then
+                topos(CFrame.new(-5622.033203125, 492.19604492188, -781.78552246094))
+            elseif getgenv().SelectIsland == "Two Snow Mountain" then
+                topos(CFrame.new(753.14288330078, 408.23559570313, -5274.6147460938))
+            elseif getgenv().SelectIsland == "Punk Hazard" then
+                topos(CFrame.new(-6127.654296875, 15.951762199402, -5040.2861328125))
+            elseif getgenv().SelectIsland == "Cursed Ship" then
+                topos(CFrame.new(923.40197753906, 125.05712890625, 32885.875))
+            elseif getgenv().SelectIsland == "Ice Castle" then
+                topos(CFrame.new(6148.4116210938, 294.38687133789, -6741.1166992188))
+            elseif getgenv().SelectIsland == "Forgotten Island" then
+                topos(CFrame.new(-3032.7641601563, 317.89672851563, -10075.373046875))
+            elseif getgenv().SelectIsland == "Ussop Island" then
+                topos(CFrame.new(4816.8618164063, 8.4599885940552, 2863.8195800781))
+            elseif getgenv().SelectIsland == "Mini Sky Island" then
+                topos(CFrame.new(-288.74060058594, 49326.31640625, -35248.59375))
+            elseif getgenv().SelectIsland == "Great Tree" then
+                topos(CFrame.new(2681.2736816406, 1682.8092041016, -7190.9853515625))
+            elseif getgenv().SelectIsland == "Castle On The Sea" then
+                topos(CFrame.new(-5074.45556640625, 314.5155334472656, -2991.054443359375))
+            elseif getgenv().SelectIsland == "MiniSky" then
+                topos(CFrame.new(-260.65557861328, 49325.8046875, -35253.5703125))
+            elseif getgenv().SelectIsland == "Port Town" then
+                topos(CFrame.new(-95, 11, 5455))
+            elseif getgenv().SelectIsland == "Hydra Island" then
+                topos(CFrame.new(5433, 1062, 290))
+            elseif getgenv().SelectIsland == "Floating Turtle" then
+                topos(CFrame.new(-13274.528320313, 531.82073974609, -7579.22265625))
+            elseif getgenv().SelectIsland == "Mansion" then
+                topos(CFrame.new(-12551, 337, -7476))
+            elseif getgenv().SelectIsland == "Haunted Castle" then
+                topos(CFrame.new(-9516, 142, 5537))
+            elseif getgenv().SelectIsland == "Ice Cream Island" then
+                topos(CFrame.new(-874, 66, -10915))
+            elseif getgenv().SelectIsland == "Peanut Island" then
+                topos(CFrame.new(-2062.7475585938, 50.473892211914, -10232.568359375))
+            elseif getgenv().SelectIsland == "Cake Island" then
+                topos(CFrame.new(-1884.7747802734375, 19.327526092529297, -11666.8974609375))
+            elseif getgenv().SelectIsland == "Cocoa Island" then
+                topos(CFrame.new(87.94276428222656, 73.55451202392578, -12319.46484375))
+            elseif getgenv().SelectIsland == "Candy Island" then
+                topos(CFrame.new(-1014.4241943359375, 149.11068725585938, -14555.962890625))
+            elseif getgenv().SelectIsland == "Tiki Outpost" then
+                topos(CFrame.new(-16101.1885, 12.8422165, 380.942291, 0.194113985, 1.39194061e-08, -0.980978966, -9.82904691e-09, 1, 1.22443504e-08, 0.980978966, 7.26528837e-09, 0.194113985))
+            end
+        until not getgenv().TeleportIsland
+    end
+end)
+Settings = Window:AddTab({ Title = "Setting Farm", Icon = "" })
+Dropdown = Settings:AddDropdown("DropdownFarm", {
+    Title = "Select Weapon",
+    Values = {"Melee","Sword","Blox Fruit"},
+    Multi = false,
+})
+Dropdown:SetValue("Melee")
+Dropdown:OnChanged(function(value)
+    getgenv().SelectWeapon = value
+end)
+task.spawn(function()
+    local lastWeapon = nil
+    while task.wait(0.5) do
+        pcall(function()
+            if getgenv().SelectWeapon == lastWeapon then
+                return
+            end
+            lastWeapon = getgenv().SelectWeapon
+            local weaponFound = nil
+            for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                if v.ToolTip == getgenv().SelectWeapon then
+                    weaponFound = v.Name
+                    break
+                end
+            end
+            if weaponFound then
+                getgenv().SelectWeapon = weaponFound
+            end
+        end)
+    end
+end)
+Toggle = Settings:AddToggle("Toggle", {Title = "Auto Turn On Buso", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().AUTOHAKI = Value
+end)
+spawn(function()
+    local canUseHaki = true
+    local debounceTime = 2
+    while task.wait(0.1) do
+        if getgenv().AUTOHAKI then
+            if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") and canUseHaki then
+                canUseHaki = false
+                local args = {
+                    [1] = "Buso"
+                }
+                pcall(function()
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                end)
+                wait(debounceTime)
+                canUseHaki = true
+            end
+        end
+    end
+end)
+Toggle = Settings:AddToggle("Toggle", { Title = "Auto Turn On Race V4", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoTurnOnV4 = Value
+end)
+task.spawn(function()
+    local lastCheckTime = 0
+    while true do
+        task.wait(0.1)
+        if getgenv().AutoTurnOnV4 then
+            local currentTime = tick()
+            if currentTime - lastCheckTime >= 0.5 then
+                lastCheckTime = currentTime
+                local character = game.Players.LocalPlayer.Character
+                if character and character:FindFirstChild("RaceEnergy") and
+                   character.RaceEnergy.Value >= 1 and
+                   not character.RaceTransformed.Value then
+                    local be = game:GetService("VirtualInputManager")
+                    be:SendKeyEvent(true, "Y", false, game)
+                    task.wait(0.1)
+                    be:SendKeyEvent(false, "Y", false, game)
+                end
+            end
+        end
+    end
+end)
+Toggle = Settings:AddToggle("Toggle", {Title = "Auto Turn On Race V3", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoTurnOnV3 = Value
+end)
+task.spawn(function()
+    local prevState = false    
+    while true do
+        task.wait(0.1)        
+        pcall(function()
+            if getgenv().AutoTurnOnV3 ~= prevState then
+                if getgenv().AutoTurnOnV3 then
+                    game:GetService("ReplicatedStorage").Remotes.CommE:FireServer("ActivateAbility")
+                end
+                prevState = getgenv().AutoTurnOnV3
+            end
+        end)
+    end
+end)
+local Toggle = Settings:AddToggle("Toggle", {Title = "Auto Set Spawn Point", Default = false })
+local lastSetState = false
+Toggle:OnChanged(function(Value)
+    getgenv().Set = Value
+    if Value ~= lastSetState then
+        lastSetState = Value
+        if Value then
+            pcall(function()
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetSpawnPoint")
+            end)
+        end
+    end
+end)
+Toggle = Settings:AddToggle("Toggle", {Title = "Anti AFK", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().AntiAFK = Value 
+end)
+task.spawn(function()
+    while true do
+        if getgenv().AntiAFK then
+            local vu = game:GetService("VirtualUser")
+            local player = game:GetService("Players").LocalPlayer
+            player.Idled:Connect(function()
+                vu:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+                wait(1)
+                vu:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+            end)
+        end
+        game:GetService("RunService").Heartbeat:wait()
+    end
+end)
+Toggle = Settings:AddToggle("Toggle", {Title = "Reset Teleport", Default = false })
+Toggle:OnChanged(function(Value)
+    BypassTP = Value 
+end)
+Toggle = Settings:AddToggle("Bypass TP", { Title = "Stop Reset Teleport When Have Legendary", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().StopTP = Value
+end)
+spawn(function()
+	while task.wait(1) do
+		if getgenv().StopTP then
+			if game.Players.LocalPlayer.Backpack:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Character:FindFirstChild("Fist of Darkness") or game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+				BypassTP = false
+			end
+		end
+	end
+end)
+getgenv().FastAttack = false
+Toggle = Settings:AddToggle("Toggle", {Title = "Fast Attack", Default = true})
+local FastAttackTask
+local function FastAttackLoop()
+    while getgenv().FastAttack do
+        if type(AttackNoCoolDown) == "function" then
+            AttackNoCoolDown()
+        end
+        task.wait(0.1)
+    end
+end
+Toggle:OnChanged(function(Value)
+    getgenv().FastAttack = Value
+    if Value and not FastAttackTask then
+        FastAttackTask = task.spawn(FastAttackLoop)
+    end
+    if not Value and FastAttackTask then
+        FastAttackTask = nil
+    end
+end)
+Toggle = Settings:AddToggle("Toggle", {Title = "Bring Mob", Default = true})
+Toggle:OnChanged(function(Value)
+    getgenv().BringMonster = Value
+end)
+local RunService = game:GetService("RunService")
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local LocalPlayer = Players.LocalPlayer
+spawn(function()
+    while task.wait(0.1) do
+        pcall(function()
+            CheckQuest()
+            local enemies = Workspace.Enemies:GetChildren()
+            local MonsterCount = 0
+            for _, enemy in ipairs(enemies) do
+                if MonsterCount >= 2 then
+                    break
+                end                
+                if getgenv().BringMonster and enemy:FindFirstChild("Humanoid") and enemy:FindFirstChild("HumanoidRootPart") then
+                    local humanoid = enemy:FindFirstChild("Humanoid")
+                    local rootPart = enemy:FindFirstChild("HumanoidRootPart")
+                    if humanoid and rootPart and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then
+                        local distance = (rootPart.Position - LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                        if getgenv().StartMagnet and (enemy.Name == MonFarm or enemy.Name == Mon) and humanoid.Health > 0 and distance <= 350 then
+                            if enemy.Name == "Factory Staff" and PosMon and (rootPart.Position - PosMon.Position).Magnitude <= 5000 then
+                                if rootPart.Parent then
+                                    rootPart.CanCollide = false
+                                    rootPart.Size = Vector3.new(60, 60, 60)
+                                    rootPart.CFrame = PosMon
+                                    enemy.Head.CanCollide = false
+                                    local animator = humanoid:FindFirstChild("Animator")
+                                    if animator then
+                                        pcall(function()
+                                            animator:Destroy()
+                                        end)
+                                    end
+                                    sethiddenproperty(LocalPlayer, "SimulationRadius", math.huge)
+                                    MonsterCount = MonsterCount + 1
+                                end
+                            elseif (enemy.Name == MonFarm or enemy.Name == Mon) and PosMon and (rootPart.Position - PosMon.Position).Magnitude <= 4500 then
+                                if rootPart.Parent then
+                                    rootPart.CanCollide = false
+                                    rootPart.Size = Vector3.new(60, 60, 60)
+                                    rootPart.CFrame = PosMon
+                                    enemy.Head.CanCollide = false
+                                    local animator = humanoid:FindFirstChild("Animator")
+                                    if animator then
+                                        pcall(function()
+                                            animator:Destroy()
+                                        end)
+                                    end
+                                    sethiddenproperty(LocalPlayer, "SimulationRadius", math.huge)
+                                    MonsterCount = MonsterCount + 1
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+Toggle = Settings:AddToggle("Toggle", {Title = "Spin Position", Description = "Spin Position When Farm", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().SpinPos = Value
+end)
+spawn(function()
+    while wait() do
+        if getgenv().SpinPos then
+            Pos = CFrame.new(0, PosY, -20)
+            wait(0.1)
+            Pos = CFrame.new(-20, PosY, 0)
+            wait(0.1)
+            Pos = CFrame.new(0, PosY, 20)
+            wait(0.1)
+            Pos = CFrame.new(20, PosY, 0)
+        else
+            Pos = CFrame.new(0, PosY, 0)
+        end
+    end
+end)
+Slider = Settings:AddSlider("Slider", {
+     Title = "Farm Distance",
+     Default = 15,
+     Min = 0,
+     Max = 30,
+     Rounding = 5,
+     Callback = function(Value)
+         PosY = Value
+    end
+})
+Toggle = Settings:AddToggle("Toggle", {Title = "Auto Reduce Lag Farm Safely", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().ReduceLag = Value
+end)
+spawn(function()
+    while wait(0.1) do
+        if getgenv().ReduceLag then
+            for i, v in pairs(game.Workspace["_WorldOrigin"]:GetChildren()) do
+                if v and (v.Name == "CurvedRing" or v.Name == "SlashHit" or v.Name == "SwordSlash" or v.Name == "SlashTail" or v.Name == "Sounds") then
+                    pcall(function()
+                        v:Destroy()
+                    end)
+                end
+            end
+        end
+    end
+end)
+Toggle = Settings:AddToggle("Toggle", {Title = "Anti Cheat Farming", Description = "This feature helps you Farm safely without being detected", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().ResetFlags = Value
+end)
+spawn(function()
+    while task.wait(5) do
+        pcall(function()
+            if getgenv().ResetFlags then
+                local player = game:GetService("Players").LocalPlayer                
+                for _, v in pairs(player.Character:GetDescendants()) do
+                    if v:IsA("LocalScript") then
+                        local scriptsToRemove = {
+                            "General", "Shiftlock", "FallDamage", "4444", 
+                            "CamBob", "JumpCD", "Looking", "Run"
+                        }
+                        if table.find(scriptsToRemove, v.Name) then
+                            v:Destroy()
+                        end
+                    end
+                end
+                for _, v in pairs(player.PlayerScripts:GetDescendants()) do
+                    if v:IsA("LocalScript") then
+                        local scriptsToRemove = {
+                            "RobloxMotor6DBugFix", "Clans", "Codes", "CustomForceField",
+                            "MenuBloodSp", "PlayerList"
+                        }
+                        if table.find(scriptsToRemove, v.Name) then
+                            v:Destroy()
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+Main = Window:AddTab({ Title = "Tab Farming", Icon = "" })
+Main:AddButton({
+    Title = "Copy discord invite link",
+    Callback = function()
+        pcall(function()
+            setclipboard("https://discord.gg/2YCGftRB")
+        end)
+    end
+})
+Main:AddParagraph({
+     Title = "Main Farm",
+     Content = string.rep("-", 21)
+})
+Dropdown = Main:AddDropdown("DropdownFarm", {
+    Title = "Select Method Farm",
+    Values = {"Farm Level", "Farm Bone", "Farm Katakuri"},
+    Multi = false,
+})
+Dropdown:SetValue("Farm Level")
+Dropdown:OnChanged(function(Value)
+FarmMode = Value
+end)
+spawn(function()
+    local canRun = true
+    local debounceTime = 0.5
+    while wait(debounceTime) do
+        if getgenv().AutoFarm and FarmMode == "Farm Level" then
+            if canRun then
+                canRun = false
+                spawn(function()
+                    local player = game:GetService("Players").LocalPlayer
+                    local questTitle = player.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                    local questVisible = player.PlayerGui.Main.Quest.Visible
+                    local humanoidRoot = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+                    if not string.find(questTitle, NameMon) then
+                        getgenv().StartMagnet = false
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                    end
+                    if not questVisible then
+                        getgenv().StartMagnet = false
+                        CheckQuest()
+                        if BypassTP then
+                            local distance = (humanoidRoot.Position - CFrameQuest.Position).Magnitude
+                            if distance > 1500 then
+                                BTP(CFrameQuest * CFrame.new(0, 20, 5))
+                            elseif distance < 1500 then
+                                topos(CFrameQuest)
+                            end
+                        else
+                            topos(CFrameQuest)
+                        end
+                        if (humanoidRoot.Position - CFrameQuest.Position).Magnitude <= 20 then
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
+                        end
+                    elseif questVisible then
+                        CheckQuest()
+                        local enemies = game:GetService("Workspace").Enemies:GetChildren()
+                        for _, v in pairs(enemies) do
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                                if v.Humanoid.Health > 0 and v.Name == Mon then
+                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                        repeat
+                                            task.wait(0.1)
+                                            AutoHaki()
+                                            EquipWeapon(getgenv().SelectWeapon)
+                                            PosMon = v.HumanoidRootPart.CFrame
+                                            topos(v.HumanoidRootPart.CFrame * Pos)
+                                            v.HumanoidRootPart.CanCollide = false
+                                            v.Humanoid.WalkSpeed = 0
+                                            v.Head.CanCollide = false
+                                            getgenv().StartMagnet = true
+                                            sethiddenproperty(player, "SimulationRadius", math.huge)
+                                        until not getgenv().AutoFarm or v.Humanoid.Health <= 0 or not v.Parent or not game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible
+                                    else
+                                        getgenv().StartMagnet = false
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end)
+                task.wait(0.5)
+                canRun = true
+            end
+        end
+    end
+end)
+local Bone = {
+    ["Reborn Skeleton"] = CFrame.new(-8769.58984, 142.13063, 6055.27637),
+    ["Living Zombie"] = CFrame.new(-10156.4531, 138.652481, 5964.5752),
+    ["Demonic Soul"] = CFrame.new(-9525.17188, 172.13063, 6152.30566),
+    ["Posessed Mummy"] = CFrame.new(-9570.88281, 5.81831884, 6187.86279)
+}
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().BonesBring then
+            pcall(function()
+                for _, v in ipairs(game.Workspace.Enemies:GetChildren()) do
+                    if Bone[v.Name] and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                        v.HumanoidRootPart.CFrame = Bone[v.Name]
+                        v.Head.CanCollide = false
+                        v.Humanoid.Sit = false
+                        v.Humanoid:ChangeState(11)
+                        task.wait(0.1)
+                        v.Humanoid:ChangeState(14)
+                        v.HumanoidRootPart.CanCollide = false
+                        v.Humanoid.JumpPower = 0
+                        v.Humanoid.WalkSpeed = 0
+                        local animator = v.Humanoid:FindFirstChild("Animator")
+                        if animator then
+                            animator:Destroy()
+                        end
+                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                    end
+                end
+            end)
+        end
+    end
+end)
+BonePos = CFrame.new(-9506.234375, 172.130615234375, 6117.0771484375)
+spawn(function()
+    while wait(0.1) do
+        if FarmMode == "Farm Bone" and getgenv().AutoFarm and World3 then
+            pcall(function()
+                local enemies = game:GetService("Workspace").Enemies:GetChildren()
+                local foundEnemy = false
+                for _, v in pairs(enemies) do
+                    if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+                        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            foundEnemy = true
+                            repeat wait(0.1)
+                                AutoHaki()
+                                EquipWeapon(getgenv().SelectWeapon)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Humanoid.WalkSpeed = 0
+                                v.Head.CanCollide = false
+                                getgenv().BonesBring = true
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                            until not getgenv().AutoFarm or not v.Parent or v.Humanoid.Health <= 0
+                        end
+                    end
+                end                
+                if not foundEnemy then
+                    if BypassTP then
+                        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                        if (playerPos - BonePos.Position).Magnitude > 1500 then
+                            BTP(BonePos)
+                        else
+                            topos(BonePos)
+                        end
+                    else
+                        topos(BonePos)
+                    end
+                    UnEquipWeapon(getgenv().SelectWeapon)
+                    getgenv().BonesBring = false
+                    topos(CFrame.new(-9515, 164, 5786))                    
+                    for _, v in pairs(game:GetService("ReplicatedStorage"):GetChildren()) do
+                        if v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy" then
+                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2, 20, 2))
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+local Cake = {
+    ["Cookie Crafter"] = CFrame.new(-2333.28052, 37.8239059, -12093.2861),
+    ["Cake Guard"] = CFrame.new(-1575.56433, 37.8238907, -12416.2529),
+    ["Baking Staff"] = CFrame.new(-1872.35742, 37.8239517, -12899.4248),
+    ["Head Baker"] = CFrame.new(-2223.1416, 53.5283203, -12854.752)
+}
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().CakeBring then
+            pcall(function()
+                for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                    if Cake[v.Name] then
+                        local targetCFrame = Cake[v.Name]
+                        if targetCFrame then
+                            v.HumanoidRootPart.CFrame = targetCFrame
+                        end
+                        v.Head.CanCollide = false
+                        v.Humanoid.Sit = false
+                        v.Humanoid:ChangeState(11)
+                        task.wait(0.1)
+                        v.Humanoid:ChangeState(14)
+                        v.HumanoidRootPart.CanCollide = false
+                        v.Humanoid.JumpPower = 0
+                        v.Humanoid.WalkSpeed = 0
+                        if v.Humanoid:FindFirstChild('Animator') then
+                            v.Humanoid.Animator:Destroy()
+                        end
+                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                    end
+                end
+            end)
+        end
+    end
+end)
+spawn(function()
+    while task.wait(0.1) do
+        if FarmMode == "Farm Katakuri" and getgenv().AutoFarm and World3 then
+            pcall(function()
+                game.ReplicatedStorage.Remotes.CommF_:InvokeServer("CakePrinceSpawner")                
+                if game.ReplicatedStorage:FindFirstChild("Cake Prince") or game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Cake Prince") then
+                        for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                            if getgenv().AutoFarm and v.Name == "Cake Prince" 
+                                and v:FindFirstChild("HumanoidRootPart") 
+                                and v:FindFirstChild("Humanoid") 
+                                and v.Humanoid.Health > 0 then                                
+                                repeat 
+                                    game:GetService("RunService").Heartbeat:wait()
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                until not getgenv().AutoFarm or not v.Parent or v.Humanoid.Health <= 0
+                            end
+                        end
+                    else
+                        if game:GetService("Workspace").Map.CakeLoaf.BigMirror.Other.Transparency == 0 
+                            and (CFrame.new(-1990.672607421875, 4532.99951171875, -14973.6748046875).Position 
+                            - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude >= 2000 then                            
+                            topos(CFrame.new(-2151.82153, 149.315704, -12404.9053))
+                        end
+                    end
+                else
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Cookie Crafter") 
+                        or game:GetService("Workspace").Enemies:FindFirstChild("Cake Guard") 
+                        or game:GetService("Workspace").Enemies:FindFirstChild("Baking Staff") 
+                        or game:GetService("Workspace").Enemies:FindFirstChild("Head Baker") then                        
+                        for _, v in pairs(game.Workspace.Enemies:GetChildren()) do
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                if (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" 
+                                    or v.Name == "Baking Staff" or v.Name == "Head Baker") 
+                                    and v:FindFirstChild("HumanoidRootPart") 
+                                    and v:FindFirstChild("Humanoid") 
+                                    and v.Humanoid.Health > 0 then                                    
+                                    repeat 
+                                        game:GetService("RunService").Heartbeat:wait()
+                                        AutoHaki()
+                                        EquipWeapon(getgenv().SelectWeapon)
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.Humanoid.WalkSpeed = 0
+                                        v.Head.CanCollide = false
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                        getgenv().CakeBring = true
+                                    until not getgenv().AutoFarm or not v.Parent or v.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    else
+                        local CakePos = CFrame.new(-2077, 252, -12373)
+                        if BypassTP then
+                            BTP(CakePos)
+                        else
+                            topos(CakePos)
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+Toggle = Main:AddToggle("Toggle", { Title = "Start Farm", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoFarm = Value
+    StopTween(getgenv().AutoFarm)
+end)
+Main:AddParagraph({
+     Title = "Farming Material",
+     Content = string.rep("-", 21)
+})
+local MaterialList = {}
+if World1 then
+    MaterialList = {"Leather + Scrap Metal", "Angel Wings", "Magma Ore", "Fish Tail"}
+elseif World2 then
+    MaterialList = {"Leather + Scrap Metal", "Radioactive Material", "Ectoplasm", "Mystic Droplet", "Magma Ore", "Vampire Fang"}
+elseif World3 then
+    MaterialList = {"Leather + Scrap Metal", "Demonic Wisp", "Conjured Cocoa", "Dragon Scale", "Gunpowder", "Fish Tail", "Mini Tusk"}
+end
+MaterialListMon = Main:AddDropdown("MaterialListMon", {
+    Title = "Select Material",
+    Values = MaterialList,
+    Multi = false
+})
+MaterialListMon:OnChanged(function(Value)
+    getgenv().SelectMaterial = Value
+end)
+Toggle = Main:AddToggle("Toggle", {Title = "Farm Material", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoMaterial = Value
+    if not Value then StopTween() end
+end)
+spawn(function()
+    local function processEnemy(v, EnemyName)
+        if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+            if v.Name == EnemyName then
+                repeat
+                    task.wait(0.1)
+                    AutoHaki()
+                    EquipWeapon(getgenv().SelectWeapon)
+                    v.HumanoidRootPart.CanCollide = false
+                    v.Humanoid.WalkSpeed = 0
+                    v.Head.CanCollide = false
+                    topos(v.HumanoidRootPart.CFrame * Pos)
+                    getgenv().StartMagnet = true
+                    MonFarm = v.Name
+                    PosMon = v.HumanoidRootPart.CFrame
+                until not getgenv().AutoMaterial or not v.Parent or v.Humanoid.Health <= 0
+                UnEquipWeapon(getgenv().SelectWeapon)
+            end
+        end
+    end
+    local function handleEnemySpawns()
+        for _, v in pairs(game:GetService("Workspace")["_WorldOrigin"].EnemySpawns:GetChildren()) do
+            for _, EnemyName in ipairs(MMon) do
+                if string.find(v.Name, EnemyName) then
+                    if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.Position).Magnitude >= 10 then
+                        topos(v.CFrame * Pos)
+                    end
+                end
+            end
+        end
+    end
+    while task.wait(0.1) do
+        if getgenv().AutoMaterial then
+            pcall(function()
+                if getgenv().SelectMaterial then
+                    MaterialMon(getgenv().SelectMaterial)
+                    topos(MPos)
+                end
+                for _, EnemyName in ipairs(MMon) do
+                    for _, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        processEnemy(v, EnemyName)
+                    end
+                end
+                handleEnemySpawns()
+            end)
+        end
+    end
+end)
+Main:AddParagraph({
+     Title = "Mastery Farm",
+     Content = string.rep("-", 21)
+})
+Slider = Main:AddSlider("Slider", {
+     Title = "Select Health [ % ]",
+     Default = 30,
+     Min = 0,
+     Max = 100,
+     Rounding = 5,
+     Callback = function(Value)
+         getgenv().Kill_At = Value
+    end
+})
+Dropdown = Main:AddDropdown("DropdownFarm", {
+    Title = "Select Method Farm Mastery",
+    Values = {"Blox Fruit", "Gun"},
+    Multi = false,
+})
+Dropdown:SetValue("Blox Fruit")
+Dropdown:OnChanged(function(Value)
+FarmMode2 = Value
+end)
+spawn(function()
+    while task.wait() do
+        if FarmMode2 == "Blox Fruit" and getgenv().MasteryFarm then
+            pcall(function()
+                QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                if not string.find(QuestTitle, NameMon) then
+                    UseSkill = false
+                    Skillaimbot = false
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                end
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    UseSkill = false
+                    CheckQuest()
+                    if BypassTP then
+                        if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude > 2000 then
+                            BTP(CFrameQuest)
+                        elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 2000 then
+                            topos(CFrameQuest)
+                        else
+                            topos(CFrameQuest)
+                        end
+                    end
+                    repeat task.wait()
+                        topos(CFrameQuest)
+                    until (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 3 or not getgenv().MasteryFarm
+                    if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 5 then
+                        wait(0.1)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
+                        wait(0.1)
+                    end
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    CheckQuest()
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                        for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                                if v.Name == Mon then
+                                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                        HealthMs = v.Humanoid.MaxHealth * getgenv().Kill_At / 100
+                                        repeat task.wait()
+                                            if v.Humanoid.Health <= HealthMs then
+                                                AutoHaki()
+                                                EquipWeapon(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value)
+                                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 10, 0))
+                                                v.HumanoidRootPart.CanCollide = false
+                                                PosMonMasteryFruit = v.HumanoidRootPart.CFrame
+                                                MonFarm = v.Name
+                                                PosMon = v.HumanoidRootPart.CFrame
+                                                v.Humanoid.WalkSpeed = 0
+                                                v.Head.CanCollide = false
+                                                UseSkill = true
+                                                Skillaimbot = true
+                                            else
+                                                UseSkill = false
+                                                Skillaimbot = false
+                                                AutoHaki()
+                                                EquipWeapon(getgenv().SelectWeapon)
+                                                MonFarm = v.Name
+                                                PosMon = v.HumanoidRootPart.CFrame
+                                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                                v.HumanoidRootPart.CanCollide = false
+                                                PosMonMasteryFruit = v.HumanoidRootPart.CFrame
+                                                v.Humanoid.WalkSpeed = 0
+                                                v.Head.CanCollide = false
+                                            end
+                                            getgenv().StartMagnet = true
+                                        until not getgenv().MasteryFarm or v.Humanoid.Health <= 0 or not v.Parent or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                    else
+                                        UseSkill = false
+                                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                    end
+                                end
+                            end
+                        end
+                    else
+                        topos(CFrameMon)
+                        UseSkill = false
+                        Skillaimbot = false
+                        Mob = game:GetService("ReplicatedStorage"):FindFirstChild(Mon)
 
-return(function(...)local C,X,R,Q,I,o,W,l,h,Y,b,H,n,T=string.byte,string.sub,string.char,string.gsub,string.rep,setmetatable,pcall,type,tostring,assert,loadstring,unpack,string.pack,{}local i={}local m=bit32 local A,k,s,w,O=_ENV,getfenv,metatable,unpack,"!!!"local M,g,U="-",true,nil local V,Z=nil,0 local B={WAjTf77c9g="v!!!"}local H={}H[7]=function(C)local X={}X[1]=C X[2]=""for C=496063+-496062,#X[1]/(304987+-304985),-790758-(-790759)do local R={}R[2]=C X[2]=X[2]..X[1][#X[1]/(-94160+94162)+X[1][R[2]]]end return X[2]end H[8]={H[7]({70698+-70697;84063-(-635710-(-719771)),"qWnc\'";"osY1F"}),"\"<.";H[7]({-964195+964204,-971103-(-971107),-197838+197845;761458+-761453;(-732123-(472990+-225228))-(-979899),854473-854471,917759-917748,-508515-(-508516);-431929-(-431942);-100186+(651875+-551681);809836+-809830;-28202-(-28205);-818604-(-818616),-158705-(-158715),"9rF*<";"<+Hgf","c$m+F";"Sb\\$V","9D%7D";"DMQH$","+#L`c","q_%KT";"gA3f:","dF$3_","H8JBT";"\'sLtf","L%Lf0";">Srb8"}),H[7]({-151072-(-151074);106309+-106308;"b9a+T","-NQj)"}),H[7]({816178-816177;566929-566927,"0Iip&";"MG4"});H[7]({-753021+753023,-574243+574248,206888+-206884,377592-377586;((342164-(-491412))+-94834)+-738741,(-507838-(-370611-(-340442)))-(-202849+-274823);"88.ci";"q4+rf","oi.Th",".O+mK";"1CQcu";"UE\\V!"}),H[7]({-732721+732726;(-368005+-481761)+849779;-255062-(-255076);-740064+740065;-24481+24487,808875+-808865,-181844-(-207074-(-25221)),-330682+330684;(-1360574-(-740990))-(-619592),-50929+50932;-895873+(481178+414699);-740901-(-740913);-583860-(677070+-1260941),-33690+33697,"g+iCk";"R,_/t",")#!2+","?i_5p","l@!jA";"f88e!","-\'Q]0","qHV6c";"^/?2\'","R7;tf";"e.7Bt","=WJ!8";"acJ0$","(`1j0"});H[7]({((610193+-389604)-(-710439))+-931027,979266-979264,"?XIMb";"A7]u"});H[7]({356301-356299;526005+(-935126+409122),"bmAkU";"AH!(l"}),H[7]({-248432+248434;(861327+-1208631)+347305;"*`-Ei";"EZePq"}),H[7]({-1025901-(-1025902);121673-121670;(901423+(-361148-(-680315-(-225288))))-(1935373-940075),-367422+(-346453-(-1236861-(-253512+(-194340-75125))));(-839365+((-570041+1061275)-((-567010+620556)+-611355)))-209666;-1002306-(-1002312),(-449879-(-87142+(89594-677936)))-225594,158409+-158402;671464+-671462;-295869+295877;-281464+281474,-68840+(-238150+306995);"n`k1#";"hT7$1";"&+X`A";"\'`[2+";"?+.FS","6:]+S","6oSkh";"Jh;2r","-&DCi";"?XL\\h";"Tqq)o";"h5aI!"});H[7]({461675-461661,-110156-(-110157),(-74822-(1280300-1011136))+343989,711950+-711939;275864-275859,-258939-(-258945);-394086+(839148-445049),((-487247-(-488271+((907175+-1027443)-(((426213+418729)+-1129396)+-274931))))+183099)-((((969022+61681)+-1181551)+(-110246+171160))+-165069),785005+-784997;-36874-(-36884);-517283+517295;-657279+(-641035+1298321);-964964-(-964968),-343967-(-343969),"$5`rN";"a52b\"","5u\\DE","qrL$9";"lp@$/","(fSe\'";".(g3X","IT][6","HqP2?";"l6ub&";"EQD:q";"*L2Q9";"&j\"T3","SMkkQ"}),H[7]({-541466+541471;(53602-(-212246))-265835;-1016972+1016981;-892556-((747743+-830693)+-809620);49478-49477;479436+-479432;-130408+(821017-(-706739+1397345));53307+-53299;-273944+273951;-905879+905890;43031+-43025;-664873+664883,816520-816518,696401+-696389;"s&I3@","@`fqd","oUjP(";"ZD?:\\";"$L`:M";"2hhk.","-R=c*","N.rb\"","Z5b\"j","KK<mO","g&KFh","Ct;G*","Rm1;[";"[(DuC"});H[7]({838440-(1038357+-199928),691149+-691140,-983882-(-983883);213410-213404,-720259+720262;-296936-(-296946),(26820+4972)-31788,438174+-438162;-64868+(-172579-((781985+-1149345)+129906));-219925-(-219933),-27425-(-27430),(((-128953+-28767)-496533)-(490145+-906727))+237673;"m19_P";"3`\'ik","[@?Q-","HKhci";"1HY#M","$+XUm","?DU3=","2b%Ze","a,eTJ",";JfpO";"m@i-V","7ud6a"});H[7]({-502022-(-44403-457621);(804170-(-182118))-986287;"RZScn","!P8]u"}),H[7]({623757+-623756,534080+-534078,"7*JSH";"RnI\'q"}),H[7]({-372746-(-372747),-494181+(-798655+(1986913-694074)),983184-(-729395+1712577);"jfS\\g";"4O,i9","J.Him"}),H[7]({-1039734-(-1039737);(-1171715-(-798001))-(-373716),704860-(((762201+-1283414)-(-256825))-(-969243)),(1002568+-1981134)-(389790+(-1644780-(-276416))),3704-3695;(659424+-1458373)+798962,661781+-661771;329399-329388,722843+-722829;624231-624230;(766181-(-72017))+-838194,970299+(-413711-556576);-779005+(-88158-(-867169)),(866412+-253326)-613079,"hA-uL","YGs$^","R`,AM","^(hT;","n%t\\6",";SP0m";"Wa:-M","X\'uQ\"";"%3n0h","R/7*R";"LqEql","8[ld6";"$p@Ih","Cl@cO"}),"Rf";H[7]({-767964+767965,212723+-212719;-180206-(-180208);(-154100-883648)-(-1037757);108504+-108497,(399869+-1136632)+((-410698-621696)+(961387+(-86877+894659))),-460576+460586;247523+-247520;-657810-(-657815);-427262+427273,503981-503973;-281320-(-281326),"]8oap","I;GYf";"!(YAo";"^gFXL";"`A.#b";"/)q(>";"h=1\"/","$;+qM","+*rTE";"C^Ru6","jD4os";"8>I?/"});"`5;",">l","\\kW","@X3\',",H[7]({1035608+(-372926-662681);-507538-(-804237+296697),"0e<+R","3jTc2"});H[7]({-148977+148979;473913+(563502+-1037414),738015-(389465+348546),(-246142-300243)+546388,"q$ctH";"!\\r_O";"9XtCI",":%OFT"});H[7]({(1427299-380165)+-1047123,(-1012781+155073)+857720;-491457-(-491474);14142-(576671+-562549),-765913-(-765931);-925728+925752;-439187+439195;(749119+-1680871)+931775,(-1019342+293864)-(-725494);-119303+119316,243977-243956,-663564+663568,((-105419+-165260)-(-397476-(-34500)))+-92295;(-989777+((894053-(137511+(-198656-428397)))-732048))-(-338252),26603-((182893+-1173362)+1017062),998306-998305;-53694-(-53703),668594+-668575,-1028155+1028170;745229-(981146+-235920),524114+-524100,412723-412717,316901-316896,999667-(189047-(-284804+-525809)),"EM#[q";"]$u%R";"T`DDe";"<FniA";"nriT3";"3/mC_","8cm=P";"F8Zs&";"8$Ebe";"G,+hi";"[@CCV","N;(E\"","+<%3S","4Zk_W","@4j9F","P<e5A","Pp/W)","+<!pF";"UnCMW",":RTWd";"km\'I`";"&r<3-","FrR^L","=j_j\""}),H[7]({((-320546-(-876841))-330659)+-225635;-33878-(-33880);"2@T=(";"NZ/L/"}),"hh;",H[7]({(-480835-(-10456))-(-470381),-580570+580578;-203414-(-203424);((-379148+-35673)-(1162195-688605))-(-801584+-86840),-32400-(-32403),423599+-423587;-848920+848921;162500+-162489,1000132+-1000126;-828786-(-828800);631508+-631504;(-814229-(-21267))+792969;-335552-(-335557);393310-(497299+-103998);"8^i7X","D/(Ec";"R,Yg.";"4ac>p","Ym6)F";"+:D$t";"RW/uC";"f&YbY","6&C^_";"_t1,R","^oJ\"M","gh*TC","ofj5<";"AWhN+"});H[7]({(-1019903-(-254422))-(-765483);944334+-944329;(790509-(535677+252330))+-2491,483113-483112,272522-272514;(-590330+1012958)+(-607809-(-185195));910061+-910049;(-543493+((975030-440298)-(-75278+(379551+-958372))))+-645332;589864-(-479788+1069648),-854157+854167,-726727-(-726734);((-342182+1355396)+-1030006)+16795;264605+-264596;-920122-(-920135);"j?#eW","[I=B#","[($K#";"Bcm=Z";"U*,sK";"TJA.M";"bu\"H/","I>=O+";"#d-?9";"o84tX";"c>]m\"","=P1W(";";pTfY","#3SIM"});H[7]({-733489+733490,212617-212615,"ZR7,B";"p\'mgQ"});"<=A";H[7]({-799334-(-799336);-960859+960860;"Y;-g,","o<=<O"}),H[7]({-563661-((1783398-(-235907+1267816))+-1315151),799861-799854;(866183+-1881352)-(-1015181);-959741+959749;-457444-(-457450),-465077+465091;-265914+265923,675869+-675864;-639285-(-639289);-701024+701026;(97136+(845580-450160))+-492545,583624-583614,637123-637120,223400+-223387;"]F?E2","$<e^d";"ph)G`";")OgIU";"+i%8O";"d]H01";"Si,LD","P$QS7";"\\QUBH";"dh\"GL",")nN.%";"O-,G`";"R!S/D","Ga&cN"}),H[7]({236835-236831,-869789+869790,19877-19869,(-609348+-1138)-(-610493),-766131+766133,-1031229+1031234;-236104+(((861084-(-1941))+-681749)+(-170039+224870)),223255+-223249,")20L$","&1l\\R";"KnF)E";"KhlKg";"[L8P)";"P]iP!";":71#]";"r.Tk%"});"o\"k";H[7]({(237668+-291941)+(395026+-340752),-450168+450170,"Y0?LF","GGMcq"}),H[7]({((836855+-27667)+(-409190+-599575))-(78756+-278334);-631472+631474,912190+-912186;-568392-(-568398);-353238+353243,-174924+174927;"q^RYj";"Lc;$G";"72U?.","+3;8$";"+1%r6";"XE<Mf"}),H[7]({-158324+158326;1007889+-1007888,"6KG]E","TKbQ9"}),H[7]({-302611-(-302617);-1047308-(-1047309),-962043+((-261164+697511)-(-525699));321129+-321127;-599190-(-599198);-233207-(-233217),497013+-497009;56004+-55995,(139222+768874)+-908085,92174+-92162;-44907+(95196+-50284),901285+-901278,"P9L1V","d,LHo";"*T%qj","d_/c\"","_YUK6";"MEd[V";"AY0>k";"l\"W65";"PIG\\Y","R8c^J";"CU=-U";"l%->L"});H[7]({(-1297617-(-864118))+433502;-832245-(-832247),-989846+(1588207-598353),890423+(843333+-1733746),(62358-871513)+809169,-371317+(758200+((-1323596-(-932991))-(-3727)));(720083-338465)+-381607,(-188379-95704)+(19075-(-265015)),684461-684455,-491751+491752;-1047152+1047164;211781-211777;-761001+761010;((842286+-138385)-443899)+-259989,"QQim7";"ipLN[";"npZ=8","pAG%M";"\\#>P,";"JJ:F[","lkOcB";"AA06c","l:<PW";"Q*&li";"e-)%m";"g=sA-";"!#,\\6";"&I5?J"}),H[7]({-344827+344832;-852595+(1387625-535028);(292136-(-753257))-1045389;-968956+968957;-1159-(-494194+((-112627-873445)+1479104)),-152793-(-152799),"\"CaFA";"%opU&";"09&K?","ks\'3p","N>kl6";"ZMjRm"}),H[7]({895294-895292,730611-730599,728536-728526;-204487-(-204493);649849-649841;-671024+671028,(-101707+-449010)-(-550730),(-1335981-(-322144))+(315976-(-697862));-419073+419084;183684+-183670;607599-607594;-596400-(-596409),((691234-(-7969))+-1491993)+792797;-45863-(-45866),"\"@?CV";"-?_$i";"1objd","hX\\<h";"n?%Bm","a4-Jr";"\')+@n";"b3d.f";"CrU_J","qE9pc","1CtOd","D2\'Du";"\':+#c","G/P$c"});H[7]({-640024+640028,(242815-366497)-(-123684),41044-(938119-897078);-746237-(-746242),206885+-206879;844065+-844064;"GFe8+";"fh/t\"","jD$&3","?#fpL","*X%Ru","@PAX#"});";l]";"qMt",H[7]({626785-626783;-903936+903937,"cu6%\'";"7O*1u"}),H[7]({-886262+886275;(-318564-((-564374-121685)+963287))-(-595799);-693858-(-693864);-845737-(-845738);-737049-(-737060);-831366+((-602530-(-637828))+796070),659476+-659467,351130-351127;(-368806-454507)-(-823323);-82523-(-82528),((214873-(-437811))-(315506-(-132169)))-(1185914-980919),863579+-863567;-14041-(-14049),121707-121703,"*UT#V","[FA0P",",4%TT","qN<;b";"&tC\\t","^M%:D","0Z30-","F8*1j";"7m8,A",";hL[d","KsV?Y","8t_\"S","5LtO_";"09A/B"});H[7]({-905140-(-905146),137358-137348,-244758+244767;960343-960335,-65860-(-65863),904922+-904915;397004-396999;(-584765-416239)+1001015,(-1478832-(-818630))-(-660204),(152117-(-640543))+-792656,(1963586-1033764)-929821;-764620+764634,692654-(-123295+815936);386448-(-480734+((5737+-1032705)+1894138)),")uP=R","^o/9e","Hg:Ii";"os1oh";"`q^(^","+KEiQ";")+\\i<","8T_VI","AcDN3","]A>VW","c1:NG","La.cP","3X)W8";"jL]sQ"});"9dp",H[7]({-688814+688816,-536322-((-2176293-(-642276))-(-997692));740161-740157,652780+-652779;-612568-(-612574),-1047859-(533767+-1581631),"CGah[","F=ZJF","UkgC\\";"Ofaf\'","UDGC6";"M<oor"});H[7]({-497598-(-497602);-323353-(-323358);-710267-(-710273);(263733-380154)+116429,-835292+835294,-656002+656011,-41479-(-41486);(85371+-626463)-(-541104);199751+-199748;735715+(-437216-(29383-(-269105))),799208-(747623+51572),1041269-1041255,443290+(-75640-367640),(606109-(-129560))+-735668,"s\'6\\@","(YqL*";"K>eOc";"b0l[?";"6-ZbS",";\"!X\"";"1^.?G","0]]*S","/WJUW";"m3Cnb";"&s?hQ";"9[>og";"*AhYm","835S\'"});"\"9";H[7]({((-34793+88166)-(-256447))-309819,-579598-(-579600),"Ea`ir","Df#"});H[7]({(528217+-960954)+((-239668-(-437975))-(379416-613848)),(987976-487152)-500823;"W17G*";"Z?BUb"}),H[7]({(100820+-133353)+(453018-(505088+((184953+79927)-(-277022-(-626506)))));540033+-540031,"Q-t-^","#\"(/&"}),H[7]({609342+(-1153791-(-544450));272209+(((-1036641-(-931188))+-120942)+-45812),"M%4]=";"3Kj"}),H[7]({4244+-4243;((111156+(430417-71719))+-872500)-(-402648),"^MJdC","1WfHB"}),H[7]({(-247663-(-630398))+(-380890-1843),(557684+-51161)-506522;-615636-(88639+-704278);-603041+603047;89684-89676,-82682+82687;((129346-991124)+-106421)+968203,(-770391-(-353695))-(-416703),"OmrX!";"\'h+<4";"I0`q4","9Uej5","<4eC6";"(G*:!";"O0K78","&gKD0"}),H[7]({((5758-312793)-598088)+905137;(-748990+(1272812-(1001482-(-320263-(-693907)))))+104018,-860259+860267,-377770+(767119-389346),654408+-654398,347048-347041,-926132+926138;-562159+(695311+-133140),114624+-114613;(33502-(-844521))+(655551+-1533565),-734540+(234182+500371);-850724+850728;-530938-(-530943);-374375+(-248114-(-622490)),"jgN)g";"Uo9f\\","H\"bpf","50UIc";"+%5CS";"gO?jQ";"5;c[-";"<8gX>";"hpIVA";"0BFG.","[e9;u";"qn)I1";"Q5\\BH","KAF*e"});H[7]({373184-373183,-631480-(-631483),-230645-(-230651);-79490-(-79502),460070-(-265477+725545);(-471022-(-860274))-389242,210506+((-992197+1424137)-642441);975803+-975789;-9001-(-9005),(-401542-478203)-(305787+-1185545);-740320+740331,-228215-(-228224),411840+-411832;722463+-722456,"2r6\'s";"H3UMZ";"`Oa;i","<M,*N";"9`mse","mU6,^","(@DJ\'";";>2^2";"%4?;)";"Nfe=8","\"?K=`","%1m/^";"9cQ\"c","&ZmTX"}),H[7]({(-271082+1127332)-856248;617775+(((-91998+-615053)+584644)-495367),"#[.E)";"?bP\"u"}),H[7]({-9382+9390,296823+-296821;470946+(483561+((72903-401449)-625956));-316816+316822;-667390-(50249-(-626531+1344171));(660876+-1641678)+980806;-794765-(-794772);(554638-710618)-(378978-534961);"m((=W";";DMMd","HJ]If","\"R<q>","oQHh=","Qo\'_.","!U@WY",";;aP0"}),H[7]({-539312+539336;303869+-303854,-332571+332579,-391098+391101,-790715+790737,(-516172+1209587)+(-1639479-(-946091));-500127-(-500137);-343798-(-343803);(14102+-215777)-(-1153720-(-952031)),(-569118-(((1524513-537559)-543177)-961056))+51865,-170015-(-170035);38430-(652920-614506),778389+-778376;100679+-100668;137004+-137002,-889062-(-889080),-1031145-(-1031173);779383-779382;76897-76890,(-562752+254683)-(-308099),(183341-736172)-((781154+-1438943)+104954),-312066+312072;-432136+432155,1047832+-1047803;720727+((((322639+570648)+-68004)-737188)+-808799);161384+-161372;539631+-539614,-458337-(-458358);81618+-81593,-888253-(-888262);"68iCe";"6=\"1*","FLlAZ","n8(de",")Z4e3";",CAX$","3CfFH","c1Nh>";"(07IU";"iIQg(","c#I*S";"fn7=^";"mp1%K","r75j>","$#rHl","J4>2H";"=RQYa";"L32H+";",Tm^;","2A3.m";"dhd&p";"R,d\\^",":9%J@","ER6;o";"P/X<O","1\\YtS","\'YSa5";"22:W/","B+C9?";"QFmD#"});H[7]({264067+(513633+(-439743-337949));-349255+349264;-266596-(-266597);624201-624188;-802190+802202,597001+-596990;839404-839397;((577403+-1475431)-(-562539))-(-335495),-547330-(-547334),833212-833202;939745+-939730,(-330448+-471385)-(-801835),638776+-638762,370004+-370001,-581709+581725,94643+-94638;"_j$,O";"p[g^V","\",+N?","&FS!a";"gE6ob";"RctlN","E<U5e","1Q)`a";"`*=Ih";".cAKh";"I]eTT";"<\\J*m";"L/$a*","Js<?J";":Gh2*";"=;:>@"}),"Q2",H[7]({-728069-(-728070),217291+-217289,"M259#";"U9B<s"});H[7]({824436-824425,463572+(1014045+-1477605);-704901+704906;(169230-(-31479))-(266228-65526),(387358-993445)-(-606097);-232129+232133;661420+-661417;719937+-719931,(888315+-840485)-47828;-1021550+1021559;((-544324+200584)-364516)-(-708264),-199912+199913,"Q%^R3","h@%&K";"1\\CB0","/Y^1Q";"rFbMg";"hi!iR";"q8U?H","=4IP8";"bC5,P","_d>D+";"M.,$*";"J\'M8u"}),H[7]({716294+(-324228-392054);(-448274-(-88618))-(-359659);(205314+-62364)-142942,-35173-(-35183);(((-170074-(-778804))-994858)-508925)+(-797013+1692075);488553+-488552,191934+-191928;253358+-253344,-434034+434045;-786802-(-718123-68692);-884009+884013,1002803-1002798;-273015+273022,-60637-(643570-704209),"k8XKb";";RMi.";"i57h>";"jHp8l","KH_n-",";0/<+";"c3U.B","8/CoK","p^co+","hA:]m","bYF<G","L[=Bg";"aXhH&";"pZ+(I"});H[7]({872912-872895,(91617-133200)-(-41598),-626112+626128;-355227-(-355232);618079-618078,(251489-157535)-93940;-170933-(-170941);(((-929265-(-882348))-(-882016))-(22530+78918))+(-1435021-(-701374));-935442+935460;-1039516+1039527,((-672091-(-92621))+606508)+(480800-507818),(421975+-286827)-135136,(-1025421-(-339317))+686114;894919-(1725067-830150);((893651+((-1520132-240252)-(-981730+((255411-(-615784))-(-116947)))))+1139590)-266438;-574770+574779,968666-968663,(624468-277431)+-347024,-18958+18977,-851279-(-851285),"90JAK","b5L7l","P\"MkH";"5dGa[","qu?f5","L2EU8","i6*,!","Ra*`f","V4UP3","<o?\'C";")Qn_M";"X9OjT";"Lh\\N[","&,h9f","jrR\\q","PMc2\'";"QDY><";"#L&Il";"\\t$A-";"k4pZ@"});H[7]({(-912675-(-1044505+100753))-31075;661537+-661536;"9HrrZ","$5?`W"});H[7]({-28411+(-198810-(-227223));965816+(-80181+-885634),"5.d?S","dJ,_@"});H[7]({(-876007+843450)-(-32558);847691-847687,(191316+-1194405)+1003098,754818-754808;965645-965638;801932-801926,1044090-1044079,-747102+747104,-728632-(-728640);-120504+120516;246133-((-821054+1764974)+-697790),363981+-363976;"#HmQ,","G&?FB";"0N+12","de!X#","KLiVr","br3!S";"`Hcao";"?gu;`","\\;O#l","9aPcp";"1TZ,C";"3*5[["}),"VUY",H[7]({-636482-(-636485);(456948+756)-457702,-231840+231854,730381-730377,(-844363+973798)-(1030129+-900695),894992-894981,-974085-(-974095),(-246798+911103)+-664299;-775426+(-465263+1240697),-693610-(1035057+-1728676),321253+-321241,-760429-(1001470+(940764+-2702668));(1587182-601822)+-985353;634595-634582,"P-#f.","iQ*T\'",".f1tV";"T+Tan";"&+ON?","IBe\"#","#RB%9",",g^(b";"h__So","d[.H9";"p&dc\"";"/ln@6","/,p\'#";"%oI1-"});H[7]({-792811+792813,237502+(-373128+135627);-245285+(1020266+(-1006459+231481)),(246459-(-320699))-567154;")%S+P","4S-06";"/2R@\"";"g@.\\p"});H[7]({905684+-905682;(455191+-49053)-406128;573137-573126;307624-307619,-380679+(761170+-380478);-871809+871812;559328-559320,-956638-(-956647);-521547+521559,-902870+(1233328-330454);-631249+631256,-809750+((-545869-(-368951))+986669);-877487-(-535130-342371),-936352+936358,"\\U.\'S","$G7V/","9gn>,";"XK3HA";":F:VB";"OIZtK";"\'#7jc";"*7bIQ";"%*m&<","F0S>j","WV/R\'";"9[0%c";"f%pm,";"/8Ab)"});H[7]({750416-750414,(-207651-(-226094))+-18442;">d;F_";"a#Q.\""});H[7]({(932512+-1574459)+641948,-30319+30322,-589364+589368,-737295+737297,"ST]ST","Igp<q","P^kD>","C8bJl"}),H[7]({-705281-(-705286),-256215+256219;-643581+643582;-279606+(-988382+1267990),-205391-(-205397);187159+-187156,"agY$2";"%03-q","21g!q";"J5-<b";"^@^#\\";"2p%UO"});H[7]({-3359-(-3361),(215952-1035326)-(-819375),"f)Ej*";"r=S*K"}),H[7]({(-49568+-730214)+779784,(540135-(535421-664765))+-669478;"H>T\"\\";";$n@Z"});H[7]({((963355+-1217165)-387249)-((948236+(588215+-1316374))+-861142);418530+-418523;425709+-425700,-262153-(-262163);711735-(1211066-499345);(-863264-(-248104))+615173,-209664-(-209666),-399406+399409,-605666+605671,-889270-(-889271),186693+-186681,-163039-(-163050),218132+-218128,-444786-(-444794);"bl-sT";"o33Xm";"bh?gQ","\\l4Ye","*V$dL","l5iI^";"E=?>h","Lf8!U";"#n(U;","ZYK;N","#^9@Q";")oRER","SBbZN";"^Sfej"});H[7]({-394945-(-394955);-918276-(-918282);(-677939+-294645)+972589;294537-294525,-393012+393020,281751-281748;858038-858036;-946208-(1017892+-1964104);4249+(782717-786957);-155217+155228;21684+-21677;(-177650+(890618+-20584))+-692383;"*aRGu","#\'ppB","p.o$l","\\Yur:","jjrI7";"n)elQ";"S;)T?";"dVgM?";"@$EXb","#,T;m";"23YBH";"nMCq2"}),H[7]({(575828-(-103763))-679587,-572240-(-572241),-677041-(-767392+90345),-91256-(-91259);-265678+265683,(533014+222033)+-755045;"CbY+F","Dukpp","a79(;";"HNS]2";"[f#3]","TNpWt"}),"-P$",H[7]({-782430+782438;-838758-(-838765),-950384-(-950387),869742-(1635892-766152),-28368-(-1023745+995366);1004009+-1003999;890040+-890028;529380-529376;779209-779208,368144+-368135,171377+-171371,21796+-21791;"MG\"VH";"rQqn#","54a*A";"./l^U";"=(Aer","c^Tm<";"L7jaK","?i::/","-pNOe";"l/i-u","0oIlB";"OoV=m"}),H[7]({-529686+529687,-1001348-(-1001350),"qbe8h";"5)?Zi"}),H[7]({-783363-(-783366),-375987-(-375991),-1016065-(835348+-1851415),438282+-438281,"NcqFJ";"2Pe,E","C6l*W";"6h?!U"}),H[7]({793118+-793117,-203614+203617;-58351+58353,(-439797-(-966490))-526689;"@ocdm","ZHbmu";"_sS19";"^ilB5"}),H[7]({-314522-(-314565);((858235-(659161+-167843))+-1317550)-(-950686);(301600-(-203332-(-703946)))-(-199074),-1045388-(-1045437);(-658452+((-237706+663229)-283594))+516582,-105226-(198479+(-561134-(-257416))),(-300967-(-743978))-442945,353474-(82594+270840);993425-993383;-920871-(-920919);548807-548738,150798+-150734,((971949+-1345162)-(-911584))+-538347;-76903-(-76961);-571000-(459762-1030770),-148706+148773;-362045-(-362050);-700834+700840,389384+-389327,564160-(1471358-907232);-470740+470779;522175-522121;-188485-(-217354-(((-1225819-(-750996))-459392)+905411)),443850+(-845807-(-254714-147266)),(-542356+(-541040+1915177))-831766,377477-(-396467-(-773906));-195161-(-195196),-172731-(-172743),126238-126193,327831-327829;-399708-(-399755),429427+-429356,-575501+575508,-318507+(-889397+1207940);-871035-(-871039);(473282-(-236764))+(344498+-1054516),-684664+684720;(-1245311-(-900754))+344584,-563066-(-563083);1012291+-1012260,-597963-(-598033),499026-498964,-658535-(-658551);(-900021-(-324126))+575956;-224917-(-224961);-925704-(-925714),(944120+-137119)-806949,-1035738-(-1035784);994496-(-42109-((-424929+828103)+((-1182203-539287)-(-281732)))),-221087+221159;-176946-(-176979);-925900+925973,997503-997435;210689-210660,51257-51239;-351026-(211745-562772),-159711+((1025010-1023308)-(-158085)),201108+-201088,(641954+-533774)+-108139;189666-189655,461305-461291;-121397+121400,805191-805169;930408+-930334;62628-62577,-536785-(-536804);-512539+512569;-255764+255839;(-104455+863656)+-759164;-783186-(-783195);-717310-(-717342),-567733+567788;-303408+303458;-764191+764217,823429-823404,-797837-(-797900);"eDSJN","BtS#N";"$eI_\\";"EnR)K";"=%mWT";"].tOe";",D2F-","g&q#O";"2Cr?a","_n+s1";"D)\\a-";"fEh`a","46b3g","gmtG=";"j4eAZ";"+G`$s","-Wc>H";"B>2$Z";"V*2tm";",V[Sm";"B+bqI","E#WH\'";"q2ONX";"W5Sa8";"^ml#+","jet7l";"(T\'@n","J3W=C","AU(#s","VG\"2l";"4*jdk","f=2MB","HF*Hd","fRKK`","#GT\'2","1asiA";"1EjWH";"?[3)o","7*9^o";"C<QLf","K;8J.","*OqD_","9CSk2";")t+J7","]FYf8","\"/@M$","(ur-p";"o8N/u","bM[6J","NcUu]";"j!97]";"\\oedO","/d8*0","L\'o(Q","Ro=*6","=:r3_","d^uo4","YL))S";"K2ZdV";"]Re?p";"Pp3if";"Jg=jD";"q&LrW","0X,P%";"4+Y99","?`5C+","#)e.%","2\'68u","Q?rAo";"\"3PYI","$,;#J","5Q\\to";".K&nb","1YkXZ";"lU<Up","J9O1d"}),H[7]({-794565+794566,-700783-(-692329+-8456);"R)FL]";"UK(U5"});H[7]({-537741-(27210-564960);996706+-996703,(1006948-199813)-807127;497337+-497333;-745780-(-745792);(-601669-(-108534))-(-493140);-319733-(-319743);689550+(226275+-915811),(-579785-(-942817))-363026,(-155056+-199329)-(-354392);-350044+350057;-255623+255624;(621442+-64788)+-556652;((40069+618387)+-727178)+68733;"r=s,0","l)(j,";"`,6l&";"[E!:/","o:Ss]";"k=s<s","GI@+>","$@XL`";")9Z.U","JqUh2";">@ZNT","`BoIT","JH&a\"";"3uG;P"}),"",H[7]({-806993+806994;((-22599-(-828967))-933271)+126905,"V\'F/L","0q&<Y"});H[7]({-154021-(-524026-(-370004)),965973+-965971;"$cYqc";"T3ILh"}),H[7]({-468731-(-468734),(-1019324-(-436513))+582815,(-985099-(-182423))+(881656-78971),830169+-830161,-504897-(-504899),-146406-(-146417),-192370-(-192377),646524+(786681+-1433200),133263+(655765-(1809208-1020190));938766+-938765;-414648-(-414654);95035-95023;"I)Q8d","=AP9V";"4$0sn","-u/D:";"!o10s","B&Agk";"\"Q)EM";"7e2aa","%?G\'.","?(,o+","1r\\<=";"UE\'SU"});"rRV",H[7]({1033804-(-228165+(293290+(-838043+(-225614+2032334)))),-80257+80258;"bOk*s","dE&HG"});H[7]({-665607+665613;922328+(-411484-(-535689-(305263+-1351792)));-940116+(737056-(-203061));-15277+15284,956567+-956565;-402056+(236850-(-165209));654487+(898077+-1552559),938472+-938464,"\'5cBl","T_#$h";".d\'9d","Wc8d0","\\aAB5";"!9\'oJ";"+kHk,","VU*e*"});H[7]({-963088+963090;286125-286116;-482363-(-482373);238880-238877;532956+-532955;502673+-502667,-281200-(85254+-366466),739809-739804;123664-123660,(-924381-(-731896))+192493,-1027623+1027634,(-307025-(-322289))+-15257,"4fL@,";"A^lNP","irl!s";"M(!p\'","Qq2?;","r95&O";"29VFY";"\\ogN!";"rlrEa","f69]+";"<jV7X","K-cKp"}),H[7]({877170-(1291093-413928),346943-346934,-837684+837687,(((-936711+1058915)+820660)-(-47889))-990749,((-733082-(-423002))-(-677158))-367076,826370+-826363,-84440+84441,28493-28485;-129595+129606,-912423+912433,19969-19963,118105-(430085-311992);"g)*.\"";"?*Hj)","CVZd4";"j3Nng";"nT%ah";"qoCZb","+Nb33";"L8$3$";"lWR;K";"?2\"2X","^AOB[";"K7mnl"}),"jf\\",H[7]({344554+-344549;390726+-390725,-14129-(-14132),490043+-490037,-315654-(-315658);300319-300317;"UUYpZ","RS?XC";"H@8so";"Wr6J;","@?_L/","Eh4id"}),H[7]({-955584-(-955600);-819758-(-819765),(649034-(-111050))-(1159507-(122307-(-277122))),646325+-646316;-343985-(-344000);-1021898-(((-1157260-(-979134))-(1607049-((98038-(-919814))-(-354571+602299))))+(-999918+993061)),773051+-773046;500697-500683;914350+-914339,293703+-293690,((-2672910-(-827080))-(-888849))-(-956985),989092+-989090,-118954+118962;(-908985+1102064)-193067,1033925-(-678116+1712040),689960+-689957,"Y$r&]";"!m=oH","R_<BB";"hXs-2","]J%\\V";"oI27D";"NHroW";"n7r7f","h<0Lp";"U*Fjs";"Ar.Ab";"VTIF.";"+rob1";">*qu3","lXWYS";"3YY_e"}),"S_!","STk",H[7]({-273583+(-446577-(-720186)),(-1131510-(-828876))-(-302641);-626506+626540,189748-189718;(804428-177298)-(-957113+1584240),373025-372979;-59649-(-59702),(-763965-(-774850+468227))-((125181-848049)-(-265504));-427914+(710270+-282316),102352+(453731-556071);(-970949+(1194069-(-583674)))+-806792;427651-427601,852300-852232,(((784921+165992)+-1040429)+72011)+17546;(((-1278784-(-426653))+1885136)-((-24470+(-1007162-(-855085)))+338493))+(-199258+-671747);-775418+775479;-21097-(-21163);-432394+432400,424460-424432;(686846+-394631)-(758795+-466612);583954-(-440725+(-352227+(((597984-(-270443))+938334)-429890)));-347139+347177,-581066-(-581084),((-72763-(292481-246033))+(1688440-804999))-764206,-337404-(-337423),-788783-(-788848);-948812-(-788066-(789370-628572)),(-301166+445943)+-144708,-460818-(-460869),(1098166-(451722+569801))+(-753533-(-676933)),-489673-(-489709);-828188-(-828208),(-838237-(-530600))+307684,-961550-(-961592),(96646+867239)+-963856;1023067-1023052,-143668-(-143738),-156973-(-157030);-360035-(-360098),955209-955195;-107603+((-604283+1007679)+-295756),-735602-(-735618);164792-164743,1009934-1009930,544956+-544898,-131005-(-131038);24441-24432;((454102+-142887)-(-675651))-986861;((506540+-995096)-126207)+614771,865466-865418;228711-228690;696321-696311,500055-(93823-(-1281975-(-875807)));(-798166-242426)-(-1040631),(144769+502304)-647056,-409760-(-409761),517398+-517375,-300432-(-300491);303737+(-661676+357995);-1031582+1031644,-421117-(456264-(979738-102312));(-34612-962489)+997168,895531-895506,-959951+959982,(-305281+768806)-463512,545390-(1438828-893498);-2116+2160;-297772+297827,-833075+833102;-730178-(-730189),"=eOL.";"DX/Ch","2$==-";"m10pG";"jGQZl";"*Jkg$","8r=[:";"Q42FT","A*fBR",">+7aY";"\\LtD4";"?I>`5";")(jUV";"\\tQiF";"[[1md";"!KWr!";"]1aeA";"aI82e","ohA0[","k1>BI";"lc,4<";"j4KeJ";"V!SC_",")qOkO","*!,4V","(sZB.","%$M-m";"AYq!P";">T._m","!FaXG","@s.2m","d&+=6";")93M.";"FOtMY","H>m(Q";"E\'237";"FKB\'<","A%;_X","IKW)F","c<[\'2";"`#\'Eg";"e+:kk","Asr+%";"+&J4]","]5N&I","]XW$h";"4N%1u","K)R:j";"]10i]";"Q*0Kc";"L=i1q";"GaW5q","q]\\4.","bT)D]","6TXFB";"T9=lr";"320$3";"TmNbS","ad%O^","(/@2t","UG(,5","eTPe^";"@>^IO";"-ELLi";"]<Ysa","K0&tb";"b_d]<";"rfuJ!";"GmlU?","4OP#:"});"Z!%",H[7]({329286+-329275;(-1585908-(-762010))-(-823905),937264-937258,(-848803+345932)-(-502884);-189363+189364,-651666-(-651680);936585+-936583,527344+-527336,-734374-(-220106-(-489640-(-1003912))),-920446-(-847376+-73082);(807214+-1610285)+(((-856189+648029)+876022)-(794299+-929518)),1023488+-1023485;-996593-(-996598),32302+-32293;"O$SmD","jZG#R";"L1t7i";"Qb[Fs","n(?Ba","L^dXV","CIrG;";"nL`7i","#Puru";"%*]4g","aS6\"\\";"F^c@B";"LJ07l","#nWs%"}),H[7]({4695+-4694,439315-439313,"f[Ze6","7(1NX"});H[7]({-574327+574329;-393721-(-393722);"r!B2#";"p`\"it"});H[7]({-153012+153014;563027+-563026;(-607375+(-490657+(-576146-(-868810))))+805374,-825324+825336,403400-(-89202+(-366050+858644)),-943744-(-943753),517858-517844,-255507+255512;25401-25390;-587075+587078,(-55445+-293267)-(-348719),449207+((70360-853746)-((-653511-(-673076))-353757)),-905023-(-905033);(1315634-485550)-830080,"51E\'1","To%2T";"%ks3U","N*d2\"","\\W%Q5","g,pI3","RL233";"TOK5:";"L9%IG";"IiDfD";"Z:VtO";"?$*N:";"n6S]8","@u.Z5"});H[7]({751101+-751098,-488197+488199,(-540420+-317163)+857587;(-71774+-64557)+(173276-(1032690-995750)),-759647-(-759653);150735-150734,"\'13h)";"H>eMa","JGnD>";"l\\`FB","\\*eS;";"s)NPm"}),"IH^";"+o",H[7]({681693+-681682;-811955-(623219+-1435186),50581+-50573,413387+-413386,(-383683+558024)-174334;(-768461+1530357)+-761894,257440-(1284122-((-1743619-((-2244450-(-695281))-(-944099-(-357098))))+1808143)),(-353951-(-828741))-474785,-591253-(-591257);-339920+339926,(-828206+(56232-(-121638)))-(-650339),769238-769229,"Y!4&=","SkJR0","Y8D_d";"0\\UEU";"0U->8";"%AcsQ";"$Tic.";"Q&<o(";"U8l]!","a6FH]";"o22p8";"*/1#m"});"nG",H[7]({709411-((761641-(-103887))-(-94348-(-250468))),693899-(-657270+1351164),-46024+46026;524149+(106148+-630293);(139285+-393844)+254560,612742-(-876953+(-615169+(2458950-((-718555+406554)-(-666093))))),"CS.g`","Tg5/^";"B.:J^";"<p5SD";")(4\")";"$79Bc"});H[7]({-57414+57425;(-339678+838503)-498806,264571-264556;-875822+875843;-563013-(-424193+-138829),653161+-653156;-65920+(-193621+259558);-386002-(38844-424864),82597-82595;426932-(996297+(-728487-(-159108)));-1032488+1032489;-198744-(-198768);-655333-(-655340),(-356221+834699)-478456,(-475909-(-688661))+(500704-713440);-370465-(-477438+((-1856673-(-872801))+(770377+320458)));961919+-961907,309999-309995,-277801-(-277804);(15337-(-675123))+(-575190+-115264),786391+(((((25677+-1668371)-(-183920))-(390213+-905123))-(-225920))-68439),-427148+(123646+(432972-129447));(257840-(-101314))+-359141,700693+(-945316+(-300754+(918534+-373137))),"T[2U?","N#\\\\Z","0&02l","\'^_C=","Ec,%f";"Bp\"M<","7]8q\\",":h&OT","#6bpB","L!=Ja";"-K_37","7pT&2",">Vm:C";"lukOG";"*$4BT";"R\\gT(";"9]Znm";"[o0K7","\":@%u";"IUG`s";"R-Pg-";"L@bcZ";"W58;\'","e:p\"5"}),H[7]({208697-208693;666752+-666751;422956+-422953;((-265372+-614541)-(-978133+-29343))+(-118585-((-502795-391866)+(-427812+1331449))),-229793+229799;247815-247810;"OJ=n7","5qb<Q","M/jNH";"I-K\\i";"62H^&","Ja^s["});"/r]",H[7]({264794+-264792,-637821+637822,"$:Og-","@mLVY"}),H[7]({(588955-107175)+-481770;229946+-229934,(307916-43637)+-264265;-956354+956361,-447368+(-342497-(-649745+-140131)),689414+-689409,-971399+((1899122-(96498-(-1016298-(-357237))))-172155);-758580-(-758586),-135245-(-135246);(506129+-302703)+-203418;378+-374;-732229-(-732242);(-122076-199337)-(-321416);-609646-(-609648);"4#eS+","k2l#\\";"MeZI#";"8<e&B","i7DMo","(6b1(";"06f\'9","GR`W(";"q28^t","Wc#KB";"S9b4p","o4#-<","j:<PP",",P^cI"}),H[7]({-320161-((-869487-(-583893))-(655162+-620591));-244782-(-895240-(-650455)),225978-225977,992697-(27792+964903);(-302799-(-480071))+-177266;-256010-(-256015);"h0YRB",",RR2[";"AA]Qn";",_*L3","7:H7Z";"WjWF:"});"jV\\",H[7]({-686241-(-686250);-953621+953626;747559-747549;-835304-(-835311);318949-318941;-963634-(-963647);595163+(-620316+25167);-684474-(-684478);414936-(302600-(((-1381977-(-1481962-(-646874)))-(-654653+224086))-(-3989))),-28438+28450,628310-628309;637376+(-589282+-48092),-762001+762012,567135-567129;"TJ>X*";"PNPK8";"]/+.h",")^$c<";"cjD\"h";"mk[an";"Vj\"D(";"?Q:r<";"pfIFY",")O4#8","Wa8]W","@>l4e";"Of<7P","Ld^FC"});".kL";"@pT","I\"M",H[7]({-861488+861490;(-182698-(-961411))+-778712;"Hp?)#";"d&R!n"}),H[7]({-245558+(-943484+1189054);697612+-697609,-228455+228456,90159+-90151,105257+-105246;-459804-(-459810),602929+(47186-650111),-816261-(-816268),-418867+418872,(-546339+599338)+-52997;(-761071+1333214)-572134,(934266+-246986)-(-734035+1421305);"!LJd-";"dZtaT";"gm`>\'","Z17cQ","A[-j@";"b/&6+";"UCoj\'","<\\?.K","*FM[g","+;ie\\";"M)Y-p","5[tpp"});H[7]({(129202+((-633260+26291)-(-975490)))+-497715;-1006824+1006825;415499-415492,-187498+187509;-499095+499100,670241-670239;108456+(-650872-(-542419)),844026-844013;146139-146133,((1068195-35796)-292438)+-739949;-157821+(-530368+688198),-1029091+1029101;906863-906849;-294493+(259240+35257);"FGH*n","ig5\'8";"lKJE!";"\"YZk\\","E\"R&3";"7j/-H";"`tf_r";"BuFUk","*G+0L","*N=3m","0)72u","V%uTs",",fW-)";"6jGNQ"}),")Ir",H[7]({-168808-(-168815);(792401+-298960)+-493438,44283+-44272,-723150+((49154+-325457)+999463);-622665+622677;-594605+(-232397-(-827011));-769664+((-30752-(-25484))+774937),267711-((-1504975-(-1001909))+770775),-367113+367119,222103+-222099,903328+-903327,814478+(-1033244-(-173167-45607));"\",JH+";"YGu`)","e:Q<2";"%HZsG";"\\c#=;";"0QR5A";">8!#r","]ZKtJ";"<,gVd","WR/b\'","?I*2!","c0Rja"}),H[7]({-448072-(-448074),(-912064+1273564)-361488;-848282+848296;303048-303041,72258-72248;(459019+(-280734-(-460488)))-638768;(-661055+-377243)-(-1038304);-972926+972927;(-77112-(((313707+(704447+-2489462))-(-1534648-(-984861-(-395854+((((-783575+1768797)+-1996152)+1665377)+(892837+-1387371))))))-(-50286)))+(-378154+-180015);-339861+339872,(-1529026-(-620108))+908926;-425723-(-425727),(-657348+-295084)-(-952435);-434375-(-434384),"@nfdR","dJM-)";"F0Y7t";"BR(il";"$^Yj-","C)i]-","4__\\i","Wk)hN";"hZ?Aa","k0Jr6","q*JZ(","e;GI$";"!fa\'h";"Q<]=s"});H[7]({-277261+277263;(-457057-406532)+863590,"TcnoE","PTj83"});H[7]({608658-608655,-721320-(-721324);-59572+59574;691750+-691745;(-286643-757991)+1044642;(261172-628207)-(-367036),(-367972+633912)+-265933;(454579-289363)-165210;"#p#XX";"V!f=%";"rmPE4","pRV\'h";"!`M`4";"?KKX0","`ENVT";"p@GL+"});H[7]({-739130-(-739133);-636703+636708;-745097-(-271537-473564);532869+-532861,-15217-(-15224);397116-397114,(-842953-(-616459))-(-226500),-519180+519181;"*[NZ-","p;#r`";"-_-o_","U2J)E","=LSc)","^<16>";"O\'fbZ","c\"GPo"}),H[7]({-949382+949383,(758791-294949)+-463836,(-273608+-580492)-(-854113);-541482-(-541485);57147-(432532-375396);103391+-103383,-283297-(-283301);((891563+-1546756)+680889)-(((304275-694318)-(-169088))+246646);344974+-344960;(755407+-198211)+-557189,(179677-909302)-(-729637),598809+-598800;(-104121-(-1015924-(-557239)))-354554,261485-261483;"L)8qP";"(\"^Hp";"X\'A3)","jWd\"4";"h8Lfb","9kZ8^";"\"pOe)";"Z@,@^";"l5B\"3";"!D:WK";"g45cE";"j@-*c";"R&Ypi";"m!C@$"}),H[7]({-973651-(-973652),((680056+-1780011)-(-386043))-(-713920);-113891+113896,288092-288089,-291117-(-291129);150745-150734;452359-452346,536522+((-354570+990410)+-1172360);-393823+393827;-695410-(-1240767-(-545348));-965806-(-965813);((554588+413194)+-501270)+-466502;407983-(466101+(-1013777-((671992+-738991)-888646)));946532+-946526;"7JJ`@",")Ta\'B";"Jcal%";"f]!8!";"Fr6\\e","g5j?p";"%o^hc","g=u(-";"S<kOF","5YRKW";"D9C=-";"A,\\q#";"JflX1";"<%iZi"}),H[7]({-500515+500517;-429763+(987831+-558067),"C2jdR","qtuQA"}),H[7]({884664+-884662,-91923+91924;(-1439303-(-970161))+469146,349640+-349634;313104+(628953+-942052),901976+-901973;"/4F-6";"eq$(B","bgLhP";"1ts[q";"8)FgS";"bC1iZ"}),H[7]({568246-568240,629025+-629021,-1000160+1000165;-357914+(693422-((547589-(-223871))-(-237086-((188095+(-507682+612013))-965465))));-988701-(-988703);-1030271+(638194-(-392080)),"B#f07","9>A?p","f-/:a";"1Z]dJ";"b\\@0o","QV!4["});H[7]({81854+-81830,(-824761-(1028492+-1269285))-(-583984),-17198-(-17216);-172159+172164,-943696-(-943713);469553+-469546;555729-555709,337375-337366,(-20031-918656)-((-747941+(-275390-203938))-(-288560)),-895441+895471;677401-677372;(438875+-355925)-82939;47722-47697,-798409-(-1009421+211011);67773-((1232466-470642)-694057),518168-(-604445+1122585);-117275+(-597710-(-739037+24048));-715662-(-715665),-533693-(-533714);-639518-(-639532),756190-756177,((-1235034-(-719295))+540711)+-24953,-642355-(-642367),-40347-(477745-518119),-36258-(-36268);-600121+600147,-1034357-(-1034365);-50097-(-50120),(992517+-1511672)-(-519170),((-348050-(-326437))-494002)+515617;"=e!em","X@HX<","0K=Yk";"1`Tu^","Ckf)A";"\\\'L!J";"\\s?Ok";"da55E";"iY+g2";"bB5Sn","^cQDh";"@\"S1g","_EMO-","^eR:4","YWh\\G";"GlU(7","\"RP?M";"DZtuN";"6W8l9","^8!?T","-$<,(","2^C(j";"CIIg1";"0g6_s";"([;dV";"2GOC?","k0:4B","Y<W:a","j*%E7","8&\'Hk"}),H[7]({-926036+926047;953497+-953489;(-112008+(750520-530660))+((1104461-591210)-621090),-50009-(-50010);-373762-(-373765),-251091-(-251096),-938123-(-938139);774752-774725;(-362342-(-599711))+-237355;228632-228630,663043-(1337216-674199);54049+(-675356+621332),864254+-864247,-249098-(-249116);-958751-(-958761);-287735-(-287757);-810201+(-492382+1302603),(914348-231938)-682398;-40531+40550;15329-15320;-662426+662447;-917938-(-917942),807678-807650,-921729+921744;(-358241-(-936585))+-578327,-510841+510865,-820095+820118;-885332+885338,"jb/Er","_(#bk",":[9>=";"/Al`a";"Tnqkj";"1/de-";"/<>1@";"/[_$t";"\"NK%f";"i?f@M","[Oc/c","qtN%)","&IT\\[","COO@J","\"$QRb","(N`MD";"OF=^k";"r-8j\"","Fo]H/","G%W0i","#Z]iO";";@\\*Z","Ncs2*";"=^?lK";"r7E=u","5I_1g";"o?I,`";"5.JfF"}),H[7]({-56521-(-56522);466429+-466427;632478+-632475;(((942262+2569)+-1109850)+(-402751+613607))-45831,445847-445842;-289090+289094,"@Ld$\\",">4@o\\";"Qgh9;";"4NS`o","aGQ/b";"kpu@?"}),H[7]({-235783-(-1199709-(-963918)),(24060+-884059)+860009,((-908130-(-351582))-(-83238))-(-473323),846594-846588;(-653940+870695)-216741,(-1629604-(-1003975))-(-625630);754222+-754219;-723565+723572;203336+((1270884-456300)-1017909),855876+-855871,-1017913-(((-2237075-(-353735))-(-1042873))+(510635-688085));687183+(-24853-662328),-773928-(-773940);(-971698+602682)-(-369025);":Y:P(","`L_@c","d#$F*",".)jh:","C>g[8";"\'e#h`","Of`5B";"p@_6f","k<\\^l";"^:;44","0n01_";"cQh<)","d@Fds";"//8#p"});H[7]({(-951891-(-793435))+158457;-312175-(-660619+348442),"::[So","<qO_<"}),H[7]({-863194-(-863198),-748923+748924;-920551+920553,-492-(-495);"G0_\'K";"^GRUW";"ouNgg";"R`<TF"});H[7]({855485-855483;-839716+839717,"KBT)p","H]#Q#"});H[7]({-34962+34968;-781344+781347,776117-(437197+338916),(-890719+((-1650167-(-875968))+1474126))-(594137+-784934);332469+-332467;((890315+-1629162)+751036)+-12188,"<-#R=";"D>eqn","9>2Lo","c`h(t";"\\H^6U";"#?\"[p"});H[7]({-609986-(-609987),(-943771+(805492+(-250628+(-253603+1684379))))-1041867,"F,B8u";"VgK)%"});H[7]({(510459-90365)-420093,397526-397524;1006853-1006848,-133029-(-133033),598801-598795;-946821-(-946824),"pSp&3";"F]PDR","#[[e;","(YS>E","LWOQU";"cjG#c"}),H[7]({-823544-(-823546),435659-435658,"Xc-OV";"!cQ4f"}),"5Sa";H[7]({(-128359+346015)-217652,-471302-(-281370-189937),786209+-786206;1031712-(247287+784423),-1031298-(-1031299),257999-257993,"]\'mVO";"p6@Gr";"Fu1Q`","3Q:T0";"5p2$+","T#+m&"});"8H";"#^Sc",H[7]({(-192702+-267780)+460487,455456-(509191+-53742),710080+-710078;(519119+((-276232+1027038)+-871653))+-398266,252093-252090;-372218+(80652+291570),102895-102894,-195113+195121,"l]Llk";"8?@VT","BeZ+o";"3`qIE","=2(\"X";"Eq[pn";"\\&ZpT","@sBN]"});H[7]({2901-2900,-906028-(-1010100+104070);"VJ09_","&)A>/"}),"ER4";H[7]({401038+(-769761+368728);((422908+(-652763+-101212))+555055)-223984,-200759-(-200773);500219-500216;(1031339+(-412107+-450732))-168489,-103937+103946,(-5044+435428)-(256752+173619),-251610+251620,987219+-987207,-436126-(-436132),-398090-(-398098),-510398+(-946667+1457067);-764211-(-764218),-671367-(-671368);"PT)P1";"\\C_[f";"/79U<","=hCAM";",tIc)";"(90+N";"NVZF,","4M)%)","gHEdd";"?SqL_","#Loq;";"bD[ef","lusS)";"cb5nB"}),"\\5*",H[7]({395478-395476;(816078+-778211)-37866,-1028324+(374184+(315760-(-338383))),-306071+306076;(826852-893476)+66630;882124-882120;"g%#!<";"PeT)V","41Ia\\","p-tCD";"p^;Ul","R/Dim"});H[7]({687565+-687562;367180-367178,-718075+718087,(-962298+264136)-(-698171),(-100225-(-123066))+-22833;-424325+424339;862765+-862755;((-338799+354516)+65354)+-81065;368352+-368339,498677+-498666,-270341-(-270345),568467+(-392173+-176293);299162-299157;-236011+236018,"#Cdnj";">3t&=",",S&D!","G7iB3","E=]/n";"Kep!Y";"p\'f[q","C?10\\","8c5+W","&DR&m","j:Q9f";"q\\X7d";";G#%B","#*VBQ"}),H[7]({738696-738684,1007386-((1721251-421359)-(1047554-755042));-213005-(-213010),-854400+854411,720151-720150;-710627-(-710634);499819+(-943482+443666);582567-(1567873-985316);-409090-(-409098);-258724-((-213695+238768)-283799),821049+-821040;-191365+191369;"At\">Z";"1#T*$";"<3\\$B","Y@S#J";"abA\'4";"%8^$+";",$#q0";"NATQa";"gTaTg";"=^WgC";"*dMqq";"0u1!?"});"Fa!";H[7]({(-318257+12984)-(-454859+149572),781762+-781756,820299-820290,705788-((1222660-946646)-(-429767)),295276-(994872+(-426094+-273512));-610226+(1311684-701450);-612159+612160;626992-626979,245226-245223,338974+-338970;1005043+-1005032;-580461-(-580473);-542342+542344;435646-435641,"6n5QZ","(()gk","cQ\'p/","\\Y\\)+","Ic2g(","8f%uM";"Ip*>q";"bK4<<","kHF=E";"(386?";"Ktb_m";"em@+k";"`#nFr";"_Ynr1"}),H[7]({602072-602069,-705241+705245;-385793+385799,688727-688722,68903-(236562-167661);-1041015-(-1041016),"(IU>t","LFGuh";"p$g;$";".`%\\&";"E\\u.5";"N,&Si"}),"E5h","HPc";H[7]({181782-181780,(-843975-7711)+(-718350+(1807223-237186)),"OFd<_";"34@G3"});H[7]({((-411679+(-340751+1797248))-914384)+-130433;36605-36603,"F.1%d";"^,3_e"});H[7]({708234+-708228;-23883-(-23891),126627-((115622+-467743)+478745),((-75270-(-696880))+-1239503)+(965089+-347195),((-271925+1213029)+(-906250-(-206093)))+-240945,-534642-((297616+-819096)+-13169);((269449+-37686)-945145)-(-713387);-313426+313430;"(Z6Yi","Cf>b*","6t!(e";"NHZ_>",",nSSY";"I-Gpa";"gnsJG","!^_dn"}),H[7]({376770+(54580+-431344),-740725-(-740729),-983818-(-983823),-639114+639122,-343843+343845;-947394+947401;-877070-(-631461+-245612),974711+-974710,"Teoca";"4t(f\"";"W\"&ip";";k0H<";"TFhHr","Z]8b1";"$T7%I";"JtXHt"});H[7]({1044460-(1587638-543181),(526675+428537)+-955206;88445-88437,(-1265089-(-280380))+984713;27309-(1027859+-1000552),684829-684822,((130367+379578)-(-125122))+(-1405238-(-770172));-342340+342345,"$Zn)?","(XD4L";"A`;Qd";"n*&h\\";"<\\aR[","pMfkb";"r8&t>";"i&dkm"});H[7]({-315772+315773;506450-506448,",AGY6","cnpsR"}),H[7]({-340228+340230;651052+-651051;"f,(U-","rk]ul"}),H[7]({-162846-(-162854);-584550+584567;-845452+845457;-627870-(-627890);416410-(460835+-44427),(1664047-888727)+-775313;207959-207945,(772614+(-569801-274539))-(-71739),31317-31314,164552+-164533,232697-232685;274435+(-829390-(-554973));-621633-(-621644);568247+-568232,-236683-((403550+-383812)-256427),-346221+346237;(690987+11682)+-702668,974746+-974737,(-949368+1922574)-973202;-105632+(910961-805319),"ek_Q!","e0WGf","8VfW6";"@\'jI_";"\"[5]3";"QA<fq","IVrb<";"`)K7p";"`R]q0";"3EiqJ";"E==\\S";"k(PO2","$3jbP","QJ`i8","9c-l<";"ILolL";"c\'/WR","lmupm";"q@pGl","=Q8$P"}),H[7]({-213945+213946,(145279-(-159785))-305059,-621082-(-621085),-29870+29874,-555849-(-555855);-49744+49746,"U_6Fd","O:3Xb";"NIu+A";"C&m*J";"D2?+6";"*JKQG"});H[7]({((201425-(-482564))+(770652+(-2925064-(-900110))))-(((155706-63945)-679662)-(-17582));(-1069461-(-327730))-(-741736);(-156137+958855)+(-650035+(138112-290784));(-642878+1443860)-800974,580568+-580567,((-13209+-730362)-45226)-(-788799);533031+((-919137-(-259843))+126273),623517-623510,831706-831697;-559538+(180688-(-378854));996921+-996909,-454715-((-1255076-(-828339))+-27981),"),Ui[";"08ISN","/+?#C";"L@@)3","bEf%&","=`\'/P","b,CF,";"DL`_&","a#.Fb";"gc6sp","B(^2t","X+=;T"});H[7]({961710-(479192+482516);(-522409-81205)+603615,"Gn3E`";"Ml\'\\F"}),H[7]({(-390168+(-128805-(-572573)))+-53590,(-66333-(-346109))-279773;-181571-(288645-470218),-337590+337602,374102+-374096,836164+-836156;(932761-527336)-405421;1045741+(-334640-711090);715075+-715074,-494915-(-494920);-421241+421250;-2386-(-2393),"`asVe","HKbgh","\"*\\&W";"H^JNJ","bW4JI","(j((m";".K4A_";"EI8$L","3j\\__";"C45`]","R-[fM","XptC@"});H[7]({-268270-(-268277);-69328+((163967-(-144830))-239465);603215+-603209;(-1269815-(-1270186-(-411072)))+(-171623-(-582326));(-869393-(-915535))-(-202110-(-248251)),-1019655-(-1019660),(18828+281032)+-299857,((-2285895-((-198864-667501)+277236))-(-938271))+758503,"hRr(9","s.TD7";"FKGl5",";0n;(","k7Hh=";"8e`e*";"+8P:M";"3,OMW"});H[7]({-669521+((-991401+99888)+(1785456-224420));687293+-687292;"eE!rI","b(s@S"});"nc";H[7]({404554+-404548;366715-(384079+-17373);495378+(-30425+-464948),869399-(-111974+981370);452026+-452015;-422948-(-422963);-55070+(-325657-(-380728)),-437293+437309;-766931-(-1742007-(-975069)),611058+-611054,84324+(954489-(405087+633718)),-730038-(-730048);-225090-(-225104);-270382+270384,((104155+-971553)+472946)+394465;(488631+(-330822+331126))+-488923;"gd1&`","]=5hU";"5hQ8g",",2bOe";"B#9;4","nBb)!","97Jtf";"P)q*C","KaY)j","cG2QO";"]!&15","`cd00";"9!mK\\","\"EHFB","HHPc8";"Fm<*$"});H[7]({-943601-(-943602),-438474+438476,-908919-(-908922),"?XIY]";"FCB9\"";"@VfT"});H[7]({824463+-824458,460232+-460229,-503744-(-503750),902253+-902249;832470-832461;710290-(1240631-530355),(-1690399-(219511+-1231793))+678128,378565-378558;-810387-(-810397),-257542+257555;-575533+575534;369138-369136;-726580+726588;443240+-443228,"8QVcH";"?9NA+","hTWeq";"Ba#qD";"1k]no";"pc.jW","O4g1t","s--Pg","b/>AW","GPo5K";"Y_,*@","BT\'\'W";"*hE.3";"-:ZUF"}),"/c";H[7]({599808-((-575113-(-164837))-(-1010077)),560153-((277556+-979339)+1261933),(-70868-204872)+275750,156946-156937;((-800876+-732236)-(-518901))-(-1014213),-24090+24104,(467585+10348)+-477920,-47944+47956,-400665+400673,-485136+485141,-906791+906795;(-922817-(-685434))+237394,-478088+(1094464-616375);-357082+357088,"NX@QB";"QSsB`","d3EX\\";"kC]4,","T^L?7";"%,T\'n";"&_Nn-",".u[*t","KoC4Z";":Kg<\"","=t\\H#","pnd:7","$%=qk";"XWdP>"}),H[7]({455611+(285437+((-1415872-359204)-(-1034034))),610816+-610812;24005+-23993,212713+((770604-(788506-775733))-970536),(49261-250303)+201044,840114+-840093;589094-589081,-839203+839208,(-797287+1659098)+-861792;((425108-(-335967+92283))+-798256)-(-129479),-243257+243260;(865372+33648)+((-1910334-(-431629))-(-579686));-123747-(-346969-(-223198));-774807-(936800+-1711617);328754+-328745;-484308-(-484328);(129464-242292)-((1252883-(((899763-(-109391-898577))-1034319)+-419567))-(167662+(-310299+(115071+939448)))),-50596+50618;-97675+97689;-621783+621790;555172-555155;(-1014104-(-671417+314945))-(-657655);(586024+18264)-604270;(-709825+(248638+1082317))-621119,"#GPH;";"K]pko","jj?=\\","n_pbo","*\"q!>","?\\TrL","OK?:;";"-,7u:","<_7`]","s3<tn","QQX8u","SJ]gG";"#4*@a";"74qb+",",$!0h";"i/]qk","doiW2","-i)6h";"aahl8";"?P^/H","E7q^A";"qmlm*","=F08M","AIHHp"});H[7]({-946854+946857;(486231-92545)-393682,-120426+120428;913064-913063;"$s8o&";"!:l<$";":%LTg","9Oj3R"});"SUU","#1N",H[7]({-398082+398088,-132689+132692;275395+-275391;-270220-((-139685+891290)+-1021826),739999+-739997;779390+-779385,"`%\'P,";"2?kq>","k&Mpu";"+ZP3_";":oSGd";"Y?V0d"});H[7]({-150223-(-150231);-731717+731719;133220-133209,-193444-(-193451),-921817+921821;-877027+877028,-668190+668202;(659947+-408926)+(-228303-22705),-1021569-(-1021583),-277719-(-277725),-963031+963036,489292+-489289,615731-615721;-290980-((-723424+620780)-188345),"glUE+","$Gr_#";"^I\"l:","\'<j5E";"c]j*t";"=7^M0","C[\\,s";"UTYSm","aN-$4","5T#7J","8?=s3","lk>7q";",R8j`";",CYu*"});H[7]({(-674473+(333388-(-367211)))-26124,(561117+((161941-692177)-(343476+459580)))+772176,"87F$>";"`;J,q"});H[7]({(925887+-1542235)-(-616372);243690+-243660,(-781773-((-826882+700475)+(-1042916-(-273266))))+-114273,-362837+362860,-128157-(-128160);-919871-(-249860-((803283+-1081726)+948466)),288448+-288441,-496879+496897;-231553+231563,706235-706207,(-639513-(-981139-(-631237)))+289625,((-741978+705137)+608700)+-571853,372055+-372029;616298-(572330-(-43966)),326250-326229,(-1070956-(-1037721))-(-33240);(694973+(((233490-(-712196))+-2245930)-423242))-(-207322-821213),-702130-(-702147);337519+-337510,((-886316-(-976682))+643387)+(((-798577+(3213162-868614))-665404)+-1614305);291556+(85639+(-495909-(-118715)));-904873-(343405+-1248303);(5079-(-135275))-140334;-284347-(-284363);(236709+110065)-346770,460824-460797;(-744427+-82146)-(-826586);287789-287760;(331095-568461)+237385,-368296-(-368304);"eBYg5";"Ap\'7,";">SBa7","QZek\\","NPo?M";"p_`\\H";"C*uRj","jUKVj";"@r\'f_";"\"+.iR";"?Nf`P","DZ3II","]BlcV","&JiTT";"<F3q_";"0(T,q","c/$`g","g?(X$","B0l^=","D+Xs+";"*2]?.","D3\\Q8","+ZYr:","gK\\ir";"BXKNB","(d#K/","]1(%D","(fE]:","?F0@d","2tm:6"}),H[7]({-527982-(-527996);(-339710-626326)+(759310+(-692819+899558));-490298+490302,-301839+301840,1006612-1006610,-838879+((-237068+1992572)-916617),-330674+330680;916280+(48875+-965143);-315074+315079,356201+-356198;-145550+((-720314+1771752)-905881);470959-470949;900817-900806;1021022+-1021013;"\'kad(";"<CjD\\","<$Ytc","ISa]Z","Td(>?";"Z7!W/";"5UrCi","#QUEm";"7aO\'*","BPDFf";"L%\"0S";"CK)]5","e;)D8","-Z7M!"});H[7]({(-398496+1357032)+(488368+-1446893);-690159+690166,(618022+(287197-586935))-318279;(641894+-862303)+220410,-100197-(897990+-998196);553089-(-13018+(780078-213985)),(-382858+840108)-457238,873146-873144,994997-994989,-263247+263251,(-563031-109877)+672921;((-1165237-124344)-(715991+-1134673))+870905,(-1336813-(-927580))+409243,-632469+632472;"-Gba%";"NOhku","o,!\'/";"lOK\\O","&Q!QO","PK_A(";"b-h#%","#K\"E!","T\"?Wp","^-iBL";"G3+mb";"6E4@;","/TrVp";"6Y7d?"});H[7]({-995177-(-995179);-962524-(-962525),"_0(:f";"$!6i="}),H[7]({424475-424469,-671922-(-671926),-799992-(-799999);-221671-(-221682);-870310-(-870318),(-245987-((-209771+-816323)-(-68940)))-711157;-203630-(-203642);-390716+390717;474633-(81200+393419),754642+-754640;-325079+325082,-269983+269992,239578-239565,1024343-1024338,"OEauI";"9X%B%","\"dS9s";"Y`!4W","D@I\\N","L+-rV","OB<!)";"5%kH,","g0(.g";"fFk2e";"EC`n8";";*/`@",";PUsc","DAE#/"}),H[7]({-782333-(-30431+(-468552+-283355));-6612+6613;(-165503-(-859986))-694472;-3141+(655629-652479);(672893+-925958)-(-253067);(-437913-(-311761))+126158;251554-251547,-163047+163057;-709769-(-709781),(-704392-(-295105))+409291;((921796+(-100207+-93528))+-1517957)-(-789899);920636+-920628,-952067+952080,1004266-1004252,"47@<M","Q_;6r";"7j6he";"1#J\"\'","GYoCe";"s+3g&";"81?[7";"r/c1?";"9g;rP";"ZBJL0","4J_&b";"gN%U;","JPcTC";"@HjE."}),H[7]({(-167918+662394)-494472,(-495913-(-171923))+323996;988395-988385,200073-200059;(-280486-(-259596))+20893,-217471-(-217478);688099+-688087,((-393344+220926)-(-280374))-((-670773+180682)-(-598046));((-821298-(333165+-622674))+(593442-((((1924278-36079)-900996)-(-786145+1337493))-750307)))-(-106858-(-482961)),-351766+351774,-752710-(-752721);((809410+-1120140)-689829)+1000572;(((271745+1372491)-817072)-285552)-541607,708130+-708121,">*G_4";"4_#r*",":lZ9q";"-\'Jeh","L[Iuo","9N.&U","cu@t+","W5/K3","J^0g7";":_h-H";"k.\\NS";"c_Iu-","Bs!7g","GI/YH"}),">1i",H[7]({252089-252087,-672488-(-672492),-522752+522757;-189429+189435;-802517-(-310843-491677);504293+-504292;"N4^ks";"TY%I*";"-l$Rf","ou1-t";"$G8dA";"94rt,"}),H[7]({709544+-709531,(-941826-(-476705))-(-465122),-389622+389632;-724287-(-724299);-275409+((961073-859125)-(-173465));-144250-(-144259);998637-(967857-(-30774)),34625+((((961789+-1806461)-(-954256))+-253831)+109624),(-18451+-733516)-(-751978);(-1041481-(-1011793))-(-29696);(-90457-(-936050))+-845586,-596512-(-596517);885638-885624;(510823-(-534151))+-1044971;"]C`6$";"4V&nI";"IZ6@K";"W:gKC";"$6i3G","%j?WT","-n<kl";"<O7sE";"!RX*Z";"_\"YHQ","8iNVQ";"SmLap","M-l-K","`feep"}),"n*\'",H[7]({(-1487057-(-827806))+659254,-541779+((-312358-(-785768))+68370);789122-789120,"-$>uH","Hk:J7","+!T_P"});H[7]({669224+-669222;-493471-(-493472),"j\'r";"BtHgu"}),H[7]({740160+-740137,-188505+188519;911067-911062,-505750+(695476-189717);(-955498+1515342)+-559837;(((-303704-(-215217+467246))-(-204587))-158702)+((-99698+563900)+45677),-681694+681695;72881+-72868;-167631-(-167660);38062-38043,-867245+867249,404463-404436;403812+-403810,-247973+247995,41498-41482,-380366+380372;-212621+(905352-692711);-358006-(-358018),902982-902964;(360394+-1291447)+931081;-553735-(-553752),-519353+519379,503818+-503807;-568960+568992,-202912+202942,(722304+-1285646)-(-234996-328349),(-378899-(-663027))+-284104;-74125+74133,-660119+660134,((-412776+(111020+-540529))+((659379+-1082908)+(-658383+1800671)))-(-123551),-680467+680488,-4533-(-4543),"UKiIP";"eD=Vo","(O;a]";"GaJNT";"DOekC";"/kKb1";"B!,*s","9@.B#";"%c1Ol";"Q=5E5","8WeWn";"!+ubO",":mdm@","n*-Vg";"1ljgi","\\e983","#!lTI";"H.VKl";"QN$Qs","`lM0R";"LQhQ8","(2q(I","L8uF1","q:LAE";"_*?b0","mUUZZ","iKRl/";">0D+-";"_>Ink","[Uc4?";"=4qQQ";"&XR=g"});H[7]({162424-162418;766464+-766462;366583+-366582;-186536-(-186539),669487-(858774+-189291),-684181+(776380+-92194);(-1237351-(-283639))+953720;(113969+375620)-489582,"c6029";"/oZ-)","R#KZ$","r&fMW";"LDJ0o","@L.Wg","3DD_c","VFbGB"}),H[7]({655840-(568332-(478404+-565909));1011250-1011248;844784-844783,"2/*","QPe@p";"-mu3-"});"4S/";H[7]({-901579-(-901581),-268932-(-268933);"f;/;6","g60*k"});H[7]({-742655-(64843-807501),799936+-799920;675656-675648;1018582-(((-144488+1279118)-(-282554))-398616),(575415+-1043101)-(-467695),-651305-(-651326),-140162+140181;-171891+(((2063908-293225)-831922)-766860);-152369+152391;-694336+694348,430586-430558,(442866+310506)-753352;(-175757-769356)+945130,-174133+174137;(466040-(-27755))+-493790;-200792+200807,(-126147+(-1227591-(-833513)))+((((-35498+79018)+1176923)-178802)+-521414),(476246-(-370862))-847081;(467108+-1497640)-(-928699-(1099370-997536)),765195-765170;71426+(-825091+753688);229661-229635;-39170-(-39188);-234422-(-234435),1006486-1006475,-580960+580984;197117-197111;978510-(-210016+1188519);"]3WhE","2pqoP";";\\!\"W";"ZgkJ0";"8iFdY","e^:I(";"f#$:I";"\\>fN&","gl/3n","fq1$N","$o)O.","e0<tZ";"e4$W-";"U;D6X","5!u57";"@Y5l.","S,\'*\"","a6B$k";"(Ui]<",">?A;s";"\'*^^Z";"KtuF9";"\'N\'[l";"Tq8O/","[19:W";"Ep6gi","RFs<M",",UQLB"});H[7]({(906367-118970)-787388;833797-833790,1014364+(-1044469+30113);-253638+253642,-838001-(-838013),-1001858+(271123+730749);-932291+932302,101453-101447,320986-(-543648-(-345560-519069)),499126+(215457-714581);875293-875292;534643+-534640,(554297+(-2035919-(-757296)))+724336;600953-600940,"-akH%";"26b`@","29oE.";"RG*\'b";"E8Ff#";"=gI4!";"7`G1o";"r,K`U";"5qPk%","fJ3rV","_fZ(H",":Z\"1S";"`4;Y/";"MfHWY"});H[7]({241020+-241018;153385-153384,129311+-129305;193167-193163;(299346-(-97418))+-396759;331999-331996;">=lN,","Os+M`","I6#6J","JRR.q","eWhkY";"cIJ@C"}),H[7]({-475329-(-475335),-284747-(-284754);825965-825956,-909141-((-480265+1109321)+-1538202),926586+-926582;(-207911-531063)-(-738985),(886511-608232)+(914146+-1192412),94309+-94301,-202832+202834,464776-464764;298199-298185,473053-473043;(1623482-806489)-(989536+(83106-255650)),-424458-(470525-894986);"Vm%BC","<Vs/I";"`_=N&","FReFk";"hP&l<";"n\"E)V";"QF9D2","kGSh)","-YVM+";"[`0Eb","i4g\"k";"dq<NG";"cR(rU";"jq1Z/"}),"O!a",H[7]({-973310+973325,34687-(-184019+((-606979+1806003)-(-149203+(-961047+2090580))));1024675-1024670,212517+-212507,-832506-(-832513);63812+-63808;(-454571+-201892)+(-88844-(-745316));-90537-(-90539),-578100-(-578116);701780+-701767,-154229-(-154235),-292513+292524;889735-889732;592885-592877;814796-814782;321772+-321771;"Yq.f(","F?NbB","$pEO;";"%8[ir","$N3@?";"&`1=(",")*6c>";"dL@pX";"14.\"i";"E`DKo","&ob?H";"]G>*%";"hLE:Q","=Ljqr";"_34dt","l!SkR"}),"U&",H[7]({661513+-661510;320388+-320387,-665401-(-665405);-259708+259710,"O*2JC","N*=`s";")K6Z-";"ka5)e"}),"4T","5+V",H[7]({-239112-(-239115);-875327-(-399057-476271);((-571353-221780)+-221803)+1014940;-233214-(-233216);"jcsPj";"H$>KW";"j1/_&";"3GkPf"}),H[7]({504892-504890;57156-57150;(-337558-516593)-(-854152);273580-273576;-168739-(-168744),244994+-244991,"<a<WL";"AIo!4","9n+nt","^Z]_S";"!W*DZ";"a_MsH"}),"#RU";"WE]";"MPU";H[7]({(1062955-938927)+-124022;-79300-(-79304),-139235-(-139240);-874622+874624,952110+-952107;(-863716+654118)+209599,"Qkq45","s(+_<","2RPh)","*asLE";"Y8n#s";"Rr#)C"});H[7]({-887934+887938;405045+-405042;-75576-(-75577),(316134-(-122348))-438480;"-N#\"n";"cZg08","8s6+?","FD\\ik"});H[7]({-983046+(485538+(240362+257147));925390-((267477+290317)+(733086+-365493)),-573848+573850,-527438-(-527442);802956-(686512+116439);(628208+-82298)+-545902,-165603-(-165609),(-471935+-55840)-(-288481+-239301),"GXD8*","WXZ0.";"cC0&e";"_?ric";"#1WnU";"&_Z@u","\\eMWs","JeU$F"}),H[7]({635724-635722;-607879-(-607880);"qfL?#","c.2c_"}),H[7]({(-724604+((-42075+849671)+(-848527+1328805)))-563269;-87838-(684260+-772100),799229-799222,-49734-(-49744),-997297+((-279638-(-1865246-(-874964)))+286659),-907391-(-907400),450933+-450929;168567+-168564;-662389-(286451+-948851);-608169+608177;971311-971299,-613957+613962,"?PfEm";"5$+\"E",";bd15";"5o<@\\","8-+&\'";"PYm7d";",Fiq=";"gE(CP","Mk6C2";"?.;R\"";"3_o0H","0Of]c"}),H[7]({(-969553+239136)-(-730418);-113708-(-113713);377727-377721,(116216-261344)+(842159-697023),660245-660243;-238286+238290;(-659401+(-829486-(-822055)))-(-666835),131503-131496;"hZSS:","iVt<P";"oiiLV","A]k[4";"0mM\\d","-&B/9","kI5,h";"-U/\'p"});H[7]({-481523-(-481527),-223534-(-223535),-526518+526520,5570-5567,"SgB\"g","7T&8N","JNUa)","LV-tm"}),H[7]({(-1500654-(-525038))+975626;867664-(987479+-119823);-539604+539610,-796264-(-796277);-344894-(-344901);-465614-(-465623),501723-((-377102-602518)+1481339);-125143-(-125145);-175265+175270,73576+-73562,-771799+771800,570281-570269;(((-945541+1686339)+49312)+-1751550)+961443,-24698-(-24709),"6gK5N","OQ[0O";"-Gsjq","s)Fe8","RoK7t","(?USd";"/D(\">","?P[eR","s(\'kD","*sjSX","M&35Z","m2.EM";">\"\'$+","3>8qY"});H[7]({1032741-(((-1234636-((-1661446-(297339+-1281052))+169408))-(-983590))-((-510296+-182689)-(-683123-(-765598))));408213+-408201,(-94519+982611)+-888083;(-991106-(-528378))+462739,((-647711-(-656713))+949291)-958290;-141932+141938;(957882+-439435)-518440,((-584798+1453416)+-270908)+(-154173+-443527),-908249+908253;747590-747585,967602-(1131153-163552);816800+-816787;-76038+76052,-527894+((329424-(-214234))+-15756),"j-)El","3nNJ\"";"Z5E*,","%s3+R","h#qV=","%`h=)";"MaE!P";"p]-Pi","<mo__";".`Yki";"_Ke[c","l/r\"r","0NI\"Y","XPiYS"});H[7]({(132112+-333852)+201746,(914921+(824860-972487))-767289,-70766-(-70767),-353269-(-601488-(-248215)),-739906-(-739908),700767+((732841-1014486)-419119),"o]OKC","O&g>_","mJ6u2","c(*-r",":]PUM";"X\'74."});"%1N";"3l1";H[7]({-96004-(-96008);-925096+925098,807346+-807345,-947819+947825,2588-(727470-724887);-996261+996264;"BZSaV";"kjA52","m&3<^","g\'+)@";"c1Vt&";".G+9S"}),H[7]({(-89075+-363701)-(-452779),-218103+218105,592848+-592847;(-452184+-497769)+949957,"Nj^qR";")=:@J","3>>fV";"PWhs;"});"=VC";H[7]({((-464510-286709)+685667)+65557;-840256+840258;-869800+869803,((((1225504-(-308769))-1003255)-212268)+-1364127)-(-1045383);-259824-(-259825),349995-((-1796698-(-817552))+1329137);"r\\T*=";"U\\ObP";"<SY+e","Zih`o","4+8MW","g(sRq"});"])",H[7]({-1039714-(-1039715),-194166-(-194168),"Z\\e<4";"^0t`Z"});"2Tu",H[7]({-955290+955293;-504868+(1542422-(-638273+(2433844-((1068639-(-300900))-611518)))),(-101007+(-725+-352735))+454475,280522+-280517,(-382609-(-827134))+-444519,-973923+(1172889-198964);(630198+-376961)-253230,-712303-(-712304);"cRbZA","8*r=a";"mDNrE","S-LF9";"ft:eR";"4]uNm","Bo61X","2Q[UQ"});H[7]({(-866777-(-418828))-(-447952),239672+(-395984+156316),-184080+(860186+-676095),1009920-1009918;152684+(405876-558555);-270180+270192,(919934-206501)-713426,(-1074133-(-675030))+399111;726977-726976;(-393771-(-30270))-(-339644-23867),-666660+666666;(-160422+-320146)-(-570632-(-90055));"gpB`V","7)ho6",">NH:h";"Fl\\\'k","<p@Ck";"@ao_f";"m;nU$";"L%@Ip","d1Z3h";"\'n=m5","&3Wbc","ek#sh"}),H[7]({-843290+(((((-1024980-(-54553))+(-493565+458759))+((18552+620085)-(-610556)))-189638)+((309185+201733)+278052)),54015-54009,(-664000+655405)-(-138070-(-129471));723319+-723312,-282203-(-282208),-731003+(307780+423234);861559-(-299966+1161515),392937+((635312+-43552)-(617581-(-367115))),601811-601808;-797593-(((-908603+1158231)-780788)+-266442);864721-(-669499+1534208);-529951+529959;"7Y!q%";"p+/T<";".kS,d","`J@/2","]F;oJ";"C#gB5";"WaT.3";"[&[qN","Qh\'g=","RTGA7","Cg3=[",".@bA:"});H[7]({595399-595392;628118+-628117,-794084-(-794088);706325+-706316;(145191+711841)+-857027,-543990-(-543992);859470+-859462,-627349-(-627361);703750+((-120957+245758)+-828541);-325033+325046,-479700+479706;193410-193396;-597586-(1039187+((-2261230-417671)-(-1042125)));30586-30575,"JN#_!";"E>SJq";"dRDBT";"<8GV\"";"ao4\\C","!!VBB","(=tfh","5INk$","I0`#U","+5sKI","0:M?/";"&S/o%","n\"1,o";"\'9\\4a"});H[7]({-267223-(-267232),869297+-869287;(1008026+((-1562018-(-693997))+856801))+-996798;-684837+684839;-202932-(-831284+(-776492+1404838));-977111+977124,436726-436712,(-391639-611152)+1002798;-180068+180073;707164-707161;(290591-369977)-(-79397);-665731+665732,-580133-(-947731-(-367594)),(350135+-1019092)-(-668969),"+H7/%","=(ZFI";")OrgF";"0>\"lm";"feVg\"","<ZG4O";"jI&P\'","F%_FL","#73EX";"2]3q3";"$^Uf/";"-mDR7";"El2e-";"+nICt"}),H[7]({384076-(240909+143166);(1401477-506890)-894585,"Eb0*+";"G%C"});H[7]({-294607-(-1030268-(-735659)),1005782+-1005781;"EW","Ao)C("}),"G7X","PoT";H[7]({405235-405230,977315-977314;(379450-303770)+-75674,361612-(532213+-170604);(-1508041-(-1029548))-(-478495);531449+-531445,"3^:+6";"!<@RD","hk<Y+";"jS/ZK";"W^B</",":tM&G"}),H[7]({606826-606818,-110237+110248;326916+-326913;(((319385+592221)-(963565-816419))+-1057344)+292894,-993755+((131455-(-873245))+-10933);((-112745-(-451277))+-312347)+(480349-506532),800276+-800270,916449-916442,(850718+-546465)-304244;-879222-(-879223);129750-129746,-823774-(-96500-727279);"[RX7%","2L84^";"b!Z<M";"2B#uN","X/!X1";"&4<9E","NaNF;","CHHal","NJ6Xp";"*)XMF","193g?","Dk&cp"});H[7]({-259936-(-259941);(-145023+-751784)+896816;(375675-(-261211))+-636885;941858-(959835+(941083-959067)),(288669+-4741)+-283916,-1026126+(((1581808-941467)+-526307)+912098),(-268918+747787)+-478865;548201-548193,((-739265+-769976)-(-588256))+920988;931350-931348,-47366-((-496937+529642)+-80082);-724019-(-724029),"+?ua%","&uFYc";"F1.eu";"Vj^9?","VeUFF";"1@Z(`","kR^s7";"BAh8H","EguV\"";"-Q%Eg","%c`\'\"";"8P-Ot"});H[7]({-296184+(968665-672478),489204+-489203,(-204534-582956)+(331732+455762),-275179-(-275181),786811-(709582-(-77224)),-950976-(72923+-1023905),"33GEL","Dn5Cc";"=X8+J","%E0F`","22_BU","1trXj"}),"Z.T";H[7]({310962-310939;-56754-(-56790);719810+-719805;796346-796313,(-538288+1305429)-767132;(-509901+650023)+-140091;(182724+136022)+-318740,413499-413467;339729+-339694;351941+-351927,-203359-(-203367),(497325-591198)+(-611788+705695);667064+(-45158+-621880);(-316622+290818)+25816;239190+-239180,-752228-(-752252),-392458+392496,78469+-78453;-810513+(-887803+1698353),-594213+(559189+35035);-369860-(-369879);(((-253115+(331721-471237))-(-69470-799417))-(-489675))-965904;(543557-568948)+25413;-460564+460568,229630+-229623;243931-243901;-798151-(-798154),(1153932-752586)-(543372+-142055),-663043+663058,((371772-(642266-702652))-457979)-(-25841),-303700+303728,-473876-(-473894),-797410+797412;-42163-(-42176);-292662+292687;-307678-(-307679),-581803-(-581824),434474-434457;"#;sdd";"Z\'F/@";"RstFL","6fHKF";"%j6\\j","Ve@$l","+%Pue","XdL6^";"+*9[D","HE-jL";"1H@-7","JUD`u";"QAhLO";"R#@S1","A8oFY";"SRe\'f","\"5O3L";"VVFU6";"\'B%W^";"%/EL-","DmRq;";"ilMQg","Ar(Lk";"Z88^k","N\"P%c";"/,0>U","N_Jf8";"]Y/<#","L1G=[";"MoDX*","@gt8u";"1FT6<";"=o9$t";"/lZ@H","%\":Lu";"_G+rK";"n%!:r","g`#f`"}),H[7]({799408-799397;-674132-(-674140);208700+-208698;-897261+897264,653657+-653653,(((-11418+777230)+-1447987)-(-697054))-14869,753246+-753240,212576+-212575,765321-765307,-716466-(-1310186-(-593711));(-365929+-607379)-(-973313),-254350+254363,-918871+918878,(((-336148-(-239761-628138))-22964)-(-537911))-(1191353-(-413410-(-558077))),"n$QL<";"R7)``";"h]6Qs";"T%eAb","s0NqY";"k9k?1","57UN(";"B=i0.","1_f->";"-`=G7";"hK\'\'k";"Im$Nf","\'<@1I";",K44d"});H[7]({-795715+(1145225-349503),32830-32825,-79986-(-79992);(700871+-1657937)-((525454-171343)+-1311179),(-659714+255541)+404177;101430+-101429;544761-544753,-438899+438902,"i:\\3I","%G@n-","U)uE-";"ckq/V";"2DokH","I8eM8";"8,q2#",")\\Yi`"}),"@_i","?W7";H[7]({((-543792+-655160)-(-444127))+((-942887+2605860)-(782079-(-88897+-37170))),(-96154-(-838387))+-742229;793433-793428;(602764+-1597371)+994608;(-622049+(451760+(502250-873590)))+541632,-635107+635113;"=gjPI",">%OJu";"T-b(k";"/)7lN","HU%6.","K#7ZI"});H[7]({-102716+102719;960738-960734;(-1021207+477799)+(-998247+1541656);385895-385893;"j@*l#";"oPKQD","B\'mU7";"4NnV\\"}),"<$q",H[7]({810302-(702002-(639628-((-488466-(-858286))-(-378104)))),104325-(688411+-584099);477191-477190,178113-(314388+-136286);778400-778391;-33324+33326;607406-607398,740031+-740024;(200925+478363)+-679278;-1023432+1023437;-531049+531052,-468578+468592;765059-765053,583573-583561,"p_<%)";"O<Y/2","1UA,:","Ma^X^","o_Xrs";"-)[6H";"7NSWl";"4tQlo";"+!=d(","%LuE+";"X,A%@","4IZ\\2","!Q##L";";X]l5"});H[7]({(629944+-391292)-238648,-156427+156432;-153843+153849,-84645+((-669385+1458091)+-704060),-992693-(-1550061-(-207165+-350200));522467-(1538754-1016289);"AeRgR","),d^s","!!Mc3","9;Q>p","d:$$[","i+L2A"});H[7]({-213407+213409;-1025719-(-1025720),"WhsGd","_XE^%"}),H[7]({-600622-(-600626);-574995+574997,-203306-(-203312),-959685+959686,480434-480429,889619-889616;"2,WO!";"CHok3";"^/op3";"crP8s";"0/p3/";"aU/9;"});H[7]({35325+-35323;-722755-(-722760),(652953-669318)+(93680+-77309),-237581-(-237585),640911+-640908;633458-633457;"0,Gem";"+?)We";"q@?d\\";"<>/0D","\\?l&m","VL<-/"});H[7]({-794985+(-223521-(-1018515)),-378911-(-378921),-1023224+1023229,-910880+910882,-414673+414676;-817644+817651;-330896+330897,-1019072+1019080,-280755-(-280766),-416535+416541,643120-643108;168873-168869,"\"=J!7";"X+A*h","5B55u","0@V\'d","4/$A:","K;!4k";"9AZ^J","K0(GH";"L-i:R";"hi)nR";"fAr\'J","E\'2oB"});H[7]({514765+-514755,825513-825510;(-1547343-(-937000))+610355,(-692416-((-1504084-(-802393))-49284))+-58558;(-466649-(-795884))+-329221,-861888+861890,510471-510466;466355+-466347,835108+(-222284+-612820);(-1030276+673130)+357152,-576491-(-576504);-478944-(-478951),116212-116203,-77617+((537170-(-418373))+-877915),">6ELZ";"6acI^","bF-u.","Abgt:","Rpi=$";"3JS2Z";"$s;Z$";"cGKhN";"WWUuD";"L&R$J";"V$0m1";"$pB.E";"]Z\\b,";"QKY\'d"}),H[7]({(-830373+1038499)+-208113,735438+-735432;-975349-(-975359);-252707+(-29171-(-281882));368036-368022;-576583-(-576591),(-1889525-(-974076+(322324+-241573)))+(92138+904073);-58009-(-540634-(-482618)),-531141-(305246-836390),-663623+663635,(607188+66724)+-673903,452303-452302,-10749-(-10754);-302162+302164,"\\Ihk_";"\"@n#M","*]&L6","&&*;r",":NJb,";"#tdq(","n.H`n";"p\"UKM","684Tl","^2:FR","9I\'[)","/r<mn";"\\lG[m";"?F@[c"});H[7]({(122073-(-546965))-(((-856981+(1267159-544491))+560045)-(-243294));868228+-868220,-64132-(553307+-617440),-948190-(-948194),6541+-6531,-13144+13150;(-1481284-(-759039))-(-722254),497130-497125;224103-224092;772818+-772816;-740128+(1147963-407832),204492-204485;"a8Cf2","_Js[5";"i*Yms";"R4T60";"Ne]a?",".:+Us","A1Sr9",">lM^E";"0onZe","og?bl","k+%Mu";"Dr]/\\"}),H[7]({(-496306+-138403)+(1004988+-370276);-160581-(689747+-850350);(-955344+1971528)+-1016176;((59906+-410845)+1128226)+-777263;(922018+-608060)-313943,-520141+520162;99039-(-375837+474870),950464+-950441,1019118+-1019102;((483-183675)+659345)+-476144;627352-627338;-507589-(-507594),515119-515101,(-1053467-(-403256))-(-650221),(1387474-987805)+-399650;569088-569076;972004-971997,-297825-(-297829),234150-(294020+-59890);932400-932399;278152+(-690329-(-412194));-592209+592211,(-130955-(-534026))-403058,171132-171121;"4-/=G","pWH;d","&KrPd","5lDii";"`\'U]q";"k\'>FA","&+H8,","p<]E^","Xr&]F";"R-[Km","P#K!m";")<DM7","\")8+l";"$?b\"&","W8_#]";"ECkJ\"";"duNT3","`b0Jh","e_phs","FqbC1";"3\\6p-";"%?7WF";"WP3CY","KHE^\""});H[7]({-196484-(-940272-(-743783));-46718-((-547666+(-1277713-(-1018233)))+760421),-346988-(-346992),87019+-87011,-605472+605478;801933-801931;151679+-151678;(-33631-370168)+403802;"i_g,]";"qL*G\"","\"kBb0";"FBuYT";"m^K&A","DsA2k","S>3c)";"]([=."});"p2p";H[7]({892389+-892387,-264703+264704;"<WFfi","$VM1F"});H[7]({565894-((-10781-(-985004))+(-431120-(-22783))),-366456-(-366470);-99953+99955;548065-548052;913520-913513,-730019-(-730020);-911686+911696,269232+-269226;-187932-(-187937),380715+-380712,491084+-491072,693210-(312205+380994),427991-427987,172222-172213,"h7o21";"j==])";"Y]Ku8";"I4=oT";"Vd_FG","+Oj;d";"5gL.q";"I+;+I";"iAn]Z","M:KeY","e0,sD","ZTH/S","f1K;b";"c(rbA"}),H[7]({509359+((239560+-1374859)-(-625943));263155+-263151,-99758+99759,207267+-207262;(-1556738-(-574433))+982307;380089-380083;"4Ng,B","_a>L/";"HsoRm";"1iQIu";">oK,0";"U`/PN"});H[7]({-268386-(-113492-154906);((2200302-1033268)-374039)+(-87550+-705439);-160750+160751,-918723+918726;-64601+64606,(448863+168489)-617343,(-177407-(-797735))+-620318;981095+-981088;-496952+((-291353-105466)+893779);-418882+(513229-94345);-213992+214003;-295280+295284;"g/\\OV","NMEdS","H5OaI";"*=+iI";"PNAr(";"kf)mp";"<$@($","9EN4\'","\\pAZO","]Z^\\\\","\'<b>d","!,o\'n"}),H[7]({941845-941834;695077-695076;-350710-(-166986-183727),202147+-202137,-3851+3856,(-616502-(-466397))-(-150117),-754114+(1108122-353999);-420583+420590,-654678-(-654684);(-928538+86787)+841759;355830-355816;-414338+414342;322497+-322495,-701691-(-701704);"\'h>Q+","ToeWj";"&>sY1";"Y&XtZ","e+\\l&","QHA*,","WW`.7";"AIF$@","YYf8Y","Z*Q%g";"/1^K\\","]I!l1";"/\"VhE";"qBL`3"});H[7]({(497858+-467014)+-30843;((-723773+1027736)-(-412627))-716588;"@-1qk","VS[fG"}),H[7]({-433562-(-433569);-545764+545766;(-1543587-(-839315))+704281,-970289+(-893416+1863717);-225071-(-225079),235530+-235520;338490+-338486;427954+(-24355-403588);(544767+-1054640)-(-509876),-828093-(-828094),-470074+470079,206812-206806;"7mlc#";"$f)+\\";"J1HV@";"k1.=1";"f\\F<\'","::\'/R";"l:1ub";"4*!oj","$<;d3","2>fXp","c;PM1","6pQco"}),H[7]({989076+-989070;855113-855111,1031567+-1031563;555607-555606;-678333-(-678336);522209+-522204;"d7s[a";"&>]92";"&u27$";"5.QIq","X<!(S";">TW.#"}),H[7]({(700560-(-246786))+((-32812-(659898-608967))-863590);-764730+764740;(-194002+997523)-803519;(-689437+1155524)-466083;-644666-(-644680),(-192228-(-749675))-557436;-903603-(-903610);(-418201+(-508013-(-242228)))+683998,1001411-1001403;1036174+-1036173;-737574-(-737577);893283+(894399+-1787677);624059+-624053;(363951+-791391)+427449;":PWT7","\\C]ZE","j]Mk,";"!\'hH%";"aRI@W";"R&!1l";"Sr!-U";"X&;F6";"ZQd\"\"","%E6\')","9>oUE","Cg>/X";"\\FW8H";"Qh_:M"});H[7]({((-897052+1821833)+-823571)+-101208,152031-152015,958183-958168;997621+(465560+-1463173),1038036-1038026;-720420-(-193194+-527231);-721053-(-721062),51339+-51338;603025-603022;-915723+915734,-697064+697068;(-471774-539912)+1011700,((853493-(-845901+910826))+-1264985)-(-476429),(1535248-883849)-651392;44754+-44741;456510-456504,"B[-@1";"/3oRF";"%VjQN";"G,R$4","5ZTM7";"r#7Jc","X].]T","N,SWn","-aWW3","7HBFX","kWD1W";"./gDb","Ca!FR","VT4?6","9qFH!","<#;(h"}),"\'qY",H[7]({(1029834+-121072)+-908755,-303677-(254905-558595),(-375032+(1182338-(-649660+656679)))+(-159235-641041);-51338-(-51339);307280-((-104614+414099)+-2217),(-938660+(-353472+1770722))+(-554671+(1067644-(1816180-824631)));-645981-(-645991);-455944-((18274+(270629+-315491))+(207982+(442152+-1079495)));-420912+420916,-937170+937172;(-916796+(1267851-427166))+(928415+-852301);-934231-(-934237),-163077-(-163086);374115-374107;"?pD\"B";"^GH`4","\'X>`Y","fD$rL";"HTST\\","83e5%",".Zls^";">2$7_";"QRudm";"pr0W8";"B/SQW","AqD>F";"<,%.&","jJpc+"});H[7]({898275-898267;-560976+560979;479069+-479055,81714+-81712,535024-535015,-940732+940752,-168069-(-168073),173716+-173705;663675-((886135-(-148684))-(499799-128649)),-595609-(-595625);-786604+(-925123+1711749);-11664+11676,(3355+-723213)+719865;436542-436529;218822-218805;772934+-772915;-453401-(-453422);-65161-(-1059624-(-994462));-462376-(((-434180+-199935)+1207345)+(-1117000-(-81379)));-119817-(-119835),((-928233-(-447459+119682))-(-741461))+-141000;-1006308+1006318,"7%$DV","##o)(";":4+_#";"*(aN5","@6!%\'";"Z*n#)","@@TB,","<\"%%b","^;Z01","A:pCG";"r573T";"1LS42";"Ahp()";"o6bbA","/YX1l";"3Mmf$","U7M`h";"(;uVR","[#2h#",",kjYS";"dSH`i";"\\[2Ml"});H[7]({(-11021-(-1019335))-1008312;676054+(-595265-80784),(-940144-(-691306-112417))+136424,568773+-568767;356770-(240840+((988580+-1820161)+947510)),36201+-36197;".Raf5","Z*[kF";"Wqq?j","_04GC","g0hpO","is8kF"});H[7]({(-46791+487672)+-440879,848004+-848001;296840-296834;-600759-((-715799+288209)+-173173);(-1012292-(-598713))+(592048+-178468);539408+-539403;"?r?/Z","?*Qb]";"h9!g=";"%QqR0","XjX\\@";",U/DT"});H[7]({267537-267530,-959560+((419519+1165393)-625346),(-647655+415951)-(-231707);-12722+12730,366868+-366866;473272-(-663749+1137020);183941+-183937,(384327-(-302580-(-747275-(-561337))))+-500964,"`&;;=";"G+4Qp","!!)0&";"<07U$","]n\'1A";"#>X,O";"jD?_F";"=h\"um"}),"i;";H[7]({499092+-499087,960396-960393;-295216+(968518-673292);396103-396099;(462063+-662807)+200756,839617-839608;-1020855+1020863,(-27650-(-108625))+-80968,-231724-(200903-432633);471405-471403,-1040310-(-1040321);270311+-270310;"&3ll)";"&g_Jm",".bD]F";"(L6Ol";"QBdou";"[\'^V3",")Bu:\'","da<co";"\'#lP$","qu]S/","\";q>W","%5aS9"}),H[7]({394309+-394308;986858+-986854,905657-905654;(677094-(-243491))+-920583;"KmZ\"_","%[mpI";"IlQ,0";"o<K$9"}),H[7]({-47629+47630;(-612582+419774)+192815;948001-947996;562083+(-742708+180628);745736+-745734,169576+-169572,259506+-259498;(445247-255600)-189641,"%Kn&T","h&]HX";"\\\"L\"!";"Bqnpm";"+H??f","NZ[eB","0b98\\";"\\iG\\l"});"\\,";H[7]({((-48237-378843)-(-310862))-(-116226),800913+-800909;(399095+153281)+-552373;-552421-(-552422),-563547+(1086654-523102);145542-145540,1014693-1014686;973924+-973918;"<U(TV","N+U8!";"1;=>i","L=R<Q";"BkW%[";"Vc_\\m";"#\\9P.";"!</im"}),"cWL";H[7]({-550881+(1426212-(-537517+1412847));750399+-750395;(367752+446143)+-813890;-87233-(-87239);107062-(192829-85769),((-454414+-316134)+1160754)+(-451065-(-60862));"f_-:U";":p4AA","\"d(t-","j#Jo2","JJ%+i";"L*ra:"}),H[7]({((1034249+(-926174+-851244))+-204876)+948057,97603+(291762+-389363);(-1129076-(-217342))+911755;432384-432327,-155522-(-155583);(1505961-(-612773+1422285))+-696420;((-245515-857615)-(-596584))+506565,998124+-998091;117691+-117684,161155+-161141;341326-341273;-1013832-(-1013900),-956047-(-956096);244088+-244084;(590552-(1515380-610684))+314209,-272310+272342,-853946+854010,(310127+480347)+-790454;54016-54011,564229-564190;732881+-732873,980658+-980613,(-1491837-(-805607))+686241;(966548+(1039840+(-43777+(-1876871-(243791-231307)))))-73212,-980905-(-1297393-(-316460));-453398-(-453456),838628+-838627,-447867-(-203850+-244054);644161-644126;-963504-(-963535);(446345-(-152744+1114844))+515771,-939128-(-939170);-32099+32147;-950364+950387;((280880+-524055)-(-34691))-(-501540+293043),(411626-117486)-294089,(-46120-(-128751))+-82628;-25099-(837434+-862596);-725639-(-725695),249684-249624;-147714-(-147724);-63044-(-785668-(-722558)),(1666551-638772)+-1027773;((128736+504871)-(-322918))+-956475;-106935+106973,130721+-130680,(-683565+-66027)-(-749647),-514532+514566,(614720-(-380809))-995514,-759691+759738,559723-559698;-295987+296030,841771-841747;579955+-579903;-788301+788347,(197921+-1082191)-(458236+-1342536),156864+-156837;-790088-(-790097);-41334+41370,(356206-(-545614))+-901798,45639-45585;(-1364253-(-1019890))+344425,89870-89853;117931+-117872;172619+-172552,-1032971+(1567555-534566),719197+-719157,-236407-(-236433),"oaqF*";"8\\Jec","62;`O","km2T.";"V@j8&";"I;\\<V";"r7=!d","8&&FG";"32><p";";88T+","()eA:","<i-Y-","kb+:)";"2R[Eq";".53%@";",hk?.";",eRK:","dQAr@","pEU./";"l+6S*";"%]tIX";"ifQKB","&ZnGD";"V@\'0W";"&Rni.";"ClY2R";"K*iK5","JcQ9,","5lSPl","91n:B","75iM\"","?fErj","@c\\fE","cPBiQ";"Ks^Q7";":&\"a?";"9-\"QL";"/#$Ks";">23i^";"&ro#A";"\"b+iN","GD!]2","d#caY","&H25%";"3&ncl";"p20W(","B@nYt";"YC?]W";"r(EgG","2?cjV";"-E;8<","\'?gAM",";UmHf","Bq#t\'","B@\".*";"%+sZ>","JH61Q";"&-,$u";"<WWh/";"hQi6-","9d#lX";"Num7.","Q\"Z3t";"peEu\\","s5T\"L","\\6pUs";"i6G.*";"HDf3="}),H[7]({-1012249+1012254;-381432-(-381443),-283835-(-283844);((-775359-(1045989+-828541))+889548)-(-103267),-738896+738902,(539597+-842928)+303343;-184830+184837;-764606-(-764616);-956882-(-956883);-257949+257951;97373-97369,((-1558012-((-431449-(-993807))+(627467+-1272921)))-(-962039))+512880;"au@pi";".8jTo";"e>42(","N9OAd";"];B:?";"f*uJa";"0qD98","j--ba";"\\A_b5","E$L<<","7V(Q7";"T-kWZ"});H[7]({-1034102-(-1034104);-554039+(16050-(-537992));(906728+-1031783)-(-125065),-57408+(919372-861953);-809528+809529;292019-(525727-233720),1034944-(-885239+1920177),(319594+-4098)-315489,804625-804617,364483-364474;720091-720086,-144964+144968,"5US)6","$Srp#","pPsjd";"iPH;I";"qn?\"-","(k?%E","r\'hA;","-+.fr","[=X*d";"\'b\\XP","8!ZFM";"P5TR1"}),";.f",H[7]({-913763+913767,(-63505-133385)+(1082849-885953);141934+-141933,-980989+980994;-109445+109447;-819108+819111,"jL,1_";"lp(t.","=MM8+","LudKt";"/9%[L";"Hls#e"}),H[7]({(-291830+1152309)-860475;(((851335+-1247242)+(-945367+2616828))-(-919152+1643193))-551510,1004332+-1004326,-1032350+1032359;570582-570570,550755+-550750;56223-56212;-491108+491116,((-1345257-(-52322))-(-1023404))-(-269532),-622595+622602;(591164+-1328747)-(-737585),(1067060-614350)+(58642-511342),";\'e#o";"WUI]t","H*k`U";"ODU$@","K16>]","qZ.96";"cMari","/rR(`","#80j#","5M/ik";"i5rF0";")<-a,"});":eq",H[7]({994591+(-734688-259902),344850+(-696897-(-352049)),"EZn*8";"[H`D&"});H[7]({(-663125-228541)-(-891672),798657+-798654;-370234-(-370238),-667504+667506;-468428+468433,-501356+501357;"\\.5cM";"mrV>3","%f+Fj","PL):>","!)^1f","H2b5U"});H[7]({1037550+-1037549,(183145-211733)+28590,"gF?\\7",",%lkr"});H[7]({135425-135416,-1020650-(-1020652),(-433815-(-489013))+-55188,1032699-1032696,925859+-925855,970232+(140572+-1110803),464935+-464929,33133-(-987675+1020800),-504202+(-908071+1412280);(725049+-848016)-(-122978),-306198+306210;-190545+(-324588-(((-400911+354278)-(-84152))-(636715-(995217-911159)))),"ADV),";"Yo+?m";"P+IBr";"q#?cI",")+*9*";"1&2_\\","5Uh]X",")gFh?";"qao!g";"c9(m_","86[n4";"#a8\"R"}),H[7]({(784103-(-219243))-1003336;648430+-648426;190655+-190644;-1015061-(-362884-652186);-366566+366573,-146445-(-146447),563531+(-434823-128707);-914267-(-914273);-607647+607655;-705656-(-1559324-(-853665)),(850580+(-2103844-(-460301)))+792968,-942341+942353;">NoIJ","eBo?1";"a&NbQ";"XX>3C";"#jH;&","\"NPUK","g5YS4";"3KT&u";"J^u&]","F[WRN",",`LVf","CRX]3"});H[7]({-153780-(-153781);(-780667+295905)-(-484767),(-44354+-469808)+514166;-145134+145141;404131-(((-985490+1203827)+-49488)-(-235280));-290775-((-527306-(-873146))-636623),744001+-743998,-717184+717190,"GR/oP";".WN;h";"<]R2.","CN,\"O",":@#dJ","$-ap)","j\"M^-","I%V51"}),H[7]({(-315503-(-408269))-92764,27293-27292;"&I\\";"[Ll\'E"});"o\'Z";"@q]:k","Y@[",H[7]({(-181521+(379227+442175))+-639879,873885+-873884,"5\'AWV",",13b]"}),H[7]({(518159+-779745)+(11647+249941);732585-732584,"\\;,(-","%:Ga/"}),H[7]({(1037074+-941244)+(693499-789327),188715-188714;"ib&,!";"\"&2I8"});H[7]({-441577-(-441582);(937041+-190386)+-746652,866690-866689,989771+-989765,-198549+198553;434383+-434381;"(Y9%@","Qr;nP";"Z2(?V";"!S:IF";"/>?<d","0Gf]p"});H[7]({736930-(-768026+1504954);-789636+789640;-492636+492639,(785233+-1188268)-(-1009936+606900);"[]KLg","f2p2X",":?NJX","bI2!t"}),H[7]({369573+(45561+-415123),5483-5478,-340228+340232,(875945+((236953+-434083)+-952282))+273474,(-802301-(493738-587992))-(-632134-75915),462496-462490;484396-484384;450402-450394,-718225+718226;((-756984+504951)-(-131116))+120926,-538881-(-538891),((-645845-(-977962+1531112))-(-653182))-(-545816),"Fdn]f",")mCO>";"d@0LO";"C(#_^","1])Y3";"aZHGs";",@=Fn","VYA7q","ojkiP","^,\"E7",":mXeJ";"SN&$J"});H[7]({318606+(631313-((1279075-(213039+287243))-((884626+-2063945)-(-141984-866212))));577297-577287,191517-191516;-933024+(-93185+1026218),-997326+997332;903592-903588,-33291+33305,(-428119-(-133845))-(-294282);-573980+573985,-811789+(1614+810182);-51675+51677;987511-(-831153+1818651);-974749-(-974761),-492369+492380,"f\':F@";")hs/u","nph8l","b_n]:";"N@%/u","C-.VX","C\"QoH","q3O\\2","Rf6f5","m`:OP";"bB/q@","gEX%E";"D/87j","2UI\'8"}),H[7]({-995676+995684,162043-162042;515886+-515875,764452+-764448,-590387+590393,411765-411758,-780252+(-184683+964937);-576404+((662684-(603631+83534))-(-600890)),(-963463+596656)+366810,61619-61610;970110-970100;532420+-532408,"[(_<4";":3\'W[","=pp\"\"","C_9:>","qDdjl";"=fF#N";"\"Y#>W","LM)1\"";"\'*E_a";"\"i-/q";"Z)mLP","p*Q%%"}),H[7]({(-333985+16616)-(-317372);-636223-(-636224),-640322+640324;"e(,C!";"2ABH2";"`]dt$"});H[7]({-479076-(-479085);-412743-(-412744);-681585+681596;-709079-(-709084),-237718-(-237724);990717+-990705;(183505-60818)-122685;-858731+858734;(-1001591+957167)+44428,-391008-(733980+-1124995),80060-80050;-1016482-(-1515588-(-499098)),"Nq#B)","R)K6/";"kJqu%","rLG9u";"diU?+","hEX-F";"IkVk=","FXeT,","UI+(n";"Y$ppR";"gu?5q";"4>%b."}),H[7]({-37454+(-160443+(((452500+(233777-612600))-(-131245))+-7023));-694713+694714,"`Qm?<";"WbR8a"}),H[7]({(1009448-(293817-93791))+-809416;2629+-2618;-660749-(-660751);-485494+485499,-767740+767752,532076+-532069;(1019003+-1267604)+(839141-590530),794541-794533;-29572-(-29573);-889005+((-1068159-(-416433))+1540740);767978+-767974;515509+-515506;"[M**k";"B_;mV";"]VZr,","@&u-e";"R*A8Q";"hg:)V","c<`-g";"9X>q6";"]tmki";"(e+UN";"q[gYn";"<d\"Fp"}),H[7]({-362915-(-362918);(-997145-(-190176))+806971,201554+-201548,401138-401137;-559643+559648,-510486-(-535999-(-25509)),"m*AZ9";"F1Y8P","CnR;T";"!jmG9","5=uAZ","JkPns"}),H[7]({276202-276196;(-603646-(-119712))-(-483941);(-1324764-(-973746))-(-351026),804680-804669,-265665-(-265668);-579367-(-579369),(-456839-(-382656))-(-74195),-237865+237878,558556+-558542,59338+-59333;(930335+-348707)+(224034+-805653),(430440+-1026949)+596510;-515336+515346,(134443-(-825490))+-959929;"i<LUd","USC,<","c(&R,","b(ka3","4HNU0","GKF<b","eaUGM";"*\'2*a";"YTB0u","(%N`m";"Lr3ku";"F*>!Z";"`MJLQ","VG-KS"});H[7]({-435852-(-435856);-513036-(-513039),(520983-889160)+368178,285592+-285590,"paXWi";"W0fe(";"8!EEl";"h#l/m"});H[7]({(381608+297553)+-679160,(233280+451948)+((-166181+668887)+-1187930),453002-453000,-676404+(772784+-96374),-207482+(788770+-581280),968215+-968212,895592-895587,(-657955+759003)-101041;"<.G=R","`FGkW","TuM%o","b\'Sf8";"HqhqV","\"JmYL","eDLad";"[Aq(n"});"56";H[7]({(241868+772140)-1014006;-435507-(-1326613-(-891105));"hB=6:";"cZ7kJ"});H[7]({-435242-(-435245),115733+-115725,(-288033+1027090)-(871152-(9730-(672317-(-678169+(2309450-(-35335+871922)))))),-987112+987123,704190-704186,-43176-(-43189);(325286-(-150916))-(351862-(608748+((-2066867-(-544712))-(-789073))));(-987113+91840)+895283,579016+-579015,-933118-(-933123),111647-111645;-457759+457773,-175770+175779;(-771936+-246318)+1018261,"?V6T(";"@^!Hr";"Q5B.@","J8Z`c","VVDM#";"^5B@k","muo,^","]BfiR","NX3E*";"Ya4ao","FZNBS";"!>9O0","=]NH@";"RX=.l"});"Ch7J",H[7]({(540330+211394)+-751722,-115238-(-115244),((-410070+(-782746+(-477459+((854863-(-628303+1484821))+1229648))))+1124554)-682269;-943651+943652,909635+-909630,8271-8267,"rLDE$";"?u,O_","D`*P[";"kJ0tg","=YDS#";"/IhoD"});H[7]({(60970-(-294390))-355359;682476-682474;-345915+345918;765400+(-1036036-(627417+-898058)),(-816360+371239)+445127,-600647+600651;"d-1f4","\\d&P8","Bp!])";"Gl)&m","h2:8c";"G/$#1"}),H[7]({9265+-9262,-504779-(-504781),-112033-(-112037);-350504-(-350505),"@;(DB","F-5Dq","7_*qL";"JEdQ@"}),H[7]({(-212891-(1165462-846921))-(-344595+(-826973+640130));-321714-(-321716),11343+-11338,-452382-(-452386),(510581-(-378350))-(((697408+-519791)+1062296)-350983),988420-((-7768-(-325043))-(-671142));"EsuFC";"Z2j^C","!TY-j";"hZ*Y+","5YGL3","f0RWe"}),H[7]({605850+-605839,233158+-233151;-814184-((258898-233265)-839818),813480-813472;-756654-(-682167+-74493),149190-149180;(578130+-894157)+(-355096-(-1121541-(-450406)));719398+-719389,(-474454-422860)-(-897318);-251838+251841;-490185-(-490187),-1017809-(-1017814);"3AT^D";"!t[Lk","qkFSn";"\'@dff","7sZh-","SuiBJ","V<lr+";"BYXj`";"W0XuF","g_/\\R";"b\\,9Y","b7K\'g"});H[7]({(-655717+-370727)-(-1026451);(-406204-87724)-(-493929);(501657-(-386835))-888487;305389-305385,(138349-823430)-(-685093),-459308+459310,175894+(305767-(390505+91145));-619508+619522;(1295923-686697)-609209;-72918-(-72937);(-633968+1614246)-980275,913726+-913708;274454+-274432,(-600289+-305932)+(((22161+(-1756650-(-903238)))+1240057)-(-497424)),757805+(-627545-130245),-158282-(-158295);-160959-(-160980);((50283+369922)+(-179087-417354))+(223051+-46805);-972538+972546,(364517-(-400990))+-765491,(((1546630-42747)-(840494-10394))+-1096525)+422762,(1443648-(-1047214+2035115))-455741;"q6VE4","!;YE6";"h><Bp","2Pp%9","D=Eia";"J--V(","Hf<jP";"Cc$pe","LE<DM";",thkh";"a*=U9";"r1ef_","5A/2n";"C[V@s";"G*ud;","dJ<nN";"-52P[","(-XeL","%haI8";"lh^Q\'","g+Q$E";"K%3GJ"}),H[7]({761831-761806;343722+-343688;164264-164262;-823924-(-518526-305417),780964+(-1482774-(349250+-1051105));487398-487351;-198180-(-198195);((73532-517613)+-362409)+806512,-249746-(-249763);785564+-785554,-679359+679391,-893744+893796,747701-747688,779266-779220;-705309-(865273+-1570590),1029322+-1029268,(533988+-1111436)-(-577452),(163005-(-807488))+-970465;-497142+497145,-946199+(-36670+982908);585828-585822,-1014828+1014868;484001-483990,426833-426795,-51095-(111670+-162779),162500-162465;631858-631816;688090+-688074,607835-607806;(349194-659372)-(-310211),-635865-(-635916);-131817-(-131818),-651471-(597796+-1249304),-254583+((-82477+(92436+-989643))+(470264+764026));-786143+(1170911-(892642-507879)),-751654+(-665298+1416964);(-336635+664130)-327471,23702+-23676;-519234+519277,-877695+877726,-865075+((((-8076-(-1029767))-(-1040384+1797799))-21241)-(-622067));-158921+((405756+-1028299)+781473),((505516-820579)-(-248397))-(-66684),(-635161-(-57894))+577311;-270083-(-270104);164708-164672;1035133+-1035113,-555706+555713;248362+-248332;-792339+792392;(346910+147657)+(474513+-969030);(846652+35513)-(1115664-233548),(986680-456330)-530309,2895+((1241-409714)+405626);"Yq.$$","ndFNr","aPh,8";"cX0;b";"\\dL]f","r<\\8e";"C\"O$f","lYtif","P*H1p";"?$rEZ","PRfNP";"k`Z3?","]2\\4U";"%1dD_";"`1tpU";"fENYG";"Te\"L4","(c6<*","TY--7";"p5OQ_","cYfOp";"/*\'Zs","\\&\\q<","=aB&S","&G0_f","g5I%L","2#:l<","=%+3O",">]\"+`","a4tT-","mUWL\\","]);KO","Hh@KC";"8o!Ym","$-nH*","L,mYb";"-;Qm]";"_Q=,-",")q*#`","eK\"Q9";"7l;`i";"pOLd=","A<_pa",">[k3e","RP,&9","iBDNT";"91T8m","f;I4r","jTuL]","rsjEO","rUf\"Z","PFb`?",",3D#6";"RK6\'4"});H[7]({194049-194047;-849794+849795;"ai<%E","$Ga]D"}),"=ZZ";H[7]({-266847-(-903406-(-636554)),(-32882-613502)-(620924+-1267309),-785096-(-785099);720918+-720914;-833841-(-833847),-438559+(341698+96863),".L5e@","op\"g&","daH#J","$`;Y+";"kOe7_";"6T8=1"});H[7]({218868-218867,(872995-676923)+-196070;"ZjZd6","mRiKf"}),H[7]({-311726-(-311727);-631778-(-631780),"%mWK%";"m:P2D"}),"(^9";"l-\'",H[7]({-82999+83001,884739+-884738,"frm_6","nrO\'#"}),")UJ$M";H[7]({(988955+-122741)-((926645-(-160867))-221300),(-302925+1058193)-755267;"j([9H","VV[Q`"});H[7]({653774-653773,-977430+977434,-542407-(-542412),14385-14379;762876-762873;(-213515-(804292-617423))-(-400386),"`H@ab","<a:d8","::6Mj","B4Gjm","[2ER0";"F`73/"}),H[7]({(438709-((270078+125582)+-786433))-829475;596147+-596143;(-197418+1092705)+((((-994256+-286101)-(-817844))+356199)-788962);((363757+54344)-21750)-396337,(330311+494451)-(682483+142266),(-283740+-663406)-(-947155);(582373+-1219017)+636646,782239-782229;818894+((-780276+762621)+-801234),-340396+340399,-455690+455691,488943-(908038-419107);786196-786190;(-13864+-803273)-(-817145);"%<?`<",";^p_J";"F-i=D";"pX#2;";";BD:9","\'/lQR","dIhB[","p1<YP";"5>ru[","+,2()","Kt7H\'";"dV>K!","J/iGu";"/(ngh"}),H[7]({((-272762-(-774133))-(-19376))+-520742;-561622+561629;485672-485671;74387+-74373,-715469-(-715479);-976577-((1161800-203338)+(-1327280-607765)),(882701-723527)+-159172;-242308-(-242321),655033+((-895373-(-203493))+36856);625799-625787,-469304-(-469307);137465-137461,-994174+994182,(616700+((501637+-796319)-(-485567)))+(((-95197+((485030-(-361835))+-2418947))-(-1577283-(-697758)))+-19820),".(WT4","A*9.h";"Z[^\\;","TCC%%";"N%[]P",";C=D5";";Yj%-",";a)OK","huuB3","DP(Sj","E7KDn";"YK^.q","WX\'nE","\\NoO/"});H[7]({923730-923698,876486+-876473;-787508+(-895110+1682663),436377-436353,(-341901-365742)+707686;(775211-(-252090))-1027280;139503+-139468,575513-575480,944195-944156,-484104+484145;((-677700+(2213147-(1470101-539817)))+-181990)+-423162;-373719-(-373737);-232404-((941598-73577)+-1100440);(-529057+972584)-(-225568-(-1661742-(-721604+-271053)));407057+-407021;48085+(335213-(-299488+682761));-914060-(-914094);(-1043826+205357)-(-1437436-(755516+-1354474));761756-761719,(208340-(-770381))-978675,(436552+(-939730+949501))-446296;984435-984406;-339426-(-339470),-750983-(-750987),(1647452-773940)+-873493;-95879+95885,273399-273379;971624-971621,-806376-(-806418),438252-438229;-679728-(-679742),411459-411454,617678+-617677,-70582-(-70608);95659-95628;(-239772+515912)-276133,(557551-217797)+-339714;638036+-638034;40567+-40545;462005-461993,-327716-(-327746),121476+-121460;-456458-(-456466);(-574289+-433265)-(-1007592);776335+-776318,(833903-602217)+-231658;"K?Q5-";"@el_@";"lqbRB";"rn]53",";Fb:t",")N$9O","-(4AD";"Rk\\^1","_MIW@","]@\"c\"";"B:RHk","\\`jfN","Z&q!W";"1c:^n","i[d:a","AXQ7f","Ip]$8";"TTEJu";"L)2@R";"Y[8RX";"Gflj$","<nK\'?";"q\"8^\"","2K=(^";">Z>ca";"/2W0n","[EO\'-";"VFcJ:";"P69\\$","#%n3l";"poJ&D","4<OYY","U[\"_]","P4,R`","c6O\'f","`KQRC","d.6:b";"J2P\'0";"k+AN0","243Z;";"e,S\'k","LWf9l","\'6h06","Vd1UL","()LPX","Nplr="}),H[7]({-760566+760567;-317960-(-457303+139334);336125+-336118,-675669+675681,-880148+880150;920961+-920955;344563+-344555,(((188646-(-925514))-(914757-979470))-(1798365-846240))+-226737,167556+-167542,(214664-421144)-(-206485),-645541-(-645551);249775-249772,(-978850-(-965263+570317))+583908,(-440898-((-179594-247982)+(98166+366264)))+477765,"Si?`k";"/I@cj";"f_dA;","6nP^K";"j8_V:";"=odT6","CVh^M";"=`YU=";"e#ZN>";"=!m^$";"1*0*(";"c4u>O",".8ND6","PD4jB"}),"gA";H[7]({-334526-(-334527),-640229-(-640231),"XONSa";"Z1p>\'"}),H[7]({-991226-(-991230),-246306+(162523-(-83784)),666330+-666327;(-613848+(963103-(-198951)))+-548204;"T+<lZ","]O,iV";"0#3TS","i6)q4"});"3pc",H[7]({516302+-516300;746758-746753,(-352825+704398)+(((232984+-575291)+-538033)-(-528775));-577021+577025;(-934843+274441)+660408,69543-69542;481927+(572425+((-491314-(-342719))-905754));576257-576250;"?*mR&","?m0)k";"\\b:fe","JJF$W","k1)&-";";HIEK";"X)3NE";"jZA5;"});H[7]({-135924+(-369361-(-505287));717224+-717220;-613130+613131,393588+((-818467+(464611+-485645))-(639862+-1085780)),153388+-153385;-174059+174065,-568822-(-568829);-294440+294448;"%9.n<";"2T!&:";"Vc0ns";"5\"OB?","8<(Qu";"8Qn5e";"UZDEK","+/l*!"}),H[7]({(1030445-714544)+-315897;-1034816-(-1034819);-1029127+(897491-(-131638));988914+-988913,"R<dk7";"CL[n9";"\'Ji3S";"Oj+ua"});H[7]({-915071+915076,256484-256473,-733352+733356,802073-802070;-177320-(-1082031-(-904705)),(893843+(-195201+-1689997))+991356;-806041-(-806050),-484504+484514,(962376+-1928187)+(562281+(536593+-133051)),-499290+499292;531010+-531003;-60613-(-60621),"[-0Wr","!N(6l";";]X@n";"mVQK!";"DrCVE";"Q?$]K";"=C_-/";"j=QL:","6(#CB","V2aRs","GAP0P","d\"JTC"});H[7]({(196701-(-611403))-808095;((-1348035-(-556810))-((10608+-497505)-((((704017+((142921+-1070456)-316476))-(-84052))+630843)-(-153188))))+-23758;((993612+(-52491+-720551))+8708)-229277,81528+(-19774-61742),645543+-645541,-1008701-(-1008712);777286-777279;81801-81796,921327+-921323,-301547+301557;633078-633072,((294538-1040563)+1475747)+-729714;"pB*)X",",nQlW","D350\\";"\"MD?B";"@m=(4";"-.XN8";"jmSH7","B(/^&";"9_C\\.","EnJ0^";"BJea0","\"co2A"}),H[7]({424735-424733;434526-434525,";OI",")CEno"});H[7]({1010843-(391546+619285);(-802606+378337)-((1239973-784946)-879305);(948153+-552231)-395912;936026+-936023,((512952+192203)-101581)-603572,164171+-164163;-967061+967068,121312+-121311,-631622-(-631626),-1009457+1009463,-963030+963035,-157749+157760;"$tgc/";"h\"!Uc","HXkSM";"pZ-)Q","I+S&/","O+;/i";",=o1b";"`f^#s","SUgX:";"\"klDE";"LdMCl","KKZK?"}),"Pkt",H[7]({899758+-899749;703530+-703520;509865+-509859,809797+-809790;-1036661+1036662,999078-999067,490050+-490048;1031646+-1031638,-252513-(-252518),-972938+(937887+(416650+-381595));-563749+563752;(((1036711+(-326434-(-123535)))-403004)-978789)+(-465076+1013069),"Pl/@1";"Y&_Y&","f#<7\'";"!R!3+","jn&U>","0^U#=","[`AC]","D:1/a";"geG\"j","q`!RC";"p_JZ@","<*CcM"});"BnZ","+VF",H[7]({-54956+54965;879055-(592601+286440);172907+-172905;(546706-155582)+-391123,-822003+822008;281906+-281894,(771578+-1260206)-(-1339892-(-851258)),-318511+318515,(392704+-876567)-(-483866),-56515-(-56523),-600953+600966,648437+-648430,(((12087-927990)+532415)+1213182)+-829683,-1234-(-1244),"gK\'kg","qHN$C";"/_XL5",")ha=H","CoNdi";"\'b\'bM";"TN0P\\";"8]Cr[";"=O+nQ";"Ujm`o";"_RktY","hu$Z^";"BrfA/";"Rk_!!"});H[7]({9333+-9322;(-287572+-157411)-(-444987),-801004-(89450+(-841700-48763)),-154519-(((1427369-437787)-827736)-316372),1011238+-1011226,117211-(-673854+791060),631835+-631832,-888248+888249;(-156319+-812869)+969196,-81900-(-81902),(-1461193-(-602303))-(-858900);-652123+((1298232-611429)+-34674),"T&Nn8";"!a\\As","c3Ngg","SeZgc";"XBr\'4","\",Mam";"(kW\\K","XMC:s","&C`=1";"^CPmY";"j__Q`","fS3%!"}),H[7]({563333-563296;-142070+142100,-852780-(-852828),783073-783061,(27753+-896525)+868783,-372522-(-372523),187707+-187667;-505173-(-505201);845345-(-387349+1232641);96425+-96383;-157818+157852;-459938+459962,-140137+140181;(154731-(-320841))-475541;970368-((635702+(((509233+-298449)+906918)-(-99970)))-883015),-773208+773231;-7065-(-7101);-932560-(-932568);88915+-88908,-832224+(545996-(-286241));(626602-210908)+(-410434-5246),((-767716+98951)+167350)+501440;486353+-486349,951139+(-150240+-800870);-455908+455935,417246-417241,(-1327389-(-377232+(-425173-(-61968))))+587004,-733041+733091;666241+-666223,-632458+632468;-1030457-(-1030479),327944-327899;422370+-422319;(822653+-648411)+-174216,-1010192+1010207,-466023-(-466077),37425+(-412606+375187),394416-(703161-308761),-212829-(-212875);145003+-144984;359048+-359046,79462+-79424;344026-343983,-596649+596666,700628-700596;-667551+667572;(-839774-(-309676-622609))+-92478;489321+-489282;-406242+406283;-825208-(-825228),-245079-(455405+-700531),-716144-(-716147),124407+-124358;(-53844+603596)+(74063+(338816-962596)),"m=@Q(","\'^K_:";"WBH^H","kYOqT";"Ro/o0","fW*<:";"`l1#1";"FT,F;","\\Q*M$","\\^$tI","5>;rb";":A7Q,";"F37uK";"\'-Z3L";"7Ad/r";"j2eIj";"KQ-aA";"@F;=_";"1lVOp","]:?cI";"*EX[u","En:cF";"5u>%<","%FG_k","<WuGN","RJ3s<";"(.?51";"8![=6","WQnaS","]!%sI";"W:Fh6";"d//Mk","LgS*O";"7:&#!","%m$$N","(9CK)","T+8pZ";"$h)2o";"jO]Co","Ofa,1","!/c:k";">$0@i","[<Tj$","6f2*Q";"k$[lV";";6Q_?";"\'\"(MM";"9N%sQ","G);-F","M`PZJ";"Fkjs(","00(4Z";"F8!?d";">p$N1"});"d9$";H[7]({1042350-(235320+807017),-1046050+1046051,-811309-(-811320),1027945+-1027940,-403925+403935;302993+-302989;121092+-121084,-36974+(972632-935644),388337-388331;(504281+-210392)-293887,(95166+587791)+-682945;548801-548792,-112534-(481420+-593957);(((-52456+-912354)+233057)-(-171485))-((-609717-686905)-(-736347)),"4OO`l";")ZhqQ";"QX\"TV";"(T;41","\'ZgQT","<%3qq";"pLUo4","b3F0W";"dN@0<","^Z*hd";"O-NDt";";MB_5";"KIgOb";"_N^gP"});H[7]({148604-148603,98479+-98476,855556-855554,594864+-594858;344036+-344031;-97712+97716;"E/>ct","9t7Uq";"^)L4R";"ECeVn","Hf$W:";"_?4Xq"});H[7]({253741-253734,412087-412083;615549-615547;-280800+(-383480-(-664283));-140566-(-737278-(-596704)),-736384+736385;-621592+621597,((1454143-(1347058-1038060))-676998)-468141,"<&.`T";"5nC(E","b-pb`","8$Z..";"#<q#h";"[Ak^+",":\'[Q@";"bfQ6a"});"\\#B";H[7]({635429-635427,517764+-517763,"]JC/\"","0^3H9"});H[7]({695017-695015;553405-553404;"4pE/(";"TZ)O8"});H[7]({-781043-(-781053),-521079-(-521087);-506396+506399,-41901-(-41903);-299874+299880,819526+-819515,(756045-(-218577))+-974615,874823-874818,-745439-(-745455),-684225+684238;(573432+-66816)+-506607;-608099+608100,964660-964645,-820406-(-820410),-474744-(-474756);((-133661+-333436)+759893)+-292782;"*s%*l","JGbdi",",F.uK";"(d3sY";"G_R3s","h*nX^","JT/Uc","nG7n#";"6@@7W","E,!\\b";"^e@/p","%;o,F","H?X\\9";"+h4kf","s*=iM","I<nQW"})}for C,X in ipairs({{-538151+538152,382599-382204};{388921+-388920,740262+-740009};{-490229-(-490483),-25259+25654}})do local R={}R[1],R[2]=C,X while R[2][79361+-79360]<R[2][1035553+-1035551]do H[8][R[2][-230672+230673]],H[8][R[2][(920555-393670)+-526883]],R[2][-395594+395595],R[2][-976327-(-976329)]=H[8][R[2][120634-120632]],H[8][R[2][(110894-33053)-77840]],R[2][371306+-371305]+(-222868-(-222869)),R[2][690793+-690791]-(275138+-275137)end end H[12]=function(C)local X={}X[2]=C return H[8][X[2]-(370536-354532)]end do local C={}C[3]=H[8]C[4]={}C[1]=function(X)local R={}R[2]=X R[5]={}R[3]=477348+-477347 R[4]=#R[2]while R[3]<=R[4]do local C={}C[2]=string.sub(R[2],R[3],R[3])if C[2]=="z"then table[H[7]({(64415-(-220916))-285330,(-70967-(-1024486))-953517;"inser";"t"})](R[5],string.char((1320768-682181)+-638587,15328-(711388-696060),213786-213786,-965513-(-965513)))R[3]=R[3]+(273236+-273235)elseif C[2]:match("%s")then R[3]=R[3]+((657315-((18349+(2246078-1003375))-733252))-(705118-575604))else local C={}C[4]={}C[1]=-696799-((-985337-665084)-(-953622))while C[1]<150303-150298 and R[3]+C[1]<=R[4]do local X={}X[2]=string.sub(R[2],R[3]+C[1],R[3]+C[1])if X[2]=="z"or X[2]==" "or X[2]=="\n"or X[2]=="\r"then break end C[4][#C[4]+(760508+(-493712-266795))]=X[2]C[1]=C[1]+(351670-351669)end C[6]=#C[4]for X=C[6]+(520408-(-452209-((((-840280+(1046383+-499359))+79793)+-208391)+-550762))),-456229+456234,-456010-(-456011)do C[4][#C[4]+(((-536399-(-856348))+572584)-892532)]="u"end C[5]=-510271+510271 for X=-418831-(-418832),-984423+984428,284347-(-173851+458197)do local R={}R[2]=X C[5]=C[5]*((-77534-(-35418))-((1776598-770002)+-1048797))+(string.byte(C[4][R[2]])-(643673+-643640))end C[2]=C[6]-((-643954+(173998+174484))-(-295473))for X=50530+-50527,(33334+-33331)-(C[2]-(-571145+571146)),611095+-611096 do local Q={}Q[3]=X Q[2]=math.floor(C[5]/(((-1025930+699636)+-74219)+((-415195+-318665)+(1033893+100736)))^Q[3])%(152683+-152427)table[H[7]({955937-((((((711388+-225420)+-1523768)+329376)-13643)+988531)+689471);-23731+23732;"t","inser"})](R[5],string.char(Q[2]))end R[3]=R[3]+C[6]end end return table[H[7]({418989+-418987,-28629-(-28630);"t","conca"})](R[5])end for X=-290444-(377856-668301),#C[3],926190+-926189 do local R={}R[3]=X R[1]=C[3][R[3]]if type(R[1])==H[7]({433389+-433387;-923938+923939;"g";"strin"})then C[3][R[3]]=C[1](R[1])end end end do local C={}C[1]=math[H[12](521397+(322148+-827424))]C[13]=math[H[12](227057-210745)]C[7]=table[H[12](231992+-215872)]C[3]=string[H[12](-758285+774473)]C[4]=621844+-621844 C[6]=(1470227-838109)+-632116 C[14]={}C[2]={}C[9]=442816-442816 C[10]={}for X=(850824-302922)+-547901,(1135236-588977)-((-2732+262423)+(-176595-((-520561-(-258827))-201173))),((((-413840-747377)-(-126584))-(-1984767-(-1012551)))-(415536+(-911762-81543)))-515351 do local R={}R[1]=X C[10][R[1]]=R[1]end repeat local X={}X[2]=C[13](122347-122346,#C[10])X[1]=C[7](C[10],X[2])C[2][X[1]]=C[3](X[1]-(((-302852+450416)+574684)+-722247))until#C[10]==(-1714649-(-754788))+(-914059+1873920)C[12]={}C[5]=function()if#C[12]==-192819+192819 then local X={}C[4]=(C[4]*(535572+-535571)+((823790+(3431672059372-281582))-(-497077+729976)))%(35184371163951-(-924881))repeat C[6]=(C[6]*(456395-456218))%(-471919-(-472176))until C[6]~=1001040+-1001039 X[10]=C[6]%(465784+-465752)X[1]=(C[1](C[4]/(419210-419208)^((-68877+68890)-(C[6]-X[10])/(310663+-310631)))%(453865+4294513431.0))/(631755-631753)^X[10]X[7]=C[1]((X[1]%(-319920+319921))*(-614749+4295582045.0))+C[1](X[1])X[2]=X[7]%(-956741-(-183464-838813))X[5]=(X[7]-X[2])/(842488-(519123-(-257829)))X[6]=X[2]%(-824843-(-825099))X[9]=(X[2]-X[6])/((1454546-994662)-459628)X[8]=X[5]%((-113963-(-569741))-455522)X[3]=(X[5]-X[8])/((1193067-241172)-951639)C[12]={X[6],X[9];X[8],X[3]}end return table[H[12](-41890+58010)](C[12])end C[11]={}H[9]=setmetatable({},{[H[12](342965+-326700)]=C[11];[H[12](-910734-(-926786))]=nil})H[5]=function(X,R)local Q={}Q[1],Q[4]=X,R Q[3]=C[11]if Q[3][Q[4]]then else local X={}C[12]={}X[2]=C[2]C[4]=Q[4]%(573106+35184371515726)C[6]=Q[4]%(94965-(46055-((-831665+1357603)+-574593)))+(-16456+16458)X[4]=string[H[12](-768528+784737)](Q[1])Q[3][Q[4]]=H[12]((627060-((739087-(-201460))+-1076330))+-746491)X[3]=-807232-(-510865-296525)for R=1022313+-1022312,X[4],270787-270786 do local I={}I[1]=R X[3]=((string[H[12](553211+-536930)](Q[1],I[1])+C[5]())+X[3])%(-927937+928193)Q[3][Q[4]]=Q[3][Q[4]]..X[2][X[3]+(-538819+(-210079-(-748899)))]end end return Q[4]end end H[4]={H[9][H[5](H[12]((((-2174586-((-503873+-958445)-(-626189)))-(-667595))+-9379)-(-696579)),982030+28854118500383)];H[9][H[5](H[12](964401-948377),27541081877985-1032417)];H[9][H[5](H[12]((-1609544-(-1333452-(-550703)))-(-843122)),838644514707-(-556448))];H[9][H[5](H[12](209872+-193831),60628+(22729355917663-(-99711)))];H[9][H[5](H[12](610206-594051),11797708887310-(-629579))],H[9][H[5](H[12](521507-505389),34889228885717-(-601997))],H[9][H[5](H[12](282577-266432),18636734157819-(-528462))];H[9][H[5](H[12](677310+-661008),28904014261229-(626791+-1351956))],H[9][H[5](H[12](868306-852123),595610+7727487601294)],H[9][H[5](H[12](407858+-391644),2519057071205-(-267669+((276742-(-570359))+((835220+((-164142+-644358)+-589212))-(-23435)))))];H[9][H[5](H[12](77059-60858),((-839138-(-821935))-87788)+22670166922895)],H[9][H[5](H[12](-482684-(179219+(-719768+41562))),(841571-(-163690))+28946383769887)];H[9][H[5](H[12](-256293-(-272471)),-164548+12382884264331)],H[9][H[5](H[12](958864+-942544),-668009+(31877363071573-946573))],H[9][H[5](H[12](-753301-((-1440425-(-1013399))-342448)),(-1034527+2068235)+22097233224165)],H[9][H[5](H[12](902844+(-574392+-312378)),(1185155-((710796+757764)-((266014+1157436)-894222)))+8103836658258)],H[9][H[5](H[12](711552-695520),((458487+436385)+-1710346)+5369917673451)];H[9][H[5](H[12](-518202+534319),((-254018+27345231150263)-286531)-(380225+-1317338))];H[9][H[5](H[12]((-381763+-114450)-(-512335)),22939605609898-(-101640))],H[9][H[5](H[12](548495+-532389),-40508+6052884662393)],H[9][H[5](H[12]((-753665-(-650079))-(-119614)),28526968088801-(-220569))],H[9][H[5](H[12]((-827723+((-593793-(-539629))-(-128718)))+769222),185267+34055762326080)];H[9][H[5](H[12]((831485+-305062)+-510203),(908849+-135140)+22844601354802)];H[9][H[5](H[12](-490501-(-506658)),385257+1013224636604)],H[9][H[5](H[12](662994+-646775),-870212+33681275830008)];H[9][H[5](H[12](-426639-(-442766)),16102539346640-308518)],H[9][H[5](H[12](-652050+668254),726562+23411945835260)];H[9][H[5](H[12](569147-552977),415788+8190632302134)],H[9][H[5](H[12](304586-288547),19821008060646-394187)],H[9][H[5](H[12](219058-202883),-847872+(117608+11832515733972))];H[9][H[5](H[12](((((136513-(-632242))-225846)-606695)+-505180)+585256),4720656916163-(-281706))];H[9][H[5](H[12](((-449945+-532485)+1474617)+-476076),-326458+5093507686865)];H[9][H[5](H[12](11176+5096),((537078-433072)+-174495)+34741195073929)],H[9][H[5](H[12](-820400+836536),990944+10884200799120)];H[9][H[5](H[12]((-574497+167326)+423519),-467542+13418796995107)],H[9][H[5](H[12](448421+(828797+-1260965)),13265426023842-(-828317))],H[9][H[5](H[12](-684474+700673),-505411+(230737+7976262323275))],H[9][H[5](H[12](550892-534521),(-924715+16134883025748)-593491)];H[9][H[5](H[12](-378688-(-394758)),25866778175223-(164881+-784624))],H[9][H[5](H[12](888786-872632),(10737630390469-(-646563))-119128)];H[9][H[5](H[12]((675261+180185)-(1069419-229979)),780762+(34450395684996-(-659016+1489354)))],H[9][H[5](H[12]((914966+17310)-916190),(-691306+(621515+952465))+15651942806184)];H[9][H[5](H[12](506768-490734),-183602+14390905533821)],H[9][H[5](H[12]((1187300-678212)-492742),-185898+21767901030592)],H[9][H[5](H[12](-325386+341415),(-495401-156835)+27747668901519)],H[9][H[5](H[12](-586220+602351),16995189524402-654864)];H[9][H[5](H[12]((1114060-1020417)-77454),-617776+19732544633219)],H[9][H[5](H[12](-14964+31126),830467+30085329261640)];H[9][H[5](H[12]((304927+-127314)+-161292),19167959825857-(-985102+1534599))];H[9][H[5](H[12](-504482+520502),((20109784972521-(-1691584-(-892109)))-(-337077))-992438)],H[9][H[5](H[12](-904248-(-920598)),-560147+30647546594642)];H[9][H[5](H[12](-76229+92421),(337994-320603)+12691744079547)];H[9][H[5](H[12](-610527-(-626563)),-571534+(32469366509977-(-56920-(-863884))))],H[9][H[5](H[12](-848324-(-864557)),801677+26144552085256)];H[9][H[5](H[12](-250143-(-266234)),-536085+(904016+14014923544746))];H[9][H[5](H[12](-44213+60545),25234547364704-(381053+-1157139))];H[9][H[5](H[12](782626+-766601),2039764331110-(666223+((-1027672+979127)-(-286196))))],H[9][H[5](H[12]((370559+(-841173-(-36798)))-(-449990)),3248728754697-302501)],H[9][H[5](H[12](940845-924615),-922025+17148324865575)];H[9][H[5](H[12](-421824-(-438021)),3418106995716-(-896629))];H[9][H[5](H[12]((-623773+727976)-87880),24374590265097-(-977385))];H[9][H[5](H[12](((-420661+-398752)-(-929208))+-93442),15434959928451-(-288955))];H[9][H[5](H[12]((441816+173065)+-598676),((-476859+-507022)+1534365)+14257483172501)];H[9][H[5](H[12](-705525+721732),15179629869695-(-259547))];H[9][H[5](H[12](-451269+467315),(-590854+33170345989408)-895692)],H[9][H[5](H[12](-891626-(-907971)),17277091378905-346354)],H[9][H[5](H[12](-617393-(-633728)),(-57980-(1872784-907276))+22114365469505)],H[9][H[5](H[12](396253-379888),(-263610+1793792430153)-(-396544))],H[9][H[5](H[12](-324077+(-480681+((742017+339716)-(-81236+342104)))),6786755877006-(-1035177))],H[9][H[5](H[12]((740638-56430)-667835),(-167966+(885970+(21638740867402-1021929)))-728084)],H[9][H[5](H[12]((-654623+-26240)+697215),-299383+((-183146-(-631884))+16169805890674))];H[9][H[5](H[12](995075-978696),32904792633331-796860)];H[9][H[5](H[12](-880205+896288),(-327011+(116189+94845452529))-(1337655-835741))];H[9][H[5](H[12](((-79576+861450)-(-568037-(-423185)))-(68824+841622)),76538+33157505212714)];H[9][H[5](H[12](683827-667517),-671574+2903232143315)];H[9][H[5](H[12](551590+-535230),6234712307746-94030)],H[9][H[5](H[12](1003715-987696),(-977641-(-691089))+4315681043992)],H[9][H[5](H[12](-385227-(-401496)),87723+27612882684689)],H[9][H[5](H[12](-202909-(-219107)),-663300+5095538566296)],H[9][H[5](H[12](-154229-(1898-172153)),18876300138026-970099)],H[9][H[5](H[12](175368-(1110646-951525)),(1742745-725191)+(6009982012558-648683))];H[9][H[5](H[12](932839-((-210806+931848)+195668)),-285500+27903606922140)];H[9][H[5](H[12]((-358168+((-173736-(-760823))+-588379))+375609),7086589685672-649939)],H[9][H[5](H[12](697042+-680939),7039070604810-400555)],H[9][H[5](H[12](-337040-(-353177)),33955917257679-834850)],H[9][H[5](H[12](-726494-(-742670)),967282+32474390881110)];H[9][H[5](H[12](803274+-786892),348711+3150637689819)];H[9][H[5](H[12](102569-86264),5718337844213-486672)],H[9][H[5](H[12](744404-728204),(563337+-624416)+7728261978483)],H[9][H[5](H[12](1019347-1002966),859484306552-(-33306))];H[9][H[5](H[12](179282+-163140),8905194989981-457350)],H[9][H[5](H[12]((103177-437583)-(-350742)),-615346+(2928416502783-(-701813)))];H[9][H[5](H[12]((726305+((-378576+(411905-(-224945)))-(961857-1016346)))+-1022704),1015604+(-834892+3077329783150))];H[9][H[5](H[12](933479-917090),(27961128342669-473302)-257949)];H[9][H[5](H[12](146402+-130046),3411605866439-(-228334))];H[9][H[5](H[12](169300-153167),9340940191118-617467)];H[9][H[5](H[12](-567297+583656),102847+(18440614533093-(-737659)))],H[9][H[5](H[12](-800759+817047),512415+34500475836663)];H[9][H[5](H[12](-273596+(687429+-397535)),19772633326869-806797)],H[9][H[5](H[12](362469+-346391),24406418484570-352919)];H[9][H[5](H[12](-223874-(-240098)),13561595575584-(-124176+-823789))];H[9][H[5](H[12](-521293-(-537547)),(16837046448625-(-664759))-(-756080))];H[9][H[5](H[12](782439-766401),9818765258038-(-965587+1733859))];H[9][H[5](H[12](-499043-((((-500220+(637017-43469))+(401900+(-60883+-1429292)))-(-49918))+(903656-473779))),((1079277-502809)+-968844)+((44066+2418269905252)-(-71785)))];H[9][H[5](H[12](-418597+434663),20495689337052-(-932937))],H[9][H[5](H[12](557833+-541455),((-427016-(-837060))+22137700857167)-((1890413-(-231621+777759))-421128))];H[9][H[5](H[12](1013081-996682),202861+19941324092118)],H[9][H[5](H[12](199699+-183369),8641140847667-(-340993))];H[9][H[5](H[12](96580+-80368),-44336+22575737907833)],H[9][H[5](H[12](804184+(-195806+-592120)),28080669599852-(-564571))];H[9][H[5](H[12](-390346+406690),8601498366471-398882)];H[9][H[5](H[12](581145-(1601380-1036575)),468363+6723950320678)],H[9][H[5](H[12](-127907-(-144041)),12972368359794-329204)];H[9][H[5](H[12](119867-103589),(-934213-(-496193))+(-702048+13852941494454))],H[9][H[5](H[12](651751+-635364),(-542578-419683)+7161603247585)],H[9][H[5](H[12](-512282-((-167366+1213444)+-1574595)),34533792160845-(-432189))],H[9][H[5](H[12](220103-(554296-350427)),(-89719+-922280)+10833169337249)];H[9][H[5](H[12](102356+-86313),210156+27240846751983)];H[9][H[5](H[12](773154-757044),(34022496608683-(-531481))-830759)];H[9][H[5](H[12](-881739+897892),221827+17049614502826)];H[9][H[5](H[12](783194-767102),(11961111061319-(-623735))-(-4536))],H[9][H[5](H[12]((154294-136573)+(-156759+155118)),28961034017149-502721)];H[9][H[5](H[12](205131-188769),649329+11973654673683)],H[9][H[5](H[12](851422-835091),721991+30924032622048)];H[9][H[5](H[12](739860+-723542),30907762351336-481761)],H[9][H[5](H[12](27499-11249),-503994+15668164746174)],H[9][H[5](H[12](708985+-692613),27646870634283-(-361303))];H[9][H[5](H[12](-331817-(-347978)),13784140698863-345390)];H[9][H[5](H[12]((-159851+-711762)+887836),1945+4199660885765)];H[9][H[5](H[12](-691435+707612),(465164+26479692565233)-(-383004-494084))];H[9][H[5](H[12]((389097+(-894098-366350))-(-887622)),((-53855+((600067+75366)-(-116933+1123943)))+-420830)+5751822416800)];H[9][H[5](H[12]((-1481318-(-796533))+701084),((((-868440+964432)-(366468+158354))-(-133432-((335788+-453199)-(-789850))))+(-148262+701111))+18200013651874)],H[9][H[5](H[12](22655+(254416+(-97994+-162813))),142246+(-612414+24127576436687))];H[9][H[5](H[12](-996456-(-1012772)),-847156+(14610367845057-((990401+-21336)+(((284311-(-74005))+-52892)-312870))))];H[9][H[5](H[12](257851+-241757),(-1391293-(-970013))+6007582338255)],H[9][H[5](H[12](-428248-(-444450)),3665299754582-817923)];H[9][H[5](H[12](-972724+(408293+580726)),-753696+(673809+20890637102633))],H[9][H[5](H[12](401139+-384972),28870569003091-906410)];H[9][H[5](H[12](120020+-103897),30114707537644-(-114901))];H[9][H[5](H[12](-314022-(-776887-(-446717))),(50805+21511515614810)-657917)],H[9][H[5](H[12](369413-353070),143461+31324575053265)];H[9][H[5](H[12](-1013867-(-1030244)),23165972439597-(-15063))],H[9][H[5](H[12](-63759+(-241507-(-321323))),901582+13759215831294)],H[9][H[5](H[12](56314+-40242),-953925+18709974415512)],H[9][H[5](H[12](-6339-(-22432)),(19313976966359-264958)-366465)],H[9][H[5](H[12](380745-364733),5197491242420-896234)],H[9][H[5](H[12](722844-706469),7899795777879-(-701396))];H[9][H[5](H[12](542907+-526620),(1048096+-1627837)+35098795797533)],H[9][H[5](H[12](-815729-(-831981)),-773975+10331299176174)],H[9][H[5](H[12](592054-575895),22542551315688-(-394760))],H[9][H[5](H[12](47889-31593),300518+20329552729990)];H[9][H[5](H[12](243481+-227432),13523562069379-(-616557+(-298980-(-176822-(-247841)))))],H[9][H[5](H[12](((-1136141-(1038380+-1289350))-(575109+-471773))-(-1004904)),(14019153572589-(-349550))-(-549142+(528832-(1116709-430908))))];H[9][H[5](H[12]((296455-(-595744))+-876155),-359299+18283595179217)];H[9][H[5](H[12](-179951+196284),10243516467852-(-397098))],H[9][H[5](H[12](-629150+645540),174209+489170332934)],H[9][H[5](H[12](-873456-(-889852)),812639+(13873845666237-(-998097)))];H[9][H[5](H[12](-51193-(-67479)),-380170+8584826091980)];H[9][H[5](H[12](-126331+142336),33527597674377-(-129721))],H[9][H[5](H[12](-993094-((-303390-658192)+-47803)),16287948982042-(449968+-1390413))],H[9][H[5](H[12](-800075-(-816293)),33291853111509-1022805)];H[9][H[5](H[12](-1028284+(-489409+1533833)),-830967+((((-1134189-(-478205))-(-703046))+-1002029)+17428613314448))];H[9][H[5](H[12](-253091+269150),(979935+(17960213768334-96336))-(-1022355))];H[9][H[5](H[12](-459202-(-587329+112076)),19456659462437-416303)],H[9][H[5](H[12](-142461+158524),(3460890051671-162799)-(-56382))],H[9][H[5](H[12](-784510+800895),-942204+22225922360566)],H[9][H[5](H[12](278518+-262451),18669543087593-(-1031576))];H[9][H[5](H[12](-881049+897151),668714+4020337176949)];H[9][H[5](H[12](-572443+588841),((702422+-1547003)-(-131291))+27407065166565)];H[9][H[5](H[12](367256-351071),(-30368-384173)+27522894333308)];H[9][H[5](H[12](665265+-649130),(726251+((430830-370632)-321198))+(-298905+14935967291564))];H[9][H[5](H[12](8599-(-7795)),45682+27688405811173)];H[9][H[5](H[12](409726+-393531),7362530076593-(951952+-1412930))],H[9][H[5](H[12]((-221998+46642)-(-191630)),2282611825099-905682)];H[9][H[5](H[12](1045250-1029125),(-416621-(-187850))+(13148399166226-(-987721)))];H[9][H[5](H[12](756835+-740773),-814835+5121149781678)];H[9][H[5](H[12](531228+-514966),(758402+-1214013)+(-440178+9091197145389))],H[9][H[5](H[12](-18666-(-35035)),-25162+(-489852+(-382302+2870108297086)))];H[9][H[5](H[12](237723-221707),30788414702970-(-35723))],H[9][H[5](H[12](375843+((-270775+55670)-144548)),30689953979044-132653)],H[9][H[5](H[12]((-435974-(-1188508-(-1006953)))+270492),(6293+7775855046062)-(-72234))],H[9][H[5](H[12](574767+-558696),34005823126643-(-898870))];H[9][H[5](H[12](-332309+(-434366-(-783003))),28159543912714-(-398800))],H[9][H[5](H[12](-706411-(-242218+-480331)),18248347363685-414430)];H[9][H[5](H[12](959256+-942914),1036145+34854757467450)];H[9][H[5](H[12](595571+-579323),-359528+(2884215876460-(-534766)))];H[9][H[5](H[12](-351885-(-367983)),-145980+17785085875368)];H[9][H[5](H[12](817763-801698),34679325065519-(-831855))],H[9][H[5](H[12](919459-903362),724320+7432791771386)],H[9][H[5](H[12](-341714+357927),811610+(224033+13497505528521))],H[9][H[5](H[12](-273336+289500),35026484540354-(239135-((-991042+30620)+1361499)))],H[9][H[5](H[12]((-780043+1490085)+-693749),(577953+32622967033041)-(-344376))],H[9][H[5](H[12](736513-720174),(-318092+8557654902599)-886387)],H[9][H[5](H[12](-406526-(170015-(((698083+-430488)-606517)+931577))),12117791281194-120982)],H[9][H[5](H[12](-95713+111972),30488661544837-150427)],H[9][H[5](H[12](831579+-815433),(-338148-(-458585))+195026786270)];H[9][H[5](H[12](346079+(-976308+646305)),15166996852223-(-326823))],H[9][H[5](H[12](-63089+79395),31368075617774-486900)];H[9][H[5](H[12](364738+-348680),(204809+826119088594)-(-862395))],H[9][H[5](H[12](945519-929474),944329+(7708743020715-372380))],H[9][H[5](H[12](-188717-(585797+(-357380-433247))),997792+4179471101693)];H[9][H[5](H[12](332369-316148),-342559+33315034811405)],H[9][H[5](H[12](332942-316874),28431476732847-(-738917+1735611))];H[9][H[5](H[12](-110240+(-877199+1003678)),1627975323832-(-289226-94893))],H[9][H[5](H[12](983685+(551365+-1518823)),((((814300+619927818044)-683237)-905845)-(-92386))-(-991431-(-771302)))];H[9][H[5](H[12](-788652+805040),-119182+(424944+13115387999235))];H[9][H[5](H[12](448475+-432445),28298094248795-831709)],H[9][H[5](H[12](-515324-(-531653)),-501431+1121601242393)];H[9][H[5](H[12](878543+-862150),144191+(13100252621476-(-475937)))];H[9][H[5](H[12](76318+-60222),-738005+25433597088604)];H[9][H[5](H[12](-206506-(803518+(-934818+-91574))),19029798325044-(-40412))],H[9][H[5](H[12](253868+(756098+-993834)),19228856386028-(-63745))];H[9][H[5](H[12](493024-476739),(636591+-1533226)+1714171345809)],H[9][H[5](H[12](-939050+((737065-108443)+326446)),29771429023849-(-109029))];H[9][H[5](H[12](-291392+307608),342536+30526641402421)];H[9][H[5](H[12](-497161-(-513313)),20969522371045-(-459758))];H[9][H[5](H[12](-1005995+((812974-(-626665))-417258)),-968985+12430450652786)],H[9][H[5](H[12](-700020-(-716377)),22289287891709-920753)],H[9][H[5](H[12](-768991-(-785090)),-661310+26499462024094)],H[9][H[5](H[12](983471+-967122),-355663+23894144493296)],H[9][H[5](H[12]((536367-775385)-(-255168)),1509880665884-(1505166-1043157))],H[9][H[5](H[12]((124642+-625042)+(465423+51059)),(1070988-910304)+27913715644205)],H[9][H[5](H[12](470822+-454698),16384266000413-452936)];H[9][H[5](H[12](-325251-(-341462)),563613+(683449+25179323892697))];H[9][H[5](H[12](725324+-709277),(792825-229877)+5643678955796)],H[9][H[5](H[12](-811682-(-827696)),242393+23382089777225)];H[9][H[5](H[12](-414631+430687),-559510+15378041867901)],H[9][H[5](H[12](-853010+869252),24146446441115-758640)],H[9][H[5](H[12](-664568-(-680959)),-895841+24349694635183)],H[9][H[5](H[12](697568-681217),-335995+32620522305271)],H[9][H[5](H[12](-983442+999635),-949246+28910987914639)];H[9][H[5](H[12](-24066-(-40143)),-287972+6862030012226)];H[9][H[5](H[12](-304619+320683),(1121599-817673)+32935811335887)];H[9][H[5](H[12]((-235968+(1034470+-229115))+((-82896-(-763297))+-1233592)),6443645866146-369279)],H[9][H[5](H[12](-12758-(-28813)),32158650467875-(-346345))];H[9][H[5](H[12](-892866-(-908981)),23457643773052-(-940642))];H[9][H[5](H[12](164443+(-418045-(-269730))),8833153961537-(-441067))],H[9][H[5](H[12](386760-370727),19046492356768-(-489816))],H[9][H[5](H[12](-911880-(-928043)),4100443594296-(-786954))],H[9][H[5](H[12](926336-(1426913-516832)),382867+(33700948513920-(-1010588)))],H[9][H[5](H[12]((690708-522839)+(-254646+103081)),-124416+20976381121245)];H[9][H[5](H[12](-579907-(-596214)),(-188015+25589485865774)-110653)],H[9][H[5](H[12](-812442+828477),(633044+29960944737955)-(-1324134-(-434520)))],H[9][H[5](H[12]((391322-18893)+-356219),21781518396524-(-169482))];H[9][H[5](H[12](478521-462426),19307505655534-(-902935+(526266+409398)))];H[9][H[5](H[12](-671009+687392),10498996514709-516391)];H[9][H[5](H[12]((-943521-(-538429))+(937228+-515976)),504061+5096705632940)],H[9][H[5](H[12]((800539-782954)-(272238-270743)),6376078483892-(-564902))];H[9][H[5](H[12](344097+(-208258+-119739)),-519147+1728248939637)];H[9][H[5](H[12]((869686+-308262)+-545336),(-753359+4055330242425)-(-323252))],H[9][H[5](H[12](799264-782989),17158709362718-489820)];H[9][H[5](H[12]((((-284316+53232)+(750841+-1293853))+1341509)+-551231),16493645366625-90331)],H[9][H[5](H[12](-415354-(-470703+39193)),1910598483585-(855935+(-1194057-(-209972+229286))))];H[9][H[5](H[12](560111-543917),(33099595640858-(-808513+(39523+53499)))-998691)];H[9][H[5](H[12](652079+(-1190703-(-554924))),34869805605159-(-412605))],H[9][H[5](H[12]((-1904344-(-1252773-(-344709)))+1012423),14929392417363-401251)],H[9][H[5](H[12](945700+-929392),4128516118743-(-49854))];H[9][H[5](H[12](-630935+647172),15540732283479-(156875-(-65874)))];H[9][H[5](H[12](-249285-(-265345)),-325785+((17149249610573-38539)-((71005+794354)+-1261504)))],H[9][H[5](H[12](531888-515857),25510900180975-(-631751+((2212291-914314)-346904)))],H[9][H[5](H[12](-459461-(-475712)),20624145752932-(-707278))],H[9][H[5](H[12](-850676+867068),(-45183-(-381716+1147717))+3515332059346)];H[9][H[5](H[12](-851231+867415),621374+16250409885357)],H[9][H[5](H[12](266973-250847),(((-565023+-107722)+1368687)+1565712897663)-(((-697988+446931)-(-592149))-(191718-392195)))],H[9][H[5](H[12](297727+-281413),(-809495+1189993)+32289558760103)];H[9][H[5](H[12](1025490+-1009346),638362+30756184350762)];H[9][H[5](H[12](113014-96913),-168182+18143289460207)],H[9][H[5](H[12](918404-(13916+888440)),14826739060528-(((-615825-(987861+-727959))+1657307)+-730373))],H[9][H[5](H[12](444255-428084),593641+15567908207175)],H[9][H[5](H[12]((396975-176077)-204740),-99436+29122818350749)],H[9][H[5](H[12](-420500+436537),278053+34336275049939)];H[9][H[5](H[12](-358897-(-1263625-(-888541))),762903371095-982608)];H[9][H[5](H[12]((45717+798337)+((-813349-(-1018533))+-1032989)),33434984357537-(-1008114))];H[9][H[5](H[12](-980920+997156),(6271714526794-(-868282))-87446)];H[9][H[5](H[12](-790366-(-806389)),-515438+(4307422017708-84406))],H[9][H[5](H[12](676841+(-246746+-414068)),1019097+12504458550126)];H[9][H[5](H[12](383525+-367297),63513+18268925178866)];H[9][H[5](H[12](1062905-1046648),((-1004800+(776828-(-154712)))+-37681)+(28881597089369-823846))],H[9][H[5](H[12](-23123+(808430-(118325+650737))),(-254949-(373737+(((34211+122974)-(333009+-1175576))-1030120)))+((5076746678738-(-517563))-(-329681)))],H[9][H[5](H[12](34536+-18431),4123576220781-(-465444))];H[9][H[5](H[12]((15832-((-172200+-324348)+-303343))+-799681),((-780096-((1099398-666293)+-1145713))+27022495150067)-((-1032375+58670)+644233))],H[9][H[5](H[12](939632+-923623),-120809+20134616784875)];H[9][H[5](H[12](-840396-(-1851308-(662112+-1656705))),(780672+27118245245408)-(-274034))];H[9][H[5](H[12](-13128+29411),1017281+(21874762590859-(-353036)))],H[9][H[5](H[12](-117923-(-134131)),(-688053+14554452284191)-24469)];H[9][H[5](H[12](298654-282365),776449+20495552944308)],H[9][H[5](H[12](612462-596296),4569836449750-(-563387))];H[9][H[5](H[12](-375209+(784099-392629)),(29536508316517-(-565213))-422132)];H[9][H[5](H[12](322907+(363628+-670151)),11907868031477-880258)],H[9][H[5](H[12](-167943+184111),28261417628929-309203)];H[9][H[5](H[12](507419-491094),(-995078-(-845834))+30702105145348)];H[9][H[5](H[12](567736+-551421),-728202+19076709111543)],H[9][H[5](H[12](646577-630243),(664657-530166)+(-402786+4070666051979))],H[9][H[5](H[12](-1000533+1016859),(((-1690716-942347)-((323613+-2143162)-(632338+-1532721)))-(-801142))+11180168423000)];H[9][H[5](H[12](756997+-740775),-210151+28173436179556)],H[9][H[5](H[12](-373395-(-389665)),34316390924290-(-175354-708909))];H[9][H[5](H[12](78528-62133),-534301+8034201876967)];H[9][H[5](H[12](365315-349302),45138+4756603699631)];H[9][H[5](H[12](126801+-110488),604520+5185959772090)];H[9][H[5](H[12](-795148+(1042987+(66441-297925))),-167653+21207385372538)];H[9][H[5](H[12](743386+-727143),32061132148440-(-660625))],H[9][H[5](H[12]((-605625+-134976)+756864),-803413+20080499953989)];H[9][H[5](H[12](-496476-(-512656)),-511219+33862351474087)];H[9][H[5](H[12](-973793-(628546+-1618631)),(31814839909740-914107)-(-300357))];H[9][H[5](H[12]((((339795-406510)-(-412498))-(-713370-(-435721)))+-607066),-830348+((415818+15292848323799)-(-512791)))];H[9][H[5](H[12](278143-261964),-518291+2470828970510)],H[9][H[5](H[12](681995+-665985),-823369+328848713734)],H[9][H[5](H[12](-273777-(-289968)),25523205810754-11315)];H[9][H[5](H[12](((338656+-24041)-773612)+475279),((633796-(-391039))-542154)+3841665652867)];H[9][H[5](H[12]((617039+-264773)-335896),22908810726005-(-509830))];H[9][H[5](H[12](614166-597963),482203+21493719175668)];H[9][H[5](H[12]((-414609+-263550)-(-694278)),-995552+6251171086551)],H[9][H[5](H[12](-769841-(-786087)),876569+(-792546+14448683127785))],H[9][H[5](H[12](-653981+670210),17393928996017-825786)],H[9][H[5](H[12](604326-588210),296962+25207479000275)],H[9][H[5](H[12](-458209-(-474510)),(((-2503903-(-694004))-(-991126))+3129944392564)-635114)],H[9][H[5](H[12]((1037964+-55755)-965953),369742+(-57915+13924326281858))];H[9][H[5](H[12](393625+(-980036+602490)),-171557+5372325411565)];H[9][H[5](H[12](((375344-496633)-(-248794))-111238),(-253058-740083)+24641269311368)],H[9][H[5](H[12](819018-(147024-(-655726))),(21654437027130-468442)-475074)];H[9][H[5](H[12](-632102-(-1119404-(-471295))),(959911+13605753172713)-(17612+(-565099+(900752+(-87943+-1273266)))))],H[9][H[5](H[12](163682-147324),(26311787675381-((-369192-89276)-(-166226)))-19809)],H[9][H[5](H[12](231156-(541786-326715)),(14419746762969-411785)-867680)];H[9][H[5](H[12]((790078-787780)+14043),-1002687+1219941588789)];H[9][H[5](H[12](27724+-11507),17966803746321-(-266230))],H[9][H[5](H[12](-231746-(720123-968010)),1020641+295823533009)],H[9][H[5](H[12](-440236+(593410+-136807)),-267639+11669897894151)],H[9][H[5](H[12](393740+-377360),643013+34140341832478)],H[9][H[5](H[12](302976+-286699),20242641455202-(-194554))];H[9][H[5](H[12](232863-(847788-631055)),(9396280584122-(-383137))-(994831+-1715636))],H[9][H[5](H[12](473105-456997),(944400+-1086228)+17154297059161)],H[9][H[5](H[12](-983376+(405242-(-594481))),-813051+29709108308798)];H[9][H[5](H[12](-331162-((622262+-1842400)-(-872936))),(942102+28490709004027)-387167)],H[9][H[5](H[12](-169442+185751),29827653021528-951486)],H[9][H[5](H[12](-389453+405604),194989+14436186169813)];H[9][H[5](H[12](-527727+543788),27355247227027-(-799692))];H[9][H[5](H[12](-327312-(-343609)),-289500+10903292630311)];H[9][H[5](H[12](-48648-(-64665)),22279326418855-((-382455+246409)+1019189))];H[9][H[5](H[12](-472608+488868),(774508-207860)+2066833220809)];H[9][H[5](H[12](-551806-(-568044)),(-739874+-118942)+27404051316929)],H[9][H[5](H[12](28622+-12328),191149+8882929814701)];H[9][H[5](H[12](662815+-646584),409191+5463003656287)],H[9][H[5](H[12](((-835306-(285492-468901))+(675091-609540))-((((222840-(-483801))+181850)-747997)-743106)),954351+1678851065187)],H[9][H[5](H[12](274496+-258488),-925868+10706787670323)];H[9][H[5](H[12](932357-915996),-525445+288654918541)];H[9][H[5](H[12](-779490-(323398+(-21600+-1097372))),598564+23907851957912)];H[9][H[5](H[12](523023-506739),21165009764055-37817)];H[9][H[5](H[12]((689315+-1630093)+956882),2087705873068-545001)];H[9][H[5](H[12](-279474+295837),2902456934810-(-402303))],H[9][H[5](H[12]((462014-133548)-312385),14161917300086-914266)];H[9][H[5](H[12](-824945-(-841014)),27172922615234-(41260+123178))];H[9][H[5](H[12](-940802-(-1262599-(-305582))),381428+32177504787677)],H[9][H[5](H[12](-308158+324384),34442557058352-233581)];H[9][H[5](H[12]((581175+-1111217)+((567087-249267)+228403)),29766833121354-(-1197911-(-968948-(-47582))))];H[9][H[5](H[12]((2035637-1035551)-984075),26792635331873-(-35503))];H[9][H[5](H[12](-348218+364357),(-597144+28470723802595)-(-233712))],H[9][H[5](H[12]((-51138+792696)+-725241),34994859077431-432687)],H[9][H[5](H[12](1016529+-1000357),32673705960274-(-476179))],H[9][H[5](H[12]((750395+(-106797+-1601132))-(-973778)),12359363790683-(-338612+(795571+-958675)))],H[9][H[5](H[12]((323952+288302)+(-766238+170306)),(403990+216735)+18884748628361)];H[9][H[5](H[12](-331111+347126),-146285+17012548183005)];H[9][H[5](H[12](698822+-682485),-149672+27100110485866)],H[9][H[5](H[12]((1573724-895625)-661952),((-44180+490339)+-188213)+16727120006030)],H[9][H[5](H[12](78883-62610),(227327+487180)+702956054207)],H[9][H[5](H[12](821299-(-671588+1476647)),-808117+6196795182095)],H[9][H[5](H[12](1003124-986770),16667127352622-(-278291-207273))]}for C,X in ipairs({{877263-(-172786+1050048),-890886-(-891252)},{-371611-(-371612),(-943782-87104)+1031220};{-994135-(-994470),1037639-(905881-(-131392))}})do local R={}R[1],R[2]=C,X while R[2][295783+-295782]<R[2][(-1270525-(-539977))+730550]do H[4][R[2][-896297+896298]],H[4][R[2][-178426+178428]],R[2][-512953-(-512954)],R[2][(192043-34580)-157461]=H[4][R[2][-1029391-((((-1835973-(-672553))-(-971445))-851994)+14576)]],H[4][R[2][(985280+-1407420)-(-497179-(955938-(120864-(-910112))))]],R[2][-909730-(-909731)]+(-974590+974591),R[2][(-830134+542788)+287348]-(((142680+815329)+-894989)+-63019)end end H[11]=function(C)local X={}X[2]=C return H[4][X[2]-(1057424-1046833)]end do local C={}C[7]=string[H[9][H[5](H[12](582630-566608),686719+199867287314)]]C[5]=string[H[9][H[5](H[12](-780128+796353),-203400+8401858661521)]]C[4]=table[H[9][H[5](H[12](-319381+335622),-836420+13165920186046)]]C[2]=table[H[9][H[5](H[12](102839-86653),((148384+(1600625-314497))-1007717)+16357236380995)]]C[6]=type C[3]=H[4]C[8]={[H[9][H[5](H[12](3660-(842727-855273)),1012148+(150302+24446599715963))]]=330140+-330140;[H[9][H[5](H[12](342638+((-681987+(503004-563889))-(-416610))),303425154717-735031)]]=9076-(798184-789109);[H[9][H[5](H[12](100704+-84615),3005579246663-(-449475))]]=(-562728+776140)+-213410,[H[9][H[5](H[12](245737-(1249885-1020202)),536836+8464844182588)]]=123969+-123966,[H[9][H[5](H[12](832654-816330),13607222089327-386002)]]=(-192484+-854730)+1047218,[H[9][H[5](H[12](583885-567716),2014006782702-43850)]]=-245446-(-245451);[H[9][H[5](H[12](-620892+637171),-352798+(-739292+29588478351359))]]=608297-608291;[H[9][H[5](H[12](-707500-(-723874)),81501909148-995506)]]=(-462745-(-479345))+-16593;[H[9][H[5](H[12](-686007-((-345567-(116180+-327765))+((-644460+(-549302-(-905995)))+-280569))),513662+19887004009120)]]=716895+-716887;[H[9][H[5](H[12](696434+-680347),25802858986934-(-842328))]]=869870+(-730352+-139509),[H[9][H[5](H[12](((970253+(565595+-2232154))-204086)-(-916442)),22092080015610-6040)]]=608465+-608455;[H[9][H[5](H[12]((73070+(-650436-338287))-(-931674)),26124016056932-(1030049+-1382101))]]=-704768+704779,[H[9][H[5](H[12](840868+-824636),8370057598520-(-779125))]]=(-908234-(-970373+829127))+767000;[H[9][H[5](H[12](1004251+-988139),588909+32371701592146)]]=281133+((125659-((33383+(-300558-(-769594)))-835817))-740177);[H[9][H[5](H[12](-257195+273360),731157+21245470461908)]]=-625503-(-625517),[H[9][H[5](H[12](765002-748726),-163790+13059141513812)]]=-448085+448100}for X=909671-909670,#C[3],-490729-((120669-(-491297))+(-1246970-(-144274)))do local R={}R[1]=X R[3]=C[3][R[1]]if C[6](R[3])==H[9][H[5](H[12](293648-(1218786-941213)),17025553828288-332779)]then local X={}X[1]={}for Q=-326679+326680,#R[3],823570-823568 do local I={}I[3]=Q I[5]=C[8][C[7](R[3],I[3],I[3])]I[1]=C[8][C[7](R[3],I[3]+(-508697-(-508698)),I[3]+(-278185+278186))]I[2]=I[5]*((-77239-807732)+884987)+I[1]C[4](X[1],C[5](I[2]))end C[3][R[1]]=C[2](X[1])end end end H[3]={H[11](537065+-526271);H[11](-403164+414080);H[11](984246-(981606-((463459-(-186519))-641891)));H[11](1058430-1047506);H[11](-33785+(-784076+828524));H[11]((-123901-(-45949))-(105107-194007));H[11](77722-66923);H[11](-948500-(-959409)),H[11](-213275+223885);H[11](((738444+(987729+(-1927129-872137)))-(-539149))-(-544695));H[11](892446+-881593);H[11](998913-988136);H[11](590491-579766);H[11](-730986+(-133519-(-875384)));H[11](90225-79513);H[11](68718-57889);H[11](-302044+312651),H[11](-782281+(640890-((663276+-649227)+-166070)));H[11](-257725+268472),H[11](-619111-(-630007));H[11](-756350+767279);H[11](-576893+587501);H[11](517425-506628);H[11]((-907305-(-1012558+(368131+294883)))+(944596+-376132)),H[11](472108+(-617211+155881));H[11]((-609046-(-824548))-204822),H[11](613084+-602370),H[11]((1656728-721744)-(69252+854799));H[11](476753-465850),H[11]((-66286-78286)+155197),H[11](((208796+742534)+-508164)+-432393),H[11](((531642-45238)-864998)+(-717100+1106424)),H[11](-335437-(((-739400+(2255391-910852))-311506)+-639984)),H[11](-449271+460132),H[11](-897868-(247536+-1156143));H[11](-585823-(-596645));H[11](-558987+569600),H[11](73005+(-884481+822100)),H[11](527850+(-644680-(-127761)));H[11](12381-1770);H[11](452633-(((-245375+829993)-((-469370-99589)+(-400905-(-943640))))+-169122));H[11](469137+-458327);H[11](-264668-(-275610)),H[11](-882973+893885),H[11](747568+-736871);H[11]((-166360-(-720602))-543317);H[11](-18074+29001),H[11](586722+-576009);H[11](-92040+102763),H[11]((561551+380264)-931047);H[11](1023639-1012815);H[11](966306+-955476);H[11](-333860+344704),H[11]((-814348+73132)-(-751864)),H[11](1000112-989159),H[11](-251953+262751);H[11](-968191-(697894+-1676747)),H[11](150614-140000),H[11](-223355+234076);H[11](-710753-(-721393));H[11]((-388899+35343)+364371);H[11](747468-736574);H[11](((2183924-(-41194-(-554568)))-642729)+-1016958);H[11](-439930-(-450811)),H[11](281854-271259),H[11](-281735-(-292655)),H[11](((741983+-82456)-628595)+-20034),H[11](((754223+-1994472)-(-810372))+(-56444-(-497002))),H[11](222410+-211455),H[11]((479735+-55121)-413932);H[11](1050115-1039366),H[11](((970839-(((-572349+486650)-(-627453+72642))+-23844))-283352)-231575),H[11](((-870087-(-241390))+(-297117-(-754955)))-(-181536)),H[11](-792085-(-1178604-(-375584))),H[11](959854+(-97154-851914)),H[11](-154858+165554);H[11](-656285+666975);H[11]((854054+-1863062)-(-638537+(678102+-1059284)));H[11](1047192+((-325777+145785)-(1834622-(1805863-(724403+(-882842-(-986284))))))),H[11](692913-(-28454+710558)),H[11](812820-802131),H[11]((-1183971-(-1038203))+(469320-312884));H[11](-933893+944847);H[11]((-390834+((-162961-(((651998-872758)-(-242486))+67644))+1317811))-663777);H[11](-460267-(-471024));H[11]((-1313470-(-631024))-(-693231));H[11]((227645-(-791914))+-1008858);H[11](-880759+891664),H[11](-227197+(576584+((660823+(((680392+-896399)-(-655248))+-984366))+-454340)));H[11](((865500+-929631)+-180506)+255573);H[11]((-1053246-(-551037))-(-512955)),H[11](-136969-(-147810)),H[11](-972958+983687);H[11](725875+-715199);H[11](768667-757854),H[11](939003-928385),H[11](((-749083+1365885)+(-751840+-107138))-(-253043)),H[11](673676-662888);H[11](-836880+(-413714+1261421));H[11]((153558-(-7425))+(-1019769+869420)),H[11](763341-752710);H[11](-485747+496463),H[11](-677535-(-688454)),H[11](809775-799014),H[11](-923642+934530),H[11](879978+-869361),H[11]((-165299-(87623-(((150254+38892)-882453)+1492665)))-535565);H[11](685967-675265),H[11](-150017-(-160684));H[11](113101-(822926-(509011-(-211678))));H[11](652144+(-131182-510096)),H[11](700054-(432339-(-256948))),H[11]((493814+358673)-(1297646-455918)),H[11](-362361-(-373133)),H[11](-305130-(829439+-1145255));H[11](-784575-(-795317));H[11](167849+-156956),H[11](271763+-261107),H[11](786385-775579);H[11](657498-646572),H[11](-183058-(-193699));H[11](-191425-(-202089));H[11](-776285-(-787017));H[11](447207+-436250);H[11](524909-514218),H[11]((121561-886048)+775192),H[11](-552132-(-563084)),H[11](403104+-392361);H[11](-856965-(-867903));H[11](-171138+(223561+-41538));H[11](902388-891539);H[11]((507677-379195)-117691),H[11](-813491-(-824183)),H[11](-399897-(515790-926480)),H[11](672527-661803);H[11]((-69816+-679103)+759731),H[11](-701200-(-711835));H[11](611617-600814);H[11](656048-645212);H[11]((-809441-(-703426+933126))+(-417932+1467712)),H[11](-281460-(-292383));H[11]((((-581710+1242725)-207106)-(-6927))+-450046),H[11](391060-((905156+-776957)-(-252095))),H[11](((-285728-610010)+1546616)+-640103);H[11](666758-655933),H[11](-306462+317241);H[11](-64772+75425),H[11]((-635597+(839945+451232))+-644688),H[11]((50438+(475450+((-811200+53811)+200793)))-(993521-1034886));H[11](792342+(-1043125+(624418+-362736)));H[11](-85475+96227),H[11](644764+(1046187+-1680171));H[11](-468737-(-479593));H[11]((-949167-((1094807-702293)+(417730-1027835)))+742393);H[11](794411-783742);H[11](-179036-(-189755)),H[11](-386255-(-397018)),H[11](-687689-(-972915+274566)),H[11](438663+-427785);H[11]((583004-659519)+87395),H[11](41851-31117);H[11]((-348042-(-180445))+178456),H[11](411449-400594),H[11](-440530-((-355034+-284372)+187979));H[11](-739422-(-750280)),H[11](-913810+924459);H[11](-342452+353236);H[11](814833+-804162);H[11](139669+-129064),H[11](-333132-(-343744)),H[11](-751291+762164);H[11]((-20070-(-922412))+-891553),H[11]((-140453-51325)-(-202589));H[11](-129070+(-564359+704369)),H[11](57428-(-913296-(-960037))),H[11](-399067-(556886+((-1031419-(-150273))+-85590))),H[11]((917616-487124)+(-761288+341570)),H[11](453582-442882);H[11](327114-316230);H[11](-98534+109371);H[11](((-1044229+1569959)-(-412869))+(-1068871-(-141147))),H[11]((865439-414712)-439983);H[11](518868-507946);H[11](21363+-10461),H[11](-222237+233105),H[11](65473+-54530),H[11](-59510-(-70175));H[11]((-542056-177324)-(-730106));H[11](376671-365739);H[11](-491840-(-502791));H[11](((-939197+2209866)-473676)+-786161);H[11]((878658-761730)-106066);H[11](719529+-708926),H[11]((616923-(-145002))+-751078);H[11](-570291-(-581197));H[11]((-1200098-(-740458))-(-1108332-(-637782))),H[11](-904233+915144);H[11](280075+-269337),H[11]((-655361-(-1038983))+-372943),H[11](-673347+684170),H[11]((662793-44970)+-607204);H[11]((654548-88437)+-555439);H[11]((727713+-483011)+-234081);H[11](-95504-(-106356));H[11]((1236545-767032)-458782),H[11](176943+-166351),H[11](((-457774-(-76123))-155283)+547581);H[11](949172-938327),H[11](137105+-126190);H[11](812986-802360),H[11](584238+-573629);H[11](-537641-(-548336));H[11](594029+-583187);H[11](394464-(356607-(-26974)));H[11](-412783+423491),H[11](-895749+906536);H[11](662526-651708),H[11](-928131+939022);H[11](931990+-921283),H[11]((75043+235526)+-299777),H[11](-349807+360513);H[11](-833086+843686);H[11]((-358684-(-240090))-(-129236));H[11](932746+-921996);H[11](781367-770716);H[11]((-919196-(1047166+-1042493))-(-934651)),H[11]((896779+(842603+((-235060-(963233+-532373))+-199765)))+-862748),H[11](514874-504254);H[11](-574572-(-228911-356531));H[11](-371063-(-381729));H[11](687724+-676817),H[11](-649621+(375752-(-284770))),H[11](-226517+237406);H[11](-707442-(-718281)),H[11](-873285+884003),H[11](452457-(591127+-149598)),H[11](-220621-(-231314));H[11](488026-477422),H[11](421440+-410803);H[11]((-1316898-(-76452+-423126))+((834695+-716593)+710061));H[11]((-453525+-297827)+762153);H[11](301040-(492156-(81109+120755)));H[11](((626449+((635404+13515)+675046))-1024076)+-915421);H[11](251044-240282),H[11](175517+-164918),H[11](((863652-(-76435))+(980512+-2503593))+593640),H[11]((-1314416-(-617525))+707574);H[11]((-99833-(-928145))+-817543),H[11]((-310132+34446)+286456),H[11](-498238+509146);H[11]((-873955-(-966799))+-82194),H[11]((-1619137-(-849261))-(-780766));H[11](659726-648776);H[11](-932203-(388454+-1331300));H[11](-779603+790408);H[11](59283-48365),H[11](-294266-(-305092));H[11](652437+-641498);H[11](-970736-(-981670));H[11](-162439+173149);H[11](646939+-636255);H[11](((-1508467-(-755034))-((541840-(-58509))-750670))-(-613962));H[11](-986666+997523);H[11](417317+-406720),H[11](-689321+700077);H[11](-65772-(-76693)),H[11](-797473+(1493619-685270)),H[11]((-691887+1230934)+-528389);H[11](-87006-(-97629)),H[11](262261+-251466);H[11](-14874-(-25748));H[11]((-738822+506439)+243329);H[11](419006+(169286+((788119+(-906264-212925))+(-122702-123805))));H[11](8769+(562224-560399)),H[11](-615914-(-626754)),H[11](-157393-(-168174));H[11](-201540-(-212281));H[11]((-316132-(-947391))-620413),H[11]((240966+567440)-797598),H[11](759080-748479),H[11](679633+-669011);H[11](-146921+((-81708+(-623596+(-930883-(-863921))))+(1657840-(259873-(-467966))))),H[11](1059310-1048555),H[11]((-281483-((831815+-742628)+-995293))-613888),H[11](-528254-(-539201)),H[11](-509633+520466);H[11](-995191+1005955);H[11]((-659039+-297856)-(-967729)),H[11](-846617+857437),H[11](((-596905+(1609766-979598))+-215463)+(-483439+676376));H[11](((-617672+((-486643-350187)+1485198))-247499)+227531);H[11](218851-208219);H[11](-782965-(-1801106-(-165803+-841443)));H[11](328719-317789)}H[6]=function(C)local X={}X[1]=C return H[3][X[1]+((592609+(-465469-(-316269-(-1019454))))-(-582772))]end for C,X in ipairs({{232959+-232958,(-880448+1058317)+-177575};{209216+-209215;-220625+220684},{-999097+999157,253538+-253244}})do local R={}R[3],R[1]=C,X while R[1][(-466738+-288812)+755551]<R[1][24177+(741817+-765992)]do H[3][R[1][619064+-619063]],H[3][R[1][(-873736+(-1028925+952134))-(-950529)]],R[1][-305514-((-211400-(-708721))-(366324-(-436512)))],R[1][-558853+558855]=H[3][R[1][512811+-512809]],H[3][R[1][734999-734998]],R[1][-164401+164402]+((-1097929-(-704097))-(-393833)),R[1][276905-276903]-(-405601+405602)end end do local C={}C[10]=type C[2]=table[H[11](-371849+382487)]C[4]=string[H[11](-980453-(-991189))]C[7]=string[H[11](88400-77640)]C[5]={[H[11]((813619+(((986171+-234101)+(-1629723-(-966447)))+((386185-105090)-739643)))+-433187)]=-708918-(-708949),[H[11](464958+-454110)]=-631105-(-631124);[H[11](-777211-(-787840))]=-587722-(-1586262-(-998480));[H[11](400543-389727)]=(266324+(-190601-(1306038-321768)))-(-908557),[H[11](124830+-114030)]=498316+-498263;[H[11](-681709-(-692394))]=-331269-(-331276);[H[11]((-158808+-102135)+271820)]=865460-(1042562-177104);[H[11](559615-548715)]=-854318+854346;[H[11](-634540+645156)]=752482-752435;[H[11](-213856-(-224573))]=-64796-(-64857),[H[11]((960983+-478302)+(149470-621320))]=-297689+297712,[H[11](1012253-(936577+65070))]=656848-656811,[H[11](477111+(-159984-306525))]=(-474594+626551)-151935,[H[11](671109+-660249)]=(-687666-(-412823))-(-274849);[H[11](-769844-(-780532))]=209095+-209043,[H[11](660439+((-1557126-(-713534))+193911))]=510862+-510848,[H[11]((-15171-(-591877+618488))-(-52578))]=-810422+810457,[H[11]((-726086+1605858)-869052)]=-263330+263375,[H[11](759957-749324)]=826611-826570;[H[11](-112528-(-123126))]=63147-63127;[H[11](613753+-603000)]=((-90230+-775042)+690346)-((719313-(-373889-(-720494)))-547688),[H[11](332330+-321737)]=316886-((-978663+587677)+707840);[H[11](-393880-(-404578))]=-829426-(-829439);[H[11]((842170+(-812929+(-1695875-(-740070))))-(-937273))]=-1038236+(672344+(441959+-76025)),[H[11](945790+-934988)]=-157006+157040,[H[11]((700277-95592)-594049)]=-475592+475609;[H[11](-255025+265912)]=61274-61230,[H[11](-386829+397711)]=1032651-1032636;[H[11](961639+-950885)]=-772095+772116;[H[11]((737451+-1418508)-(-691727))]=-592568+592568,[H[11](472084+(-121453-339891))]=637662+-637623;[H[11](-326047-(-336992))]=810988-810926;[H[11](-799808-(-810435))]=(250235+((-736896+481744)+478054))-473136;[H[11](-35096+45982)]=318418+-318389;[H[11](284403+-273638)]=829158+-829132,[H[11](-476293-((659029+(-2095030-(-710693-(23048+-110096))))+325369))]=741837+-741781;[H[11](-529133-(-591371+51583))]=(-97202-(237071-262723))+71588,[H[11](800079-789258)]=-63637-(256736-320384);[H[11]((11001-(-925232+191656))+-733640)]=-918771-(250081+-1168892),[H[11](384469+-373808)]=-809031-(-809094);[H[11](154195+-143580)]=67336-67306,[H[11]((-697241+1500389)+-792329)]=979527+-979491;[H[11](-989684+(-979642+1980025))]=753956-753899;[H[11]((-569102+(616600-429639))-(-392995))]=776305+-776281;[H[11](484615+-473970)]=(434988-(-236360))-671323,[H[11](-1014741+(554897+470800))]=-238505-(-238532);[H[11](-722696+733472)]=(-10840-(-113422))-102573;[H[11](579967+-569160)]=673690-673687,[H[11](-116643+127508)]=-286936-(-286941),[H[11]((212821-(-802928))-1005095)]=474189+(-256549-217632);[H[11](-715995-(-144108-582562))]=-923400-(-923458),[H[11](136840-125936)]=-668499-(-668517);[H[11]((738681-(-151799+690820))-188716)]=593191+-593158;[H[11](66257-55605)]=-924213+924262,[H[11](224291-213463)]=((2224994-774946)-758566)-691432,[H[11](-724568+735440)]=-542649-(-937811+395111),[H[11](623601-612897)]=-9415-(-9419);[H[11](858194-(153165+694356))]=-615461+615516,[H[11](-663738-(-674366))]=1037105-(801244+235815),[H[11](1040671+-1029836)]=619204+(-408846+-210299),[H[11](((200696+-1486658)-(-606734))+689950)]=551599+-551556;[H[11](676745-666071)]=1002153+-1002137,[H[11](-459375+470213)]=933249+-933237,[H[11]((-320788-58201)+389760)]=992720-992672}C[9]=string[H[11](-196594-(-1032946+825501))]C[6]=H[3]C[1]=table[H[11](-158351+169292)]C[8]=math[H[11](969361-(180425-(-778277)))]for X=-255490+(571927+(472736-789172)),#C[6],-794021-(573891+-1367913)do local R={}R[3]=X R[2]=C[6][R[3]]if C[10](R[2])==H[11](1021317+-1010584)then local X={}X[1]={}for Q=((632647-(-840586+658576))+-391240)+-423416,C[4](R[2]),-446945-(-446946)do local I={}I[2]=Q I[1]=C[9](R[2],I[2],I[2])I[4]=I[1]:byte()I[4]=I[4]-(-280776-(-528210+247411))C[2](X[1],C[7](I[4]))end R[2]=C[1](X[1])X[2]=C[4](R[2])X[7]={}X[6]=-374524-(-374525)X[4]=-922394+922394 X[3]=(-812879+1291764)+(-896004+417119)while X[6]<=X[2]do local Q={}Q[2]=C[9](R[2],X[6],X[6])Q[3]=C[5][Q[2]]if Q[3]then X[4]=X[4]+Q[3]*(34154-(7524+26566))^(((-649968+699200)+-49229)-X[3])X[3]=X[3]+((-1814586-(-956851))-(-857736))if X[3]==922010-922006 then local R={}X[3]=-977046-(-977046)R[1]=C[8](X[4]/(966248+-900712))R[4]=C[8]((X[4]%(122519-56983))/((-190537+111587)-(-79206)))R[2]=X[4]%(-1003099-(-1003355))C[2](X[7],C[7](R[1],R[4],R[2]))X[4]=1003924-1003924 end elseif Q[2]==H[11](378278-367474)then C[2](X[7],C[7](C[8](X[4]/(-369845+435381))))if X[6]>=X[2]or C[9](R[2],X[6]+(338222+-338221),X[6]+(308354-308353))~=H[11](232268+-221464)then C[2](X[7],C[7](C[8]((X[4]%((17154+-769303)+((331895-((367888+-920464)+49156))+-17630)))/(515007-514751))))end break end X[6]=X[6]+(-493233+493234)end C[6][R[3]]=C[1](X[7])end end end H[1]={H[6](626982+(-946533-(-312928))),H[6](-776129-(-769680)),H[6](515235-521955),H[6]((-177956-(-418053))+-246682),H[6](28673+-35228),H[6]((-42498+10502)+25416);H[6]((31288-(-568969))-606704),H[6](-376988+370554);H[6](345672+-352129);H[6](574019-580498),H[6](-1013643-(-1007193));H[6]((-307077-358338)+658696),H[6](-776601-(-769903));H[6](230307+-236811),H[6](709520+-716229),H[6](-673383-(-666784)),H[6](210977-217428);H[6](-106678-(-100108));H[6](161989-168678);H[6](-700599-(-693922));H[6](272951+-279387),H[6](162482+-169132),H[6](-26761+20151),H[6](-548424+541816);H[6]((-1288033-(153373+-905203))+529610),H[6](-1003733-(-648279+-348746));H[6](-157002+150423);H[6](-353938-(-347439)),H[6](-703375+696788);H[6](-1036368+1029658);H[6](676436-682914),H[6](-667072-(-660606)),H[6](725778+-732325),H[6]((-692367-337625)-(-1023367));H[6](482227+-488917);H[6](-620828+(-184180+798497));H[6](-182927+176329);H[6](633827+-640392);H[6](-990642-(-984002));H[6](-471108+(732122-267494));H[6](-657722-(-759904+108717)),H[6](-784049-(-777374)),H[6]((-1026627-(-259998))-(-759960));H[6](274161-280853),H[6](-89240-(-82629));H[6]((961297-189709)-778128);H[6]((508479+-168735)+-346276);H[6]((-278386-(56251+198467))+526596);H[6](501596+-508089);H[6](849747-856460);H[6](((1832950-756489)-882354)-200789);H[6](131969+-138639);H[6](733385+-740073),H[6](324434-330956),H[6](495441+(-801709-(-299778)));H[6](270798-277451),H[6](-81064-(-74406)),H[6]((487845-139324)+-354984),H[6]((390816-9190)+-388244),H[6]((((-353725+(1911174-((-228096+731983)+(-662668+908227))))-(-362773))-944470)+-232950);H[6](676681+-683258),H[6](800912+-807366),H[6](-562957-(-556306));H[6](-971873+965353);H[6](-406698+400173),H[6](1022335-1029059);H[6](-980329+(-387300+1360950));H[6](-284664-(-277991)),H[6](-308346-(-301832)),H[6](576329+-582802);H[6](-1005601-(-999153)),H[6](798744+(-19866+-785365)),H[6]((382113+-1062235)-(-673586)),H[6]((917852-743762)+(-880378-(749125+-1448941)));H[6](-283089-(-276521)),H[6]((833018+-1841771)+1002177),H[6]((751081-(-51882))+-809601),H[6]((-480483+(1316247-(-91430)))-933910),H[6](336444+-342921),H[6](634617-641140);H[6](-572780-(-566223)),H[6]((-1008306+(-625490+2074099))+-446897),H[6](-935857-(-929160));H[6]((234919-(-653136))-894735),H[6](-606153+599620);H[6](-280949+274266);H[6]((898658+(-953812-503305))-(-68476-483364)),H[6](-483354-(-870659-(-394007)));H[6](-556625+549984),H[6](-590639+((-130098-(-783725))-69531));H[6](505732-512341),H[6]((656621-144963)+-518152);H[6](429564+-436282);H[6](75190-81845);H[6](((-556585-(-486031))-((524551+565874)-783980))-(-370421));H[6](-667574-(-660867)),H[6](1002655+-1009260),H[6](((510058-(-477575))+-1919699)+((1458142-992012)+459213));H[6](-372361-(-365647)),H[6](742865+(-752753-(-3430))),H[6](939874+(-659801-286559)),H[6](-562116+(1137041-581360)),H[6](7321+-13760),H[6](-154319-(-147882)),H[6](700224-706782),H[6](557233+-563777),H[6]((-716368-(-594905))-(-114751));H[6](-123034+116405);H[6](497223+-503826);H[6](811139-817754),H[6](-740947+734375),H[6](-841281+834841),H[6](-911108+904473);H[6]((629695+((284392+469780)+-1341606))+(-943050+894348));H[6]((147211+167432)-321195),H[6](-867578-(-861122)),H[6](-466552+459948),H[6](-427401-(-420963)),H[6](-705913+699365),H[6]((695972+(-1038760+1185443))-849179);H[6]((-1140195-((387037+-592181)+19075))+947644);H[6](-232430+225734);H[6]((551691+-481203)-76932),H[6]((718906-488906)-236488),H[6](183668-190288);H[6]((686381-(-234967))+-927993);H[6](160347+-166818);H[6](((1594689-713254)+-348979)+-538982);H[6](-989255-(-982660)),H[6](161641-168273),H[6](-25240-(776495+-795230)),H[6](337408+((296982-242483)-398606));H[6](-668139-(-661605)),H[6](-192811+186283),H[6](-903392+896681),H[6](-498505-(-491942));H[6](42001+-48563),H[6]((397527+-276343)-127685),H[6](1018093+-1024643);H[6]((979282+-41431)-944478);H[6](496855+-503371),H[6](-230001-(659564-(288392+(1292527-697928))));H[6](193372-199917),H[6](((-362272-(-748801))+-796451)-(-403333));H[6](-576460-(-569759)),H[6](530618+-537070),H[6](346777+-353368);H[6](218033-(-577935+802652)),H[6](-883279-(-75525+-801157));H[6](576469+(-832520+249384)),H[6](488109-494705),H[6](1002962+-1009636),H[6](((-997021+1135607)+-908403)+763131);H[6](-2491-4000);H[6](-45873-(-39381)),H[6](434367+-440969),H[6](-998170+(1173293-181620));H[6](-224552-(-217900)),H[6](409847-416538),H[6](-411269-(-404709));H[6](491826+(-188291-310004));H[6](20427-(-721600+748748)),H[6](653921-660602);H[6](452005-458708);H[6](-651390-(-644744));H[6](235375+-241988),H[6](-618409-(-933578-(-321854))),H[6](58658+-65195);H[6](64085+-70623),H[6](39827+-46308);H[6](-144282-(-137836));H[6](-494817-(-488102)),H[6]((896625+-127587)+-775698);H[6](-911596-(-904995));H[6](-186771+180165);H[6](-467152+460447);H[6](-593384+586658),H[6]((722689-519476)+-209668),H[6](258338+-264911);H[6](-276719-(-270048));H[6](-357195-(-350583));H[6](-124824+118217);H[6]((1040389+(-108971+-1908454))-(-970372)),H[6](584615+-591166),H[6]((-762261-134938)-(518199+-1408891));H[6](525027-531692),H[6]((-329562+1269342)+-946349);H[6](((-392801-611582)+428169)+569588),H[6](426404-432935),H[6](-236770+230102);H[6](287057+-293638);H[6](1046195+-1052871);H[6](-90051-(-83476));H[6](-157559-((513484+-538578)+-125997));H[6](961304+-967833),H[6]((-922798-(-972599))+-56320);H[6](-675501-(-669005));H[6](-313097-(-306514)),H[6](-60195-((804030-51555)-806036));H[6]((-1910491-(93901+(-723724-322419)))+951543),H[6](-437944+431477),H[6](975262+-981768),H[6](659603-(771503+-105333)),H[6]((995613+-1474651)-(-472384));H[6](-627032+620338),H[6]((-600940+1408534)+-814160);H[6](-373112+366455),H[6](-79862+73332);H[6](((-355996+((603707+-1332616)-(-258712-(1038327-1020784))))+989685)+-187596);H[6]((-662026+530241)+125136);H[6](-185224+178706),H[6](-464376-(-375051-82786));H[6](-669477-(-662835));H[6](-290604-(-283938)),H[6](551862-(-203638-(-761942)));H[6](-828501+822016);H[6](939329+-945882);H[6](-288999+282546),H[6](840548-(571244-(-275853)));H[6](-487817-(-481178));H[6](-307371-(-300785)),H[6]((-970097+1445965)+-482504)}H[10]=function(C)local X={}X[1]=C return H[1][X[1]+(-136431-(-284389-(-1161267-(-1043619))))]end for C,X in ipairs({{1017401+-1017400;306974+(319677+-626429)};{(-540765-(-810457))-269691;113285+-113257};{379813+-379784;223923-223701}})do local R={}R[3],R[1]=C,X while R[1][-756639-(-756640)]<R[1][-937294-(-937296)]do H[1][R[1][930024+-930023]],H[1][R[1][(337744-913152)+575410]],R[1][859763+-859762],R[1][-492510+492512]=H[1][R[1][(416841-(-69087))+(-876484+390558)]],H[1][R[1][-211762+211763]],R[1][-821903+821904]+(-534563+534564),R[1][-635805+635807]-(-153031-(682969-836001))end end do local C={}C[9]=math[H[6]((-98448-(-830865))-739080)]C[7]=type C[3]=table[H[6](-181330+174608)]C[10]={[H[6]((1002456-393208)+-615935)]=-977758+977807,[H[6](1012403-1018836)]=465960+(974458+-1440388),[H[6]((135207-(-707778))-849541)]=((229588-((797516+-626184)+-394139))-934972)-(-482583);[H[6](140169-146886)]=-665596+(1236356-570752);[H[6](-982489-(-728559+-247302))]=(-900355+665877)+234513;[H[6](465547+(-469668+-2512))]=(901131-((261922+-1163125)+1302467))+-499833;[H[6](-582921-(-576350))]=-783072-(-897625-(-114535)),[H[6]((880838-675558)+-211782)]=806323-806264,[H[6]((-125379-(18898-527569))+((403955-(589839+22007))-181871))]=((-605116+(1282065-411570))-55268)+-210053,[H[6](571992-578538)]=954707-954687;[H[6](-364205+(208058+149583))]=794532+-794509;[H[6](-689247+682720)]=-386883+386926,[H[6]((-372398+-130904)-(-496789))]=-169381+169438,[H[6](-671012-(-664312))]=-786346+786391;[H[6](764154+-770649)]=898287-((-401349+863415)-(-436180));[H[6](-442705-(-436084))]=(-159965-(-257252))-97233;[H[6](425-7084)]=((361598+-1076267)+647577)+((-986459+1138270)+-84704),[H[6](243226+-249842)]=-727102-(-727126),[H[6](-1020775-(-1014300))]=40159+-40106,[H[6](-457823+451130)]=(227693+-686520)-(-458860),[H[6](837473-844135)]=-498430-(895946+-1394376),[H[6](-992541-(-985816))]=739177+(-963465-(-224301)),[H[6](346659+-353124)]=-327857-(-327920);[H[6](((-489923+11231)+390798)-(-624857-(-543610)))]=151400-151354;[H[6](79313+-85825)]=777504+-777492,[H[6](-836974-(-830357))]=((2772560-928902)-838276)-1005354;[H[6](856718+-863163)]=(-313700-(-421419))-(-869518-(-977226)),[H[6](652727-659188)]=-940871+(1830931-890021),[H[6](803553+(-1471425-(-661290)))]=655632-(117490-(-538098));[H[6](-722723+716214)]=629549-629493;[H[6](694691-701174)]=((-1005683-(-963256))+(((((-488136+371045)+-257982)+907788)-(330861-(-110781)))-(-266637)))-315269;[H[6](1033371+-1039830)]=(606685-(-383842))-990475,[H[6](-211730-(-205220))]=724421+-724418;[H[6](94328-100802)]=469900+-469868,[H[6](925299-931883)]=607810-607760;[H[6](-119661+113000)]=-763154+763215;[H[6](1014717-1021193)]=110320-110304;[H[6](639499+(-276395-369602))]=609487+(79207+-688672);[H[6](((-44500-(-485129))+-519961)+72654)]=-646435+646486;[H[6](-681459+674999)]=687389+-687380,[H[6]((670790-63405)+-613874)]=294844-294840;[H[6](752685+-759316)]=-25575+(132808-107195),[H[6](769134+(-892154+116364))]=-971948-(-971958);[H[6](1017143+(-116788-(1458445-((-965357-(-10189))+1506636))))]=-439761-(-439803);[H[6](-955068+948438)]=-860855+((941603+-240614)-(8728+(194866-363489)));[H[6](-694951+688256)]=269373-269311;[H[6](708416-714958)]=-240553-(-240574),[H[6](-515553+508905)]=-1038203+1038263,[H[6](-1018443+(((547116-(659111+-1124593))+-1425583)+1424874))]=593364-593317,[H[6](-327869-(-321407))]=(-1397841-(-589720))-(-808122);[H[6]((277894+354162)+-638728)]=738674+(-406938+(-826487-(-494758)));[H[6](471967+-478604)]=-233706+233733,[H[6](-83742-(-77142))]=854927+-854890;[H[6](270227+-276819)]=-884555-(-884557);[H[6](((971344+-108168)-646413)+-223206)]=-354015-(-354055);[H[6](358778+-365281)]=-686426+686443;[H[6](-787608-(-781087))]=222972+-222936;[H[6](-703510-(-697010))]=977268-977249;[H[6](-408473-(-401769))]=-233821+233826;[H[6](-823139+816580)]=9159+-9134,[H[6](1042279+-1048763)]=((-167871-724467)-(-332758))-(-823547-(-263936)),[H[6](-1029758-(-297114-(-353905+1080034)))]=-813133-(-813188);[H[6](-325701-(-319111))]=870456+(977835+-1848265),[H[6](-719312-(-1363576-(-650888)))]=-546769-(-546817)}C[6]=string[H[6](582518+-589161)]C[4]=table[H[6]((-626689-173662)+793763)]C[5]=string[H[6](807451-(-686650+1500565))]C[2]=string[H[6](609022+-615539)]C[1]=H[1]for X=700475-700474,#C[1],(-856416+132468)+(1716392-992443)do local R={}R[2]=X R[1]=C[1][R[2]]if C[7](R[1])==H[6](-538877-(-532336))then local X={}X[3]=C[2](R[1])X[6]={}X[5]=294559-294558 X[1]=-958274+958274 X[2]=-210868+210868 while X[5]<=X[3]do local Q={}Q[1]=C[6](R[1],X[5],X[5])Q[3]=C[10][Q[1]]if Q[3]then X[1]=X[1]+Q[3]*(-241834-(-241898))^((633543-633540)-X[2])X[2]=X[2]+(-109353+(1001026-891672))if X[2]==-390992+(714132+-323136)then local R={}X[2]=805124-805124 R[2]=C[9](X[1]/(160659+-95123))R[3]=C[9]((X[1]%((-1402623-((508911+-16900)+-1437481))-(-522689)))/(-854131-(-854387)))R[4]=X[1]%(-339607-(-339863))C[4](X[6],C[5](R[2],R[3],R[4]))X[1]=-383160+(-28037-(-411197))end elseif Q[1]==H[6](250900+-257514)then C[4](X[6],C[5](C[9](X[1]/(-442694-(-508230)))))if X[5]>=X[3]or C[6](R[1],X[5]+(241821-241820),X[5]+(78979+-78978))~=H[6]((295960-174990)+-127584)then C[4](X[6],C[5](C[9]((X[1]%((311726-379154)+132964))/(((16937+-143242)-(1005383-1012224))-(280443-400163)))))end break end X[5]=X[5]+(64053+-64052)end C[1][R[2]]=C[3](X[6])end end end return(function(C,R,Q,I,o,W,l,w,X,n,Y,M,g,m,s,T,A,b,i,h,U,k,O)local V={}V[18],V[24],V[7],V[15],V[17],V[12],V[14],V[10],V[3],V[5],V[20],V[13],V[4],V[1],V[16],V[11],V[2],V[6],V[19],V[9],V[8],V[21],V[22]=C,R,Q,I,o,W,l,w,X,n,Y,M,g,m,s,T,A,b,i,h,U,k,O V[3],V[6],V[20],V[11],V[16],V[21],V[4],V[5],V[22],V[9],V[2],V[19],V[8],V[13],V[10],V[1]=function(C,X,Q,I)local hF={}hF[18],hF[36],hF[11],hF[42]=C,X,Q,I hF[38]={}while hF[18]do if hF[18]<-165877+7798422 then if hF[18]<(-667210+(1714613-(-468563-(-655079))))+(1820458-(-866558))then if hF[18]<431221+1459232 then if hF[18]<-475885+(-701229+2061112)then if hF[18]<388460-(-168772)then if hF[18]<(-468826+89316)+(835646+-224327)then if hF[18]<943134-(1238292-456856)then if hF[18]<537845-436774 then hF[18]=10360282-158608 else hF[28]=V[9][hF[37]]hF[18]=hF[28]and(((632972+-1196332)-(70315-653892))+749598)+6953671 or 6584825-918161 hF[44]=hF[28]end else if hF[18]<(736196-(1022232+(272400-326421)))+453700 then hF[14]={}hF[18]=V[18][H[10](-102875-(507927-(144228+436431)))]else hF[18]=V[18][H[10](202558-232689)]hF[17]=nil hF[37]=nil hF[51]=nil hF[14]={}end end else if hF[18]<-1045912+1475039 then if hF[18]<295596+-38267 then hF[38][-383366-(-383379)]=H[10]((((658454+-1144976)+575935)+390739)-510406)hF[38][333068+-333056]=V[18][hF[38][125906+-125893]]hF[38][-663582-(-663592)]=hF[18]hF[38][332892+-332881]=hF[38][6574-6562]~=hF[20]hF[18]=hF[38][79705+-79694]and 15097882-(-957075)or 5923295-(-266916)hF[38][665059+-665050]=hF[38][30489-30478]else hF[18]=hF[14]and 16932334-600502 or 8371890-(-306003)end else if hF[18]<-168337-(-684365)then hF[18]=V[9][hF[11][-783920-(-783921)]]hF[13]=H[10](723556+-753838)hF[17]=V[18][hF[13]]hF[13]={hF[18](hF[17])}hF[14]=hF[13][(730948-(((((((426790-(((-1064618-(-519235))+778409)+-215817))+(-375582-3732))+-989725)-(-239716))-(-509505))+840724)+-445467))-545927]hF[17]=hF[14]hF[51]=hF[13][713003-(-576051+1289052)]hF[18]=-423563+6563403 hF[37]=hF[13][619188+-619185]else hF[18]=true hF[18]=hF[18]and-842615+2545367 or 6320113-(-656792)end end end else if hF[18]<223698+450974 then if hF[18]<-77149+656669 then if hF[18]<-931269+(-772337+2264405)then hF[31]=hF[10]hF[18]=hF[19]hF[18]=1367980-(-521550)else hF[55]=nil hF[38][(1232671-303648)+-929021]=nil hF[23]=nil hF[31]=nil hF[38][82964+-82944]=-973571-(-973826)hF[30]=nil hF[45]=nil hF[19]=V[1](hF[19])hF[8]=nil hF[56]=nil hF[50]=V[1](hF[50])hF[21]=V[1](hF[21])hF[17]=V[1](hF[17])hF[38][704305-704304]=nil hF[24]=nil hF[43]=nil hF[17]=H[10]((724702+274579)-((116722+-283230)+1196071))hF[38][((925694-181307)+-1354277)+609904]=-889449+889494 hF[16]=V[1](hF[16])hF[53]=nil hF[54]=nil hF[48]=nil hF[38][-538935-(-538959)]=646593+-646443 hF[5]=V[1](hF[5])hF[54]=H[10]((214990+276783)-521934)hF[15]=V[1](hF[15])hF[1]=V[1](hF[1])hF[55]=H[10](-533909-(-503742))hF[35]=V[1](hF[35])hF[15]=H[10](226837-256973)hF[46]=nil hF[16]=H[10](-161036+130878)hF[49]=nil hF[22]=nil hF[37]=nil hF[20]=nil hF[47]=V[1](hF[47])hF[38][-1046331+1046342]=-630248-(-630448)hF[10]=nil hF[38][(-1074520-(-1010432))-(-64090)]=H[10](-693805-(732268+-1395877))hF[5]=H[10](-327023+(-265058+561942))hF[12]=nil hF[47]=H[10](764560+-794733)hF[48]=H[10](-887907-(-857668))hF[52]=nil hF[25]=nil hF[2]=nil hF[49]=H[10](-567081+536855)hF[22]=H[10](-801795-(-771564))hF[23]=false hF[38][356150-356145]=H[10](-1038692-(-1008384))hF[19]=H[10](-161678-(-131509))hF[38][(219529-356858)+137351]=H[10](-273443+243152)hF[38][-818958+818971]=952848-952813 hF[3]=nil hF[6]=nil hF[38][585671-585668]=V[1](hF[38][862190-(-462374+1324561)])hF[4]=nil hF[38][766738+-766735]=H[10]((-538340+146206)-(-589700-(-227814)))hF[38][149802-(256584-106805)]=50105-50005 hF[38][634520+-634495]=1015370-(769186+246044)hF[20]=H[10](-170406+(1047186+-907033))hF[3]=H[10]((-1488993-(-913407))-(-545464))hF[27]=nil hF[10]=H[10](-266187+236052)hF[24]=H[10](-924838-(-894706))hF[38][465718+-465717]=H[10](604428+-634636)hF[29]=nil hF[45]=820527+(-173605-646919)hF[38][-579542+579571]=-794121-(-794301)hF[8]=H[10](132003+-162206)hF[4]=H[10](-1075103-(-1044908))hF[41]=nil hF[38][(-193959+-139135)+(-639664+972768)]=H[10](-558571+(-116467-(-644827)))hF[38][-413402-(-413409)]=H[10](-459327-(-429135))hF[34]=V[1](hF[34])hF[38][-613401+(-339720-(-953154))]=36464-36364 hF[52]=H[10](((((-1045476+1547141)+-397173)+-433787)-(-69061))+(-417199+647176))hF[35]=H[10]((245543-(-345886))-621647)hF[31]=H[10](-750383+(355828+364364))hF[32]=nil hF[7]=nil hF[29]=H[10](489992+-520252)hF[38][996688-996682]=H[10](-215531+185353)hF[32]=H[10]((-197089-(-149506))+17486)hF[34]=true hF[7]=H[10](-469265+438966)hF[13]=nil hF[2]=H[10]((-158660-(-724620))+(-31962-564173))hF[37]=V[18][hF[17]]hF[17]=H[10](-12378+-17798)hF[53]=H[10](18779-48958)hF[38][106230+(723723+-829922)]=-968900-(-969051)hF[41]=H[10](915729-(313007-(-497542-135352)))hF[30]=H[10]((-340943-(-703059))-392244)hF[46]=H[10](717439+-747555)hF[27]=H[10](-249419+219126)hF[25]=H[10](-586393+556155)hF[38][435476-435468]=H[10]((1952018-942165)+(-108606+-931425))hF[21]=true hF[38][-674953-(79464-754443)]=142616-142416 hF[6]=H[10](739263-769407)hF[56]={[hF[46]]=hF[23],[hF[3]]=hF[29];[hF[20]]=hF[27]}hF[38][-429258+429277]=595211+-594956 hF[23]=H[10](-557325+527119)hF[27]=H[10]((164284-(866630+-421337))-(563178-814075))hF[50]=H[10](338026+-368174)hF[38][292620-292611]=H[10](524230-554446)hF[12]=H[10](((1157976-178503)-838832)-170758)hF[46]=H[10](29890-59981)hF[43]=H[10]((-507358+1419389)-942243)hF[3]=H[10](-443809+413720)hF[1]={[hF[10]]=hF[19];[hF[35]]=hF[53],[hF[41]]=hF[38][-790344-(-790345)],[hF[38][-325823-(-325825)]]=hF[38][655428-655425];[hF[38][547249-547244]]=hF[38][-622561+622567];[hF[38][-775409+(1627093-851677)]]=hF[38][646472+-646464];[hF[38][(223614-(-84819-420262))+(-188092+-540594)]]=hF[38][885969+-885959]}hF[29]=H[10](-854216-(-823932))hF[41]=H[10](-986159-(-1258899-(-302829)))hF[38][-328161+328170]=574327-574072 hF[38][(-927399-(-312769))+614635]=H[10](-46362-(-16117))hF[38][-160929+160930]=(-40562+884138)-843563 hF[53]=774096-774074 hF[38][(1150610-661531)+((-2151152-(-778270))-(-883809))]=((221164-(-88416))+-438274)+128710 hF[38][699039+((-889696+368364)+-177705)]=H[10](-851531+821284)hF[38][((-931838+1523679)+-1193251)-((951965+-981806)+-571581)]=402357-402157 hF[38][-187866+187869]=-776800+776816 hF[20]=H[10](-925241+895009)hF[10]=H[10](-261404+(-201466-(460289+-892881)))hF[38][460183+-460173]=-536130+((-900167+1559886)-123334)hF[35]=H[10](-797066+766975)hF[19]={[hF[35]]=hF[53];[hF[41]]=hF[38][-887651+887652],[hF[38][-853451+853453]]=hF[38][802844+-802841];[hF[38][(399495+-780780)+381290]]=hF[38][423556+-423550]}hF[38][-11189+11192]=H[10](-1056419-(-1026128))hF[41]=H[10](-856437+826128)hF[35]=H[10](423547+-453673)hF[38][(504203-823630)-(-319429)]=V[18][hF[38][916788+-916785]]hF[38][-719508+719511]=H[10](-701148-(-670939))hF[38][-824757+824764]=(806356+-1408224)+602123 hF[38][(-1332043-(-638648))-(-693400)]=914425-(669675-(-244725))hF[38][425979-425978]=hF[38][-275364+(1118122-842756)][hF[38][-384054-(-384057)]]hF[38][-357958-(-357964)]=-803046+803081 hF[38][(261576+(-376225-(-106217-(-50126))))-(376653-(1449557-(1406730-392387)))]=(-711259+871424)-160140 hF[38][-560638-(-560640)]=hF[38][1004381+-1004380](hF[38][(963723+-597015)-366705],hF[38][(-742540+(960275-941298))-(-723568)],hF[38][196491+-196485])hF[38][(-562826-(-193843))-(-1039773+670784)]=H[10]((960536+21099)-1011926)hF[38][(-145060+806640)+-661575]=V[18][hF[38][-40164-(-40170)]]hF[38][251719+(-528557-(-276846))]=991622-991367 hF[38][698137+-698131]=H[10](-777886-(-747677))hF[38][960540-(-265273+1225810)]=hF[38][-996076-(-996081)][hF[38][226972+-226966]]hF[38][(44987-(-208005))+-252991]=H[10](333424-363586)hF[38][-451356+451386]=170094-(-473350-(432265+-1075454))hF[38][(-732371+1324520)+-592143]=-118311+118311 hF[38][(-82857+576314)+-493452]=hF[38][841331+-841328](hF[38][949311+-949305],hF[38][323398-323391],hF[38][-1043403+1043411])hF[38][-911649+(446612-(-465040))]=H[10](799201-(473785+355563))hF[38][-972232+972240]=H[10]((-922941+1819169)+-926519)hF[38][(88040-233208)-(-145175)]=V[18][hF[38][-587572+587580]]hF[38][(-1438974-(-899632))-(-539350)]=H[10](254453-284662)hF[38][(34606+-651337)+616737]=hF[38][699916+-699909][hF[38][-874082-(-874090)]]hF[38][-786549+786576]=324280+-324100 hF[38][689542+-689534]=-904584+904584 hF[38][-813532+813539]=hF[38][(82954-(-71191))-154139](hF[38][-840759+840767],hF[38][-672633+672642],hF[38][-370942-(-370952)])hF[38][826310+-826300]=H[10](-619987-(-589696))hF[38][544167-544158]=V[18][hF[38][(-1633037-(-814728))-(-818319)]]hF[38][(-171580-222508)-(-214931-179163)]=H[10](((-536833-(-361401))+30892)+114372)hF[38][-897970-(-897980)]=H[10](727535+-757744)hF[38][-632642-(-632650)]=hF[38][-574107+574116][hF[38][-598049+598059]]hF[38][349756+-349728]=-251671-(-251926)hF[38][-269300-(-269310)]=((256090+-757078)+483557)+(130724-113093)hF[38][1040130-1040121]=hF[38][-666129+666137](hF[38][-1031247-(-1031257)],hF[38][-495198+495209],hF[38][701417+-701405])hF[38][152193+((-1380392-(((-948492-311638)-(998214+-1685233))-178806))-(-476294))]=H[10](-732207+((-858883+2467150)-906351))hF[38][(-505341+-324727)-(-830076)]=H[10]((64807-(-943620+623314))-415407)hF[38][-592739+592750]=V[18][hF[38][-385+397]]hF[38][936840+(-218071+-718757)]=H[10]((-1032644+582086)-(-183824+-236525))hF[38][-651097+651107]=hF[38][79370-79359][hF[38][809067+-809055]]hF[38][636253-636241]=-248265-(-248300)hF[38][-450469+450480]=hF[38][-954932+954942](hF[38][1029715+(291379+-1321082)],hF[38][-820754+(273584-(121739-668922))],hF[38][-758160+(1715623-(1013229-(-360376+416156)))])hF[38][-895439+895449]=H[10](920879-(407682-(-799267+255793)))hF[38][814105+(841199+-1655290)]=H[10](512260+-542551)hF[38][(-812590+-121448)-(-934051)]=V[18][hF[38][196914-196900]]hF[38][(((-1535278-328475)-(-821636))+845785)+196346]=H[10](((987353+-1332317)+674309)+-359554)hF[38][-486479-(-486491)]=hF[38][-863239-(-863252)][hF[38][(522414-739066)-(-216666)]]hF[38][-609787+609801]=-343416+(424644-81228)hF[38][-325014-(-325027)]=hF[38][(-746788-138225)-(-885025)](hF[38][-545796+545810],hF[38][(951623-((253488+-718168)+1439703))-(-23419)],hF[38][-440076-(-440096)])hF[38][(479681-35970)-(-740455+1184154)]=H[10](338724+-368920)hF[38][-289406-(-289425)]=H[10](480357-(681000+-170508))hF[38][-259055+259076]=V[18][hF[38][-156742+156764]]hF[38][-626331+626353]=H[10](750781+-780990)hF[38][166543+-166523]=hF[38][-392961-(-392982)][hF[38][-760255+760277]]hF[38][-919087-(-421728+-497381)]=173275+-173225 hF[38][-945813+945834]=hF[38][-477107-(-477127)](hF[38][-831351+831373],hF[38][23252-23229],hF[38][-966486-(-966510)])hF[38][-627385+627409]=H[10](-364264+333973)hF[38][364860+-364837]=V[18][hF[38][137253-((-202307+162915)+176621)]]hF[38][(1473187-503494)+-969673]=H[10]((197124-(-708633))+-935890)hF[38][795221-795197]=H[10](-562875-(-532666))hF[38][1039760+-1039738]=hF[38][659460+-659437][hF[38][-521340-(-885732+364368)]]hF[38][619054-(496218-(-950886+828074))]=-578822-(-578892)hF[38][530790-530767]=hF[38][609511-609489](hF[38][525884-525860],hF[38][((-536175+885956)-((948698+-795557)+-91994))-288609],hF[38][-58306+58332])hF[38][-320611-(-320633)]=H[10](-381709+351437)hF[38][-529100-(-83896-445238)]=-629927-(-630182)hF[38][((-852867+(-637192+825165))-(315933+-974975))+5878]=H[10](463208+-493499)hF[38][218748+-218723]=V[18][hF[38][(-225962-(((100500+(458924-1037104))-(-664587))-(-405661)))+818556]]hF[38][744383-744357]=H[10](-130814-(-100605))hF[38][(-574314+(2332315-955511))+-802466]=hF[38][-896496-(-896521)][hF[38][1034694+-1034668]]hF[38][-313838+313864]=(((612103+79132)+-988962)+871972)+((61196+-966989)+331648)hF[38][-261596-(-261621)]=hF[38][-160295+160319](hF[38][-1013062-(-1013088)],hF[38][(-318030-(-604234+1007382))+721205],hF[38][-55523-(-55551)])hF[38][247455+-247431]=H[10](889920-920211)hF[38][-310370-(-310384)]={[hF[38][-984946+(1774045-789080)]]=hF[38][(441131-(-817316-(-1123059-(-612766))))+(-1705130-(-956997))],[hF[38][-131213-(-131233)]]=hF[38][(577591+267489)-845057],[hF[38][(-763964-(-431070))+332916]]=hF[38][802520-802495]}hF[38][(-829588-(-976175))-146555]=255244+-254989 hF[38][(18733+804928)+-823640]=H[10]((1430794-((831917-(-936574))-938624))-631062)hF[38][(-302728+580587)+-277834]=-269738+269838 hF[38][435112+-435089]=V[18][hF[38][603365+-603341]]hF[38][(163387+-360736)-(-197373)]=H[10](((-1953632-(-565231+-392060))+1632716)+-666584)hF[38][-632963-(-64791+(-385683-182508))]=H[10](772556+(121136-924000))hF[38][652658+-652632]=-446246-(-789604+343208)hF[38][(-534150+1433429)+(76966+-976223)]=hF[38][-638520-(-638543)][hF[38][-1039956+1039980]]hF[38][722607-722583]=(59707+384656)-444313 hF[38][28016-(363057+-335064)]=hF[38][945877-945855](hF[38][-567910-(-567934)],hF[38][-388317-(-388342)],hF[38][411986-411960])hF[38][587907-(-247682-(-835567))]=H[10](883387+-913520)hF[38][-219744-(-219770)]=H[10](628514-658805)hF[38][568826+(324753-893554)]=V[18][hF[38][-758669+(1298503-539808)]]hF[38][-259064-(-259090)]=H[10](-686164+655955)hF[38][(-108036+942957)+-834894]=258095+-257955 hF[38][-710214+710238]=hF[38][588012-587987][hF[38][-759583+759609]]hF[38][-860024+(407242+452810)]=-694849-(-695049)hF[38][(((-488328+-577087)-(-340639))-(-761571))+-36769]=294002+-293932 hF[18]=356195+12445403 hF[38][-454184+(763167+-308958)]=hF[38][-475993-(-476017)](hF[38][571183-(859796-288639)],hF[38][945142-945115],hF[38][814182-814154])hF[38][369339+(203382-572697)]=H[10](-919259+(-646290+1535277))hF[38][319820-319792]=H[10](-822304+792013)hF[38][-134716-(-134743)]=V[18][hF[38][1038948+-1038920]]hF[38][((161295+-824915)+(2288519-928303))+-696568]=H[10]((-65230+1026656)+-991635)hF[38][1020967-1020941]=hF[38][55038-55011][hF[38][(1031714-710122)-321564]]hF[38][(824633+223859)+(-1281089-(-232625))]=-917809+917909 hF[38][-915614-(-915641)]=hF[38][-1013289-(-1013315)](hF[38][-926201+926229],hF[38][148814+-148785],hF[38][-921171-(-921201)])hF[38][(288034-(-161667+-281312))-730993]={[hF[38][(1718-(-291115))+(-1320323-(-1027511))]]=hF[38][(120834+-74517)-46294];[hF[38][996577+(-361368+(77058+-712245))]]=hF[38][-549473-(-938014-(-388516))],[hF[38][274387-274363]]=hF[38][1006922-1006895]}hF[38][-622672+(1629539-1006844)]=H[10]((-208467-(-331873))+-153541)hF[38][743041+(-116424-626590)]=1024975-1024874 hF[38][991653+-991623]=-507031-(-507286)hF[38][-749675+749696]=H[10](112103-((-304463-(-690790))-244032))hF[38][-179625-(-179651)]=H[10]((1234390-370218)+(-1305957-(-411494)))hF[38][-304705-(-304730)]=V[18][hF[38][-516500-(-516526)]]hF[38][-91564+91590]=H[10](11884+-42093)hF[38][561796-561768]=-608821+(89980+519083)hF[38][(-510663+(287613-145568))-(-368642)]=hF[38][-749725+(694972-(-54778))][hF[38][-254370-(-254396)]]hF[38][(920055-891362)-28667]=711745+-711657 hF[38][(-949062+1553012)+-603921]=465794-465673 hF[38][-566202-(-566227)]=hF[38][((808464-1000601)+-528615)+720776](hF[38][861964-(142805+719133)],hF[38][(-249474+-760644)-(-764918-245227)],hF[38][967185+-967157])hF[38][878017+-877989]=H[10](700141+(-916571+186139))hF[38][((149858+((-758412-(-202708))+98520))+-234043)-(-541396)]=V[18][hF[38][((472361-174220)-(-229754))+-527867]]hF[38][-72821-(-72849)]=H[10]((390188-336422)+-83975)hF[38][756988-756962]=hF[38][-309512-(-309539)][hF[38][608844-608816]]hF[38][251464+-251440]=H[10](-162859-(-132726))hF[38][-919696+919724]=210483-210375 hF[38][859121+-859094]=hF[38][410220+-410194](hF[38][-459621-(-459649)],hF[38][(-789475+1570954)+-781450],hF[38][(-686909+261564)-(-425375)])hF[38][896238-896212]=H[10]((-996077-(-458476))+507329)hF[38][(-367463+-216974)-(-584467)]=H[10](-919252-(-888961))hF[38][99330+-99301]=V[18][hF[38][-871614-(-871644)]]hF[38][378321-378291]=H[10](-952960+922751)hF[38][-883054+883082]=hF[38][122504+-122475][hF[38][-440073+440103]]hF[38][500496-500466]=-301970-(-302108)hF[38][-89459+89488]=hF[38][685732-(1113430-427726)](hF[38][((-1037090+1822508)+-225088)+-560300],hF[38][-361952-(-361983)],hF[38][819743-819711])hF[38][546261-546231]=((445593+-465191)-620437)-(-640185)hF[38][974108+-974077]=4112-(-661144-((-94718+(-1523723-(-592453)))-(-360802)))hF[38][69242-(-905403-(-974617))]=H[10](820649-850940)hF[38][83476-(1097741-(1771598-757311))]={[hF[38][61889+-61866]]=hF[38][((733036+-1445477)+((-193532+1478735)-923505))-(-1231928-(-881160))];[hF[38][-65178+65202]]=hF[38][595568-595541],[hF[38][612295+(-1491853-(723490+((-1033452+138027)+-707649)))]]=hF[38][-521065-(-521094)]}hF[38][-663916+(-843710+1507658)]=(138778+-796528)-(-657950)hF[38][525720-(1305473-779782)]=351302-351252 hF[38][-833337+833362]=H[10](-219121-(738229-927215))hF[38][209086-209059]=V[18][hF[38][575218-((-589483+476413)-(-688260))]]hF[38][(947479+-338679)-608777]=H[10](-764777-(-734561))hF[38][42130+-42102]=H[10](658404-(-246476+935089))hF[38][370275+-370249]=hF[38][641595+-641568][hF[38][-862698+862726]]hF[38][764499-764471]=(-741124+880964)-139690 hF[38][922726-922699]=hF[38][-666640+666666](hF[38][468554-468526],hF[38][708709+(-1016583+307903)],hF[38][74125+-74095])hF[38][-320229+320255]=H[10]((169822+-1125147)+925192)hF[38][990847-(-98555+(1257843-168471))]=H[10]((-760872+1563860)-833279)hF[38][1010564+-1010535]=V[18][hF[38][-962029-(-962059)]]hF[38][(343515+-522522)-(-179037)]=H[10]((-870305+904410)-64314)hF[38][369160-(-78698+(-663873+1111703))]=hF[38][-173308-(-173337)][hF[38][656417+(-1556555-(-900168))]]hF[38][-283413+283443]=327292+((581378-259124)-649346)hF[38][-66589-(-66618)]=hF[38][(779097-(-91962))-871031](hF[38][513307-((398458+(-543087+751256))+-93350)],hF[38][(-54666-230137)+284834],hF[38][889785-889753])hF[38][217756-(1192363-(-29268-(-1003903)))]=H[10](-487261-(-456989))hF[38][(753778-657197)+-96549]=H[10](-384630+354339)hF[38][-285800+285831]=V[18][hF[38][-262588-(-262620)]]hF[38][-868007+868039]=H[10](892962+-923171)hF[38][-827674+827704]=hF[38][-308808+308839][hF[38][988304+-988272]]hF[38][(-486402+(261446+523041))+-298053]=-864800-(-865055)hF[38][902160+-902129]=hF[38][-325094-(-325124)](hF[38][-805549-(-805581)],hF[38][-144024+144057],hF[38][-510362-(-510396)])hF[38][251882+-251858]={[hF[38][-24183+24208]]=hF[38][1022447-1022420],[hF[38][((566109+-864670)-491508)-(-790095)]]=hF[38][490155-490126],[hF[38][-581966+581994]]=hF[38][(-577061-(-95059))+482033]}hF[53]={[hF[41]]=hF[38][(217054-672709)-(-455657)],[hF[38][-287904-(-287905)]]=hF[38][752415-752410];[hF[38][-345313+(975885-630569)]]=hF[38][-5683+5690];[hF[38][-509271+509277]]=hF[38][-692114-(-692123)];[hF[38][159783+-159775]]=hF[38][(-558344-(-815143))+-256788];[hF[38][(279510-(779557-857988))-(1260368-(1391698-489261))]]=hF[38][-604306-(-1573101-(-968782))];[hF[38][(282670+306037)-588695]]=hF[38][(239336+494818)-734140];[hF[38][-773152-(-773171)]]=hF[38][-815448+(1042720+-227252)],[hF[38][953560-953539]]=hF[38][520007-(274966+245019)],[hF[38][225032-225009]]=hF[38][(-1408192-(-549003))+859213]}hF[38][-503608-(-503610)]=H[10](78608+-108727)hF[38][977536+-977522]=H[10](-346243+316073)hF[38][951997-951984]=H[10]((-507349-(-141483))+(-288883-(-624625)))hF[38][-693074-(-693086)]=H[10]((-422075-(-791156))+-399278)hF[38][-289057-(-289068)]=H[10](556252+-586544)hF[38][(((-1087928-(-838230))-(-169))-(79296+(-28977+((1040943+-1021870)-(321471-292431)))))+289889]=H[10](-1071907-(-1995747-(-953949)))hF[41]=H[10](-65113-(-34828))hF[38][208252+-208246]=H[10]((312418+-679849)+337276)hF[38][(712785-72102)+-640676]=H[10](148480+-178787)hF[38][-466109+466114]=H[10]((-597156+-163665)-(-730580))hF[38][-848548+((((686198-634017)-(-313323))-(((558672+-1667639)-(-751124))-(-244491)))+(1180159-810457))]=H[10]((((958441+-1475033)+82709)-(-531254))-127570)hF[38][-547970+547979]=H[10](-228559+(((50591+(1027880-(97916+-10137)))-1009321)-(-93971+-123073)))hF[38][-742945+742948]=H[10](129063+-159216)hF[38][((-984695-(-209685))+1589023)+(977908+-1791920)]={[hF[38][760721-760719]]=hF[38][-89851+(-896989-(-986843))];[hF[38][202812+-202807]]=hF[38][-811284+811290],[hF[38][-984330+984337]]=hF[38][201769+-201761],[hF[38][809769+-809760]]=hF[38][-683445-(-683455)],[hF[38][-943837-(-943848)]]=hF[38][-65707-(737606+-803325)];[hF[38][60022-60009]]=hF[38][-251473+251487]}hF[13]={[hF[6]]=hF[55];[hF[7]]=hF[34];[hF[48]]=hF[21];[hF[47]]=hF[45],[hF[15]]=hF[8];[hF[32]]=hF[56];[hF[46]]=hF[23],[hF[3]]=hF[29],[hF[20]]=hF[27];[hF[4]]=hF[12];[hF[22]]=hF[24],[hF[2]]=hF[25];[hF[16]]=hF[50],[hF[49]]=hF[52],[hF[54]]=hF[43],[hF[5]]=hF[30],[hF[31]]=hF[1],[hF[10]]=hF[19];[hF[35]]=hF[53];[hF[41]]=hF[38][255951+-255950]}hF[37][hF[17]]=hF[13]hF[6]=H[10](-826376+796265)hF[17]=H[10]((250643-(-522351))-803194)hF[37]=V[18][hF[17]]hF[13]=V[18][hF[6]]hF[55]=H[10]((-764783-(-674439))+60116)hF[7]=H[10]((663084+-797288)-(-103991))hF[7]=hF[13][hF[7]]hF[6]={hF[7](hF[13],hF[55])}hF[17]=hF[37](V[24](hF[6]))hF[37]=hF[17]()end else if hF[18]<135626+(477479-(-42826))then V[9][hF[37]]=hF[39]hF[18]=V[9][hF[37]]hF[18]=hF[18]and-1040770+(-801187+8116336)or 970731+(5290745-(-201916))else hF[5]=H[10](-696520-(-666277))hF[43]=V[18][hF[5]]hF[54]=hF[43]~=hF[32]hF[49]=hF[54]hF[52]=hF[18]hF[18]=hF[54]and-815581+15194424 or 7099512-675162 end end else if hF[18]<644404+228375 then if hF[18]<860244+-103547 then hF[8]=H[10]((572990+(-516185-(-974270)))+(-1160551-(-99336)))hF[29]=H[10](-671593+((-235064-37759)-(-804116-110075)))hF[51]=V[6]()hF[34]=V[8](4716705-(-508992),{hF[11][(57780+111485)-169263]})hF[46]=V[21](755709+1649739,{hF[11][437203+-437201]})hF[37]=V[6]()hF[33]=V[22](880210+3599580,{hF[11][51128-51126]})hF[47]=H[10](736303+-766599)V[9][hF[51]]=hF[36][598040-598039]hF[18]=V[2](573190+7223631,{hF[51]})hF[17]={}V[9][hF[37]]=hF[18]hF[20]=V[21](895257+((38913+-211264)-((-1459125-(-877363))+415435)),{hF[11][-620418-(-620420)]})hF[6]=H[10](-510450+480344)hF[18]=V[9][hF[11][-179492-(-179493)]]hF[3]=V[10](9991261-(1027414+-1331569),{hF[11][463905-(879332-415429)]})hF[9]=H[10](630458+-660744)hF[15]=H[10](((916340+12539)+-392727)+((-1011390-47995)-(-493126)))hF[39]=V[10](-507075+7491106,{hF[11][(304287-(-528531+237130))+-595686]})hF[55]=V[10](873605+(4046045-312806),{hF[37];hF[11][-644173+644175]})hF[32]=H[10]((-934645+1745410)+-840907)hF[21]=false hF[45]=V[22](530951+2975077,{hF[11][7987-7985]})hF[23]=H[10](743300+-773459)hF[7]=H[10](-462578-(-432432))hF[56]=H[10]((1003905+-2078687)-(-1044494))hF[48]=H[10](712478-742596)hF[13]={[hF[6]]=hF[55];[hF[7]]=hF[34];[hF[48]]=hF[21],[hF[47]]=hF[45];[hF[15]]=hF[8];[hF[32]]=hF[39];[hF[9]]=hF[33],[hF[56]]=hF[46],[hF[23]]=hF[3],[hF[29]]=hF[20]}hF[14]={hF[18](hF[17],hF[13])}hF[14]={V[24](hF[14])}hF[18]=V[18][H[10]((-99494+853067)-783778)]else hF[18]=true hF[14]={}V[9][hF[11][(-545514-(-804645-(-743983)))-(-484853)]]=hF[18]hF[18]=V[18][H[10](577719-607926)]end else hF[30]=H[10]((2520+97576)+-130332)hF[5]=V[18][hF[30]]hF[30]=H[10]((-1031672+122800)-(-878709))hF[52]=hF[5][hF[30]]hF[18]=14725645-105338 hF[5]=V[6]()V[9][hF[5]]=hF[52]hF[30]=H[10](((-362890-295995)+658949)+-30307)hF[52]=V[18][hF[30]]hF[10]=H[10](-520238+489949)hF[1]=V[18][hF[10]]hF[10]={hF[52](hF[1])}hF[31]=hF[10][-869039-(-869041)]hF[30]=hF[10][83961+(-663658-(-579698))]hF[1]=H[10](586505-616706)hF[52]=V[18][hF[1]]hF[26]={hF[52](hF[49])}hF[10]=hF[26][-1003841-(153995+(265746+-1423584))]hF[19]=hF[26][(-107202-111635)-(-218840)]hF[1]=hF[26][-892729-(-892730)]end end end else if hF[18]<(909863-(136795+-962356))-463065 then if hF[18]<-526278+1722658 then if hF[18]<((((293948-395956)+(-644944-136882))-(-974332))+1066724)-260531 then if hF[18]<297483+595394 then hF[18]=V[9][hF[11][909748+-909747]]hF[14]=hF[18]()hF[18]=V[18][H[10](-1059692-(-1029488))]hF[14]={}else hF[14]={}hF[18]=V[18][H[10]((-413025+636903)+-254098)]end else if hF[18]<593503-(-310567)then hF[15]=H[10](597367-627523)hF[45]=V[18][hF[15]]hF[15]=H[10](-124193+94092)hF[47]=hF[45][hF[15]]hF[48]=hF[47]hF[18]=-456230+4499855 else hF[51]=H[10]((-926997+1762839)-866143)hF[18]=V[18][hF[51]]hF[37]=V[9][hF[11][421963+-421955]]hF[17]=108298+-108298 hF[51]=hF[18](hF[37],hF[17])hF[18]=-929179+4271686 end end else if hF[18]<1838449-576760 then if hF[18]<-121355+1374691 then hF[33]=-34724-(-753050-(-173179+-545146))hF[18]=V[9][hF[7]]hF[56]=258009+-258003 hF[9]=hF[18](hF[33],hF[56])hF[56]=H[10](-85156-(-55006))hF[18]=H[10](-399397+369247)V[18][hF[18]]=hF[9]hF[33]=V[18][hF[56]]hF[56]=446443+-446441 hF[18]=hF[33]>hF[56]hF[18]=hF[18]and 2803789-(-234553)or((11822726-672337)-(-480100))-(1433955-(937312-218180))else hF[18]=hF[35]and 3749182-53107 or 404523+13815173 hF[1]=hF[26]end else hF[18]=V[9][hF[11][924313-924311]]hF[14]=hF[18]()hF[18]=(-534422-(-932952))+-175866 end end else if hF[18]<947575-(-730465)then if hF[18]<299825+1253595 then if hF[18]<476125+853337 then hF[14]=H[10](133690+-163840)hF[18]=V[18][hF[14]]hF[51]=H[10](277571+-307852)hF[14]=V[18][hF[51]]hF[51]=H[10](779424+-809705)V[18][hF[51]]=hF[18]hF[51]=H[10](-566630+((838784+(-335696-479786))-(-513178)))hF[18]=7623173-15528 V[18][hF[51]]=hF[14]hF[51]=V[9][hF[11][-947251-(-1491182-(-543930))]]hF[37]=hF[51]()else hF[37]=V[9][hF[11][(-745245+-196580)+(-133746+1075573)]]hF[17]=V[9][hF[11][-863792+((((630529+-891052)-755473)+23765)+1856026)]]hF[18]=-177216-(-521251)hF[51]=hF[37]==hF[17]hF[14]=hF[51]end else if hF[18]<1114541-(-493089)then hF[18]=hF[19]hF[18]=(-426389+908785)+15140466 hF[26]=H[10](-639110+(-755587+1364429))hF[19]=hF[12][hF[26]]hF[52]={hF[1];hF[10];hF[19]}hF[1]=V[9][hF[21]]hF[35]={hF[1](hF[52])}hF[19]=hF[35][-795531-(-795533)]hF[26]=hF[35][-27756+27759]hF[10]=hF[35][330003-330002]else hF[18]=V[9][hF[11][-246116-(681205-927331)]]hF[37]=V[9][hF[11][495009-494998]]hF[51][hF[18]]=hF[37]hF[18]=V[9][hF[11][796141-796129]]hF[37]={hF[18](hF[51])}hF[18]=V[18][H[10](-991644+961539)]hF[14]={V[24](hF[37])}end end else if hF[18]<2319132-452597 then if hF[18]<1049620-(-667963)then hF[18]=-846302+(-825677+2219173)else hF[18]=V[16](-474094+4599082,{hF[13]})hF[9]={hF[18]()}hF[18]=V[18][H[10]((288056+111319)-429467)]hF[14]={V[24](hF[9])}end else hF[18]=hF[1]hF[18]=8256837-(-504029)hF[5]=hF[31]end end end end else if hF[18]<-1034006+3770137 then if hF[18]<-672575+(4048312-995456)then if hF[18]<-733570+2938820 then if hF[18]<219573+1831981 then if hF[18]<2784503-868414 then hF[18]=hF[38][-374006-(-374022)]hF[18]=9694168-(-561449)V[9][hF[17]]=hF[38][538733-(1084081-545363)]else V[9][hF[17]]=hF[38][(((446529+-38054)+(1189390-200721))-539338)+-857802]hF[18]=hF[38][854581+((527913+313062)+-1695551)]hF[38][707008+-707003]=V[9][hF[17]]hF[18]=hF[38][775042+-775037]and-943333+11525614 or-1040512+8431513 end else if hF[18]<1705386-(-979735+581629)then hF[1]=nil hF[52]=nil hF[19]=nil hF[10]=nil hF[18]=((1349135-887781)+13604634)-707101 else hF[34]=232369+-232369 hF[18]=V[9][hF[11][-152241-(-152242)]]hF[37]=hF[17]hF[48]=-953379+953634 hF[7]=hF[18](hF[34],hF[48])hF[18]=1038061+3723172 hF[51][hF[37]]=hF[7]hF[37]=nil end end else if hF[18]<-236624+2572707 then if hF[18]<1801796-(-517337)then hF[30]=nil hF[18]=(((((745662-(-625583-(-545198)))-893703)+((61694-(-146808))+101948))-(-64113))+15131806)-(-853555)hF[52]=nil else hF[18]=V[9][hF[11][427984-427978]]hF[18]=hF[18]and-437580+9621374 or((893365-(-151282))-(-783940+1360988))+2459294 end else hF[18]=V[9][hF[11][299809+-299808]]hF[14]=hF[18]()hF[14]={}hF[18]=V[18][H[10](289590+(635258+-955012))]end end else if hF[18]<3633424-(973773-(-69684))then if hF[18]<264246+(2069450-(-150946))then if hF[18]<1693689-(-731041)then hF[18]=V[9][hF[11][515699+-515698]]hF[14]=hF[18]()hF[14]={}hF[18]=V[18][H[10]((301642-(-384914))-716820)]else hF[18]=-554311+13475659 hF[38][(779350+-206786)+(368838+-941398)]=H[10](844903-875137)hF[38][(30580-31451)-(-874)]=hF[53][hF[38][-388430+388434]]hF[38][((-401923+-280523)+778767)+-96317]=H[10](((1537768-918328)-263608)+-386111)hF[38][129136+-129134]=hF[38][-427506-(-427509)]~=hF[38][-125968+125972]hF[41]=hF[38][74526-(348563-274039)]end else if hF[18]<-816875+3348384 then hF[18]=V[18][H[10]((292303-51815)-270581)]hF[14]={}else hF[49]=V[4]((13985183-138786)-(-486264),{hF[50],hF[34];hF[47]})hF[16]=V[6]()V[9][hF[16]]=hF[49]hF[49]=V[10](1083775-609765,{hF[21];hF[15],hF[50],hF[16];hF[47]})hF[52]=H[10](789521-819777)hF[25][hF[52]]=hF[49]hF[5]=H[10](909192-939493)hF[52]=H[10](933707+-964007)hF[49]=V[16](158055+4259543,{hF[16]})hF[25][hF[52]]=hF[49]hF[52]=H[10]((-730725-(-397183))+(-516410-(-819710)))hF[49]=V[4]((-873159-84625)+1658415,{hF[47],hF[34]})hF[25][hF[52]]=hF[49]hF[52]=hF[18]hF[43]=V[18][hF[5]]hF[54]=hF[43]~=hF[7]hF[18]=hF[54]and 12155507-966175 or 124872+14561410 hF[49]=hF[54]end end else if hF[18]<934249+1759347 then if hF[18]<2076780-(-571790)then hF[14]=hF[17]hF[18]=V[9][hF[11][-247050+247051]]hF[18][hF[37]]=hF[14]hF[18]=-1037503+1260167 else hF[18]=8092920-(-584973)V[9][hF[11][(617690+(1113625-717317))-1013993]]=hF[14]hF[51]=nil end else hF[38][269510+-269509]=hF[38][-464491-(-464494)]hF[18]=hF[38][717621+(-932401+(909503+-694719))]hF[18]=9566258-((35768-(-510511))+(248077-(-139780)))end end end else if hF[18]<(((1001317+-319296)-(-84099))+2139111)-(-239595+-11412)then if hF[18]<-909870+3798482 then if hF[18]<3094166-241875 then if hF[18]<1736321-(-1018506)then hF[38][784570-784564]=V[9][hF[17]]hF[38][535810-535805]=hF[18]hF[38][117603-117599]=hF[38][(518688-564311)-(-45629)]hF[18]=hF[38][(123226+896970)-1020190]and 9122552-(-103101)or(725517+(367267+-1753770))+2578528 else hF[18]=hF[35]hF[10]=hF[26]hF[18]=509504+49818 end else if hF[18]<(-802733+182331)+3480258 then hF[31]=V[9][hF[34]]hF[18]=3119766-818096 hF[1]=hF[31]()else hF[53]=24208-24205 hF[18]=hF[35]hF[35]=V[6]()hF[41]=(987747+-731863)-(612314+-356495)V[9][hF[35]]=hF[26]hF[26]=hF[56](hF[53],hF[41])hF[41]=hF[18]hF[53]=H[10](282701+-312972)V[18][hF[53]]=hF[26]hF[38][14900-14897]=H[10]((1484640-667588)+-847323)hF[38][949124+-949122]=V[18][hF[38][(381258-(683417+-1093859))+-791697]]hF[38][452029-452026]=-773869+773872 hF[38][566507-566506]=hF[38][-365313+365315]<hF[38][(-305738-(-26248))-(-279493)]hF[18]=hF[38][277388+-277387]and((-1085587-(-885643))-247859)+(11995746-((-112579-623048)+(8432-(-283054))))or 10797134-(10138-(-538948))hF[53]=hF[38][(((-499805+1189956)+-318554)+-1101257)+729661]end end else if hF[18]<-907489+3969833 then if hF[18]<85964+2893530 then hF[18]={}hF[51]=hF[18]hF[37]=(-432655-(-679302+1076504))+(392868-(-436990))hF[18]=(582764+((925727+-832611)-799776))+13299571 hF[17]=V[9][hF[11][728006+-727998]]hF[13]=hF[17]hF[17]=107326-107325 hF[6]=hF[17]hF[17]=145037-(((241467-(-259060))-(-242380+853064))-(-255194))hF[55]=hF[6]<hF[17]hF[17]=hF[37]-hF[6]else hF[46]=H[10](-370774+340493)hF[33]=H[10](-890961-(-860663))hF[18]=V[18][hF[33]]hF[56]=V[18][hF[46]]hF[33]=hF[18](hF[56])hF[18]=H[10](223409+-253559)V[18][hF[18]]=hF[33]hF[18]=-347083+433679 end else hF[35]=H[10](86509-116760)hF[18]=2205125-615447 hF[26]=hF[22][hF[35]]hF[10]=hF[26]end end else if hF[18]<372559+2962242 then if hF[18]<-539933+3837201 then if hF[18]<2843242-(-449279)then hF[18]=H[10](540435-570606)hF[14]={hF[18]}hF[18]=V[18][H[10](456580+(-125163-361558))]else hF[38][526724+-526715]=hF[38][661227-(-79400+740616)]hF[18]=hF[38][1003963+-1003951]hF[18]=((576775+-800577)+809313)+15469446 end else if hF[18]<(-465654+(-441149-(-946953)))+3262583 then hF[18]=6028050-(-1001709)hF[55]=V[9][hF[6]]hF[14]=hF[55]else hF[41]=hF[18]hF[38][963854+-963851]=H[10](-679926+649726)hF[38][-651443-((141486+-1179443)-(-386512))]=V[18][hF[38][570750-570747]]hF[38][(-183714-274077)+457792]=hF[38][246001-245999]~=hF[8]hF[53]=hF[38][419265-419264]hF[18]=hF[38][-776111-(-776112)]and 10093778-945827 or-692256+6904951 end end else if hF[18]<(-73318+333481)+3239421 then if hF[18]<3184300-(-242673)then hF[18]={}hF[51]=hF[18]hF[37]=-500351+500352 hF[17]=V[9][hF[11][((((653157-(361732+(978425-546872)))+1879863)-965585)-986562)+212421]]hF[13]=hF[17]hF[17]=((-904882+734603)-(604301+(-542411-(-173306))))+405476 hF[18]=3715689-(152497+-1198041)hF[6]=hF[17]hF[17]=902882-902882 hF[55]=hF[6]<hF[17]hF[17]=hF[37]-hF[6]else hF[18]=V[9][hF[11][(-153540-(-838409))+-684868]]hF[14]=hF[18]()hF[18]=V[18][H[10](-919337-(-889123))]hF[14]={}end else hF[18]=V[9][hF[11][(-1047065-(-596696))-(-450370)]]hF[14]=hF[18]()hF[18]=V[18][H[10](261094+-291232)]hF[14]={}end end end end end else if hF[18]<-846340+6109972 then if hF[18]<692980+3740710 then if hF[18]<(1017784+-1994373)+5026533 then if hF[18]<(-1338163-(-859106))+4385046 then if hF[18]<4689956-976498 then if hF[18]<-449245+(-905547+5057357)then hF[41]=H[10](428017-(1000780+-542667))hF[53]=hF[3](hF[35],hF[41])hF[38][105232-105231]=hF[18]hF[18]=hF[53]and-354096+2821893 or-297796+13219144 hF[41]=hF[53]else hF[38][-374862-(-374873)]=hF[38][(884679+-430100)-(1123431-668865)]hF[18]=hF[38][-459099+459113]hF[18]=-451578+3747942 end else if hF[18]<-479174+4223304 then hF[9]=hF[47]==hF[45]hF[39]=hF[9]hF[18]=1654581-1011251 else hF[52]=hF[19]hF[41]=H[10](751125-781342)hF[38][-665223-(-665226)]=H[10](-155650+125368)hF[53]=V[18][hF[41]]hF[38][-770656+(-625371+1396029)]=V[18][hF[38][549244-549241]]hF[38][47946+-47945]=hF[38][739752-739750][hF[26]]hF[41]=hF[53](hF[38][(194174-271640)-(-77467)])hF[38][-276527-(-276528)]=H[10](477432-507649)hF[53]=V[18][hF[38][503830+-503829]]hF[38][-654031+654034]=V[9][hF[50]]hF[38][(-648614+737481)-88865]=hF[38][-45747+45750][hF[26]]hF[38][(-843130-160561)-(-1003692)]=hF[53](hF[38][861029-861027])hF[35]=hF[41]~=hF[38][(-876273+1773783)-897509]hF[18]=hF[35]and 11964374-(-73655-(-1001015))or-1044112+9610852 end end else if hF[18]<-667691+4648051 then if hF[18]<816674+3139711 then hF[38][-396167-(-396172)]=V[4](5889978-1043520,{hF[34]})hF[38][313025-313019]={hF[38][846622-(1687374-840757)]()}hF[14]={V[24](hF[38][(-1010482+279899)+730589])}hF[18]=V[18][H[10](-829531-(-799411))]else hF[38][539429-(606467+-67055)]=H[10](-188738-(-158582))hF[18]=-322477+(3894785-(-134144))hF[38][904344+-904328]=V[18][hF[38][-489780+((24648-(-902869))-437720)]]hF[38][-288092+288107]=hF[38][(1799417-790661)-(814733-(-194007))]~=hF[12]hF[38][(-1146402-(-287038))-(-1566874-(-707497))]=hF[38][495271-495256]end else if hF[18]<463990+(4147236-601063)then hF[18]=V[9][hF[11][-82394-(-82395)]]hF[14]=hF[18]()hF[18]=V[18][H[10](-90471+60248)]hF[14]={}else hF[14]=hF[48]hF[18]=hF[21]hF[18]=hF[48]and 12719007-(-993670-(-513984+-382175))or(-592579-(-303060))+16531985 end end end else if hF[18]<3808431-(-528631)then if hF[18]<((265187-156249)-(-554062))+3468669 then if hF[18]<4160717-46959 then hF[24]=H[10](218746-248975)hF[18]=hF[27]hF[50]=V[6]()hF[27]=nil hF[3]=hF[20]or hF[27]hF[25]=H[10](822393+-852508)hF[27]=H[10]((675088-(889162+-343849))-160029)hF[18]=(-755425-(-681735))+(6978377-(114109-(-332686+439625)))hF[2]=H[10](-84771-(-54488))hF[20]=H[10](-127173-(-96952))hF[29]=V[18][hF[20]]hF[20]=V[18][hF[27]]hF[4]=H[10](-797007+766771)hF[12]=H[10](-125815+95541)hF[27]=V[18][hF[4]]hF[22]=H[10](-563285+533129)hF[4]=V[18][hF[12]]hF[12]=V[18][hF[22]]hF[22]=V[18][hF[24]]hF[24]=V[18][hF[2]]hF[2]=V[18][hF[25]]hF[5]=H[10](-147563-(-117281))hF[25]={}hF[16]={}V[9][hF[50]]=hF[16]hF[16]=V[9][hF[21]]hF[43]=V[18][hF[5]]hF[5]={hF[16](hF[43])}hF[49]=hF[5][311477-311476]hF[52]=hF[5][-51206-(-51208)]hF[54]=hF[5][-19132+(-131467-(-150602))]else hF[18]=832617+6775028 end else if hF[18]<(((469994+-810324)+-349027)+1355815)+3535685 then hF[38][230994+-230980]=hF[18]hF[38][-346828+346845]=H[10](-113012+82738)hF[38][602779+(820497+-1423260)]=V[18][hF[38][468999+-468982]]hF[38][706533-706518]=hF[38][-593546+593562]~=hF[4]hF[18]=hF[38][-1003251+1003266]and 910388+2796064 or(3565541-(-1026946))-618376 hF[38][-337769-(627242-965024)]=hF[38][495697+(-387789+-107893)]else hF[6]=nil hF[13]=nil hF[18]=6295986-156146 end end else if hF[18]<4014383-(-373741)then if hF[18]<4649834-268842 then hF[17]=V[9][hF[11][-815086+815092]]hF[18]=772274+1884004 hF[37]=hF[17]==hF[51]hF[14]=hF[37]else hF[51]=H[10](315227-345331)hF[14]=H[10](932056+-962357)hF[18]=V[18][hF[14]]hF[14]=hF[18](hF[51])hF[18]=V[18][H[10](388195+((-1247291-(-928937-(-590245)))-(-225124-265000)))]hF[14]={}end else hF[51]=hF[36][-789107-(-789108)]hF[18]=V[9][hF[11][-878950+878951]]hF[14]={hF[18](hF[51])}hF[14]={V[24](hF[14])}hF[18]=V[18][H[10](-610733-(-580545))]end end end else if hF[18]<5529920-691941 then if hF[18]<5524161-928848 then if hF[18]<3789224-(-708594)then if hF[18]<572153+((3608391-(-467094-(394557+(-409638+(-293252+82414)))))-(-63956))then hF[18]=V[9][hF[11][(-812756-96304)+909061]]hF[14]=hF[18]()hF[18]=V[18][H[10](799859-830156)]hF[14]={}else hF[17]=13093451-(-69041)hF[14]=(10792980-(-14223-792591))-107983 hF[37]=H[10]((86279-429341)+312816)hF[51]=hF[37]^hF[17]hF[18]=hF[14]-hF[51]hF[14]=H[10](-760186+729925)hF[51]=hF[18]hF[18]=hF[14]/hF[51]hF[14]={hF[18]}hF[18]=V[18][H[10](421498+-451643)]end else if hF[18]<3588133-(-1122672-(-190242))then hF[51]=V[10](4173208-1003458,{})hF[14]=H[10](830144+-860366)hF[18]=V[18][hF[14]]hF[14]=hF[18](hF[51])hF[18]=-714984+(-12603+5369987)else hF[30]=H[10](-1064015-(-1033778))hF[54]=H[10](924372-954615)hF[52]=V[18][hF[54]]hF[5]=hF[23][hF[30]]hF[30]={hF[52](hF[5])}hF[43]=hF[30][-1041949+1041951]hF[54]=hF[30][800231+-800230]hF[18]=hF[54]and(8137913-(354704-571511))-(-421100)or 1289225-414872 end end else if hF[18]<5251990-598666 then if hF[18]<4119455-(-503902)then hF[37]=hF[36][80849+-80847]hF[51]=hF[36][-663016-(-663017)]hF[14]=H[10](-924477+894335)hF[18]=hF[37]==hF[14]hF[18]=hF[18]and-95384+14427295 or 5722698-(251034+(1172756-950463))else hF[18]=true hF[18]=hF[18]and((-896376+15610836)-(-175677))-59150 or 900882-(-700104-(-135139+-571297))end else hF[7]=not hF[55]hF[17]=hF[17]+hF[6]hF[37]=hF[17]<=hF[13]hF[37]=hF[7]and hF[37]hF[7]=hF[17]>=hF[13]hF[7]=hF[55]and hF[7]hF[37]=hF[7]or hF[37]hF[7]=-795155+2946448 hF[18]=hF[37]and hF[7]hF[37]=2242327-624369 hF[18]=hF[18]or hF[37]end end else if hF[18]<91782+5052342 then if hF[18]<4766769-(967745+-1194060)then if hF[18]<5674861-816452 then hF[18]=V[9][hF[11][554611-((-584362+1304985)+-166013)]]hF[14]=hF[18]()hF[14]={}hF[18]=V[18][H[10](229236-259429)]else hF[18]=V[9][hF[11][854306-854302]]hF[13]=H[10](702463-732745)hF[37]=V[9][hF[11][543602-543599]]hF[51]=hF[18](hF[37])hF[18]=H[10](154300+-184582)V[18][hF[18]]=hF[51]hF[6]=H[10](785680+-815798)hF[18]=V[9][hF[11][-871408-(-871413)]]hF[14]={}hF[17]=V[18][hF[13]]hF[55]=H[10]((716186-(-705764-(-1175599-(-786180))))+-1062746)hF[13]={[hF[6]]=hF[55]}hF[37]=hF[18](hF[17],hF[13])hF[18]=V[18][H[10](-418454+388244)]end else if hF[18]<-855126+(897631+5055880)then hF[18]=hF[1]hF[18]=hF[52]and((779772+-670880)+9592927)-506333 or 13878430-((872946-659709)+306306)else hF[18]=(705010-(((-652677+60265)+(-988073+2214383))+-580716))+(-505302+10055148)end end else if hF[18]<174860+5054083 then if hF[18]<12260+5159072 then hF[41]=V[9][hF[34]]hF[18]=289188+9550004 hF[38][322035+-322034]=hF[41]()else hF[17]=hF[36][(-403840-582883)-(523004+-1509730)]hF[17]=nil hF[51]=hF[36][-580843+(289089-(783543+-1075298))]hF[51]=nil hF[37]=hF[36][(-843686-(-268054))+575634]hF[37]=nil hF[18]=V[9][hF[11][(1029590+-309602)+-719987]]hF[14]=hF[18]()hF[18]=V[18][H[10](-682078-(-651941))]hF[14]={}end else hF[18]=V[9][hF[11][-166639+166641]]hF[14]=hF[18]()hF[18]=(-847167+365425)+12544403 end end end end else if hF[18]<6104177-(-672023)then if hF[18]<6027132-(-141495)then if hF[18]<(-123656+396652)+5680107 then if hF[18]<5032574-(-625999)then if hF[18]<5251460-(-361957)then hF[18]=5029803-(((-165419-(-977715))+-1173747)+((-955154+543303)-(-757563)))hF[52]=hF[3]else hF[46]=not hF[56]hF[39]=hF[39]+hF[33]hF[14]=hF[39]<=hF[9]hF[14]=hF[46]and hF[14]hF[46]=hF[39]>=hF[9]hF[46]=hF[56]and hF[46]hF[14]=hF[46]or hF[14]hF[46]=333531+11532850 hF[18]=hF[14]and hF[46]hF[14]=14501458-949846 hF[18]=hF[18]or hF[14]end else if hF[18]<5420520-(-256243)then hF[2]=(-1013971-(-98466))-(-915506)V[9][hF[37]]=hF[44]hF[24]=V[9][hF[29]]hF[22]=hF[24]+hF[2]hF[12]=hF[4][hF[22]]hF[28]=hF[47]+hF[12]hF[12]=(-912320-(-46751))+865825 hF[18]=hF[28]%hF[12]hF[22]=V[9][hF[3]]hF[47]=hF[18]hF[18]=8731425-(-312360)hF[12]=hF[45]+hF[22]hF[22]=974381-974125 hF[28]=hF[12]%hF[22]hF[45]=hF[28]else hF[37]=V[9][hF[11][-450571-((276485-(670233-(646201-335184)))-367842)]]hF[13]=H[10](865845+(419044+-1315160))hF[18]=400776+13785424 hF[17]=V[18][hF[13]]hF[51]=hF[37]==hF[17]hF[14]=hF[51]end end else if hF[18]<669472+5442082 then if hF[18]<5846935-(-254883)then hF[38][34093+-34075]=V[9][hF[17]]hF[38][-440937+(101303+339651)]=hF[18]hF[18]=hF[38][(1253724-744371)-509335]and 15331955-85513 or(8254980-733903)-(-419506)hF[38][((913253+-856193)-(303926+(-693299-(665730-(-290292-(-941181))))))+-461258]=hF[38][-950499-(-950517)]else hF[44]=V[9][hF[37]]hF[18]=hF[44]and-289111+7302860 or 177015+15031326 hF[14]=hF[44]end else hF[37],hF[6]=hF[17](hF[51],hF[37])hF[18]=hF[37]and 15392909-(-456142)or-501299+5381558 end end else if hF[18]<47716+6269272 then if hF[18]<(6458877-(-777116))-1008719 then if hF[18]<562007+5639921 then hF[38][(((546322-(-129007+-179591))-(-197653))-315097)-737461]=H[10](626961-657197)hF[38][-464242+464254]=hF[18]hF[38][141161-(-456548+597695)]=V[18][hF[38][(-270815+(-955341+1285859))-((-35222-(-852248))-757338)]]hF[38][-309126-(-309139)]=hF[38][-674054-(-674068)]~=hF[27]hF[18]=hF[38][-1028999-(-1029012)]and 2745688-(-550676)or-33311+4196801 hF[38][-689686-(-689697)]=hF[38][196144+-196131]else hF[38][36731+-36729]=hF[18]hF[38][129862+-129857]=H[10](-755089-(-724846))hF[38][891014+-891010]=V[18][hF[38][649900+-649895]]hF[38][-198581+198584]=hF[38][748415+-748411]~=hF[32]hF[38][1032386-1032385]=hF[38][452590-452587]hF[18]=hF[38][481908+-481905]and 8167752-(-962264-(-497894))or 10602676-(-1036027)end else if hF[18]<251303+6006696 then hF[49]=V[9][hF[34]]hF[18]=62350+12380554 hF[52]=hF[49]()else hF[18]=14417080-575655 end end else if hF[18]<5924097-(-395645+-210187)then if hF[18]<6798347-351237 then hF[30]=H[10](-195789-(-984309-(-818794)))hF[5]=V[18][hF[30]]hF[30]=H[10](-138286-(-108051))hF[18]=((99080+14616438)-794299)-(-457624)hF[43]=hF[5][hF[30]]hF[54]=hF[43]~=hF[56]hF[49]=hF[54]else hF[18]=1036187+821654 end else hF[18]=V[9][hF[11][979907+-979906]]hF[14]=hF[18]()hF[14]={}hF[18]=V[18][H[10](((108302+-99078)-922585)-(-883262))]end end end else if hF[18]<(-359103+7337430)-(-45482)then if hF[18]<7107364-(-605604-(592504+-1328060))then if hF[18]<6580464-(-301810)then if hF[18]<6771465-(((-978392+(401105+79202))-616181)-(-1034600))then hF[38][564476+-564468]=hF[18]hF[38][(-418185+10319)-(-407877)]=H[10](-735173+704952)hF[38][(((-1739727-(-768627))+1066073)-196919)-(-101956)]=V[18][hF[38][-907639+907650]]hF[38][((-723700-(-125591))+248369)+349749]=hF[38][-133759-(-133769)]~=hF[29]hF[38][556547-556540]=hF[38][-328166+328175]hF[18]=hF[38][(383124-646306)+263191]and 296437+10298130 or((1064015-967131)+-51430)-(-196213)else V[9][hF[11][-42131+42135]]=hF[14]hF[18]=-258815+2579099 hF[51]=nil end else if hF[18]<(6427088-(-21829))-(-509976)then hF[54],hF[43]=hF[49](hF[52],hF[54])hF[18]=hF[54]and 952782+((-694033+15024254)-(-978126+436963))or(257287+-1062211)+3367304 else hF[14]={}hF[18]=V[18][H[10](217834-248140)]end end else if hF[18]<7222500-217759 then if hF[18]<-420256+7398259 then hF[24]=(339104+-136799)+-202303 hF[22]=hF[4][hF[24]]hF[24]=V[9][hF[27]]hF[18]=-186603+(498302+14371047)hF[12]=hF[22]==hF[24]hF[44]=hF[12]else hF[18]=V[9][hF[11][239724-239723]]hF[14]=hF[18]()hF[18]=V[18][H[10]((1087672-(173631-(-97798)))+-846425)]hF[14]={}end else hF[28]=hF[18]hF[24]=-686769-(-686770)hF[22]=hF[4][hF[24]]hF[24]=false hF[12]=hF[22]==hF[24]hF[44]=hF[12]hF[18]=hF[12]and 6274987-(-702844)or 14067415-(-615331)end end else if hF[18]<111496+7278958 then if hF[18]<7461141-((390179+(-919927+133075))-(-811118))then if hF[18]<-757049+7784506 then hF[18]=V[9][hF[11][98941-98940]]hF[14]=hF[18]()hF[14]={}hF[18]=V[18][H[10](652196-682498)]else hF[55]=hF[14]hF[34]=H[10](-1012170+982014)hF[7]=H[10](427099-457373)hF[14]=V[18][hF[7]]hF[7]=H[10]((-784365+-149037)+903167)hF[18]=hF[14][hF[7]]hF[7]=V[6]()hF[45]=H[10]((-443819+871190)-457527)V[9][hF[7]]=hF[18]hF[14]=V[18][hF[34]]hF[34]=H[10](-387361+357056)hF[18]=hF[14][hF[34]]hF[34]=hF[18]hF[47]=V[18][hF[45]]hF[21]=hF[18]hF[48]=hF[47]hF[18]=hF[47]and 1313471-416389 or 4292219-248594 end else if hF[18]<6683867-(-537049)then hF[18]=V[9][hF[11][-712207-(-514829-197379)]]hF[14]=hF[18]()hF[14]={}hF[18]=V[18][H[10]((-117274+(-467550+-235897))-(-790627))]else hF[51]=hF[36][124289-124288]hF[17]=hF[36][(((-523909+(-71800-(840403-964461)))-((-350362+(681997-468567))+-372102))-(-697986))+(-339536+-395830)]hF[37]=hF[36][965041-965039]hF[14]=V[9][hF[11][565507-565506]]hF[18]=hF[14][hF[37]]hF[18]=hF[18]and 678167+594071 or-528293+3132181 end end else if hF[18]<-952918+8491381 then if hF[18]<871183+6537183 then hF[18]=-973176+(938811+3952159)else hF[17]=83603+9391330 hF[37]=H[10](-887250-(-857031))hF[51]=hF[37]^hF[17]hF[14]=-44274+7171148 hF[18]=hF[14]-hF[51]hF[51]=hF[18]hF[14]=H[10]((-1356903-(-742795))-(-583804))hF[18]=hF[14]/hF[51]hF[14]={hF[18]}hF[18]=V[18][H[10](-3869-((1092874-996557)-(-381909-(-452007))))]end else hF[18]=true hF[18]=hF[18]and 1119323-(-153233)or 661977+15004061 end end end end end end else if hF[18]<12621175-(-575009-(-707709))then if hF[18]<564356+9248028 then if hF[18]<-909579+(273260+(9340640-(-118966)))then if hF[18]<8725750-651193 then if hF[18]<7372576-(-418079)then if hF[18]<1029692+6708681 then if hF[18]<903472+6819517 then hF[38][-369716-(-369720)]=V[10](552789+10637380,{hF[19]})hF[53]=(193027+253829)+-446856 hF[18]=10507644-700787 hF[38][((-114603+15929)+137887)+(78143+(-386088+268740))]=H[10](1028975+(784761+-1844034))hF[38][-817402-(-918738+101333)]=H[10](-251619-(977248+-1198624))hF[41]=372839+-372839 hF[38][897804-897802]=V[18][hF[38][-417316-(-417319)]]hF[38][448396+-448393]={hF[38][-1010169-(-819654+-190517)](hF[38][(-460079-468754)-(-928837)])}hF[38][-976014-(-791908-184107)]={V[24](hF[38][-934124+934127])}hF[38][(-297541-(-489840+1164720))+(299693+672731)]=(618798+-1061274)+442478 hF[38][884273-884271]=hF[38][834480-834479][hF[38][775904-775901]]hF[38][-842842-(-842846)]=H[10]((530343+(-788148-121845))+349360)hF[38][-715531+715534]=V[18][hF[38][-5483-(-5487)]]hF[38][(-576385+357583)+218807]=V[9][hF[5]]hF[38][-224354+224361]=V[18][hF[38][727713-727705]]hF[38][955239+(-1268894-(-313663))]=hF[38][-47524+47531](hF[38][84099-(140191-(((62136-40693)+124287)-89636))])hF[38][317299-317292]=H[10](125470+-155584)hF[38][-1004882-(-1314978-(-310090))]=hF[38][((1783537-70649)-933330)-779553](hF[38][955645-955637],hF[38][-955978-(-955985)])hF[38][-879860-(-879865)]={hF[38][684277+-684271]()}hF[38][89607+-89603]=hF[38][-890765-(-890768)](V[24](hF[38][-784284-(-784289)]))hF[38][752028-752023]=-454915+455015 hF[38][793342+(-373722-(1252749-833132))]=V[6]()V[9][hF[38][318786-318783]]=hF[38][876075-(-724161+1600232)]hF[38][-149201+149207]=hF[38][268771+((157129-(-492832))-918727)]hF[38][-959617+959622]=((809839+-761855)+76975)+-124958 hF[38][(-1397215-(-639494))+757728]=hF[38][(-166614+-193628)-(-360247)]hF[38][(1008658-712544)+(-541402+245293)]=983996-(-571185+1555181)hF[38][807898-807894]=-201971-(-201972)hF[38][1035642-1035634]=hF[38][-603647-(-603654)]<hF[38][-96298-(-96303)]hF[38][984700-984695]=hF[38][153466-153462]-hF[38][-345638-(((-1590130-(-467627))-(-525770))+251088)]else hF[12]=(((64039+-1080807)+1851744)-264102)-570873 hF[28]=hF[4][hF[12]]hF[44]=hF[28]hF[18]=(5185902-293084)-(-773846)end else if hF[18]<-646889+(7821520-(-606423))then hF[14]={}hF[18]=V[18][H[10](-911136+880987)]else hF[55]=hF[6]hF[18]=V[9][hF[11][(1306869-748897)+-557969]]hF[18][hF[13]]=hF[55]hF[18]=4540165-(1211310-996569)end end else if hF[18]<676035+7275013 then if hF[18]<-66931+(502800+(184169+7316565))then hF[51]={V[12](639946+-639945,V[24](hF[36]))}hF[18]=V[9][hF[11][(226583+-414161)+187579]]hF[14]={hF[18](V[24](hF[51]))}hF[14]={V[24](hF[14])}hF[18]=V[18][H[10](194116+-224226)]else hF[18]=hF[38][580069-580052]hF[38][742843+(-1071242-(-328421))]=882467+-882466 hF[18]=11168015-912398 V[9][hF[17]]=hF[38][-636623+(-77433-(-714072))]hF[38][197971+((-1049760-(-49678))+802132)]=V[9][hF[38][-974588+(62401+912199)]]hF[38][-181098+181118]=hF[38][-421684-(-421705)]+hF[38][-564895+564917]hF[38][-366428-(167132+-533579)]=hF[38][-217548-(-217557)][hF[38][-277220-(-277240)]]hF[38][428008-427990]=hF[53]+hF[38][227717+-227698]hF[38][(-286686-731325)+1018030]=971600+-971344 hF[38][726847+-726830]=hF[38][52273-52255]%hF[38][315382-315363]hF[38][705501-705481]=V[9][hF[38][((-323027-181958)-(-575137))+-70141]]hF[53]=hF[38][-685673+685690]hF[38][-301642+301661]=hF[41]+hF[38][-496554+496574]hF[38][(601950+-308961)-292969]=-794422-(-794678)hF[38][(-1724373-(-908000))+(-765638+1582029)]=hF[38][(1142948-955337)+-187592]%hF[38][-724680+724700]hF[41]=hF[38][(-616226-228160)-(-844404)]end else if hF[18]<(7593209-621962)-(-999790)then hF[18]=true hF[18]=hF[18]and 2122+13318000 or-1021421+(3457132-(-95665))else hF[37]=V[9][hF[11][(1779571-((-1516171-(-655688))+(2796928-901973)))-745098]]hF[13]=-752754+752755 hF[6]=(428910+557557)-(-156216+1142681)hF[17]=hF[37](hF[13],hF[6])hF[37]=-925205-(-925206)hF[51]=hF[17]==hF[37]hF[18]=hF[51]and(-661301+811369)+14036132 or 5901301-86417 hF[14]=hF[51]end end end else if hF[18]<7900182-(-830585)then if hF[18]<(-296801-568228)+9461202 then if hF[18]<(-1002494+2023681)+7443781 then hF[19]=H[10](-252828+222732)hF[10]=306164+-306163 hF[1]=hF[3](hF[10],hF[19])hF[10]=not hF[1]hF[18]=hF[10]and-834228+((-189347+-413758)+17590261)or 444517+10100720 else hF[26]=nil hF[52]=nil hF[18]=-282867+14903174 end else if hF[18]<482957+8169146 then hF[53]=hF[38][-351507-(-351508)]hF[18]=hF[38][-430726-(-197057-233671)]hF[18]=-585826+9733777 else hF[18]=V[9][hF[11][410857-410850]]hF[18]=hF[18]and 1350001-410132 or 686326+2656181 end end else if hF[18]<924763+7863894 then if hF[18]<302980+(987627+7481997)then hF[54]=hF[5]hF[18]=hF[30]hF[18]=874338+15433975 else hF[18]=hF[43]and 718187+15046168 or 10773051-(-875957)end else hF[1]=hF[18]hF[26]=H[10](372624-(408383-5542))hF[19]=V[18][hF[26]]hF[10]=hF[19]~=hF[48]hF[31]=hF[10]hF[18]=hF[10]and-1042712+2932242 or((348731-564436)-(-21680))+(11690067-768977)end end end else if hF[18]<8997143-(393575-(-870390+1459792))then if hF[18]<9560558-(798238+-264214)then if hF[18]<93154+8816031 then if hF[18]<127049+8734686 then hF[38][-563261+563276]=hF[38][-686659+686676]hF[18]=hF[38][(-572949-253048)-(-826015)]hF[18]=-458919+2374887 else hF[6]=(561841-518247)-43592 hF[37]=V[9][hF[11][-865892-(-865893)]]hF[13]=(-276839+(46008+369026))+-138194 hF[17]=hF[37](hF[13],hF[6])hF[37]=976201+-976200 hF[51]=hF[17]==hF[37]hF[14]=hF[51]hF[18]=hF[51]and 189975+154060 or(-593718-323930)+2441340 end else if hF[18]<980669+7968341 then hF[35]=hF[18]hF[38][-141294-(-364943-(-223648))]=H[10]((-517180+((1028273-246808)+((-737054+433853)+-985086)))+993762)hF[41]=V[18][hF[38][264598+-264597]]hF[53]=hF[41]~=hF[45]hF[26]=hF[53]hF[18]=hF[53]and 3420768-576550 or-286909+3590727 else hF[18]=V[9][hF[11][552550-552549]]hF[14]=hF[18]()hF[14]={}hF[18]=V[18][H[10](-741651-(1021876+-1733404))]end end else if hF[18]<647210+8507909 then if hF[18]<9639957-562129 then hF[4]=nil hF[46]=V[1](hF[46])hF[3]=V[1](hF[3])hF[18]=-374149+6027513 hF[20]=V[1](hF[20])hF[27]=V[1](hF[27])hF[23]=V[1](hF[23])hF[29]=V[1](hF[29])else hF[18]=hF[41]hF[26]=hF[53]hF[18]=32958+2811260 end else hF[51]=H[10](365853-396154)hF[18]=V[18][hF[51]]hF[17]=(1596194-582239)-1013955 hF[37]=V[9][hF[11][(358133-518431)+160305]]hF[51]=hF[18](hF[37],hF[17])hF[18]=3484183-557290 end end else if hF[18]<9120497-(-283475)then if hF[18]<10319895-1038282 then if hF[18]<(1653512-805165)+(972921+7382718)then hF[19]=hF[18]hF[1]=V[9][hF[21]]hF[35]=H[10](527348+(-446410-111092))hF[26]=hF[22][hF[35]]hF[18]=hF[26]and 1482342-(-107336)or(-729357+3185368)-(-689008)hF[10]=hF[26]else hF[18]=518471+1399071 hF[38][231979+-231973]=hF[53]==hF[41]hF[38][1012326-1012322]=hF[38][-76167+(525538-449365)]end else if hF[18]<((-499971+1353609)-(-133962))+8302564 then hF[49]=V[9][hF[34]]hF[18]=-186048-(-842012)hF[52]=hF[49]()else hF[18]=V[9][hF[11][-505331+505332]]hF[14]=hF[18]()hF[18]=V[18][H[10](357677-(1012301-(1314015-689593)))]hF[14]={}end end else if hF[18]<-426270+10221037 then if hF[18]<8662984-(68352-866093)then hF[18]=V[9][hF[11][45664+(-280690+235027)]]hF[14]=hF[18]()hF[18]=V[18][H[10](-188586+158324)]hF[14]={}else hF[18]=V[9][hF[11][241352+-241351]]hF[14]=hF[18]()hF[18]=V[18][H[10](-376416+346192)]hF[14]={}end else hF[38][691904-691895]=not hF[38][-25198+(-749846+775052)]hF[38][-387013-(-387018)]=hF[38][777356+-777351]+hF[38][-783190-(-1011061+227864)]hF[38][-920329+920333]=hF[38][(121815-(-771609))+-893419]<=hF[38][479122-479116]hF[38][665880-665876]=hF[38][47346+((-749040+(509226+352550))-160073)]and hF[38][(13995-(935227+-1797198))-875962]hF[38][-764579-(-764588)]=hF[38][-420649-(-420654)]>=hF[38][-776686+776692]hF[38][(602316+-981670)-(-379363)]=hF[38][830671-(471582-(-421199-(-62118)))]and hF[38][869212-(1819626-950423)]hF[38][(925914+-51963)+-873947]=hF[38][-204282+204291]or hF[38][(374160+-39283)+-334873]hF[38][-183538-(-183547)]=(15235956-285793)-(-143016)hF[18]=hF[38][-662491-(-662495)]and hF[38][(841825+-1246832)+405016]hF[38][988013-988009]=-1030622+3767604 hF[18]=hF[18]or hF[38][307662-(((-754000-(-115302))+122857)+(1320091-496592))]end end end end else if hF[18]<672915+10301802 then if hF[18]<9912801-(-508604)then if hF[18]<10805841-(165296+((-571802-(-417683))+523445))then if hF[18]<(10073833-657069)-(-823493)then if hF[18]<10864760-684940 then hF[18]=-745455+14965151 hF[53]=nil else hF[18]=true hF[18]=hF[18]and-166516+1378838 or 12703236-590745 end else if hF[18]<(9247926-(-469306))-(-534268)then hF[38][(-405365+1058902)-653534]=H[10](287588+-317859)hF[38][-252981-(-252983)]=V[18][hF[38][-564669-((-886524-322125)-(-858709-(-214732)))]]hF[38][-740207-(-740210)]=(-1456692-(-831845))+624912 hF[38][931151-931150]=hF[38][-538626+538628]>hF[38][(809879+(-2161892-(-391120-285916)))+674980]hF[53]=hF[38][627882+-627881]hF[18]=13016180-1024096 else hF[18]=10103887-297030 hF[38][-709933+(-296944+1006891)]=V[1](hF[38][16066-16052])hF[38][(-520371-(-338600))-(-181783)]=V[1](hF[38][426470-426458])hF[38][((159727+570895)+(670871+-1118670))+-282814]=nil hF[38][(-913662-(-645654))-(-300722-(-32710))]=V[1](hF[38][-901631-(-901635)])hF[38][(-60287+(-19644+-775338))+855280]=V[1](hF[38][449627+-449616])hF[38][-778041-(-778051)]=V[1](hF[38][(232070+-537752)+((-163273+-384402)-(-853367))])hF[38][143245+-143232]=V[1](hF[38][61295-61282])end end else if hF[18]<-112462+(10419655-(-96427))then if hF[18]<10607432-260991 then hF[18]=V[9][hF[11][-1043613-(-1043614)]]hF[14]=hF[18]()hF[18]=V[18][H[10](695989+-726091)]hF[14]={}else hF[37]=hF[17]hF[18]=V[9][hF[11][(992042+(-204041-107244))-680756]]hF[34]=143169+-143169 hF[48]=585653-585398 hF[7]=hF[18](hF[34],hF[48])hF[18]=-690253+13865928 hF[51][hF[37]]=hF[7]hF[37]=nil end else hF[41]=H[10](-79951+(-1042715+1092565))hF[18]=-512646+3398590 hF[53]=V[18][hF[41]]hF[26]=hF[53]end end else if hF[18]<-601321+11273058 then if hF[18]<630984+(-77461+9992891)then if hF[18]<1028880+(10247718-807987)then hF[18]=V[9][hF[11][-148969+148970]]hF[14]=hF[18]()hF[18]=V[18][H[10]((-1645534-(-754607))+860664)]hF[14]={}else hF[35]=H[10](523049+-553145)hF[26]=H[10]((-607379-257287)-(-1039064+204494))hF[41]=H[10]((-525175+1355282)+-860341)hF[19]=V[9][hF[21]]hF[53]=H[10](-824960+794726)hF[10]=hF[3](hF[19],hF[26])hF[26]=V[16](707872-534457,{})hF[19]=hF[3](hF[26],hF[35])hF[35]=hF[10][hF[53]]hF[53]=hF[19][hF[41]]hF[26]=hF[35]==hF[53]hF[18]=hF[26]and 429494+13713349 or(2732140-(-551046+(1276256-(-121109))))-(((-1125213-((-363360-(-170075))+-847909))-(-477090))-572040)end else if hF[18]<(616328+10733186)-764521 then hF[18]=((-821078+342932)-(919225-(889422-289877)))+1365628 else hF[38][219309-219304]=hF[38][587331+((-1154509-(-12089))-(-555096))]hF[18]=hF[38][(768576+-825743)-(-57175)]hF[18]=-693159+13873149 end end else if hF[18]<-878831+11780792 then if hF[18]<11661429-(531501-((256255+106065)+-743101))then hF[53]=H[10](551359+-581624)hF[35]=V[18][hF[53]]hF[19]=hF[18]hF[53]=V[9][hF[15]]hF[26]=hF[35]~=hF[53]hF[10]=hF[26]hF[18]=hF[26]and(((414385-(-430564))-(1419470-1045047))-(-164409-(-753776)))-(-678163)or(1004816-((577944+696298)-798131))+8402159 else hF[17]=H[10](835767-866003)hF[18]=true hF[37]=V[6]()hF[51]=hF[36]V[9][hF[37]]=hF[18]hF[14]=V[18][hF[17]]hF[17]=H[10](851958-882121)hF[18]=hF[14][hF[17]]hF[13]=V[6]()hF[17]=V[6]()V[9][hF[17]]=hF[18]hF[18]=V[21](3880072-(-500944),{})hF[6]=V[6]()V[9][hF[13]]=hF[18]hF[34]=V[16](13206471-(-399069),{hF[6]})hF[7]=H[10](-474352+444109)hF[18]=false V[9][hF[6]]=hF[18]hF[55]=V[18][hF[7]]hF[7]=hF[55](hF[34])hF[18]=hF[7]and-382866+3684174 or 7559975-530216 hF[14]=hF[7]end else hF[56]=H[10](-642424+612274)hF[18]=V[18][hF[56]]hF[56]=H[10](-946105-(-915824))V[18][hF[56]]=hF[18]hF[18]=-466630+553226 end end end else if hF[18]<-379253+12290298 then if hF[18]<-609479+(11369002-(-888236))then if hF[18]<927317+10262653 then if hF[18]<11059649-(-41397)then hF[35]=V[9][hF[34]]hF[53]=hF[35]()hF[18]=889137+7677603 else hF[18]=hF[52]hF[18]=hF[49]and 267424+(((811198-47493)+(-565082-601230))+9422692)or(984771-((188960-351668)+1095494))-(-603979)end else if hF[18]<((((-415078-(-59675))+-218978)-552305)-((-293254+1122108)+-1186025))+12217988 then hF[6]=855329-855328 hF[14]=V[9][hF[11][-142967+142968]]hF[17]=-483777+17260993.0 hF[37]=-1041830+1041831 hF[13]=H[10](992713-1022834)hF[51]=hF[14](hF[37],hF[17])hF[17]=V[18][hF[13]]hF[13]=H[10](-442513-(-412379))hF[37]=hF[17][hF[13]]hF[55]=16678692.0-(-98524)hF[17]=hF[37]()hF[37]=V[9][hF[11][-810780-(-810781)]]hF[13]=hF[37](hF[6],hF[55])hF[14]=hF[17]^hF[13]hF[18]=hF[51]-hF[14]hF[51]=hF[18]hF[17]=H[10]((-58754-(-974643))-946010)hF[37]=V[18][hF[17]]hF[17]=H[10](581047-611181)hF[14]=hF[37][hF[17]]hF[37]=hF[14]()hF[18]=hF[37]/hF[51]hF[14]={hF[18]}hF[18]=V[18][H[10](-54892+24784)]else hF[38][((-279303+-152423)+204811)-(-226919)]=hF[18]hF[38][507099-507092]=H[10](-1034916+1004689)hF[38][-913990+(1610388-696392)]=V[18][hF[38][385586+-385579]]hF[38][753702-753697]=hF[38][-766338+(-225797+992141)]~=hF[46]hF[18]=hF[38][293708-293703]and 2593194-(-136959)or 930420+15301725 hF[38][523454+(-160748+-362703)]=hF[38][413445+-413440]end end else if hF[18]<((734244-(-170855))+11105071)-138927 then if hF[18]<(-641060+1154898)+11273946 then hF[18]=1454604-580251 else hF[2]=753761-(-203320+(1251217-294136))hF[46]=V[6]()hF[23]=H[10](416064-446338)hF[29]=85157+-84902 V[9][hF[46]]=hF[39]hF[14]=V[18][hF[23]]hF[3]=188072+(656505-(1338243-(((1236162-865523)+(857942+(-476434+-1087655)))+(-201136+1030410))))hF[23]=H[10](621039-(1213926-562652))hF[4]=145474-145472 hF[18]=hF[14][hF[23]]hF[23]=(-444986-138400)-((-74681+((-636638-(-643405))+((902185-211537)-667116)))+-539005)hF[14]=hF[18](hF[23],hF[3])hF[23]=V[6]()V[9][hF[23]]=hF[14]hF[25]=364205-(677454-323249)hF[3]=-430319+430319 hF[18]=V[9][hF[7]]hF[27]=850464+(-1688476-(-580155+-257858))hF[14]=hF[18](hF[3],hF[29])hF[3]=V[6]()V[9][hF[3]]=hF[14]hF[29]=372843+(-220024+-152818)hF[18]=V[9][hF[7]]hF[20]=V[9][hF[23]]hF[12]=H[10](756791-787089)hF[14]=hF[18](hF[29],hF[20])hF[29]=V[6]()V[9][hF[29]]=hF[14]hF[14]=V[9][hF[7]]hF[20]=hF[14](hF[27],hF[4])hF[14]=123245+-123244 hF[18]=hF[20]==hF[14]hF[4]=H[10](-1006667-(-976408))hF[20]=V[6]()hF[14]=H[10](-752388+722274)V[9][hF[20]]=hF[18]hF[28]=V[18][hF[12]]hF[22]=V[9][hF[7]]hF[24]={hF[22](hF[2],hF[25])}hF[12]=hF[28](V[24](hF[24]))hF[28]=H[10](-636801+606542)hF[18]=H[10](-297828-(174947-442592))hF[18]=hF[8][hF[18]]hF[44]=hF[12]..hF[28]hF[27]=hF[4]..hF[44]hF[18]=hF[18](hF[8],hF[14],hF[27])hF[4]=H[10]((575709+-1268604)+662652)hF[27]=V[6]()hF[44]=V[10](-297365+9177060,{hF[7];hF[46],hF[21],hF[17];hF[37],hF[32],hF[20];hF[27];hF[23],hF[29];hF[3];hF[48]})V[9][hF[27]]=hF[18]hF[14]=V[18][hF[4]]hF[4]={hF[14](hF[44])}hF[18]={V[24](hF[4])}hF[4]=hF[18]hF[18]=V[9][hF[20]]hF[18]=hF[18]and 6395302-291215 or-567211+673654 end else hF[18]=V[9][hF[11][900401-900392]]hF[37]=V[9][hF[11][(-1202387-(-250689))-(-951708)]]hF[51][hF[18]]=hF[37]hF[18]=V[9][hF[11][-740285+740296]]hF[37]={hF[18](hF[51])}hF[14]={V[24](hF[37])}hF[18]=V[18][H[10](-980077+(1000357+-50431))]end end else if hF[18]<374820+11703681 then if hF[18]<301008+11695248 then if hF[18]<12652522-706475 then hF[38][-241870+241888]=hF[18]hF[38][-389803-(-389824)]=-658279+658280 hF[38][876831+-876811]=hF[38][-75255+75264][hF[38][1034259-1034238]]hF[38][351862-351841]=false hF[38][885591+-885572]=hF[38][56596-56576]==hF[38][-84339-(503931-588291)]hF[18]=hF[38][50456+-50437]and-284747+14381554 or 9780188-(-423069+1373067)hF[38][((1400427-784114)+-1540060)-(-923764)]=hF[38][-878988+879007]else hF[18]=hF[41]hF[18]=hF[53]and(-653799-(-51320))+(-22245+13884487)or(8581668-673310)-236492 end else if hF[18]<892613+11166734 then hF[18]=V[9][hF[11][(506457+-869734)+363278]]hF[14]=hF[18]()hF[14]={}hF[18]=V[18][H[10](57285-87410)]else hF[37]=nil hF[18]=V[18][H[10](-958809+928628)]hF[51]=nil hF[14]={}end end else if hF[18]<12630127-394756 then if hF[18]<12927837-714319 then hF[14]={}hF[18]=V[18][H[10](680713-710988)]else hF[22]=H[10](219203-(333044+-83611))hF[12]=V[18][hF[22]]hF[22]=H[10]((-1008338+1786587)-808344)hF[4]=hF[12][hF[22]]hF[18]=4247396-186764 hF[20]=hF[4]end else hF[54]=H[10](957616+-987899)hF[5]=H[10](-703559-(-673329))hF[52]=H[10](407347+-437576)hF[43]=H[10]((-604099+(-535112+1137492))-28396)hF[49]={hF[52],hF[54];hF[43];hF[5]}hF[18]=-367161+(16745768-86339)hF[54]=H[10](790190+-820391)hF[52]=V[18][hF[54]]hF[30]={hF[52](hF[49])}hF[54]=hF[30][305723-305722]hF[43]=hF[30][(1045521+-1782882)+737363]hF[5]=hF[30][-253555+253558]end end end end end else if hF[18]<13814353-(-805163)then if hF[18]<-764833+14809692 then if hF[18]<12938403-(-259486)then if hF[18]<12100349-(-809370)then if hF[18]<351363+12394220 then if hF[18]<-859705+13466530 then hF[35]=H[10]((184244+583797)+(12063+((621161+402850)+-1834271)))hF[26]=H[10](-642146+611872)hF[19]=V[18][hF[26]]hF[26]=H[10](-882382-(691398+-1543545))hF[18]=hF[10]hF[10]=hF[19][hF[26]]hF[19]=V[6]()hF[41]=hF[18]V[9][hF[19]]=hF[10]hF[26]=V[18][hF[35]]hF[35]=H[10](-475031+444726)hF[10]=hF[26][hF[35]]hF[35]=hF[18]hF[38][-801426+801428]=H[10](711231-741387)hF[38][443001-443000]=V[18][hF[38][-439259-(-439261)]]hF[53]=hF[38][(-508308-(-106930))-((457781+(452248+-687112))+-624296)]hF[18]=hF[38][-77032+77033]and 13128329-(751060-(-687952+1327931))or 3644+14086875 else hF[17]=H[10](16665+-46831)hF[37]=V[18][hF[17]]hF[13]=H[10](645518-675767)hF[17]=hF[37](hF[13])hF[7]=H[10]((-518470+77901)-(-410356))hF[55]=H[10](-343887+313697)hF[17]=H[10](((41644+185164)+-1287075)-(-1030137))hF[37]=V[18][hF[17]]hF[17]=hF[37]()hF[6]=H[10](277783-(284528+23366))hF[13]=H[10](-249267+219034)hF[37]=H[10](-452525-(-422422))hF[17][hF[37]]=hF[13]hF[17]=H[10](-1003840-(-973640))hF[37]=V[18][hF[17]]hF[14]={}hF[18]=V[18][H[10](371329-401518)]hF[13]=V[18][hF[6]]hF[7]=hF[13][hF[7]]hF[6]={hF[7](hF[13],hF[55])}hF[17]=hF[37](V[24](hF[6]))hF[37]=hF[17]()end else if hF[18]<11738+12798202 then hF[13]=H[10]((-1475824-(-541253))+904301)hF[17]=V[18][hF[13]]hF[6]=H[10](-414668+(-655225-(-1039611)))hF[13]=H[10](252698+-282811)hF[37]=hF[17][hF[13]]hF[17]=hF[37]()hF[13]=V[18][hF[6]]hF[6]=H[10](664501+((-968969+-482390)-(-756603)))hF[17]=hF[13][hF[6]]hF[13]=true hF[37]=hF[17]==hF[13]hF[18]=hF[37]and 12006619-(-623080)or 1021868+11779730 else hF[15]=H[10](356663+(390002-776908))hF[47]=-990781+((406368+1307945)-723467)hF[48]=V[6]()V[9][hF[48]]=hF[14]hF[21]=72140+-72137 hF[18]=V[9][hF[7]]hF[14]=hF[18](hF[21],hF[47])hF[21]=V[6]()V[9][hF[21]]=hF[14]hF[14]=V[18][hF[15]]hF[18]=-467966+467966 hF[8]=V[10](997137+(6715803-279847),{})hF[47]=hF[18]hF[18]=-648505+648505 hF[45]=hF[18]hF[15]={hF[14](hF[8])}hF[14]=839443+-839441 hF[33]=H[10](-529669+499371)hF[18]={V[24](hF[15])}hF[15]=hF[18]hF[18]=hF[15][hF[14]]hF[14]=H[10]((343606+-1363572)+989676)hF[8]=hF[18]hF[18]=V[18][hF[14]]hF[32]=V[9][hF[17]]hF[9]=V[18][hF[33]]hF[33]=hF[9](hF[8])hF[9]=H[10](-705132-(-675018))hF[39]=hF[32](hF[33],hF[9])hF[32]={hF[39]()}hF[14]=hF[18](V[24](hF[32]))hF[32]=V[6]()V[9][hF[32]]=hF[14]hF[14]=60589-(65132+-4544)hF[39]=V[9][hF[21]]hF[9]=hF[39]hF[39]=429592+-429591 hF[33]=hF[39]hF[18]=522002+5131362 hF[39]=-18796-(-18796)hF[56]=hF[33]<hF[39]hF[39]=hF[14]-hF[33]end end else if hF[18]<13592374-574235 then if hF[18]<13829796-883975 then hF[18]=hF[38][-777625+777626]hF[18]=hF[41]and 728513+4418870 or 485231+(8340332-(-1013629))else hF[38][372813-372810]=H[10](241677+-271833)hF[38][-213947-(-213949)]=V[18][hF[38][-577477+577480]]hF[18]=13922789-(-167730)hF[38][-834922-(-1773632-(-938707))]=H[10](70970+-101071)hF[38][530866+(-990544+459679)]=hF[38][-666159-(-666161)][hF[38][-162406-(-162409)]]hF[53]=hF[38][685350-(-841257+1526606)]end else if hF[18]<721817+12458010 then hF[17]=hF[17]+hF[6]hF[7]=not hF[55]hF[37]=hF[17]<=hF[13]hF[37]=hF[7]and hF[37]hF[7]=hF[17]>=hF[13]hF[7]=hF[55]and hF[7]hF[37]=hF[7]or hF[37]hF[7]=10020998-(-345529)hF[18]=hF[37]and hF[7]hF[37]=771812+11106603 hF[18]=hF[18]or hF[37]else hF[38][-372902+372905]=hF[38][-916667+(842177-(-74495))]hF[18]=hF[38][352463-352457]hF[18]=-477059+3207212 end end end else if hF[18]<12507602-(-945039)then if hF[18]<(-1870348-(-981919))+14210543 then if hF[18]<13433088-133919 then hF[38][((909947+(624459+-1161819))+505846)-878431]=-723475+723476 hF[38][-304659-(-304662)]=17669684.0-((847886+-304541)+349123)hF[38][797549-797545]=H[10](-761774-(-731653))hF[41]=V[9][hF[19]]hF[18]=V[18][H[10](-162812+132509)]hF[38][(-1227979-(-317150))+(1520683-609853)]=hF[41](hF[38][-119736-(-119738)],hF[38][-836543+836546])hF[38][-360525+360528]=V[18][hF[38][(868837+(-639565+((342582+413244)+-151447)))+-833647]]hF[38][533152-533148]=H[10](-1031622+1001488)hF[38][458099+-458094]=326006+(343416+(140320+-809741))hF[38][-482623+482625]=hF[38][363216+-363213][hF[38][86029+-86025]]hF[38][839100+-839097]=hF[38][(-1033229-(-75922))-(-957309)]()hF[38][-515859-(-515861)]=V[9][hF[19]]hF[38][((672538-(-147454))-(-123810))+-943796]=17436739.0-659523 hF[38][(274495+-461993)-(-187502)]=hF[38][775618+-775616](hF[38][235820+-235815],hF[38][-791667-(-1335562-((-308675+-551476)+316262))])hF[41]=hF[38][-69025+69028]^hF[38][445451-445447]hF[38][975285-975282]=H[10](448287+-478408)hF[53]=hF[38][669780+(286359-956138)]-hF[41]hF[38][-891728-(-891730)]=V[18][hF[38][-405368+405371]]hF[38][-489612-(-489615)]=H[10](354835+(-299043-85926))hF[38][(583323-153352)-429970]=hF[38][357308+-357306][hF[38][-391194-(-391197)]]hF[38][-626298+626300]=hF[38][-825662-(-825663)]()hF[41]=hF[38][-399788-(-891513-(-491723))]/hF[53]hF[14]={hF[41]}else hF[18]=-1036596+(9606868-611804)end else if hF[18]<-147844+13520718 then hF[1]=V[6]()hF[52]=false hF[26]=V[10](1778654-(1868294-960475),{hF[1]})hF[10]=hF[18]V[9][hF[1]]=hF[52]hF[19]=hF[32](hF[26])hF[18]=hF[19]and(-976188+17344437)-(-14667)or-455904+13039457 hF[52]=hF[19]else hF[19]=H[10](196206-(955454-728966))hF[10]=V[18][hF[19]]hF[52]=hF[5]hF[1]=hF[10][hF[30]]hF[19]=V[9][hF[50]]hF[10]=hF[19][hF[30]]hF[31]=hF[1]~=hF[10]hF[18]=hF[31]and-265623+3123309 or 1428299-(-873371)end end else if hF[18]<13839506-166113 then if hF[18]<14390948-821798 then hF[9]=V[9][hF[37]]hF[18]=hF[9]and-463177+((-255124+-580716)+5042397)or 56313-(-488147+-98870)hF[39]=hF[9]else hF[14]={}hF[18]=true V[9][hF[11][520258+-520257]]=hF[18]hF[18]=V[18][H[10](787937-818037)]end else hF[32]=V[1](hF[32])hF[23]=H[10]((-472198+-11108)-(-453032))hF[15]=nil hF[7]=V[1](hF[7])hF[8]=nil hF[15]=H[10](243380+-273645)hF[55]=nil hF[6]=V[1](hF[6])hF[45]=nil hF[37]=V[1](hF[37])hF[47]=nil hF[37]=true hF[3]=H[10](737644-767874)hF[13]=V[1](hF[13])hF[6]=V[13](871765+(-293405+3923115),{})hF[48]=V[1](hF[48])hF[21]=V[1](hF[21])hF[17]=V[1](hF[17])hF[45]=H[10](593454-623671)hF[17]=V[6]()hF[13]=V[13](14692992-154018,{})hF[34]=nil hF[27]=hF[18]V[9][hF[17]]=hF[37]hF[37]=V[22](275848+13783104,{})hF[8]=H[10](408004+-438244)hF[32]=H[10](181125-211325)hF[21]=H[10](299489-329763)hF[55]={hF[37];hF[13];hF[6]}hF[48]=V[18][hF[21]]hF[21]=H[10](444988-475223)hF[34]=hF[48][hF[21]]hF[47]=#hF[55]hF[21]=939829-939828 hF[48]=hF[34](hF[21],hF[47])hF[47]=H[10](-322156-(-291890))hF[7]=hF[55][hF[48]]hF[21]=H[10](304651+(361672-(956039-259589)))hF[34]=V[6]()hF[48]=H[10](581919-(124382+487838))V[9][hF[34]]=hF[7]hF[56]=H[10](-810635-(-780392))hF[7]=V[18][hF[48]]hF[48]=V[18][hF[21]]hF[21]=V[6]()V[9][hF[21]]=hF[48]hF[48]=V[18][hF[47]]hF[29]=hF[18]hF[47]=V[6]()V[9][hF[47]]=hF[48]hF[48]=V[18][hF[45]]hF[45]=V[18][hF[15]]hF[15]=V[6]()V[9][hF[15]]=hF[45]hF[45]=V[18][hF[8]]hF[8]=V[18][hF[32]]hF[12]=H[10]((45426-58108)-17548)hF[32]=V[18][hF[56]]hF[46]=V[18][hF[23]]hF[23]=H[10](118350-148585)hF[56]=hF[46][hF[23]]hF[23]=H[10](-148967+118740)hF[46]=V[18][hF[23]]hF[23]=V[18][hF[3]]hF[4]=V[18][hF[12]]hF[18]=hF[4]and(11436581-(-154526))-(-634064)or 3577107-(-483525)hF[20]=hF[4]end end end else if hF[18]<-491568+14697758 then if hF[18]<13750713-(-391011)then if hF[18]<14166232-85688 then if hF[18]<-749548+14811605 then hF[14]=H[10](17212-47434)hF[17]=H[10](-574338-(-544161))hF[18]=V[18][hF[14]]hF[37]=H[10](-795847+765687)hF[51]={[hF[37]]=hF[17]}hF[14]=hF[18](hF[51])hF[18]=8085145-126677 else hF[18]=V[9][hF[11][735508+-735507]]hF[14]=hF[18]()hF[18]=V[18][H[10](93410+-123595)]hF[14]={}end else if hF[18]<-592215+14683688 then hF[26]=hF[53]hF[18]=hF[41]hF[18]=hF[53]and 2177387-(-708557)or 10752462-344923 else hF[18]=-846775+9676965 hF[38][39767-39746]=-835232+835234 hF[38][-264596+(-697105-(-961721))]=hF[38][-495476-(-495485)][hF[38][-413810-(-413831)]]hF[38][-743180-(-743201)]=V[9][hF[38][-114904-(-114918)]]hF[38][((-726710+(506010+-787858))+885912)-(-122665)]=hF[38][(-485589+326265)-(-159344)]==hF[38][13428-13407]hF[38][453559-((787294+((-904832+396893)-(-747831)))-573644)]=hF[38][-282569+282588]end end else if hF[18]<146637+14005946 then if hF[18]<14883097-738983 then hF[26]=V[9][hF[34]]hF[35]=hF[26]()hF[18]=((((1092566-713477)-(((1617373-911438)-329959)-28874))+-763260)+(908734+-1198760))+3086089 else hF[52]=hF[23]hF[1]=hF[18]hF[18]=hF[23]and 519474+4811276 or 784247+((731494+2499196)-(-1030605))end else hF[18]=hF[14]and-364816+15132258 or-885780+3206064 end end else if hF[18]<219357+(14390468-241608)then if hF[18]<14416116-83571 then if hF[18]<14674021-373743 then hF[18]=14580936-(-391453-650473)hF[1]=nil hF[35]=nil else hF[18]=V[9][hF[11][540727+-540726]]hF[14]={hF[18]}hF[18]=V[18][H[10](-894909+864640)]end else if hF[18]<61471+14277562 then hF[45]=H[10](648023-678309)hF[6]=false hF[46]=H[10](987354+(-1595279-(-577738)))hF[47]=V[22]((834256+(-2061162-(999366+-1301146)))+10218471,{hF[11][-900303-(-900305)]})hF[49]=H[10](880535-910729)hF[51]=hF[36][565910+(-388996-176913)]hF[44]=V[16](14543645-(-201102-(-125509)),{hF[11][(474840+(100906-181682))-394062]})hF[55]=H[10](-373746-(-343450))hF[7]=V[13](((-1830113-(944567+(-335133-1046899)))-(-540646+(9161+-241199)))+(4453135-(-170302)),{hF[11][-708442-((-52351+566255)+-1222348)]})hF[28]=H[10](903941-934098)hF[4]=H[10]((-1412822-(-914159))-(-468477))hF[17]=V[22](8242581-852264,{hF[11][156694-156693];hF[11][834049+(-56052-777995)]})hF[13]=H[10](-689628-(-659510))hF[54]=H[10]((343405+-803775)-(-430272))hF[5]=H[10](-612196-(-581909))hF[8]=H[10](-929076-((-2296112-(-1038481))-(-358843)))hF[33]=H[10](-319440+289215)hF[3]=H[10](-264071+233981)hF[15]=V[21](12895559-(1419623-(-1035-((-437785-(-249827))-341753))),{hF[11][-470553+470555]})hF[56]=V[13]((((1037467+-705425)+14056208)-301661)-8466,{hF[11][-741405+((1606702-123103)-742192)]})hF[39]=H[10](-739786+709627)hF[48]=H[10](-223979-(-929575-(-735736)))hF[21]=H[10]((318699+-513424)+164583)hF[9]=V[4](-828858+10461092,{hF[11][-20349+(-338907+359258)]})hF[1]=V[16](330159+6433198,{hF[11][6925-6923]})hF[43]=V[4]((8533106-(-757353))-(-588889-(-926614)),{hF[11][-650461+650463]})hF[22]=H[10](-435834-(-405584))hF[30]=V[16](-15269+15320417,{hF[11][(-1659024-(((-13048-712973)-172023)+-115817))-(-645165)]})hF[14]=H[10](-128548-(-98442))hF[52]=V[10](105833+10317563,{hF[11][485876-485874]})hF[2]=H[10]((1476380-628133)-878514)hF[25]=V[21](-1019999+16440156,{hF[11][630562-630560]})hF[16]=H[10](659119+-689371)hF[37]=H[10](-707674+677528)hF[29]=V[4]((2166174-(271673-735253))-291160,{hF[11][626602-626600]})hF[32]=V[4]((17966099-(302484+575883))-1024913,{hF[11][-296614+296616]})hF[23]=V[22](2690534-(-800403),{hF[11][662629+(-171070+-491557)]})hF[27]=V[21](9423424-(-906118-(-906306)),{hF[11][-963240+963242]})hF[24]=V[22](7718905-694160,{hF[11][(-801032+256029)-((372570-973967)+56392)]})hF[12]=V[10]((735714+274177)+(16406341-879884),{hF[11][(-1338013-((219554+-838649)-151516))-(-567404)]})hF[31]=H[10](-178551+148353)hF[20]=H[10]((932221+-807154)-((457034+-602276)+300582))hF[34]=H[10](-312191+282084)hF[50]=V[4](612718+6436959,{hF[11][332919+-332917]})hF[18]={[hF[14]]=hF[51],[hF[37]]=hF[17],[hF[13]]=hF[6];[hF[55]]=hF[7];[hF[34]]=hF[48],[hF[21]]=hF[47];[hF[45]]=hF[15];[hF[8]]=hF[32];[hF[39]]=hF[9],[hF[33]]=hF[56];[hF[46]]=hF[23];[hF[3]]=hF[29],[hF[20]]=hF[27];[hF[4]]=hF[44];[hF[28]]=hF[12],[hF[22]]=hF[24],[hF[2]]=hF[25],[hF[16]]=hF[50],[hF[49]]=hF[52],[hF[54]]=hF[43];[hF[5]]=hF[30],[hF[31]]=hF[1]}hF[17]={}hF[37]=hF[18]hF[18]=V[9][hF[11][-649885-(-859585-(-209697))]]hF[14]={hF[18](hF[17],hF[37])}hF[14]={V[24](hF[14])}hF[18]=V[18][H[10](268048-298177)]else hF[10]=H[10](841895-872161)hF[30]=hF[18]hF[1]=V[18][hF[10]]hF[10]=V[9][hF[47]]hF[31]=hF[1]~=hF[10]hF[18]=hF[31]and 7722970-(-1037896)or(-1032011+1592398)+8237496 hF[5]=hF[31]end end else if hF[18]<-649232+15214264 then if hF[18]<13713513-(-814647)then hF[18]=hF[52]hF[18]=hF[49]and 5528156-(-716453)or 12417886-(-25018)else hF[37]=H[10](-887623-(-857379))hF[6]=H[10](-792077+761803)hF[14]=H[10](((76468+-139425)-766405)+799140)hF[18]=V[18][hF[14]]hF[13]=V[18][hF[6]]hF[55]=(875035-(1806961-814771))-(-127154)hF[6]=H[10](((1170234-317836)-(1060595-(1002843+(-915524+916927))))-826284)hF[17]=hF[13][hF[6]]hF[6]=905350+-904350 hF[13]=hF[17](hF[6],hF[55])hF[51]=hF[37]..hF[13]hF[14]=hF[18](hF[51])hF[18]=38316-(-508878)end else hF[18]=V[9][hF[11][-468639+(-904351+(2222566-849575))]]hF[14]=hF[18]()hF[18]=V[18][H[10](294479-324631)]hF[14]={}end end end end else if hF[18]<(15943461-(-979459+1626329))-(-479233)then if hF[18]<(372834+-673720)+15513033 then if hF[18]<15343022-560687 then if hF[18]<904843+13778620 then if hF[18]<(((-679076+1943015)-312279)+13210598)-(-476536)then hF[19],hF[26]=hF[1](hF[10],hF[19])hF[18]=hF[19]and 2770240-(-1022637)or-338839+14483438 else hF[18]=hF[28]hF[18]=(501210+6736)+14700395 hF[14]=hF[44]end else if hF[18]<14419851-(-268737)then hF[31]=H[10]((((2897077-(1205042-581705))-1000548)-380091)+(-149383-773845))hF[30]=V[18][hF[31]]hF[31]=V[9][hF[21]]hF[5]=hF[30]~=hF[31]hF[43]=hF[18]hF[54]=hF[5]hF[18]=hF[5]and(-389775+16403326)-(-294762)or 14842965-500420 else hF[14]=H[10](-27612-2678)hF[48]=V[22](16643979-865510,{hF[11][227912-227911]})hF[13]=H[10](314744-345042)hF[34]=H[10]((-42999+805390)+(-1461013-(-668379)))hF[18]=V[18][hF[14]]hF[51]=V[9][hF[11][968456+(292024+-1260477)]]hF[17]=V[18][hF[13]]hF[7]=V[18][hF[34]]hF[34]={hF[7](hF[48])}hF[7]=-443305-(528274+-971581)hF[55]={V[24](hF[34])}hF[6]=hF[55][hF[7]]hF[13]=hF[17](hF[6])hF[17]=H[10](-938330-(-908216))hF[37]=hF[51](hF[13],hF[17])hF[51]={hF[37]()}hF[14]=hF[18](V[24](hF[51]))hF[37]=V[9][hF[11][963785-963781]]hF[51]=hF[14]hF[14]=hF[37]hF[18]=hF[37]and 15794881-(-29149)or 7401945-535408 end end else if hF[18]<14468072-((-428757-661610)-(-406222))then if hF[18]<14219403-(-704994)then hF[18]=(-322922+-449342)+5414664 else hF[38][(687350-656170)-31176]=V[6]()hF[38][-472346+472356]=V[6]()V[9][hF[38][-928510-(-928514)]]=hF[38][((-16904+-890334)+1757006)+-849763]hF[38][451254-451245]=((-987246+1531760)+(963610+-958339))+-549685 hF[38][319010+-318991]=H[10](290923+(557859-879080))hF[38][603494-603478]=H[10](-620195+589936)V[9][hF[38][77375+-77365]]=hF[38][(491756-(-174284+-352445))+-1018476]hF[38][110136-110125]=V[9][hF[38][-145344+145348]]hF[38][-375002+375014]=1061+-805 hF[38][827324-(-184615-(-1011924))]=-866838+866840 hF[38][-113254-(-113263)]=hF[38][-588466+588477]%hF[38][799616-799604]hF[38][453969+-453958]=V[6]()V[9][hF[38][(824848+-650039)+-174798]]=hF[38][107321-107312]hF[38][-16287-(104251+-120551)]=V[9][hF[38][-1027921+1027925]]hF[38][-467218+(((175281-(-977127))-(1243182-(-921109+(2774418-(263528-(-741239))))))-290536)]=V[9][hF[38][(-470032-(371093-(-118985)))-(-960120)]]hF[38][-1023912-(-1023924)]=hF[38][-622874+622887]%hF[38][-327535+327549]hF[38][933248-(174632+758603)]=983129+-983128 hF[38][-516687+516696]=hF[38][453376-453364]+hF[38][36256-36243]hF[38][851764+(((-736271+1022974)-76992)+-1061463)]=V[6]()V[9][hF[38][48438-48426]]=hF[38][44911-(268021+-223119)]hF[38][-746852+746866]=V[9][hF[38][(574161-(-268668))-842825]]hF[38][-475992+476005]=hF[38][(-620931+1279330)-658385]%hF[38][631776-631761]hF[38][(-157052-(-390662))+(673596-907192)]=(645292-(1106672-89896))-(-371484)hF[38][303645+-303636]=hF[38][(-171838+-554338)-(-726189)]==hF[38][-649814+649828]hF[38][936004-935991]=V[6]()hF[38][4222+-4208]=H[10](248130+-278244)hF[38][-819046+819068]=(-33043+1051018)-1017975 V[9][hF[38][-935889+935902]]=hF[38][-278926-(-278935)]hF[38][-904563-(-904586)]=527756-517756 hF[38][1027566+(((95014+905341)+(-670513+(328356+86632)))+-1772378)]=V[18][hF[38][106485-(-701734+808200)]]hF[38][869483-(775160+94303)]=V[9][hF[19]]hF[38][(-436059-(-912084))-476004]={hF[38][-591847-(-591867)](hF[38][463135-463113],hF[38][(801232+(-308668+(-1284860-(-136768))))-(-703829+48278)])}hF[38][982034+-982015]=hF[38][-144467-(-144485)](V[24](hF[38][472170+-472149]))hF[38][-438446-(1019649+-1458113)]=H[10](-168604+138345)hF[38][-1047068+1047085]=hF[38][-704235-(-704254)]..hF[38][(-242863-((120396+524484)+-291453))+596308]hF[38][51125+-51110]=hF[38][180071-180055]..hF[38][(135971+-30467)+-105487]hF[38][-554218+554227]=H[10](194859-225042)hF[38][(-1872192-(-832015))-(-1040193)]=H[10](-570875-(-540632))hF[38][-505282+505291]=hF[38][839577+-839575][hF[38][(962299+-1397589)-(-435299)]]hF[38][-1023094-(-1023103)]=hF[38][-639838+(227327-(-412520))](hF[38][-176257+176259],hF[38][-260276+260290],hF[38][(-624736+1490579)+-865828])hF[38][842246+(-698991-143241)]=V[6]()V[9][hF[38][-190181+190195]]=hF[38][4841+-4832]hF[38][-394989+395006]=V[21](8252001-276266,{hF[19];hF[38][111002+-110998],hF[5],hF[17],hF[38][804490+-804487];hF[38][-807600+807613];hF[38][-720547+(-64074-(-784635))];hF[38][-607066+607076],hF[38][933499+(-1185831-(-252344))];hF[38][-774175-(-774186)];hF[35]})hF[38][(-153311+(885348+(((-295420+-769461)-(-260405))-(-795469))))-723015]=V[18][hF[38][408498+-408482]]hF[38][(((-661927-(-762296))+-563904)+1154099)-(1165083-474535)]={hF[38][((1050994-45298)+-1443249)+437568](hF[38][-263260+263277])}hF[38][-126193+126202]={V[24](hF[38][-753223-(-753239)])}hF[38][(559650+(((940059+(-1189340-(-203449)))-(-913511+(858611+531320)))-(-175965+-763509)))-976857]=V[9][hF[38][207625+-207612]]hF[18]=hF[38][(-1000389+96136)+904268]and 16018137-528953 or-794370+6894842 end else V[9][hF[37]]=hF[14]hF[18]=659262+8384523 end end else if hF[18]<-157281+15775458 then if hF[18]<15279573-(-90930)then if hF[18]<14895304-(-406133)then hF[18]=(8145293-887237)-(-682527)hF[38][(1503050-966985)-536046]=790837+(-136768+-654068)hF[38][214322+-214304]=hF[38][-665496-(-665505)][hF[38][-58016-(392113+-450148)]]hF[38][323115+(-850706-(-527607))]=hF[38][-806774-(-806792)]else hF[18]=V[9][hF[11][857438+(447686+-1305123)]]hF[14]=hF[18]()hF[18]=V[18][H[10](((5160-347558)+-225003)-(-537217))]hF[14]={}end else if hF[18]<14525802-(-929458)then hF[18]=V[9][hF[11][678304-678303]]hF[14]=hF[18]()hF[18]=V[18][H[10]((-785683+654503)-(-101006))]hF[14]={}else hF[38][28142+-28126]=hF[18]hF[38][-139443+139460]=V[9][hF[17]]hF[18]=hF[38][66545-66528]and(-360239+12395950)-107892 or-698806+(154098+2460676)hF[38][-777890+(126754+(331739+319412))]=hF[38][412506+-412489]end end else if hF[18]<16239846-543653 then if hF[18]<586184+15037203 then hF[26],hF[35]=hF[10](hF[19],hF[26])hF[18]=hF[26]and 1902565-644815 or(-318181+1195329)+7453133 else hF[14]={}hF[18]=V[18][H[10](640286+-670544)]end else hF[52]=V[9][hF[34]]hF[5]=hF[52]()hF[18]=-796007+12445015 end end end else if hF[18]<15931852-(56630-(-852247+1140570))then if hF[18]<15193339-(-736425)then if hF[18]<15121372-(-702695)then if hF[18]<-93658+15913658 then hF[37]=((-1033000+1153757)-(-518394))-(382896+256254)hF[17]=814865+15962351.0 hF[13]=H[10]((-527425+-144264)-(-641568))hF[14]=V[9][hF[11][725461+(277802+-1003262)]]hF[51]=hF[14](hF[37],hF[17])hF[17]=V[18][hF[13]]hF[55]=-654236+17431452.0 hF[13]=H[10](419599-449733)hF[37]=hF[17][hF[13]]hF[6]=-332609-(-332610)hF[17]=hF[37]()hF[37]=V[9][hF[11][-703784+703785]]hF[13]=hF[37](hF[6],hF[55])hF[14]=hF[17]^hF[13]hF[18]=hF[51]-hF[14]hF[17]=H[10](35560-65681)hF[51]=hF[18]hF[37]=V[18][hF[17]]hF[17]=H[10]((603095-734443)-(-101214))hF[14]=hF[37][hF[17]]hF[37]=hF[14]()hF[18]=hF[37]/hF[51]hF[14]={hF[18]}hF[18]=V[18][H[10](-228796+(-98944+(969216+-671752)))]else hF[17]=V[9][hF[11][-723762+723767]]hF[37]=hF[17]==hF[51]hF[14]=hF[37]hF[18]=7611836-(708257-(-37042))end else if hF[18]<515616+(14760292-(-560295))then hF[30]=hF[43]hF[5]=V[9][hF[50]]hF[18]=-916892+(8226456-412047)hF[16]=hF[54]hF[43]=nil hF[5][hF[16]]=hF[30]hF[16]=nil else hF[13]=hF[37]hF[55]=V[9][hF[11][(1144739-782869)+-361868]]hF[7]=hF[55](hF[6])hF[55]=H[10](146245+-176410)hF[18]=hF[7]==hF[55]hF[18]=hF[18]and-225719+8011859 or 5146282-820858 end end else if hF[18]<((-697922+(445240+15244697))-(-898565))-(-195247)then if hF[18]<(-488615+(-725272+18071437))-802548 then hF[38][-1018812+1018819]=hF[38][-1004963+1004972]hF[18]=hF[38][383085-((-726142+174396)+934821)]hF[18]=-750124+11344691 else hF[18]=V[9][hF[11][744795+-744794]]hF[14]=hF[18]()hF[14]={}hF[18]=V[18][H[10]((172465+-1132579)+929934)]end else hF[10]=V[9][hF[34]]hF[19]=hF[10]()hF[18]=11023274-478037 end end else if hF[18]<-444048+(16402363-(-356917))then if hF[18]<17276466-(120202+(526448-(-351747)))then if hF[18]<15207695-(-1026482)then hF[38][-243379+243385]=hF[18]hF[38][18597-18588]=H[10](139854+((-12625-(-372900))-(-192774+723133)))hF[38][893312+-893304]=V[18][hF[38][-384905+((96584+-441594)+729924)]]hF[38][-1003375-(-1003382)]=hF[38][-9679-(-9687)]~=hF[23]hF[38][(-286175-594032)+880212]=hF[38][405617-405610]hF[18]=hF[38][-954356+954363]and 12514463-(-665527)or 7186223-((((-42730+-1373596)-(-1038065))+(-1169019-(-847806+284195)))+(771559+549059))else hF[21]=H[10](254206-284307)hF[18]=12586865-(-229653)hF[48]=V[18][hF[21]]hF[14]=hF[48]end else if hF[18]<16832453-(-583111+1121940)then hF[5],hF[30]=hF[54](hF[43],hF[5])hF[18]=hF[5]and 412129+12967321 or 4120914-(-413310)else hF[49]=hF[54]hF[18]=hF[43]hF[18]=11104484-(-84848)end end else if hF[18]<16761479-(-923453+1298278)then if hF[18]<(523286+16040247)-184459 then hF[14]=H[10]((969012-756071)+-243231)hF[48]=V[22](621915+3873571,{})hF[34]=H[10](405740+((-547696+1338542)+-1226829))hF[18]=V[18][hF[14]]hF[13]=H[10](868472+-898770)hF[51]=V[9][hF[11][925678-925674]]hF[17]=V[18][hF[13]]hF[7]=V[18][hF[34]]hF[34]={hF[7](hF[48])}hF[7]=112956-(-857533+(1702557-732070))hF[55]={V[24](hF[34])}hF[6]=hF[55][hF[7]]hF[13]=hF[17](hF[6])hF[17]=H[10](-874895-(-844781))hF[37]=hF[51](hF[13],hF[17])hF[51]={hF[37]()}hF[14]=hF[18](V[24](hF[51]))hF[51]=hF[14]hF[37]=V[9][hF[11][250933-250928]]hF[14]=hF[37]hF[18]=hF[37]and(581361+4662025)-(124120+738346)or 2145618-(-510660)else hF[18]=12876780-293227 hF[19]=V[9][hF[1]]hF[52]=hF[19]end else hF[18]=V[9][hF[11][127430+-127429]]hF[14]=hF[18]()hF[18]=V[18][H[10](-657423+627128)]hF[14]={}end end end end end end end end hF[18]=#hF[42]return V[24](hF[14])end,function()V[5]=(577441+-577440)+V[5]V[20][V[5]]=-660936-(-660937)return V[5]end,{},function(C)local X={}X[1]=C for C=(215598-524361)+308764,#X[1],-497482+497483 do local R={}R[1]=C V[20][X[1][R[1]]]=V[20][X[1][R[1]]]+(378826+(((866409+-421601)-818884)-(352880-348131)))end if V[7]then local C={}C[3]=V[7](true)C[1]=V[17](C[3])C[1][H[10](-491183-(-1414025-(-952948)))],C[1][H[10](-169668-(-139372))],C[1][H[10](732488+-762774)]=X[1],V[19],function()return 3125220-(-447966)end return C[3]else return V[15]({},{[H[10]((-731650+1609827)+-908473)]=V[19],[H[10](-772336-(-742230))]=X[1];[H[10](-539472+509186)]=function()return((-29965+(387905+-1361716))+((-773472+6718834)-424533))-943867 end})end end,function(C,X)local Q={}Q[2],Q[3]=C,X Q[5]=V[11](Q[3])Q[4]=function(C)local X={}X[2]=C return V[3](Q[2],{X[2]},Q[3],Q[5])end return Q[4]end,function(C,X)local Q={}Q[2],Q[5]=C,X Q[3]=V[11](Q[5])Q[1]=function()return V[3](Q[2],{},Q[5],Q[3])end return Q[1]end,function(C,X)local Q={}Q[1],Q[3]=C,X Q[2]=V[11](Q[3])Q[5]=function(C,X,R,I)local o={}o[2],o[5],o[3],o[1]=C,X,R,I return V[3](Q[1],{o[2],o[5],o[3];o[1]},Q[3],Q[2])end return Q[5]end,-908968-(-908968),function(C,X)local Q={}Q[3],Q[5]=C,X Q[1]=V[11](Q[5])Q[2]=function(C,X,R)local I={}I[1],I[4],I[2]=C,X,R return V[3](Q[3],{I[1];I[4];I[2]},Q[5],Q[1])end return Q[2]end,{},function(C,X)local Q={}Q[1],Q[2]=C,X Q[3]=V[11](Q[2])Q[4]=function(...)return V[3](Q[1],{...},Q[2],Q[3])end return Q[4]end,function(C)local Q={}Q[2]=C Q[3],Q[1]=-118227-(-118228),Q[2][-317756+(1142670-824913)]while Q[1]do V[20][Q[1]],Q[3]=V[20][Q[1]]-(-79733-(-79734)),((-899748+1202305)+((-364111+394112)-(674004-341447)))+Q[3]if V[20][Q[1]]==806070+-806070 then V[20][Q[1]],V[9][Q[1]]=nil,nil end Q[1]=Q[2][Q[3]]end end,function(C,X)local Q={}Q[1],Q[3]=C,X Q[5]=V[11](Q[3])Q[4]=function(C,X,R,I,o,W,l)local h={}h[3],h[6],h[2],h[5],h[4],h[8],h[1]=C,X,R,I,o,W,l return V[3](Q[1],{h[3];h[6],h[2];h[5],h[4];h[8],h[1]},Q[3],Q[5])end return Q[4]end,function(C,X)local Q={}Q[5],Q[4]=C,X Q[1]=V[11](Q[4])Q[2]=function(C,X,R,I,o)local W={}W[1],W[6],W[2],W[3],W[4]=C,X,R,I,o return V[3](Q[5],{W[1];W[6],W[2],W[3];W[4]},Q[4],Q[1])end return Q[2]end,function(C,X)local Q={}Q[3],Q[4]=C,X Q[1]=V[11](Q[4])Q[5]=function(C,X)local R={}R[2],R[3]=C,X return V[3](Q[3],{R[2];R[3]},Q[4],Q[1])end return Q[5]end,function(C)local X={}X[1]=C V[20][X[1]]=V[20][X[1]]-(-973420-(-973421))if V[20][X[1]]==-119487+119487 then V[20][X[1]],V[9][X[1]]=nil,nil end end return(V[2]((-304622-(-681675))+10391509,{}))(V[24](V[14]))end)(getfenv and getfenv()or _ENV,unpack or table[H[10]((((1842915-(-2975+(-754095+805320)))-1042919)-((-510190-(-698125))+-384789))-(55724-(-922977)))],newproxy,setmetatable,getmetatable,select,{...})end)(...)
+                        if Mob then
+                            topos(Mob.HumanoidRootPart.CFrame * CFrame.new(0, 0, 10))
+                        else
+                            if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.Y <= 1 then
+                                game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = true
+                                task.wait()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = false
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+spawn(function()
+    while task.wait() do
+        if UseSkill then
+            pcall(function()
+                CheckQuest()
+                for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if game:GetService("Players").LocalPlayer.Character:FindFirstChild(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value) then
+                        MasBF = game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Data.DevilFruit.Value].Level.Value
+                    elseif game:GetService("Players").LocalPlayer.Backpack:FindFirstChild(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value) then
+                        MasBF = game:GetService("Players").LocalPlayer.Backpack[game:GetService("Players").LocalPlayer.Data.DevilFruit.Value].Level.Value
+                    end
+                    if game:GetService("Players").LocalPlayer.Character:FindFirstChild(game:GetService("Players").LocalPlayer.Data.DevilFruit.Value) then
+                        if getgenv().SkillZ then
+                            local args = {
+                                [1] = PosMonMasteryFruit.Position
+                            }
+                            game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "Z", false, game)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "Z", false, game)
+                        end
+                        if getgenv().SkillX then
+                            local args = {
+                                [1] = PosMonMasteryFruit.Position
+                            }
+                            game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "X", false, game)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "X", false, game)
+                        end
+                        if getgenv().SkillC then
+                            local args = {
+                                [1] = PosMonMasteryFruit.Position
+                            }
+                            game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "C", false, game)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "C", false, game)
+                        end
+                        if getgenv().SkillV then
+                            local args = {
+                                [1] = PosMonMasteryFruit.Position
+                            }
+                            game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "V", false, game)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "V", false, game)
+                        end
+                        if getgenv().SkillF then
+                            local args = {
+                                [1] = PosMonMasteryFruit.Position
+                            }
+                            game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Character:FindFirstChildOfClass("Tool").Name].RemoteEvent:FireServer(unpack(args))
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "F", false, game)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "F", false, game)
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        pcall(function()
+            if UseSkill then
+                for i, v in pairs(game:GetService("Players").LocalPlayer.PlayerGui.Notifications:GetChildren()) do
+                    if v.Name == "NotificationTemplate" then
+                        if string.find(v.Text, "Skill locked!") then
+                            v:Destroy()
+                        end
+                    end
+                end
+            end
+        end)
+    end)
+end)
+spawn(function()
+    pcall(function()
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if UseSkill then
+                local args = {
+                    [1] = PosMonMasteryFruit.Position
+                }
+                game:GetService("Players").LocalPlayer.Character[game:GetService("Players").LocalPlayer.Data.DevilFruit.Value].RemoteEvent:FireServer(unpack(args))
+            end
+        end)
+    end)
+end)    
+spawn(function()
+    pcall(function()
+        while task.wait() do
+            if FarmMode2 == "Gun" and getgenv().MasteryFarm then
+                QuestTitle = game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text
+                if not string.find(QuestTitle, NameMon) then                      
+                    Skillaimbot = false          
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                end
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    CheckQuest()
+                        if BypassTP then
+                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude > 2000 then
+						        BTP(CFrameQuest)
+                            elseif (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - CFrameQuest.Position).Magnitude <= 2000 then
+                                topos(CFrameQuest)
+                            else
+                                topos(CFrameQuest)
+                            end
+                        else                                 
+                             topos(CFrameQuest)
+                        end
+                    if (CFrameQuest.Position - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+                        task.wait(1.1)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", NameQuest, LevelQuest)
+                    end
+                elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                    CheckQuest()
+                    if game:GetService("Workspace").Enemies:FindFirstChild(Mon) then
+                        pcall(function()
+                            for i,v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                if v.Name == Mon then
+                                    repeat task.wait()
+                                        if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, NameMon) then
+                                            HealthMin = v.Humanoid.MaxHealth * getgenv().Kill_At/100
+                                            if v.Humanoid.Health <= HealthMin then
+                                                EquipWeapon(SelectWeaponGun)
+                                                Skillaimbot = true
+                                                AimSkill = v.Engine.CFrame * CFrame.new(0, -15, 0)
+                                                AimBotSkillPosition = AimSkill.Position
+                                                MonFarm = v.Name                
+                                                PosMon = v.HumanoidRootPart.CFrame
+                                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
+                                                v.Humanoid.WalkSpeed = 0
+                                                v.HumanoidRootPart.CanCollide = false
+                                                v.HumanoidRootPart.Size = Vector3.new(2,2,1)
+                                                v.Head.CanCollide = false                                                
+                                                local args = {
+                                                    [1] = v.HumanoidRootPart.Position,
+                                                    [2] = v.HumanoidRootPart
+                                                }
+                                                game:GetService("Players").LocalPlayer.Character[SelectWeaponGun].RemoteFunctionShoot:InvokeServer(unpack(args))
+                                                task.wait(.1)
+                                                game:GetService("VirtualInputManager"):SendKeyEvent(true,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
+                                                game:GetService("VirtualInputManager"):SendKeyEvent(false,122,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
+                                                task.wait(.1)
+                                                game:GetService("VirtualInputManager"):SendKeyEvent(true,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
+                                                game:GetService("VirtualInputManager"):SendKeyEvent(false,120,false,game.Players.LocalPlayer.Character.HumanoidRootPart)
+                                            else
+                                                AutoHaki()
+                                                EquipWeapon(getgenv().SelectWeapon)
+                                                MonFarm = v.Name                
+                                                PosMon = v.HumanoidRootPart.CFrame
+                                                v.Humanoid.WalkSpeed = 0
+                                                v.HumanoidRootPart.CanCollide = false
+                                                v.Head.CanCollide = false    
+                                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                                game:GetService'VirtualUser':CaptureController()
+                                                game:GetService'VirtualUser':Button1Down(Vector2.new(1280, 672))
+                                            end
+                                            getgenv().StartMagnet = true 
+                                            PosMonMasteryGun = v.HumanoidRootPart.CFrame
+                                        else
+                                            getgenv().StartMagnet = true 
+                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+                                        end
+                                    until v.Humanoid.Health <= 0 or not getgenv().MasteryFarm or game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false
+                                end
+                            end
+                        end)
+                    else
+                       topos(CFrameMon)
+                        Mob = game:GetService("ReplicatedStorage"):FindFirstChild(Mon) 
+                        if Mob then
+                            topos(Mob.HumanoidRootPart.CFrame * CFrame.new(0,0,10))
+                        else
+                            if game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame.Y <= 1 then
+                                game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = true
+                                task.wait()
+                                game:GetService("Players").LocalPlayer.Character.Humanoid.Jump = false
+                            end
+                        end
+                    end 
+                end
+            end
+        end
+    end)
+end)
+spawn(function()
+    pcall(function()
+        if getgenv().MasteryFarm then
+            while task.wait() do
+                for i,v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
+                    if v:IsA("Tool") then
+                        if v:FindFirstChild("RemoteFunctionShoot") then
+                            SelectWeaponGun = v.Name
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end)
+local plr = game:GetService("Players").LocalPlayer
+spawn(function()
+     pcall(function()
+         while task.wait() do
+            for i,v in pairs(game:GetService("Players").LocalPlayer.Backpack:GetChildren()) do  
+                if v:IsA("Tool") then
+                    if v:FindFirstChild("RemoteFunctionShoot") then 
+                        SelectWeaponGun = v.Name
+                    end
+                end
+            end
+        end
+    end)
+end)
+Toggle = Main:AddToggle("Toggle", { Title = "Auto Farm Mastery", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().MasteryFarm = Value
+    StopTween(getgenv().MasteryFarm)
+end)
+Toggle = Main:AddToggle("Toggle", {Title = "Skill Z", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().SkillZ = Value
+end)
+Toggle = Main:AddToggle("Toggle", {Title = "Skill X", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().SkillX = Value
+end)
+Toggle = Main:AddToggle("Toggle", {Title = "Skill C", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().SkillC = Value
+end)
+Toggle = Main:AddToggle("Toggle", {Title = "Skill V", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().SkillV = Value
+end)
+Toggle = Main:AddToggle("Toggle", {Title = "Skill F", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().SkillF = Value
+end)
+Stack = Window:AddTab({ Title = "Tab Stack Farm", Icon = "" })
+Dropdown = Stack:AddDropdown("DropdownFarm", {
+    Title = "Select Melee",
+    Values = {"Superhuman", "DeathStep", "Sharkman Karate", "Electric Claw", "Dragon Talon", "GodHuman"},
+    Multi = false,
+})
+Dropdown:OnChanged(function(Value)
+GetMode = Value
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.1) do
+            if GetMode == "Superhuman" and getgenv().AutoGetMelee and World2 then
+                local player = game.Players.LocalPlayer
+                local backpack = player.Backpack
+                local character = player.Character
+                local beli = player.Data.Beli.Value
+                local fragments = player.Data.Fragments and player.Data.Fragments.Value or 0                
+                if (backpack:FindFirstChild("Combat") or character:FindFirstChild("Combat")) and beli >= 150000 then
+                    UnEquipWeapon("Combat")
+                    task.wait(0.1)
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
+                end                
+                if backpack:FindFirstChild("Superhuman") or character:FindFirstChild("Superhuman") then
+                    getgenv().SelectWeapon = "Superhuman"
+                end                
+                local meleeWeapons = {
+                    {"Black Leg", 300, "BuyElectro", 300000},
+                    {"Electro", 300, "BuyFishmanKarate", 750000},
+                    {"Fishman Karate", 300, "DragonClaw", 1500, "BlackbeardReward"},
+                    {"Dragon Claw", 300, "BuySuperhuman", 3000000}
+                }                
+                for _, weaponData in ipairs(meleeWeapons) do
+                    local weaponName = weaponData[1]
+                    local levelRequirement = weaponData[2]
+                    local purchaseAction = weaponData[3]
+                    local cost = weaponData[4]
+                    local isFragment = weaponData[5] == "BlackbeardReward"                    
+                    local weapon = backpack:FindFirstChild(weaponName) or character:FindFirstChild(weaponName)
+                    if weapon then
+                        if weapon.Level.Value < levelRequirement then
+                            getgenv().SelectWeapon = weaponName
+                        elseif weapon.Level.Value >= levelRequirement and ((isFragment and fragments >= cost) or (not isFragment and beli >= cost)) then
+                            UnEquipWeapon(weaponName)
+                            task.wait(0.1)
+                            if isFragment then
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(purchaseAction, "DragonClaw", "1")
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(purchaseAction, "DragonClaw", "2")
+                            else
+                                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(purchaseAction)
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.1) do
+            if GetMode == "DeathStep" and getgenv().AutoGetMelee and World2 then
+                local player = game:GetService("Players").LocalPlayer
+                local backpack = player.Backpack
+                local character = player.Character
+                local blackLeg = backpack:FindFirstChild("Black Leg") or character:FindFirstChild("Black Leg")
+                local deathStep = backpack:FindFirstChild("Death Step") or character:FindFirstChild("Death Step")
+                if blackLeg or deathStep then
+                    if blackLeg and blackLeg.Level.Value >= 450 then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
+                        getgenv().SelectWeapon = "Death Step"
+                    elseif blackLeg and blackLeg.Level.Value < 450 then
+                        getgenv().SelectWeapon = "Black Leg"
+                    end
+                else
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBlackLeg")
+                end
+            end
+        end
+    end)
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.1) do
+            if GetMode == "Sharkman Karate" and getgenv().AutoGetMelee and World2 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyFishmanKarate")                
+                local sharkmanKarateAvailable = string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate"), "keys")
+                local player = game:GetService("Players").LocalPlayer
+                local backpack = player.Backpack
+                local character = player.Character
+                local hasWaterKey = character:FindFirstChild("Water Key") or backpack:FindFirstChild("Water Key")
+                local hasFishmanKarate = character:FindFirstChild("Fishman Karate") and character:FindFirstChild("Fishman Karate").Level.Value >= 400                
+                if sharkmanKarateAvailable then  
+                    if hasWaterKey then
+                        topos(CFrame.new(-2604.6958, 239.432526, -10315.1982, 0.0425701365, 0, -0.999093413, 0, 1, 0, 0.999093413, 0, 0.0425701365))
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
+                    elseif not hasFishmanKarate then
+                        local Ms = "Tide Keeper"
+                        local enemy = game:GetService("Workspace").Enemies:FindFirstChild(Ms)                        
+                        if enemy then
+                            local target = enemy:FindFirstChild("HumanoidRootPart")
+                            if target then
+                                local OldCFrameShark = target.CFrame
+                                repeat
+                                    task.wait(0.1)
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    target.CanCollide = false
+                                    target.Parent.Humanoid.WalkSpeed = 0
+                                    target.CFrame = OldCFrameShark
+                                    topos(target.CFrame * CFrame.new(2, 20, 2))
+                                until not target.Parent or target.Parent.Humanoid.Health <= 0 or not getgenv().AutoGetMelee or hasWaterKey
+                            end
+                        else
+                            topos(CFrame.new(-3570.18652, 123.328949, -11555.9072, 0.465199202, -1.3857326e-08, 0.885206044, 4.0332897e-09, 1, 1.35347511e-08, -0.885206044, -2.72606271e-09, 0.465199202))
+                            task.wait(1)
+                        end
+                    end
+                else
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
+                end
+            end
+        end
+    end)
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.1) do
+            local player = game:GetService("Players").LocalPlayer
+            local backpack = player.Backpack
+            local character = player.Character
+            local electro = backpack:FindFirstChild("Electro") or character:FindFirstChild("Electro")
+            local electricClaw = backpack:FindFirstChild("Electric Claw") or character:FindFirstChild("Electric Claw")
+            local electroLevel = electro and electro.Level.Value or 0            
+            if GetMode == "Electric Claw" and getgenv().AutoGetMelee and World3 then
+                if electro and electroLevel >= 400 then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
+                    getgenv().SelectWeapon = "Electric Claw"
+                elseif not electro then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectro")
+                end
+            end
+            if getgenv().AutoGetMelee then
+                if electro then
+                    if electroLevel >= 400 then
+                        if not getgenv().AutoFarm then
+                            repeat task.wait(1)
+                                topos(CFrame.new(-10371.4717, 330.764496, -10131.4199))
+                            until not getgenv().AutoGetMelee or (character.HumanoidRootPart.Position - CFrame.new(-10371.4717, 330.764496, -10131.4199).Position).Magnitude <= 10                            
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw", "Start")
+                            task.wait(1)
+                            repeat task.wait(1)
+                                topos(CFrame.new(-12550.532226563, 336.22631835938, -7510.4233398438))
+                            until not getgenv().AutoGetMelee or (character.HumanoidRootPart.Position - CFrame.new(-12550.532226563, 336.22631835938, -7510.4233398438).Position).Magnitude <= 10
+                            task.wait(1)
+                            repeat task.wait(1)
+                                topos(CFrame.new(-10371.4717, 330.764496, -10131.4199))
+                            until not getgenv().AutoGetMelee or (character.HumanoidRootPart.Position - CFrame.new(-10371.4717, 330.764496, -10131.4199).Position).Magnitude <= 10                            
+                            task.wait(1)
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
+                        elseif getgenv().AutoFarm then
+                            getgenv().AutoFarm = false
+                            task.wait(1)
+                            repeat task.wait(1)
+                                topos(CFrame.new(-10371.4717, 330.764496, -10131.4199))
+                            until not getgenv().AutoGetMelee or (character.HumanoidRootPart.Position - CFrame.new(-10371.4717, 330.764496, -10131.4199).Position).Magnitude <= 10                            
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw", "Start")
+                            task.wait(1)
+                            repeat task.wait(1)
+                                topos(CFrame.new(-12550.532226563, 336.22631835938, -7510.4233398438))
+                            until not getgenv().AutoGetMelee or (character.HumanoidRootPart.Position - CFrame.new(-12550.532226563, 336.22631835938, -7510.4233398438).Position).Magnitude <= 10
+                            task.wait(1)
+                            repeat task.wait(1)
+                                topos(CFrame.new(-10371.4717, 330.764496, -10131.4199))
+                            until not getgenv().AutoGetMelee or (character.HumanoidRootPart.Position - CFrame.new(-10371.4717, 330.764496, -10131.4199).Position).Magnitude <= 10                            
+                            task.wait(1)
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
+                            getgenv().SelectWeapon = "Electric Claw"
+                            task.wait(0.1)
+                            getgenv().AutoFarm = true
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end)
+spawn(function()
+    while task.wait(0.1) do
+        local player = game:GetService("Players").LocalPlayer
+        local backpack = player.Backpack
+        local character = player.Character
+        local dragonClaw = backpack:FindFirstChild("Dragon Claw") or character:FindFirstChild("Dragon Claw")
+        local dragonTalon = backpack:FindFirstChild("Dragon Talon") or character:FindFirstChild("Dragon Talon")
+        local dragonClawLevel = dragonClaw and dragonClaw.Level.Value or 0
+        if GetMode == "Dragon Talon" and getgenv().AutoGetMelee and World3 then
+            if dragonClaw then
+                if dragonClawLevel >= 400 then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
+                    getgenv().SelectWeapon = "Dragon Talon"
+                elseif dragonClawLevel <= 399 then
+                    getgenv().SelectWeapon = "Dragon Claw"
+                end
+            else
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "DragonClaw", "2")
+            end
+        end
+    end
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.1) do
+            if GetMode == "GodHuman" and getgenv().AutoGetMelee and World3 then
+                local player = game.Players.LocalPlayer
+                local backpack = player.Backpack
+                local character = player.Character
+                local function checkLevel(toolName, levelRequired)
+                    local tool = backpack:FindFirstChild(toolName) or character:FindFirstChild(toolName)
+                    return tool and tool.Level.Value >= levelRequired
+                end
+                if not (checkLevel("Superhuman", 400) or checkLevel("Death Step", 400) or checkLevel("Sharkman Karate", 400) or checkLevel("Electric Claw", 400) or checkLevel("Dragon Talon", 400)) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySuperhuman")
+                    game.StarterGui:SetCore("SendNotification", { Title = "Not Have SuperHuman!!", Text = "", Duration = 5 })
+                elseif checkLevel("Superhuman", 400) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDeathStep")
+                    game.StarterGui:SetCore("SendNotification", { Title = "Superhuman Ready!", Text = "Buying Death Step...", Duration = 5 })
+                elseif checkLevel("Death Step", 400) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuySharkmanKarate")
+                    game.StarterGui:SetCore("SendNotification", { Title = "Death Step Ready!", Text = "Buying Sharkman Karate...", Duration = 5 })
+                elseif checkLevel("Sharkman Karate", 400) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyElectricClaw")
+                    game.StarterGui:SetCore("SendNotification", { Title = "Sharkman Karate Ready!", Text = "Buying Electric Claw...", Duration = 5 })
+                elseif checkLevel("Electric Claw", 400) then
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyDragonTalon")
+                    game.StarterGui:SetCore("SendNotification", { Title = "Electric Claw Ready!", Text = "Buying Dragon Talon...", Duration = 5 })
+                elseif checkLevel("Dragon Talon", 400) then
+                    local response = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman", true)
+                    if string.find(response, "Bring") then
+                        game.StarterGui:SetCore("SendNotification", { Title = "Not Enough Material", Text = "You need more resources.", Duration = 5 })
+                    else
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyGodhuman")
+                        game.StarterGui:SetCore("SendNotification", { Title = "GodHuman Purchased!", Text = "Congratulations!", Duration = 5 })
+                    end
+                end
+            end
+        end
+    end)
+end)
+Toggle = Stack:AddToggle("Toggle", { Title = "Auto Get Melee", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoGetMelee = Value
+    StopTween(getgenv().AutoGetMelee)
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Teleport To Fruit", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().TeleportToFruit = Value
+    StopTween(getgenv().TeleportToFruit)
+end)
+local Workspace = game:GetService("Workspace")
+local StarterGui = game:GetService("StarterGui")
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().TeleportToFruit then
+            local foundFruit = false
+            for _, v in ipairs(Workspace:GetChildren()) do
+                if v:IsA("Model") and string.find(v.Name, "Fruit") and v:FindFirstChild("Handle") then
+                    topos(v.Handle.CFrame)
+                    foundFruit = true
+                    break
+                end
+            end
+            if not foundFruit then
+            end
+        end
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Teleport To Fruit [ Hop Server ]", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().TeleportToFruitHop = Value
+end)
+spawn(function()
+    while task.wait(0.5) do
+        if getgenv().TeleportToFruit and getgenv().TeleportToFruitHop then
+            local foundFruit = false
+            for _, v in ipairs(Workspace:GetChildren()) do
+                if v:IsA("Model") and string.find(v.Name, "Fruit") and v:FindFirstChild("Handle") then
+                    topos(v.Handle.CFrame)
+                    foundFruit = true
+                    break
+                end
+            end
+            if not foundFruit then
+                task.wait(1)
+                StarterGui:SetCore("SendNotification", {
+                    Title = "Server Hop..",
+                    Text = "",
+                    Duration = 5,
+                })
+                Hop()
+            end
+        end
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto New World", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoNewWorld = Value
+    StopTween(getgenv().AutoNewWorld)
+end)
+spawn(function()
+    while task.wait(0.1) do
+        if getgenv().AutoNewWorld and World1 then
+            spawn(function()
+                local player = game:GetService("Players").LocalPlayer
+                local workspace = game:GetService("Workspace")
+                local replicatedStorage = game:GetService("ReplicatedStorage")
+                local myLevel = player.Data.Level.Value
+                if myLevel >= 700 and World1 then
+                    local iceDoor = workspace.Map.Ice.Door
+                    if iceDoor.CanCollide == false and iceDoor.Transparency == 1 then
+                        local cframe1 = CFrame.new(4849.29883, 5.65138149, 719.611877)
+                        repeat
+                            topos(cframe1)
+                            task.wait(0.1)
+                        until (cframe1.Position - player.Character.HumanoidRootPart.Position).Magnitude <= 3 or not getgenv().AutoNewWorld
+                        task.wait(1.1)
+                        replicatedStorage.Remotes.CommF_:InvokeServer("DressrosaQuestProgress", "Detective")
+                        task.wait(0.1)
+                        EquipWeapon("Key")
+                        local targetCFrame = CFrame.new(1347.7124, 37.3751602, -1325.6488)
+                        repeat
+                            topos(targetCFrame)
+                            task.wait(0.1)
+                        until (targetCFrame.Position - player.Character.HumanoidRootPart.Position).Magnitude <= 3 or not getgenv().AutoNewWorld
+                        task.wait(0.1)
+                    else
+                        if workspace.Enemies:FindFirstChild("Ice Admiral [Lv. 700] [Boss]") then
+                            for _, v in pairs(workspace.Enemies:GetChildren()) do
+                                if v.Name == "Ice Admiral" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                                    local oldCFrameSecond = v.HumanoidRootPart.CFrame
+                                    repeat
+                                        task.wait(0.05)
+                                        AutoHaki()
+                                        EquipWeapon(getgenv().SelectWeapon)
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.Humanoid.WalkSpeed = 0
+                                        v.Head.CanCollide = false
+                                        v.HumanoidRootPart.CFrame = oldCFrameSecond
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    until not getgenv().AutoNewWorld or not v.Parent or v.Humanoid.Health <= 0
+                                end
+                            end
+                        else
+                            if replicatedStorage:FindFirstChild("Ice Admiral") then
+                                topos(replicatedStorage:FindFirstChild("Ice Admiral").HumanoidRootPart.CFrame * CFrame.new(5, 10, 7))
+                            else
+                                replicatedStorage.Remotes.CommF_:InvokeServer("TravelDressrosa")
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Third World", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoThirdSea = Value
+    StopTween(getgenv().AutoThirdSea)
+end)
+spawn(function()
+    while task.wait(0.1) do
+        if getgenv().AutoThirdSea and World2 then
+            pcall(function()
+                local player = game:GetService("Players").LocalPlayer
+                local replicatedStorage = game:GetService("ReplicatedStorage")
+                local workspaceEnemies = game:GetService("Workspace").Enemies
+                if player.Data.Level.Value >= 1500 and World2 then
+                    getgenv().AutoFarm = false
+                    if replicatedStorage.Remotes["CommF_"]:InvokeServer("ZQuestProgress", "General") == 0 then
+                        topos(CFrame.new(-1926.322, 12.82, 1738.309))                        
+                        if (CFrame.new(-1926.322, 12.82, 1738.309).Position - player.Character.HumanoidRootPart.Position).Magnitude <= 10 then
+                            task.wait(1.1)
+                            replicatedStorage.Remotes.CommF_:InvokeServer("ZQuestProgress", "Begin")
+                        end
+                        task.wait(1.3)
+                        if workspaceEnemies:FindFirstChild("rip_indra [Lv. 1500] [Boss]") then
+                            for _, v in pairs(workspaceEnemies:GetChildren()) do
+                                if v.Name == "rip_indra" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                    local oldCFrameThird = v.HumanoidRootPart.CFrame                                    
+                                    repeat
+                                        task.wait(0.05)
+                                        AutoHaki()
+                                        EquipWeapon(getgenv().SelectWeapon)
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                        v.HumanoidRootPart.CFrame = oldCFrameThird                                              
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.Humanoid.WalkSpeed = 0
+                                        replicatedStorage.Remotes.CommF_:InvokeServer("TravelZou")                                        
+                                    until not getgenv().AutoThirdSea or v.Humanoid.Health <= 0 or not v.Parent
+                                end
+                            end
+                        elseif not workspaceEnemies:FindFirstChild("rip_indra") and 
+                               (CFrame.new(-26880.934, 22.849, 473.19).Position - player.Character.HumanoidRootPart.Position).Magnitude <= 1000 then
+                            topos(CFrame.new(-26880.934, 22.849, 473.19))
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Factory", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoFactory = Value
+    StopTween(getgenv().AutoFactory)
+end)
+task.spawn(function()
+    while task.wait(0.1) do
+        if not getgenv().AutoFactory or not World2 then
+            continue
+        end
+        local enemies = game:GetService("Workspace").Enemies
+        local coreEnemy = enemies:FindFirstChild("Core")
+        if coreEnemy and coreEnemy.Humanoid.Health > 0 then
+            repeat
+                task.wait(0.1)
+                AutoHaki()
+                EquipWeapon(getgenv().SelectWeapon)
+                topos(coreEnemy.HumanoidRootPart.CFrame)
+            until coreEnemy.Humanoid.Health <= 0 or not getgenv().AutoFactory
+        else
+            topos(CFrame.new(448.46756, 199.356781, -441.389252))
+        end
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", { Title = "Auto Pirate Raid", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoPirateRaid = Value
+    StopTween(getgenv().AutoPirateRaid)
+end)
+task.spawn(function()
+    while task.wait(0.1) do
+        if not getgenv().AutoPirateRaid or not World3 then
+            continue
+        end
+        pcall(function()
+            local CFrameBoss = CFrame.new(-5496.17432, 313.768921, -2841.53027)
+            local player = game.Players.LocalPlayer
+            local humanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")            
+            if not humanoidRootPart then return end
+            local distanceToBoss = (CFrame.new(-5539.311, 313.801, -2972.372).Position - humanoidRootPart.Position).Magnitude
+            if distanceToBoss <= 500 then
+                for _, enemy in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if getgenv().AutoPirateRaid and enemy:FindFirstChild("HumanoidRootPart") and enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 then
+                        local enemyDistance = (enemy.HumanoidRootPart.Position - humanoidRootPart.Position).Magnitude
+                        if enemyDistance < 2000 then
+                            repeat task.wait(0.1)
+                                AutoHaki()
+                                EquipWeapon(getgenv().SelectWeapon)
+                                enemy.HumanoidRootPart.CanCollide = false
+                                topos(enemy.HumanoidRootPart.CFrame * Pos)
+                                getgenv().StartMagnet = true
+                            until enemy.Humanoid.Health <= 0 or not enemy.Parent or not getgenv().AutoPirateRaid
+                        end
+                    end
+                end
+            else
+                UnEquipWeapon(getgenv().SelectWeapon)
+                if BypassTP then
+                    local distanceToCFrameBoss = (humanoidRootPart.Position - CFrameBoss.Position).Magnitude
+                    if distanceToCFrameBoss > 1500 then
+                        BTP(CFrameBoss)
+                    elseif distanceToCFrameBoss <= 1500 then
+                        topos(CFrameBoss)
+                    end
+                end
+                topos(CFrame.new(-5122, 315, -2963))
+            end
+        end)
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Elite Hunter", Default = false })
+Toggle:OnChanged(function(Value)
+    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("AbandonQuest")
+    getgenv().AutoEliteHunter = Value
+    StopTween(getgenv().AutoEliteHunter)
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Hop Server Elite Hunter", Description = "Find New Elite Hunter Server", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoEliteHunterHop = Value
+end)
+spawn(function()
+    while task.wait(0.3) do
+        if getgenv().AutoEliteHunter and World3 then
+            pcall(function()
+                local player = game:GetService("Players").LocalPlayer
+                local questGui = player.PlayerGui.Main.Quest
+                if questGui.Visible == true then
+                    local questTitle = questGui.Container.QuestTitle.Title.Text
+                    local eliteNames = {"Diablo", "Deandre", "Urban"}
+                    local foundEnemy = false                    
+                    for _, enemy in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                        if table.find(eliteNames, enemy.Name) and 
+                           enemy:FindFirstChild("Humanoid") and 
+                           enemy:FindFirstChild("HumanoidRootPart") and 
+                           enemy.Humanoid.Health > 0 then                            
+                            foundEnemy = true
+                            repeat
+                                task.wait(0.2)
+                                AutoHaki()
+                                EquipWeapon(getgenv().SelectWeapon)
+                                if enemy:FindFirstChild("HumanoidRootPart") then
+                                    enemy.HumanoidRootPart.CanCollide = false
+                                    enemy.Humanoid.WalkSpeed = 0
+                                    topos(enemy.HumanoidRootPart.CFrame * Pos)
+                                end
+                            until not getgenv().AutoEliteHunter or enemy.Humanoid.Health <= 0 or not enemy.Parent
+                            break
+                        end
+                    end
+                    if not foundEnemy then
+                        for _, name in pairs(eliteNames) do
+                            local enemy = game:GetService("ReplicatedStorage"):FindFirstChild(name)
+                            if enemy and enemy:FindFirstChild("HumanoidRootPart") then
+                                topos(enemy.HumanoidRootPart.CFrame * CFrame.new(2, 20, 2))
+                                break
+                            end
+                        end
+                    end
+                else
+                    local response = game:GetService("ReplicatedStorage").Remotes["CommF_"]:InvokeServer("EliteHunter")
+                    if getgenv().AutoEliteHunterHop and response == "I don't have anything for you right now. Come back later." then
+                        Hop()
+                    end
+                end
+            end)
+        end
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Touch Pad Haki", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoTouchPadHaki = Value
+    StopTween(getgenv().AutoTouchPadHaki)
+end)
+spawn(function()
+    while task.wait(1) do
+        pcall(function()
+            if getgenv().AutoTouchPadHaki and World3 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("activateColor", "Winter Sky")
+                task.wait(0.5)
+                local target1 = CFrame.new(-5420.16602, 1084.9657, -2666.8208)
+                repeat
+                    topos(target1)
+                    task.wait(0.2)
+                until getgenv().StopTween == true or getgenv().AutoTouchPadHaki == false or
+                    (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - target1.Position).Magnitude <= 10
+                task.wait(0.5)                
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("activateColor", "Pure Red")
+                task.wait(0.5)
+                local target2 = CFrame.new(-5414.41357, 309.865753, -2212.45776)
+                repeat
+                    topos(target2)
+                    task.wait(0.2)
+                until getgenv().StopTween == true or getgenv().AutoTouchPadHaki == false or
+                    (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - target2.Position).Magnitude <= 10
+                task.wait(0.5)                
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("activateColor", "Snow White")
+                task.wait(0.5)
+                local target3 = CFrame.new(-4971.47559, 331.565765, -3720.02954)
+                repeat
+                    topos(target3)
+                    task.wait(0.2)
+                until getgenv().StopTween == true or getgenv().AutoTouchPadHaki == false or
+                    (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - target3.Position).Magnitude <= 10
+                task.wait(0.5)               
+                game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 600))
+                task.wait(1)
+                game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 600))
+            end
+        end)
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Rip Indra", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoRipIndra = Value
+    StopTween(getgenv().AutoRipIndra)
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(1) do
+            if getgenv().AutoRipIndra and World3 then
+                local enemies = game:GetService("Workspace").Enemies
+                local player = game:GetService("Players").LocalPlayer                
+                if enemies:FindFirstChild("rip_indra True Form") or enemies:FindFirstChild("rip_indra") then
+                    for _, v in pairs(enemies:GetChildren()) do
+                        if (v.Name == "rip_indra True Form" or v.Name == "rip_indra") and v.Humanoid.Health > 0 and v:IsA("Model") and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                            repeat
+                                task.wait(0.3)
+                                pcall(function()
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                end)
+                            until getgenv().AutoRipIndra == false or v.Humanoid.Health <= 0
+                        end
+                    end
+                elseif player.Backpack:FindFirstChild("God's Chalice") or player.Character:FindFirstChild("God's Chalice") then
+                    repeat
+                        task.wait(0.3)
+                        topos(CFrame.new(-5563.75048828125, 320.4276123046875, -2662.509521484375))
+                        EquipWeapon("God's Chalice")
+                    until not (player.Backpack:FindFirstChild("God's Chalice") or player.Character:FindFirstChild("God's Chalice"))
+                elseif game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form") then
+                    local ripIndraTrueForm = game:GetService("ReplicatedStorage"):FindFirstChild("rip_indra True Form")
+                    topos(ripIndraTrueForm.HumanoidRootPart.CFrame * Pos)
+                end
+            end
+        end
+    end)
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Soul Reaper", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoSoulReaper = Value
+    StopTween(getgenv().AutoSoulReaper)
+end)
+spawn(function()
+    while true do
+        if getgenv().AutoSoulReaper and World3 then
+            pcall(function()
+                local workspaceEnemies = game:GetService("Workspace").Enemies
+                local replicatedStorage = game:GetService("ReplicatedStorage")
+                local player = game:GetService("Players").LocalPlayer
+                local backpack = player.Backpack
+                local character = player.Character
+                local humanoidRootPart = character and character:FindFirstChild("HumanoidRootPart")
+                if workspaceEnemies:FindFirstChild("Soul Reaper") then
+                    for _, v in pairs(workspaceEnemies:GetChildren()) do
+                        if string.find(v.Name, "Soul Reaper") then
+                            repeat 
+                                task.wait(0.1)
+                                AutoHaki()
+                                EquipWeapon(getgenv().SelectWeapon)
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Humanoid.WalkSpeed = 0
+                                v.HumanoidRootPart.Transparency = 1
+                            until v.Humanoid.Health <= 0 or not getgenv().AutoSoulReaper
+                        end
+                    end
+                elseif backpack:FindFirstChild("Hallow Essence") or character:FindFirstChild("Hallow Essence") then
+                    local targetPosition = CFrame.new(-8932.322265625, 146.83154296875, 6062.55078125)
+                    repeat
+                        topos(targetPosition)
+                        task.wait(0.1)
+                    until (targetPosition.Position - humanoidRootPart.Position).Magnitude <= 8
+                    EquipWeapon("Hallow Essence")
+                else
+                    local soulReaper = replicatedStorage:FindFirstChild("Soul Reaper")
+                    if soulReaper then
+                        topos(soulReaper.HumanoidRootPart.CFrame * CFrame.new(2, 20, 2))
+                    end
+                end
+            end)
+        end
+        task.wait(0.1)
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Pray", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoPray = Value
+    StopTween(getgenv().AutoPray)
+end)
+spawn(function()
+    while wait(0.5) do
+        if getgenv().AutoPray and World3 then    
+            local targetPos = CFrame.new(-8652.99707, 143.450119, 6170.50879)
+            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPos.Position).magnitude > 5 then
+                topos(targetPos)
+                wait(0.5)
+            end
+            pcall(function()
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent", 1)
+            end)
+        end
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Try Luck", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoTryLuck = Value
+    StopTween(getgenv().AutoTryLuck)  
+end)
+spawn(function()
+    while wait(0.5) do
+        if getgenv().AutoTryLuck and World3 then    
+            local targetPos = CFrame.new(-8652.99707, 143.450119, 6170.50879)
+            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - targetPos.Position).magnitude > 5 then
+                topos(targetPos)
+                wait(0.5)
+            end
+            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("gravestoneEvent", 2)
+        end
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Dough King", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoDoughKing = Value
+    StopTween(getgenv().AutoDoughKing)
+end)
+spawn(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
+        pcall(function()
+            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if getgenv().AutoDoughKing and StartCakegetgenv().StartMagnet and 
+                   (v.Name == "Cookie Crafter" or v.Name == "Cake Guard" or v.Name == "Baking Staff" or v.Name == "Head Baker") and 
+                   (v.HumanoidRootPart.Position - POSCAKE.Position).magnitude <= 300 then
+                    v.HumanoidRootPart.CFrame = POSCAKE
+                    v.HumanoidRootPart.CanCollide = false
+                    if v.Humanoid:FindFirstChild("Animator") then
+                        v.Humanoid.Animator:Destroy()
+                    end
+                    sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                end
+            end
+        end)
+    end)
+end)
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().AutoDoughKing and World3 then
+            pcall(function()
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or 
+                   game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice") then
+                    if string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SweetChaliceNpc"), "Where") then
+                        game.StarterGui:SetCore("SendNotification", {
+                            Title = "Notification",
+                            Text = "Not Have Enough Material",
+                            Icon = "http://www.roblox.com/asset/?id=",
+                            Duration = 2.5
+                        })
+                    else
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SweetChaliceNpc")
+                    end
+                elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Sweet Chalice") or 
+                       game.Players.LocalPlayer.Character:FindFirstChild("Sweet Chalice") then
+                    if string.find(game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner"), 
+                                   "Do you want to open the portal now?") then
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CakePrinceSpawner")
+                    else
+                        if game.Workspace.Enemies:FindFirstChild("Baking Staff") or 
+                           game.Workspace.Enemies:FindFirstChild("Head Baker") or 
+                           game.Workspace.Enemies:FindFirstChild("Cake Guard") or 
+                           game.Workspace.Enemies:FindFirstChild("Cookie Crafter") then
+                            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do  
+                                if (v.Name == "Baking Staff" or v.Name == "Head Baker" or 
+                                    v.Name == "Cake Guard" or v.Name == "Cookie Crafter") and 
+                                    v.Humanoid.Health > 0 then
+                                    repeat
+                                        task.wait(0.05)
+                                        AutoHaki()
+                                        EquipWeapon(getgenv().SelectWeapon)
+                                        StartCakegetgenv().StartMagnet = true
+                                        POSCAKE = v.HumanoidRootPart.CFrame
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    until getgenv().AutoDoughKing == false or 
+                                          game:GetService("ReplicatedStorage"):FindFirstChild("Cake Prince") or 
+                                          not v.Parent or 
+                                          v.Humanoid.Health <= 0
+                                end
+                            end
+                        else
+                            StartCakegetgenv().StartMagnet = false
+                            topos(CFrame.new(-1820.063, 210.748, -12297.496))
+                        end
+                    end
+                elseif game.ReplicatedStorage:FindFirstChild("Dough King") or 
+                       game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Dough King") then
+                        for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do 
+                            if v.Name == "Dough King" then
+                                repeat
+                                    task.wait(0.05)
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                until getgenv().AutoDoughKing == false or 
+                                      not v.Parent or 
+                                      v.Humanoid.Health <= 0
+                            end    
+                        end    
+                    else
+                        topos(CFrame.new(-2009.280, 4532.972, -14937.308))
+                    end
+                elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Red Key") or 
+                       game.Players.LocalPlayer.Character:FindFirstChild("Red Key") then
+                    local args = {
+                        [1] = "CakeScientist",
+                        [2] = "Check"
+                    }
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                else
+                    if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == true then
+                        if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Diablo") or 
+                           string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Deandre") or 
+                           string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Urban") then
+                            if game:GetService("Workspace").Enemies:FindFirstChild("Diablo") or 
+                               game:GetService("Workspace").Enemies:FindFirstChild("Deandre") or 
+                               game:GetService("Workspace").Enemies:FindFirstChild("Urban") then
+                                for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                    if v.Name == "Diablo" or v.Name == "Deandre" or v.Name == "Urban" then
+                                        if v:FindFirstChild("Humanoid") and 
+                                           v:FindFirstChild("HumanoidRootPart") and 
+                                           v.Humanoid.Health > 0 then
+                                            repeat
+                                                task.wait(0.05)
+                                                AutoHaki()
+                                                EquipWeapon(getgenv().SelectWeapon)    
+                                                v.HumanoidRootPart.CanCollide = false
+                                                v.Humanoid.WalkSpeed = 0
+                                                topos(v.HumanoidRootPart.CFrame * Pos)                                                    
+                                                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                                            until getgenv().AutoDoughKing == false or 
+                                                  v.Humanoid.Health <= 0 or 
+                                                  not v.Parent or 
+                                                  game.Players.LocalPlayer.Backpack:FindFirstChild("God's Chalice") or 
+                                                  game.Players.LocalPlayer.Character:FindFirstChild("God's Chalice")
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+Toggle = Stack:AddToggle("Toggle", {Title = "Auto Darkbeard", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoDarkbeard = Value
+    StopTween(getgenv().AutoDarkbeard)
+end)
+spawn(function()
+    while task.wait(0.1) do
+        if getgenv().AutoDarkbeard and World2 then
+            pcall(function()
+                local enemies = game:GetService("Workspace").Enemies
+                local player = game:GetService("Players").LocalPlayer
+                if enemies:FindFirstChild("Darkbeard") then
+                    for _, v in pairs(enemies:GetChildren()) do
+                        if v.Name == "Darkbeard" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                            repeat
+                                task.wait(0.05)
+                                AutoHaki()
+                                EquipWeapon(getgenv().SelectWeapon)
+                                v.HumanoidRootPart.CanCollide = false
+                                v.Humanoid.WalkSpeed = 0           
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                            until not getgenv().AutoDarkbeard or not v.Parent or v.Humanoid.Health <= 0
+                        end
+                    end
+                elseif player.Backpack:FindFirstChild("Fist of Darkness") or player.Character:FindFirstChild("Fist of Darkness") then
+                    repeat
+                        task.wait(0.1)
+                        topos(CFrame.new(3778.584, 15.791, -3499.404))
+                        EquipWeapon("Fist of Darkness")
+                    until not getgenv().AutoDarkbeard
+                elseif game:GetService("ReplicatedStorage"):FindFirstChild("Darkbeard") then
+                    topos(game:GetService("ReplicatedStorage"):FindFirstChild("Darkbeard").HumanoidRootPart.CFrame * Pos)
+                end
+            end)
+        end
+    end
+end)
+Other = Window:AddTab({ Title = "Tab Farming Other", Icon = "" })
+Other:AddParagraph({
+        Title = "Quest Dragon",
+        Content = ""
+})
+Other:AddButton({
+    Title = "Teleport To Dragon Dojo",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("requestEntrance", Vector3.new(5661.5322265625, 1013.0907592773438, - 334.9649963378906))
+        topos(CFrame.new(5814.42724609375, 1208.3267822265625, 884.5785522460938))
+    end
+})
+Toggle = Other:AddToggle("Toggle", {Title = "Auto Quest Dojo Trainer", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().DojoClaimQuest = Value
+    StopTween(getgenv().DojoClaimQuest)
+end)
+local DojoQuestNpc = CFrame.new(5855.19629, 1208.32178, 872.713501, 0.606994748, -1.81058823e-09, -0.794705868, 5.72712722e-09, 1, 2.09605577e-09, 0.794705868, -5.82367621e-09, 0.606994748)
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().DojoClaimQuest and World3 then
+            pcall(function()
+                if BypassTP then
+                    BTP(DojoQuestNpc)
+                else
+                    topos(DojoQuestNpc)
+                end
+                local distance = (DojoQuestNpc.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+                if distance <= 5 then
+                    local claimQuestTable = {
+                        ["NPC"] = "Dojo Trainer",
+                        ["Command"] = "ClaimQuest"
+                    }
+                    game:GetService("ReplicatedStorage").Modules.Net["RF/InteractDragonQuest"]:InvokeServer(claimQuestTable)
+                    task.wait(1)
+                    local requestQuestTable = {
+                        ["NPC"] = "Dojo Trainer",
+                        ["Command"] = "RequestQuest"
+                    }
+                    game:GetService("ReplicatedStorage").Modules.Net["RF/InteractDragonQuest"]:InvokeServer(requestQuestTable)
+                end
+            end)
+        end
+    end
+end)
+Toggle = Other:AddToggle("Toggle", {Title = "Auto Upgrade Dragon Talon", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().DragonTalonUpgrade = Value
+    StopTween(getgenv().DragonTalonUpgrade)
+end)
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().DragonTalonUpgrade and World3 then
+            local UzothNPC = CFrame.new(5661.89014, 1211.31909, 864.836731, 0.811413169, -1.36805838e-08, -0.584473014, 4.75227395e-08, 1, 4.25682458e-08, 0.584473014, -6.23161966e-08, 0.811413169)
+            local distance = (UzothNPC.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude
+            if distance > 5 then
+                topos(UzothNPC)
+            else
+                local ohTable1 = {
+                    ["NPC"] = "Uzoth",
+                    ["Command"] = "Upgrade"
+                }                
+                game:GetService("ReplicatedStorage").Modules.Net["RF/InteractDragonQuest"]:InvokeServer(ohTable1)
+            end
+        end
+    end
+end)
+Toggle = Other:AddToggle("Toggle", {Title = "Auto Attack Hydra Mob And Collect Ember", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().BlazeEmberFarm = Value
+    StopTween(getgenv().BlazeEmberFarm)
+end)
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().BlazeEmberFarm and World3 then
+            pcall(function()
+                local workspaceEnemies = game:GetService('Workspace').Enemies
+                local playerRoot = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                local ghost = workspaceEnemies:FindFirstChild('Ghost')
+                local hydraEnforcer = workspaceEnemies:FindFirstChild('Hydra Enforcer')
+                local venomousAssailant = workspaceEnemies:FindFirstChild('Venomous Assailant')
+                if ghost or hydraEnforcer or venomousAssailant then
+                    for _, v in pairs(workspaceEnemies:GetChildren()) do
+                        if v.Name == 'Hydra Enforcer' or v.Name == 'Venomous Assailant' then
+                            if v:FindFirstChild('Humanoid') and v:FindFirstChild('HumanoidRootPart') and v.Humanoid.Health > 0 then
+                                repeat 
+                                    game:GetService("RunService").Heartbeat:wait()
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    getgenv().StartMagnet = true
+                                    if v.HumanoidRootPart.CanCollide then
+                                        v.HumanoidRootPart.CanCollide = false
+                                    end
+                                    if v.HumanoidRootPart.Size ~= Vector3.new(60, 60, 60) then
+                                        v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                    end
+                                    if v.HumanoidRootPart.Transparency ~= 1 then
+                                        v.HumanoidRootPart.Transparency = 1
+                                    end
+                                    MonFarm = v.Name
+                                    PosMon = v.HumanoidRootPart.CFrame
+                                until not getgenv().BlazeEmberFarm or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                    topos(CFrame.new(5394.36475, 1082.71057, 561.993958, -0.62453711, 3.17826405e-08, -0.780995131, 6.77530991e-08, 1, -1.34849545e-08, 0.780995131, -6.13366922e-08, -0.62453711))
+                end
+            end)
+        end
+    end
+end)
+Toggle = Other:AddToggle("Toggle", {Title = "Auto Collect FireFlower", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoCollectFireFlowers = Value
+end)
+spawn(function()
+    while wait() do
+        if getgenv().AutoCollectFireFlowers then
+            local v747 = workspace:FindFirstChild("FireFlowers")
+            if v747 then
+                for v903, v904 in pairs(v747:GetChildren()) do
+                    if (v904:IsA("Model") and v904.PrimaryPart) then
+                        local v1367 = v904.PrimaryPart.Position;
+                        local v1368 = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                        local v1369 = (v1367 - v1368).Magnitude
+                        if (v1369 <= 1) then
+                            game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+                            wait(1.5)
+                            game:GetService("VirtualInputManager"):SendKeyEvent(false, "E", false, game)
+                        else
+                            topos(CFrame.new(v1367))
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+Other:AddParagraph({
+        Title = "Farm Chest",
+        Content = string.rep("-", 21)
+})
+ToggleChest = Other:AddToggle("ToggleChest", {Title = "Auto Chest", Default = false })
+ToggleChest:OnChanged(function(Value)
+    getgenv().AutoFarmChest = Value
+end)
+spawn(function()
+    local lastTarget = nil
+    while wait(0.2) do
+        if getgenv().AutoFarmChest then
+            local player = game:GetService("Players").LocalPlayer
+            local character = player.Character or player.CharacterAdded:Wait()
+            local playerPos = character:GetPivot().Position
+            local chestService = game:GetService("CollectionService")
+            local chests = chestService:GetTagged("_ChestTagged")
+            local closestChest, minDist = nil, math.huge
+            for _, chest in ipairs(chests) do
+                if not chest:GetAttribute("IsDisabled") then
+                    local dist = (chest:GetPivot().Position - playerPos).Magnitude
+                    if dist < minDist then
+                        minDist, closestChest = dist, chest
+                    end
+                end
+            end
+            if closestChest and closestChest ~= lastTarget then
+                lastTarget = closestChest
+                topos(closestChest:GetPivot())
+            end
+        end
+    end
+end)
+Toggle = Other:AddToggle("Toggle", {Title = "Stop When Have God's Chalice& Fist Of Darkness", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().StopChest = Value
+end)
+spawn(function()
+    while task.wait(0.5) do
+        if getgenv().StopChest then
+            local player = game.Players.LocalPlayer
+            if not player then continue end       
+            local backpack = player:FindFirstChild("Backpack")
+            local character = player.Character            
+            if backpack and character then
+                if backpack:FindFirstChild("Fist of Darkness") or character:FindFirstChild("Fist of Darkness") or 
+                   backpack:FindFirstChild("God's Chalice") or character:FindFirstChild("God's Chalice") then
+                    getgenv().AutoFarmChest = false
+                    if ToggleChest and typeof(ToggleChest.Set) == "function" then
+                        ToggleChest:Set(false)
+                    end
+                    break
+                end
+            end
+        end
+    end
+end)
+Other:AddParagraph({
+     Title = "Farm Observation",
+     Content = string.rep("-", 21)
+})
+ObservationRange = Other:AddParagraph({
+    Title = "Observation Level",
+    Content = ""
+})
+spawn(function()
+    local lastValue = game:GetService("Players").LocalPlayer.VisionRadius.Value
+    while wait(0.1) do
+        pcall(function()
+            local currentValue = game:GetService("Players").LocalPlayer.VisionRadius.Value
+            if currentValue ~= lastValue then
+                ObservationRange:SetDesc("Observation Range Level: " .. math.floor(currentValue))
+                lastValue = currentValue
+            end
+        end)
+    end
+end)
+Toggle = Other:AddToggle("Toggle", {Title = "Auto UP Observation V2", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoObservationHakiV2 = Value
+    StopTween(getgenv().AutoObservationHakiV2)
+end)    
+spawn(function()
+    local lastUpdateTime = tick()
+    while task.wait(0.1) do
+        pcall(function()
+            if getgenv().AutoObservationHakiV2 and World3 then
+                if game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Visible == false then
+                    if tick() - lastUpdateTime >= 1 then
+                        topos(CFrame.new(-12444.78515625, 332.40396118164, -7673.1806640625))
+                        lastUpdateTime = tick()
+                    end
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CitizenQuestProgress", "Citizen")
+                    task.wait(1)
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StartQuest", "CitizenQuest", 1)
+                else
+                    if string.find(game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text, "Defeat 50 Forest Pirates") then
+                        if game:GetService("Workspace").Enemies:FindFirstChild("Forest Pirate") then
+                            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                if v.Name == "Forest Pirate" then
+                                    repeat
+                                        if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+                                        end
+                                        EquipWeapon(getgenv().SelectWeapon)
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                        PosHee = v.HumanoidRootPart.CFrame
+                                        v.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.Humanoid.WalkSpeed = 0
+                                        v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                    until getgenv().AutoObservationHakiV2 == false or v.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    elseif game:GetService("Players").LocalPlayer.PlayerGui.Main.Quest.Container.QuestTitle.Title.Text == "Defeat Captain Elephant (0/1)" then
+                        if game:GetService("Workspace").Enemies:FindFirstChild("Captain Elephant") then
+                            for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                                if v.Name == "Captain Elephant" then
+                                    repeat
+                                        if not game.Players.LocalPlayer.Character:FindFirstChild("HasBuso") then
+                                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+                                        end
+                                        EquipWeapon(getgenv().SelectWeapon)
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                        if sethiddenproperty then
+                                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                                        end
+                                        v.HumanoidRootPart.CFrame = v.HumanoidRootPart.CFrame
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.Humanoid.WalkSpeed = 0
+                                        v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                    until getgenv().AutoObservationHakiV2 == false or v.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    end
+                end
+                if game.Players.LocalPlayer.Backpack:FindFirstChild("Banana") and 
+                    game.Players.LocalPlayer.Backpack:FindFirstChild("Apple") and 
+                    game.Players.LocalPlayer.Backpack:FindFirstChild("Pineapple") then
+                    if tick() - lastUpdateTime >= 1 then
+                        topos(CFrame.new(-12444.78515625, 332.40396118164, -7673.1806640625))
+                        lastUpdateTime = tick()
+                    end
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("CitizenQuestProgress", "Citizen")
+                elseif game.Players.LocalPlayer.Backpack:FindFirstChild("Fruit Bowl") or 
+                        game.Players.LocalPlayer.Character:FindFirstChild("Fruit Bowl") then
+                    if tick() - lastUpdateTime >= 1 then
+                        topos(CFrame.new(-10920.125, 624.20275878906, -10266.995117188))
+                        lastUpdateTime = tick()
+                    end
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk2", "Start")
+                    task.wait(1)
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KenTalk2", "Buy")
+                end
+            end
+        end)
+    end
+end)
+spawn(function()
+    local lastUpdate = tick()
+    while true do
+        task.wait(0.1)
+        pcall(function()
+            if getgenv().AutoObservationHakiV2 and World3 then
+                if sethiddenproperty then
+                    if tick() - lastUpdate >= 1 then
+                        sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                        lastUpdate = tick()
+                    end
+                end
+            end
+        end)
+    end
+end)
+spawn(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
+        pcall(function()
+            if getgenv().AutoObservationHakiV2 and World3 then
+                local character = game:GetService("Players").LocalPlayer.Character
+                if character and character:FindFirstChild("Humanoid") then
+                    local humanoid = character.Humanoid
+                    if humanoid:GetState() ~= Enum.HumanoidStateType.Physics then
+                        humanoid:ChangeState(Enum.HumanoidStateType.Physics)
+                    end
+                end
+            end
+        end)
+    end)
+end)
+spawn(function()
+    pcall(function()
+        game:GetService("RunService").Heartbeat:Connect(function()
+            task.wait(0.1)
+            if getgenv().AutoObservationHakiV2 and getgenv().StartMagnet then
+                local enemies = game.Workspace.Enemies:GetChildren()
+                for i, v in ipairs(enemies) do
+                    if v.Name == "Forest Pirate" and v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
+                        local humanoidRootPart = v.HumanoidRootPart
+                        if humanoidRootPart.CanCollide ~= false then
+                            humanoidRootPart.CanCollide = false
+                        end
+                        if humanoidRootPart.Size ~= Vector3.new(50, 50, 50) then
+                            humanoidRootPart.Size = Vector3.new(50, 50, 50)
+                        end
+                        if humanoidRootPart.CFrame ~= PosHee then
+                            humanoidRootPart.CFrame = PosHee
+                        end
+                    end
+                end
+            end
+        end)
+    end)
+end)
+spawn(function()
+    game:GetService("RunService").Heartbeat:Connect(function()
+        pcall(function()
+            if getgenv().AutoObservationHakiV2 and getgenv().StartMagnet then
+                CheckQuest()
+                local enemies = game.Workspace.Enemies:GetChildren()
+                for i, v in ipairs(enemies) do
+                    if v.Name == Ms and v:FindFirstChild("Humanoid") then
+                        local humanoid = v.Humanoid
+                        if humanoid.Health > 0 then
+                            humanoid:ChangeState(11)
+                            task.wait(0.1)
+                            humanoid:ChangeState(14)
+                        end
+                    end
+                end
+            end
+        end)
+    end)
+end)
+Toggle = Other:AddToggle("Toggle", {Title = "Farm Observation", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoObservation = Value
+    StopTween(getgenv().AutoObservation)
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.1) do
+            if getgenv().AutoObservation then
+                if game:GetService("Players").LocalPlayer.VisionRadius.Value >= 5000 then
+                    Alert:create("You Have Max Points")
+                    task.wait(1)
+                else
+                    local enemyName, spawnPos
+                    local player = game:GetService("Players").LocalPlayer
+                    local workspaceEnemies = game:GetService("Workspace").Enemies
+                    local gui = player.PlayerGui.ScreenGui
+                    if World2 then
+                        enemyName = "Lava Pirate [Lv. 1200]"
+                        spawnPos = CFrame.new(-5478.39209, 15.9775667, -5246.9126)
+                    elseif World1 then
+                        enemyName = "Galley Captain"
+                        spawnPos = CFrame.new(5533.29785, 88.1079102, 4852.3916)
+                    elseif World3 then
+                        enemyName = "Venomous Assailant"
+                        spawnPos = CFrame.new(4638.78564453125, 1078.94091796875, 881.8002319335938)
+                    end
+                    local enemy = workspaceEnemies:FindFirstChild(enemyName)
+                    if enemy then
+                        if gui:FindFirstChild("ImageLabel") then
+                            repeat
+                                task.wait(0.1)
+                                player.Character.HumanoidRootPart.CFrame = enemy.HumanoidRootPart.CFrame * CFrame.new(3, 0, 0)
+                            until not getgenv().AutoObservation or not gui:FindFirstChild("ImageLabel")
+                        else
+                            repeat
+                                task.wait(0.1)
+                                player.Character.HumanoidRootPart.CFrame = enemy.HumanoidRootPart.CFrame * CFrame.new(0, 50, 0)
+                                if not gui:FindFirstChild("ImageLabel") and getgenv().AutoObservation_Hop then
+                                    game:GetService("TeleportService"):Teleport(game.PlaceId, player)
+                                end
+                            until not getgenv().AutoObservation or gui:FindFirstChild("ImageLabel")
+                        end
+                    else
+                        topos(spawnPos)
+                    end
+                end
+            end
+        end
+    end)
+end)
+Other:AddParagraph({
+     Title = "Auto Boss",
+     Content = string.rep("-", 21)
+})
+if World1 then
+    tableBoss = {
+        "The Gorilla King", "Bobby", "Yeti", "Mob Leader", "Vice Admiral", 
+        "Warden", "Chief Warden", "Swan", "Magma Admiral", "Fishman Lord", 
+        "Wysper", "Thunder God", "Cyborg", "Saber Expert"
+    }
+elseif World2 then
+    tableBoss = {
+        "Diamond", "Jeremy", "Fajita", "Don Swan", "Smoke Admiral", 
+        "Cursed Captain", "Darkbeard", "Order", "Awakened Ice Admiral", "Tide Keeper"
+    }
+elseif World3 then
+    tableBoss = {
+        "Stone", "Island Empress", "Kilo Admiral", "Captain Elephant", 
+        "Beautiful Pirate", "rip_indra True Form", "Longma", "Soul Reaper", 
+        "Cake Queen", "Cake Prince", "Dough King"
+    }
+end
+Dropdown = Other:AddDropdown("Dropdown", {
+    Title = "Select Boss",
+    Values = tableBoss,
+    Multi = false,
+})
+Dropdown:OnChanged(function(Value)
+    getgenv().SelectBoss = Value
+end)
+Toggle = Other:AddToggle("Toggle", {Title = "Auto Kill Boss", Default = getgenv().AutoFarmBoss })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoFarmBoss = Value
+    StopTween(getgenv().AutoFarmBoss)
+end)
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().AutoFarmBoss and getgenv().BypassTP then
+            pcall(function()
+                local workspaceEnemies = game:GetService("Workspace").Enemies
+                local selectBoss = getgenv().SelectBoss
+                local selectWeapon = getgenv().SelectWeapon
+                local playerRoot = game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                local boss = workspaceEnemies:FindFirstChild(selectBoss)
+                if boss then
+                    for _, v in pairs(workspaceEnemies:GetChildren()) do
+                        if v.Name == selectBoss and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                            local humanoid = v.Humanoid
+                            local humanoidRootPart = v.HumanoidRootPart
+                            if humanoid.Health > 0 then
+                                repeat
+                                    task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    if humanoidRootPart.CanCollide then
+                                        humanoidRootPart.CanCollide = false
+                                    end
+                                    if humanoid.WalkSpeed ~= 0 then
+                                        humanoid.WalkSpeed = 0
+                                    end
+                                    if humanoidRootPart.Size ~= Vector3.new(80, 80, 80) then
+                                        humanoidRootPart.Size = Vector3.new(80, 80, 80)
+                                    end
+                                    topos(humanoidRootPart.CFrame * Pos)
+                                until not getgenv().AutoFarmBoss or not v.Parent or humanoid.Health <= 0
+                            end
+                        end
+                    end
+                elseif game.ReplicatedStorage:FindFirstChild(selectBoss) then
+                    local bossReplicated = game.ReplicatedStorage:FindFirstChild(selectBoss)
+                    local bossRoot = bossReplicated.HumanoidRootPart
+                    if (bossRoot.CFrame.Position - playerRoot.Position).Magnitude <= 1500 then
+                        topos(bossRoot.CFrame)
+                    else
+                        BTP(bossRoot.CFrame)
+                    end
+                end
+            end)
+        end
+    end
+end)
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().AutoFarmBoss and not getgenv().BypassTP then
+            pcall(function()
+                local workspaceEnemies = game:GetService("Workspace").Enemies
+                local selectBoss = getgenv().SelectBoss
+                local selectWeapon = getgenv().SelectWeapon
+                local boss = workspaceEnemies:FindFirstChild(selectBoss)
+                if boss then
+                    for _, v in pairs(workspaceEnemies:GetChildren()) do
+                        if v.Name == selectBoss and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                            local humanoid = v.Humanoid
+                            local humanoidRootPart = v.HumanoidRootPart
+                            if humanoid.Health > 0 then
+                                repeat
+                                    task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    if humanoidRootPart.CanCollide then
+                                        humanoidRootPart.CanCollide = false
+                                    end
+                                    if humanoid.WalkSpeed ~= 0 then
+                                        humanoid.WalkSpeed = 0
+                                    end
+                                    if humanoidRootPart.Size ~= Vector3.new(80, 80, 80) then
+                                        humanoidRootPart.Size = Vector3.new(80, 80, 80)
+                                    end
+                                    topos(humanoidRootPart.CFrame * Pos)
+                                until not getgenv().AutoFarmBoss or not v.Parent or humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                    local replicatedBoss = game:GetService("ReplicatedStorage"):FindFirstChild(selectBoss)
+                    if replicatedBoss then
+                        topos(replicatedBoss.HumanoidRootPart.CFrame * CFrame.new(5, 10, 7))
+                    end
+                end
+            end)
+        end
+    end
+end)
+Toggle = Other:AddToggle("Toggle", {Title = "Auto Kill All Boss", Default = false })
+Toggle:OnChanged(function(Value)    
+    getgenv().AutoFarmAllBoss = Value
+    StopTween(getgenv().AutoFarmAllBoss)    
+end)
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().AutoFarmAllBoss then
+            pcall(function()
+                for i, boss in pairs(tableBoss) do
+                    if game:GetService("Workspace").Enemies:FindFirstChild(boss) then
+                        for i, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == boss then
+                                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                    repeat
+                                        task.wait()
+                                        AutoHaki()
+                                        EquipWeapon(getgenv().SelectWeapon)
+                                        v.HumanoidRootPart.CanCollide = false
+                                        v.Humanoid.WalkSpeed = 0
+                                        v.HumanoidRootPart.Size = Vector3.new(80, 80, 80)
+                                        topos(v.HumanoidRootPart.CFrame * Pos)
+                                    until not getgenv().AutoFarmAllBoss or not v.Parent or v.Humanoid.Health <= 0
+                                end
+                            end
+                        end
+                    else
+                        if game:GetService("ReplicatedStorage"):FindFirstChild(boss) then
+                            topos(game:GetService("ReplicatedStorage"):FindFirstChild(boss).HumanoidRootPart.CFrame * CFrame.new(5, 10, 2))
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+Blog = Window:AddTab({ Title = "Tab Fruit And Raid", Icon = "" })
+Toggle = Blog:AddToggle("Toggle", {Title = "Random Devil Fruit", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().RandomFruit = Value
+end)
+spawn(function()
+     while task.wait(0.2) do
+         if getgenv().RandomFruit then
+              game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Cousin","Buy")
+          end 
+     end
+end)
+Toggle = Blog:AddToggle("Toggle", {Title = "Auto Store Fruit", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoStoreFruit = Value
+end)    
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().AutoStoreFruit then
+            pcall(function()
+                if getgenv().AutoStoreFruit then
+                    local player = game:GetService("Players").LocalPlayer
+                    local character = player.Character
+                    local backpack = player.Backpack
+                    local fruits = {
+                        {"Rocket Fruit", "Rocket-Rocket"},
+                        {"Spin Fruit", "Spin-Spin"},
+                        {"Blade Fruit", "Blade-Blade"},
+                        {"Spring Fruit", "Spring-Spring"},
+                        {"Bomb Fruit", "Bomb-Bomb"},
+                        {"Smoke Fruit", "Smoke-Smoke"},
+                        {"Spike Fruit", "Spike-Spike"},
+                        {"Flame Fruit", "Flame-Flame"},
+                        {"Falcon Fruit", "Falcon-Falcon"},
+                        {"Ice Fruit", "Ice-Ice"},
+                        {"Sand Fruit", "Sand-Sand"},
+                        {"Dark Fruit", "Dark-Dark"},
+                        {"Diamond Fruit", "Diamond-Diamond"},
+                        {"Light Fruit", "Light-Light"},
+                        {"Rubber Fruit", "Rubber-Rubber"},
+                        {"Barrier Fruit", "Barrier-Barrier"},
+                        {"Ghost Fruit", "Ghost-Ghost"},
+                        {"Magma Fruit", "Magma-Magma"},
+                        {"Quake Fruit", "Quake-Quake"},
+                        {"Buddha Fruit", "Buddha-Buddha"},
+                        {"Love Fruit", "Love-Love"},
+                        {"Spider Fruit", "Spider-Spider"},
+                        {"Sound Fruit", "Sound-Sound"},
+                        {"Phoenix Fruit", "Phoenix-Phoenix"},
+                        {"Portal Fruit", "Portal-Portal"},
+                        {"Rumble Fruit", "Rumble-Rumble"},
+                        {"Pain Fruit", "Pain-Pain"},
+                        {"Blizzard Fruit", "Blizzard-Blizzard"},
+                        {"Gravity Fruit", "Gravity-Gravity"},
+                        {"Mammoth Fruit", "Mammoth-Mammoth"},
+                        {"T-Rex Fruit", "T-Rex-T-Rex"},
+                        {"Dough Fruit", "Dough-Dough"},
+                        {"Shadow Fruit", "Shadow-Shadow"},
+                        {"Venom Fruit", "Venom-Venom"},
+                        {"Gas Fruit", "Gas-Gas"},
+                        {"Control Fruit", "Control-Control"},
+                        {"Spirit Fruit", "Spirit-Spirit"},
+                        {"Leopard Fruit", "Leopard-Leopard"},
+                        {"Yeti Fruit", "Yeti-Yeti"},
+                        {"Kitsune Fruit", "Kitsune-Kitsune"},
+                        {"Dragon Fruit", "Dragon-Dragon"},
+                    }
+                    for _, fruit in ipairs(fruits) do
+                        local fruitName, serverName = fruit[1], fruit[2]
+                        if character:FindFirstChild(fruitName) or backpack:FindFirstChild(fruitName) then
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("StoreFruit", serverName, backpack:FindFirstChild(fruitName))
+                        end
+                    end
+                end
+            end)
+        end
+        task.wait(0.1)
+    end
+end)
+FruitList = {
+  "Rocket-Rocket",
+  "Spin-Spin",
+  "Blade-Blade",
+  "Spring-Spring",
+  "Bomb-Bomb",
+  "Smoke-Smoke",
+  "Spike-Spike",
+  "Flame-Flame",
+  "Falcon-Falcon",
+  "Ice-Ice",
+  "Sand-Sand",
+  "Dark-Dark",
+  "Diamond-Diamond",
+  "Light-Light",
+  "Rubber-Rubber",
+  "Barrier-Barrier",
+  "Ghost-Ghost",
+  "Magma-Magma",
+  "Quake-Quake",
+  "Buddha-Buddha",
+  "Love-Love",
+  "Spider-Spider",
+  "Sound-Sound",
+  "Phoenix-Phoenix",
+  "Portal-Portal",
+  "Rumble-Rumble",
+  "Pain-Pain",
+  "Blizzard-Blizzard",
+  "Gravity-Gravity",
+  "T-Rex-T-Rex",
+  "Mammoth-Mammoth",
+  "Dough-Dough",
+  "Shadow-Shadow",
+  "Venom-Venom",
+  "Gas-Gas",
+  "Control-Control",
+  "Spirit-Spirit",
+  "Leopard-Leopard",
+  "Yeti-Yeti",
+  "Kitsune-Kitsune",
+  "Dragon-Dragon"
+ }
+Dropdown = Blog:AddDropdown("Dropdown", {
+    Title = "Blox Fruit Sniper Shop",
+    Values = FruitList,
+    Multi = false,
+})
+Dropdown:OnChanged(function(Value)
+    getgenv().SelectFruit = Value
+end)    
+Toggle = Blog:AddToggle("Toggle", {Title = "Buy Blox Fruit Sniper Shop", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoBuyFruitSniper = Value
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(1) do
+            if getgenv().AutoBuyFruitSniper then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("GetFruits")
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("PurchaseRawFruit", getgenv().SelectFruit)
+            end
+        end
+    end)
+end)
+Blog:AddParagraph({
+    Title = "Raids",
+    Content = string.rep("-", 21)
+})
+Dropdown = Blog:AddDropdown("Dropdown", {
+    Title = "Select Raid",
+    Values = {
+        "Dark", "Sand", "Magma", "Rumble", "Flame", 
+        "Ice", "Light", "Quake", "Buddha", "Spider", 
+        "Phoenix", "Dough"
+    },
+    Multi = false,
+})
+Dropdown:OnChanged(function(Value)
+    getgenv().SelectChip = Value
+end)
+Toggle = Blog:AddToggle("Toggle", {Title = "Get Fruit In Inventory Low Beli", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoGetFruit = Value
+end)
+spawn(function()
+    while task.wait(.1) do
+        pcall(function()
+            if getgenv().AutoGetFruit then
+                local fruits = {"Rocket-Rocket", "Spin-Spin", "Chop-Chop", "Spring-Spring", "Bomb-Bomb", "Smoke-Smoke", 
+                                "Spike-Spike", "Flame-Flame", "Falcon-Falcon", "Ice-Ice", "Sand-Sand", "Dark-Dark", 
+                                "Ghost-Ghost", "Diamond-Diamond", "Light-Light", "Rubber-Rubber", "Barrier-Barrier"}
+
+                for _, fruit in ipairs(fruits) do
+                    local args = {
+                        [1] = "LoadFruit",
+                        [2] = fruit
+                    }
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                end
+            end
+        end)
+    end
+end)
+Toggle = Blog:AddToggle("Toggle", {Title = "Auto Raid", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().Auto_Dungeon = Value
+end)
+spawn(function()
+    while task.wait(1) do
+        if getgenv().Auto_Dungeon then
+            if not game.Players.LocalPlayer.PlayerGui.Main.TopHUDList.RaidTimer.Visible == false then
+                local islands = {"Island 5", "Island 4", "Island 3", "Island 2", "Island 1"}
+                for _, island in ipairs(islands) do
+                    local location = game:GetService("Workspace")["_WorldOrigin"].Locations:FindFirstChild(island)
+                    if location then
+                        topos(location.CFrame * CFrame.new(0, 70, 100))
+                        break
+                    end
+                end
+            end
+        end
+    end
+end)
+spawn(function()
+    while task.wait(1) do
+        pcall(function()
+            if getgenv().Auto_Dungeon then
+                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == false then
+                    local specialMicrochip = game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Special Microchip") 
+                                            or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Special Microchip")
+                    if specialMicrochip then
+                        if World2 then
+                            fireclickdetector(game:GetService("Workspace").Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
+                        elseif World3 then
+                            fireclickdetector(game:GetService("Workspace").Map["Boat Castle"].RaidSummon2.Button.Main.ClickDetector)
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+spawn(function()
+    while task.wait(1) do
+        if getgenv().Auto_Dungeon then
+            for i, v in pairs(game.Workspace.Enemies:GetDescendants()) do
+                if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                    pcall(function()
+                        repeat task.wait(.001)
+                            v.Humanoid.Health = 0
+                            v.HumanoidRootPart.CanCollide = false
+                            sethiddenproperty(game.Players.LocalPlayer, "SimulationRadius", math.huge)
+                        until not getgenv().Auto_Dungeon or not v.Parent or v.Humanoid.Health <= 0
+                    end)
+                end
+            end
+        end
+    end
+end)
+spawn(function()
+    while task.wait(1) do
+        if getgenv().Auto_Dungeon then
+            pcall(function()
+                local args = {
+                    [1] = "RaidsNpc",
+                    [2] = "Select",
+                    [3] = getgenv().SelectChip
+                }
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+            end)
+        end
+    end
+end)
+spawn(function()
+    while wait(1) do
+        pcall(function()
+            if getgenv().Auto_Dungeon then
+                if game:GetService("Players")["LocalPlayer"].PlayerGui.Main.Timer.Visible == false then
+                    local specialMicrochip = game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Special Microchip") 
+                                            or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Special Microchip")
+                    if specialMicrochip then
+                        if World2 then
+                            fireclickdetector(game:GetService("Workspace").Map.CircleIsland.RaidSummon2.Button.Main.ClickDetector)
+                        elseif World3 then
+                            fireclickdetector(game:GetService("Workspace").Map["Boat Castle"].RaidSummon2.Button.Main.ClickDetector)
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+Toggle = Blog:AddToggle("Toggle", {Title = "Auto Awaken Fruit", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoAwaken = Value
+end)
+spawn(function()
+    pcall(function()
+        while wait(1) do
+            if getgenv().AutoAwaken then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Awakener", "Check")
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Awakener", "Awaken")
+            end
+        end
+    end)
+end)
+if World2 then
+Blog:AddButton({
+    Title = "Teleport To Lab",
+    Description = "",
+    Callback = function()
+        topos(CFrame.new(-6438.73535, 250.645355, -4501.50684))
+    end
+})
+end
+if World3 then
+Blog:AddButton({
+    Title = "Teleport To Lab",
+    Description = "",
+    Callback = function()
+        topos(CFrame.new(-5017.40869, 314.844055, -2823.0127, -0.925743818, 4.48217499e-08, -0.378151238, 4.55503146e-09, 1, 1.07377559e-07, 0.378151238, 9.7681621e-08, -0.925743818))
+    end
+})
+end
+Sea = Window:AddTab({ Title = "Tab Sea Event", Icon = "" })
+SetSpeedBoatSlider = Sea:AddSlider("SliderSpeedBoat", {
+	Title = "Ship Speed",
+	Default = 300,
+	Min = 0,
+	Max = 1000,
+	Rounding = 1,
+	Callback = function(value)
+    SetSpeedBoat = value
+	end
+})
+SetSpeedBoatSlider:OnChanged(function(value)
+	SetSpeedBoat = value
+end)
+SetSpeedBoatSlider:SetValue(300)    
+ListSeaZone = {
+  "Zone 1",
+  "Zone 2",
+  "Zone 3",
+  "Zone 4",
+  "Zone 5",
+  "Zone 6"
+}
+zoneselect = Sea:AddDropdown("zoneselect", {
+	Title = "Select Zone",
+	Values = ListSeaZone,
+	Multi = false,
+	Default = false,
+})
+zoneselect:OnChanged(function(value)
+	getgenv().SelectedZone = value
+end)
+ListSeaBoat = {
+  "Guardian",
+  "PirateGrandBrigade",
+  "MarineGrandBrigade",
+  "PirateBrigade",
+  "MarineBrigade",
+  "PirateSloop",
+  "MarineSloop",
+  "BeastHunter",
+}
+selectthuyen = Sea:AddDropdown("selectthuyen", {
+	Title = "Select Boat",
+	Values = ListSeaBoat,
+	Multi = false,
+	Default = false,
+})
+selectthuyen:OnChanged(function(value)
+	getgenv().SelectedBoat = value
+end)
+boattween = Sea:AddDropdown("boattween", {
+    Title = "Speed Tween Boat",
+    Values = {"180", "200", "250", "300", "325", "350"},
+    Multi = false,
+    Default = 300,
+})
+boattween:OnChanged(function(Value)
+    getgenv().SpeedBoat = Value
+end)
+spawn(function()
+    pcall(function()
+        while wait() do
+            if getgenv().SelectedZone == "Zone 1" then
+                CFrameSelectedZone = CFrame.new(
+                    -21998.375, 30.0006084, -682.309143,
+                    0.120013528, 0.00690158736, 0.99274826,
+                    -0.0574118942, 0.998350561, -2.36509201e-10,
+                    -0.991110802, -0.0569955558, 0.120211802
+                )
+            elseif getgenv().SelectedZone == "Zone 2" then
+                CFrameSelectedZone = CFrame.new(
+                    -26779.5215, 30.0005474, -822.858032,
+                    0.307457417, 0.019647358, 0.951358974,
+                    -0.0637726262, 0.997964442, -4.15334017e-10,
+                    -0.949422479, -0.0606706589, 0.308084518
+                )
+            elseif getgenv().SelectedZone == "Zone 3" then
+                CFrameSelectedZone = CFrame.new(
+                    -31171.957, 30.0001011, -2256.93774,
+                    0.37637493, 0.0150483791, 0.926345229,
+                    -0.0399504974, 0.999201655, 2.70896673e-11,
+                    -0.925605655, -0.0370079502, 0.376675636
+                )
+            elseif getgenv().SelectedZone == "Zone 4" then
+                CFrameSelectedZone = CFrame.new(
+                    -34054.6875, 30.2187767, -2560.12012,
+                    0.0935864747, -0.00122954219, 0.995610416,
+                    0.0624034069, 0.998040259, -0.00463332096,
+                    -0.993653536, 0.062563099, 0.0934797972
+                )
+            elseif getgenv().SelectedZone == "Zone 5" then
+                CFrameSelectedZone = CFrame.new(
+                    -38887.5547, 30.0004578, -2162.99023,
+                    -0.188895494, -0.00704088295, 0.981971979,
+                    -0.0372481011, 0.999306023, -1.39882339e-09,
+                    -0.981290519, -0.0365765914, -0.189026669
+                )
+            elseif getgenv().SelectedZone == "Zone 6" then
+                CFrameSelectedZone = CFrame.new(
+                    -44541.7617, 30.0003204, -1244.8584,
+                    -0.0844199061, -0.00553312758, 0.9964149,
+                    -0.0654025897, 0.997858942, 2.02319411e-10,
+                    -0.99428153, -0.0651681125, -0.0846010372
+                )
+            end
+        end
+    end)
+end)
+Toggle = Sea:AddToggle("Toggle", {Title = "Auto Penetrate Rocks When Boat Runs", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().GoThroughRocks = Value
+end)
+spawn(function()
+    while task.wait(1) do
+        if getgenv().GoThroughRocks or getgenv().SailBoat then
+            for _, boat in ipairs(game:GetService("Workspace").Boats:GetChildren()) do
+                for _, part in ipairs(boat:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = false
+                    end
+                end
+            end
+        else
+            for _, boat in ipairs(game:GetService("Workspace").Boats:GetChildren()) do
+                for _, part in ipairs(boat:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        part.CanCollide = true
+                    end
+                end
+            end
+        end
+    end
+end)
+Toggle = Sea:AddToggle("Toggle", {Title = "Auto Sea Event",Default = false })
+Toggle:OnChanged(function(state)
+    getgenv().SailBoat = state
+    StopTween(getgenv().SailBoat)
+end)
+function CheckBoat()
+    local workspace = game:GetService("Workspace")
+    local boats = workspace:FindFirstChild("Boats")
+    local selectedBoat = getgenv().SelectedBoat
+    if not (boats and selectedBoat) then
+        return false
+    end
+    for _, boat in pairs(boats:GetChildren()) do
+        if boat.Name == selectedBoat then
+            if boat:FindFirstChild("MyBoatEsp") then
+                return boat
+            end
+        end
+    end
+    return false
+end
+function CheckEnemiesBoat()
+    local enemies = game:GetService("Workspace"):FindFirstChild("Enemies")    
+    if not enemies then
+        return false
+    end
+    return enemies:FindFirstChild("FishBoat") 
+        or enemies:FindFirstChild("PirateBrigade") 
+        or enemies:FindFirstChild("PirateGrandBrigade") 
+        and true or false
+end
+function CheckShark()
+    local workspace = game:GetService("Workspace")
+    local enemies = workspace:FindFirstChild("Enemies")
+    local player = game.Players.LocalPlayer
+    local character = player and player.Character
+    local rootPart = character and character:FindFirstChild("HumanoidRootPart")
+    if not (enemies and rootPart) then
+        return false
+    end
+    for _, v in pairs(enemies:GetChildren()) do
+        local humanoid = v:FindFirstChild("Humanoid")
+        local enemyRoot = v:FindFirstChild("HumanoidRootPart")
+        if v.Name == "Shark" and humanoid and enemyRoot and humanoid.Health > 0 then
+            if (enemyRoot.Position - rootPart.Position).Magnitude <= 200 then
+                return true
+            end
+        end
+    end
+    return false
+end
+function CheckPiranha()
+    local workspace = game:GetService("Workspace")
+    local enemies = workspace:FindFirstChild("Enemies")
+    local player = game.Players.LocalPlayer
+    local character = player and player.Character
+    local rootPart = character and character:FindFirstChild("HumanoidRootPart")
+    if not (enemies and rootPart) then
+        return false
+    end
+    for _, v in pairs(enemies:GetChildren()) do
+        local humanoid = v:FindFirstChild("Humanoid")
+        local enemyRoot = v:FindFirstChild("HumanoidRootPart")
+        if v.Name == "Piranha" and humanoid and enemyRoot and humanoid.Health > 0 then
+            if (enemyRoot.Position - rootPart.Position).Magnitude <= 200 then
+                return true
+            end
+        end
+    end
+    return false
+end
+function AddEsp(Name, Parent)
+    if not Parent or not Parent:IsA("Instance") then
+        return
+    end
+    local BillboardGui = Instance.new("BillboardGui")
+    local TextLabel = Instance.new("TextLabel")
+    BillboardGui.Name = Name
+    BillboardGui.Parent = Parent
+    BillboardGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    BillboardGui.AlwaysOnTop = true
+    BillboardGui.Size = UDim2.new(0, 200, 0, 50)
+    BillboardGui.StudsOffset = Vector3.new(0, 2.5, 0)
+    TextLabel.Parent = BillboardGui
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.Size = UDim2.new(1, 0, 1, 0)
+    TextLabel.Font = Enum.Font.GothamBold
+    TextLabel.TextColor3 = Color3.new(1, 1, 1)
+    TextLabel.TextSize = 15
+    TextLabel.Text = "YOUR BOAT IS HERE↓"
+    return BillboardGui
+end
+spawn(function()
+    while wait(0.2) do
+        pcall(function()
+            if getgenv().SailBoat then
+                if not CheckBoat() then
+                    BuyBoatCFrame = CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781)                    
+                    if (BuyBoatCFrame.Position - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude > 1000 then
+                        topos(CFrame.new(-16224, 9, 439))
+                    else
+                        buyb = topos(BuyBoatCFrame)
+                    end
+                    if (CFrame.new(-16927.451171875, 9.0863618850708, 433.8642883300781).Position 
+                        - game.Players.LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 10 then                        
+                        if buyb then buyb:Stop() end
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BuyBoat", getgenv().SelectedBoat)
+                        for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+                            if v.Name == getgenv().SelectedBoat then
+                                if (v.VehicleSeat.CFrame.Position 
+                                    - game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.Position).Magnitude <= 100 then
+                                    AddEsp('MyBoatEsp', v)
+                                end
+                            end
+                        end
+                    end
+                elseif CheckBoat() then
+                    for i, v in pairs(game:GetService("Workspace").Boats:GetChildren()) do
+                        if v.Name == getgenv().SelectedBoat then
+                            if v:FindFirstChild("MyBoatEsp") then
+                                if game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false then
+                                    if ((CheckShark() and getgenv().AutoKillShark) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and getgenv().AutoTerrorshark) 
+                                        or (CheckPiranha() and getgenv().AutoKillPiranha) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and getgenv().AutoKillFishCrew) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and getgenv().RelzFishBoat) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and getgenv().RelzPirateBrigade) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and getgenv().RelzPirateGrandBrigade) 
+                                        or (CheckSeaBeast() and getgenv().AutoSeaBest)) then                                        
+                                        if stoppos then stoppos:Stop() end
+                                    else
+                                        stoppos = topos(v.VehicleSeat.CFrame * CFrame.new(0, 1, 0))
+                                    end
+                                else
+                                    repeat 
+                                        wait()
+                                        stopboat = TPB(CFrameSelectedZone, v.VehicleSeat)
+                                    until ((CheckShark() and getgenv().AutoKillShark) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark") and getgenv().AutoTerrorshark) 
+                                        or (CheckPiranha() and getgenv().AutoKillPiranha) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("Fish Crew Member") and getgenv().AutoKillFishCrew) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") and getgenv().RelzFishBoat) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("PirateBrigade") and getgenv().RelzPirateBrigade) 
+                                        or (game:GetService("Workspace").Enemies:FindFirstChild("PirateGrandBrigade") and getgenv().RelzPirateGrandBrigade) 
+                                        or (CheckSeaBeast() and getgenv().AutoSeaBest)) 
+                                        or game.Players.LocalPlayer.Character:WaitForChild("Humanoid").Sit == false 
+                                        or getgenv().SailBoat == false                                    
+                                    if stopboat then stopboat:Stop() end
+                                    game:GetService("VirtualInputManager"):SendKeyEvent(true, 32, false, game)
+                                    wait(0.1)
+                                    game:GetService("VirtualInputManager"):SendKeyEvent(false, 32, false, game)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.2) do
+            if not getgenv().SailBoat then continue end
+            local enemies = game:GetService("Workspace").Enemies
+            local hasEnemy = false
+            if (CheckShark() and getgenv().AutoKillShark) or 
+               (enemies:FindFirstChild("Terrorshark") and getgenv().AutoTerrorshark) or 
+               (CheckPiranha() and getgenv().AutoKillPiranha) or 
+               (enemies:FindFirstChild("Fish Crew Member") and getgenv().AutoKillFishCrew) or 
+               (enemies:FindFirstChild("FishBoat") and getgenv().RelzFishBoat) or 
+               (enemies:FindFirstChild("PirateBrigade") and getgenv().RelzPirateBrigade) or 
+               (enemies:FindFirstChild("PirateGrandBrigade") and getgenv().RelzPirateGrandBrigade) or 
+               (CheckSeaBeast() and getgenv().AutoSeaBest) then
+                hasEnemy = true
+            end
+            if hasEnemy then
+                local humanoid = game.Players.LocalPlayer.Character:FindFirstChild("Humanoid")
+                if humanoid and humanoid.Sit then
+                    local vim = game:GetService("VirtualInputManager")
+                    vim:SendKeyEvent(true, 32, false, game)
+                    task.wait(0.1)
+                    vim:SendKeyEvent(false, 32, false, game)
+                end
+            end
+        end
+    end)
+end)
+spawn(function()
+    while task.wait(0.1) do
+        pcall(function()
+            if not getgenv().SailBoat then return end            
+            local enemies = game:GetService("Workspace").Enemies:GetChildren()
+            if getgenv().AutoKillFishCrew then
+                for _, enemy in pairs(enemies) do
+                    if enemy.Name == "Fish Crew Member" and enemy:FindFirstChild("Humanoid") and enemy:FindFirstChild("HumanoidRootPart") and enemy.Humanoid.Health > 0 then
+                        StartBring = true
+                        repeat
+                            task.wait()
+                            AutoHaki()
+                            EquipWeapon(getgenv().SelectWeapon)
+                            local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                            local enemyPos = enemy.HumanoidRootPart.Position
+                            if (enemyPos - playerPos).Magnitude > 5 then
+                                topos(enemy.HumanoidRootPart.CFrame * Pos)
+                            end
+                            getgenv().SeaSkill = false
+                        until not getgenv().AutoKillFishCrew or not enemy.Parent or enemy.Humanoid.Health <= 0
+                        StartBring = false
+                    end
+                end
+            end
+            if getgenv().RelzFishBoat then
+                for _, enemy in pairs(enemies) do
+                    if enemy:FindFirstChild("Engine") then
+                        local boatCFrame = enemy.Engine.CFrame
+                        repeat
+                            task.wait()
+                            local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position                            
+                            if (boatCFrame.Position - playerPos).Magnitude > 5 then
+                                topos(boatCFrame)
+                            end
+                            getgenv().SeaSkill = (boatCFrame.Position - playerPos).Magnitude <= 50
+                            Skillaimbot = true
+                            AimBotSkillPosition = boatCFrame.Position + Vector3.new(0, -15, 0)
+                        until not enemy.Parent or enemy.Health < 0 or not getgenv().RelzFishBoat
+                        Skillaimbot = false
+                        getgenv().SeaSkill = false
+                    end
+                end
+            end
+        end)
+    end
+end)
+spawn(function()
+    while task.wait(0.1) do
+        pcall(function()
+            if not getgenv().SailBoat then return end
+            local enemies = game:GetService("Workspace").Enemies:GetChildren()
+            if getgenv().AutoKillFishCrew then
+                for _, enemy in pairs(enemies) do
+                    if enemy.Name == "Fish Crew Member" and enemy:FindFirstChild("Humanoid") and enemy:FindFirstChild("HumanoidRootPart") and enemy.Humanoid.Health > 0 then
+                        getgenv().StartMagnet = true
+                        repeat
+                            task.wait()
+                            AutoHaki()
+                            EquipWeapon(getgenv().SelectWeapon)
+                            topos(enemy.HumanoidRootPart.CFrame * Pos)
+                            getgenv().SeaSkill = false
+                        until not getgenv().AutoKillFishCrew or not enemy.Parent or enemy.Humanoid.Health <= 0
+                        getgenv().StartMagnet = false
+                    end
+                end
+            elseif getgenv().RelzFishBoat then
+                for _, enemy in pairs(enemies) do
+                    if enemy:FindFirstChild("Engine") then
+                        local boatCFrame = enemy.Engine.CFrame
+                        repeat
+                            task.wait()
+                            local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                            getgenv().SeaSkill = (boatCFrame.Position - playerPos).Magnitude <= 50                            
+                            if (boatCFrame.Position - playerPos).Magnitude > 5 then
+                                topos(boatCFrame)
+                            end
+                            Skillaimbot = true
+                            AimBotSkillPosition = boatCFrame.Position + Vector3.new(0, -15, 0)
+                        until not enemy.Parent or enemy.Health < 0 or not getgenv().RelzFishBoat
+                        Skillaimbot = false
+                        getgenv().SeaSkill = false
+                    end
+                end
+            end
+        end)
+    end
+end)
+Toggle = Sea:AddToggle("Toggle", {Title = "Auto Shark",Default = false })
+Toggle:OnChanged(function(value)
+   getgenv().AutoKillShark = value
+   StopTween(getgenv().AutoKillShark)
+end)
+Toggle = Sea:AddToggle("Toggle", {Title = "Auto Piranha",Default = false })
+Toggle:OnChanged(function(value)
+    getgenv().AutoKillPiranha = value
+    StopTween(getgenv().AutoKillPiranha)
+end)
+Toggle = Sea:AddToggle("Toggle", {Title = "Auto Fish Crew",Default = false })
+Toggle:OnChanged(function(value)
+    getgenv().AutoKillFishCrew = value
+    StopTween(getgenv().AutoKillFishCrew)
+end)
+spawn(function()
+    while task.wait(0.1) do
+        pcall(function()
+            local player = game.Players.LocalPlayer
+            local char = player and player.Character
+            local root = char and char:FindFirstChild("HumanoidRootPart")
+            if not root then return end            
+            local enemies = game:GetService("Workspace").Enemies:GetChildren()
+            if getgenv().AutoKillShark and World3 then
+                for _, v in pairs(enemies) do
+                    if v.Name == "Shark" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - root.Position).Magnitude <= 500 then
+                            EquipWeapon(getgenv().SelectWeapon)
+                            repeat
+                                task.wait(0.1)
+                                AutoHaki()
+                                EquipWeapon(getgenv().SelectWeapon)
+                                v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                v.HumanoidRootPart.CanCollide = false
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                            until not getgenv().AutoKillShark or not v.Parent or v.Humanoid.Health <= 0
+                        end
+                    end
+                end
+            end
+            if getgenv().AutoKillPiranha and World3 then
+                for _, v in pairs(enemies) do
+                    if v.Name == "Piranha" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - root.Position).Magnitude <= 500 then
+                            EquipWeapon(getgenv().SelectWeapon)
+                            repeat
+                                task.wait(0.1)
+                                AutoHaki()
+                                EquipWeapon(getgenv().SelectWeapon)
+                                v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                v.HumanoidRootPart.CanCollide = false
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                            until not getgenv().AutoKillPiranha or not v.Parent or v.Humanoid.Health <= 0
+                        end
+                    end
+                end
+            end
+            if getgenv().AutoKillFishCrew and World3 then
+                for _, v in pairs(enemies) do
+                    if v.Name == "Fish Crew Member" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        if (v.HumanoidRootPart.Position - root.Position).Magnitude <= 500 then
+                            EquipWeapon(getgenv().SelectWeapon)
+                            repeat
+                                task.wait(0.1)
+                                AutoHaki()
+                                EquipWeapon(getgenv().SelectWeapon)
+                                v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                v.HumanoidRootPart.CanCollide = false
+                                topos(v.HumanoidRootPart.CFrame * Pos)
+                                MonFarm = v.Name
+                                PosMon = v.HumanoidRootPart.CFrame
+                            until not getgenv().AutoKillFishCrew or not v.Parent or v.Humanoid.Health <= 0
+                        end
+                    end
+                end
+            end
+            if getgenv().AutoTerrorshark and World3 then
+                for _, v in pairs(enemies) do
+                    if v.Name == "Terrorshark" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        EquipWeapon(getgenv().SelectWeapon)
+                        repeat
+                            task.wait(0.1)
+                            AutoHaki()
+                            EquipWeapon(getgenv().SelectWeapon)
+                            v.HumanoidRootPart.CanCollide = false
+                            v.Humanoid.WalkSpeed = 0
+                            v.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                            if char.Humanoid.Health < 2000 then
+                                fastpos(v.HumanoidRootPart.CFrame * CFrame.new(0, 300, 0))
+                                task.wait(1)
+                            else
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 55, 0))
+                            end
+                            TerrorSharkpos = v.HumanoidRootPart.CFrame
+                        until not getgenv().AutoTerrorshark or not v.Parent or v.Humanoid.Health <= 0
+                    end
+                end
+            end
+        end)
+    end
+end)
+spawn(function()
+    while task.wait(0.1) do
+        pcall(function()
+            if getgenv().AutoTerrorshark then
+                local player = game.Players.LocalPlayer
+                local char = player and player.Character
+                local root = char and char:FindFirstChild("HumanoidRootPart")
+                if not root then return end                
+                local shark = game:GetService("Workspace").Enemies:FindFirstChild("Terrorshark")
+                if shark and shark:FindFirstChild("HumanoidRootPart") then
+                    if (shark.HumanoidRootPart.Position - root.Position).Magnitude <= 150 then
+                        repeat
+                            task.wait()
+                        until not getgenv().AutoTerrorshark
+                    end
+                end
+            end
+        end)
+    end
+end)
+function UpDownPos(pos)
+    if typeof(pos) ~= "CFrame" then return end
+    fastpos(pos * CFrame.new(0, 40, 0))
+    task.wait(1)
+    fastpos(pos * CFrame.new(0, 300, 0))
+    task.wait(2)
+end
+Toggle = Sea:AddToggle("Toggle", {
+    Title = "Auto Ghost Ship",
+    Default = false
+})
+Toggle:OnChanged(function(value)
+    getgenv().RelzFishBoat = value
+    StopTween(getgenv().RelzFishBoat)
+    if not getgenv().RelzFishBoat then
+        getgenv().SeaSkill = false
+        Skillaimbot = false
+    end
+end)
+Toggle = Sea:AddToggle("Toggle", {
+    Title = "Auto Pirate Brigade",
+    Default = false
+})
+Toggle:OnChanged(function(value)
+    getgenv().RelzPirateBrigade = value
+    StopTween(getgenv().RelzPirateBrigade)
+end)
+Toggle = Sea:AddToggle("Toggle", {
+    Title = "Auto Pirate Grand Brigade",
+    Default = false
+})
+Toggle:OnChanged(function(value)
+    getgenv().RelzPirateGrandBrigade = value
+    StopTween(getgenv().RelzPirateGrandBrigade)
+end)
+spawn(function()
+    while task.wait(0.1) do
+        pcall(function()
+            if not getgenv().RelzFishBoat then return end
+            for _, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                if v.Name == "FishBoat" and v:FindFirstChild("Engine") then
+                    repeat task.wait(0.1)
+                        local CFrameFishBoat = v.Engine.CFrame * CFrame.new(0, 10, 0)
+                        local player = game.Players.LocalPlayer
+                        local char = player and player.Character
+                        local root = char and char:FindFirstChild("HumanoidRootPart")
+                        if root and (v.Engine.Position - root.Position).Magnitude <= 50 then
+                            getgenv().SeaSkill = true
+                        else
+                            getgenv().SeaSkill = false
+                        end
+                        if root and (root.Position - CFrameFishBoat.Position).Magnitude > 2 then
+                            topos(CFrameFishBoat)
+                        end
+                        Skillaimbot = true
+                        AimBotSkillPosition = v.Engine.Position
+                    until 
+                        not v.Parent or v.Health.Value <= 0 or 
+                        not game:GetService("Workspace").Enemies:FindFirstChild("FishBoat") or 
+                        not v:FindFirstChild("Engine") or 
+                        not getgenv().RelzFishBoat
+                    Skillaimbot = false
+                    getgenv().SeaSkill = false
+                end
+            end
+        end)
+    end
+end)
+   
+Toggle = Sea:AddToggle("Toggle", {
+    Title = "Auto Terror Shark",
+    Default = false
+})
+Toggle:OnChanged(function(value)
+    getgenv().AutoTerrorshark = value
+    StopTween(getgenv().AutoTerrorshark)
+end)
+Toggle = Sea:AddToggle("Toggle", {
+    Title = "Auto Sea Beast",
+    Default = false
+})
+Toggle:OnChanged(function(value)
+    getgenv().AutoSeaBest = value
+    StopTween(getgenv().AutoSeaBest)
+    if not getgenv().AutoSeaBest then
+        getgenv().SeaSkill = false
+        Skillaimbot = false
+    end
+end)
+function CheckSeaBeast()
+    local seaBeasts = game:GetService("Workspace"):FindFirstChild("SeaBeasts")
+    if not seaBeasts then return false end
+    for _, beast in ipairs(seaBeasts:GetChildren()) do
+        local humanoid = beast:FindFirstChild("Humanoid")
+        local rootPart = beast:FindFirstChild("HumanoidRootPart")
+        if humanoid and rootPart and humanoid.Health > 0 then
+            return true
+        end
+    end
+    return false
+end
+task.spawn(function()
+    while task.wait(0.5) do
+        if getgenv().AutoSeaBest then
+            pcall(function()
+                local workspace = game:GetService("Workspace")
+                local player = game.Players.LocalPlayer
+                if workspace:FindFirstChild("SeaBeasts") then
+                    for _, v in pairs(workspace.SeaBeasts:GetChildren()) do
+                        if CheckSeaBeast() then
+                            repeat
+                                wait()
+                                CFrameSeaBeast = v.HumanoidRootPart.CFrame * CFrame.new(0, 400, 0)
+                                if (CFrameSeaBeast.Position - player.Character.HumanoidRootPart.CFrame.Position).Magnitude <= 50 then
+                                    getgenv().SeaSkill = true
+                                else
+                                    getgenv().SeaSkill = false
+                                end
+                                Skillaimbot = true
+                                AimBotSkillPosition = v.HumanoidRootPart.CFrame.Position
+                                topos(CFrameSeaBeast)
+                            until 
+                                not getgenv().AutoSeaBest or 
+                                not v:FindFirstChild("Humanoid") or 
+                                not v:FindFirstChild("HumanoidRootPart") or 
+                                v.Humanoid.Health < 0 or 
+                                not v.Parent
+                            Skillaimbot = false
+                            getgenv().SeaSkill = false
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+local function UseSkill(key, holdTime)
+    game:service('VirtualInputManager'):SendKeyEvent(true, key, false, game)
+    task.wait(holdTime)
+    game:service('VirtualInputManager'):SendKeyEvent(false, key, false, game)
+end
+task.spawn(function()
+    while task.wait(1) do
+        pcall(function()
+            if getgenv().SeaSkill then
+                local player = game.Players.LocalPlayer
+                local backpack = player.Backpack                
+                if getgenv().UseSeaFruitSkill and not DoneSkillFruit then
+                    for _, v in pairs(backpack:GetChildren()) do
+                        if v:IsA("Tool") and v.ToolTip == "Blox Fruit" then
+                            player.Character.Humanoid:EquipTool(v)
+                        end
+                    end                    
+                    if getgenv().SkillFruitZ then UseSkill("Z", getgenv().SeaHoldSKillZ) end
+                    if getgenv().SkillFruitX then UseSkill("X", getgenv().SeaHoldSKillX) end
+                    if getgenv().SkillFruitC then UseSkill("C", getgenv().SeaHoldSKillC) end
+                    if getgenv().SkillFruitV then UseSkill("V", getgenv().SeaHoldSKillV) end
+                    if getgenv().SkillFruitF then UseSkill("F", getgenv().SeaHoldSKillF) end                    
+                    DoneSkillFruit = true
+                end                
+                if getgenv().UseSeaMeleeSkill and not DoneSkillMelee then
+                    for _, v in pairs(backpack:GetChildren()) do
+                        if v:IsA("Tool") and v.ToolTip == "Melee" then
+                            player.Character.Humanoid:EquipTool(v)
+                        end
+                    end                    
+                    if getgenv().SkillMeleeZ then UseSkill("Z", 0) end
+                    if getgenv().SkillMeleeX then UseSkill("X", 0) end
+                    if getgenv().SkillMeleeC then UseSkill("C", 0) end                    
+                    DoneSkillMelee = true
+                end                
+                if getgenv().UseSeaSwordSkill and not DoneSkillSword then
+                    for _, v in pairs(backpack:GetChildren()) do
+                        if v:IsA("Tool") and v.ToolTip == "Sword" then
+                            player.Character.Humanoid:EquipTool(v)
+                        end
+                    end                    
+                    if getgenv().SkillSwordZ then UseSkill("Z", 0) end
+                    if getgenv().SkillSwordX then UseSkill("X", 0) end                    
+                    DoneSkillSword = true
+                end                
+                if getgenv().UseSeaGunSkill and not DoneSkillGun then
+                    for _, v in pairs(backpack:GetChildren()) do
+                        if v:IsA("Tool") and v.ToolTip == "Gun" then
+                            player.Character.Humanoid:EquipTool(v)
+                        end
+                    end                    
+                    if getgenv().SkillGunZ then UseSkill("Z", 0.1) end
+                    if getgenv().SkillGunX then UseSkill("X", 0.1) end
+                    
+                    DoneSkillGun = true
+                end                
+                task.wait(0.5)
+                DoneSkillGun, DoneSkillSword, DoneSkillFruit, DoneSkillMelee = false, false, false, false
+            end
+        end)
+    end
+end)         
+Sea:AddParagraph({
+        Title = "Kitsune Event",
+        Content = string.rep("-", 21)
+    })    
+Toggle = Sea:AddToggle("Toggle", {Title = "Teleport To Kitsune Island",Default = false })
+Toggle:OnChanged(function(value)
+    getgenv().TweenToKitsune = value
+    StopTween(getgenv().TweenToKitsune)
+end)
+spawn(function()
+    while wait() do
+        if getgenv().TweenToKitsune then
+            local map = game:GetService("Workspace").Map
+            local kitsuneIsland = map:FindFirstChild("KitsuneIsland")
+            if kitsuneIsland then
+                local shrinePart = kitsuneIsland.ShrineActive.NeonShrinePart
+                topos(shrinePart.CFrame * CFrame.new(0, 0, 10))
+            end
+        end
+    end
+end)
+Toggle = Sea:AddToggle("Toggle", {Title = "Auto Summon Soul EmBer",Default = false })
+Toggle:OnChanged(function(value)
+    getgenv().SummonKitsume = value    
+end)
+spawn(function()
+    while task.wait(0.6) do  
+        if getgenv().SummonKitsume and World3 then
+            pcall(function()
+                local replicatedStorage = game:GetService("ReplicatedStorage")
+                local net = replicatedStorage:FindFirstChild("Modules") and replicatedStorage.Modules:FindFirstChild("Net")
+                local prayFunction = net and net:FindFirstChild("RF/KitsuneStatuePray")                
+                if prayFunction then
+                    prayFunction:InvokeServer()
+                end
+            end)
+        end
+    end
+end)
+Toggle = Sea:AddToggle("Toggle", {Title = "Auto Collect Azure Wisp",Default = false })
+Toggle:OnChanged(function(value)
+    getgenv().CollectAzure = value
+    StopTween(getgenv().CollectAzure)
+end)
+task.spawn(function()
+    while task.wait(1) do
+        if getgenv().CollectAzure then
+            pcall(function()
+                local attachedAzure = game:GetService("Workspace"):FindFirstChild("AttachedAzureEmber")
+                local emberTemplate = game:GetService("Workspace"):FindFirstChild("EmberTemplate")
+                if attachedAzure and emberTemplate then
+                    local part = emberTemplate:FindFirstChild("Part")
+                    if part then
+                        local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                        local targetPos = part.Position                        
+                        if (playerPos - targetPos).Magnitude > 10 then
+                            fastpos(part.CFrame)
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+Slider = Sea:AddSlider("Slider", {
+     Title = "Set Azure Ember",
+     Default = 20,
+     Min = 0,
+     Max = 25,
+     Rounding = 5,
+     Callback = function(state)
+         getgenv().SetToTradeAureEmber = state
+    end
+})
+Toggle = Sea:AddToggle("Toggle", {
+    Title = "Auto Trade Azure Ember",
+    Default = false,
+    Callback = function (state)
+        getgenv().TradeAureEmber = state
+    end
+})
+function GetCountMaterials(MaterialName)
+    local Inventory = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("getInventory")
+    for _, v in pairs(Inventory) do
+        if v.Name == MaterialName then
+            return v["Count"]
+        end
+    end
+    return 0
+end
+task.spawn(function()
+    while task.wait(3) do
+        if getgenv().TradeAureEmber then
+            pcall(function()
+                local AzureAvailable = GetCountMaterials("Azure Ember")                
+                if AzureAvailable >= getgenv().SetToTradeAureEmber then
+                    game:GetService("ReplicatedStorage").Modules.Net:FindFirstChild("RF/KitsuneStatuePray"):InvokeServer()
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("KitsuneStatuePray")                    
+                    task.wait(5)
+                end
+            end)
+        end
+    end
+end)
+           
+Sea:AddButton({
+    Title = "Trade Azure Wisp",
+    Callback = function()            
+        game:GetService("ReplicatedStorage"):WaitForChild("Modules"):WaitForChild("Net"):WaitForChild("RF/KitsuneStatuePray"):InvokeServer()
+    end
+})
+Sea:AddParagraph({
+        Title = "Leviathan Event",
+        Content = string.rep("-", 21)
+    })
+Sea:AddButton({
+    Title = "Buy Spy",
+    Callback = function()
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("InfoLeviathan", "2")
+    end
+})    
+Toggle = Sea:AddToggle("Toggle", {Title = "Teleport To Frozen Dimension", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoFrozenDimension = Value
+end)
+task.spawn(function()
+    while task.wait(1) do
+        pcall(function()
+            if getgenv().AutoFrozenDimension and World3 then
+                local frozenDim = game:GetService("Workspace").Map:FindFirstChild("FrozenDimension")
+                if frozenDim then
+                    local targetPos = frozenDim.Center.Position
+                    local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position                    
+                    if (playerPos - Vector3.new(targetPos.X, 500, targetPos.Z)).Magnitude > 10 then
+                        topos(CFrame.new(targetPos.X, 500, targetPos.Z))
+                    end
+                end
+            end
+        end)
+    end
+end)
+Toggle = Sea:AddToggle("Toggle", {Title = "Auto Attack Leviathan", Default = false })
+Toggle:OnChanged(function(state)
+    getgenv().KillLevi = state
+end)
+task.spawn(function()
+    while task.wait(0.5) do
+        if getgenv().KillLevi and World3 then
+            pcall(function()
+                for _, v in pairs(game:GetService("Workspace").SeaBeasts:GetChildren()) do
+                    if v.Name == "Leviathan" and v:FindFirstChild("HumanoidRootPart") then
+                        repeat
+                            task.wait(0.2)             
+                            if (game.Players.LocalPlayer.Character.HumanoidRootPart.Position - v.HumanoidRootPart.Position).Magnitude > 10 then
+                                topos(v.HumanoidRootPart.CFrame * CFrame.new(0, 500, 0))
+                            end                            
+                            if not getgenv().SeaSkill then
+                                getgenv().SeaSkill = true
+                            end                            
+                            if not IsHakiActive() then
+                                AutoHaki()
+                            end                            
+                            AimBotSkillPosition = v.HumanoidRootPart
+                            Skillaimbot = true                            
+                        until not v:FindFirstChild("HumanoidRootPart") or not getgenv().KillLevi                        
+                        getgenv().SeaSkill = false
+                        Skillaimbot = false
+                    end
+                end
+            end)
+        end
+    end
+end)
+ChooseSkill = Window:AddTab({ Title = "Tab Setting Select Skill", Icon = "" })
+ChooseSkill:AddParagraph({
+    Title = "Setting Sea Event",
+    Content = string.rep("-", 21)
+})
+ChooseSkill:AddParagraph({
+    Title = "Activating Skill Event,\nAnd Skill Leviathan Flawless Fusion",
+})
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Select Use Fruit",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().UseSeaFruitSkill = value
+end)
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Select Use Melee",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().UseSeaMeleeSkill = value
+end)
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Select Use Sword",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().UseSeaSwordSkill = value
+end)
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Select Use Gun",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().UseSeaGunSkill = value
+end)
+ChooseSkill:AddParagraph({
+    Title = "Activate Weapon Farm Event,\nClick to Activate",
+})
+ChooseSkill:AddParagraph({
+    Title = "Setting Skill Fruit",
+    Content = string.rep("-", 21)
+})
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Skill Fruit Z",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillFruitZ = value
+end)
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Skill Fruit X",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillFruitX = value
+end)
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Skill Fruit C",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillFruitC = value
+end)
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Skill Fruit V",
+    Default = false
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillFruitV = value
+end)
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Skill Fruit F",
+    Default = false
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillFruitF = value
+end)
+ChooseSkill:AddParagraph({
+    Title = "Use To Enable Skill Fruit,\nPlease Select Correct",
+})
+ChooseSkill:AddParagraph({
+    Title = "Setting Skill Melee",
+    Content = string.rep("-", 21)
+})
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Skill Melee Z",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillMeleeZ = value
+end)
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Skill Melee X",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillMeleeX = value
+end)
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Skill Melee C",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillMeleeC = value
+end)
+ChooseSkill:AddParagraph({
+    Title = "Use To Enable Skill Melee,\nPlease Select Correct",
+})
+ChooseSkill:AddParagraph({
+    Title = "Setting Skill Sword And Gun",
+    Content = string.rep("-", 21)
+})
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Sword And Gun Skill Z",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillSwordZ = value
+    getgenv().SkillGunZ = value
+end) 
+Toggle = ChooseSkill:AddToggle("Toggle", {
+    Title = "Sword And Gun Skill X",
+    Default = true
+})
+Toggle:OnChanged(function(value)
+    getgenv().SkillSwordX = value
+    getgenv().SkillGunX = value
+end)
+ChooseSkill:AddParagraph({
+    Title = "Use To Enable Skill Sword and Gun,\nPlease Select Correct",
+})
+local gg = getrawmetatable(game)
+local old = gg.__namecall
+setreadonly(gg, false)
+gg.__namecall = newcclosure(function(...)
+    local method = getnamecallmethod()
+    local args = {...}    
+    if tostring(method) == "FireServer" then
+        if tostring(args[1]) == "RemoteEvent" then
+            if tostring(args[2]) ~= "true" and tostring(args[2]) ~= "false" then
+                if Skillaimbot then
+                    args[2] = AimBotSkillPosition
+                    return old(unpack(args))
+                end
+            end
+        end
+    end
+    return old(...)
+end)
+local function useSkill(skillKey, holdTime)
+    game:service('VirtualInputManager'):SendKeyEvent(true, skillKey, false, game)
+    wait(holdTime or 0.1)
+    game:service('VirtualInputManager'):SendKeyEvent(false, skillKey, false, game)
+end
+task.spawn(function()
+    while task.wait(0.5) do
+        pcall(function()
+            if UseSkill then
+                for _, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") 
+                    and v.Humanoid.Health <= v.Humanoid.MaxHealth * getgenv().Kill_At / 100 then                        
+                        if getgenv().SkillZ then useSkill("Z", getgenv().HoldSKillZ) end
+                        if getgenv().SkillX then useSkill("X", getgenv().HoldSKillX) end
+                        if getgenv().SkillC then useSkill("C", getgenv().HoldSKillC) end
+                    end
+                end
+            end
+        end)
+    end
+end)
+task.spawn(function()
+    while task.wait(0.5) do
+        pcall(function()
+            if UseGunSkill then
+                for _, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                    if v.Name == MonFarm and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") 
+                    and v.Humanoid.Health <= v.Humanoid.MaxHealth * getgenv().Kill_At / 100 then                        
+                        if getgenv().SkillZ then useSkill("Z", 0.1) end
+                    end
+                end
+            end
+        end)
+    end
+end)
+Volcanic = Window:AddTab({ Title = "Tab Volcanic Event", Icon = "" })
+Volcanic:AddButton({
+	Title = "Destroy Lava In Prehistoric Island",
+	Callback = function()
+        for i,v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == "Lava" then   
+				v:Destroy()
+			end
+		end
+		for i,v in pairs(game.ReplicatedStorage:GetDescendants()) do
+			if v.Name == "Lava" then   
+				v:Destroy()
+			end
+		end
+	end
+})
+Volcanic:AddButton({
+    Title = "Crafting Volcanic Magnet",
+    Callback = function()
+        local v395 = {
+            [1] = "CraftItem",
+            [2] = "Craft",
+            [3] = "Volcanic Magnet"
+        }
+        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(v395))
+    end
+})
+Toggle = Volcanic:AddToggle("MyToggle", {Title = "Teleport Prehistoric Island", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().TweenPrehistoric = Value
+end)
+spawn(function()
+    local island
+    while not island do
+        island = game:GetService("Workspace").Map:FindFirstChild("PrehistoricIsland")
+        wait()
+    end
+    while wait() do
+        if getgenv().TweenPrehistoric and World3 then
+            local prehistoricIslandCore = game:GetService("Workspace").Map:FindFirstChild("PrehistoricIsland")
+            if prehistoricIslandCore then
+                local relic = prehistoricIslandCore:FindFirstChild("Core") and prehistoricIslandCore.Core:FindFirstChild("PrehistoricRelic")
+                local skull = relic and relic:FindFirstChild("Skull")
+                if skull then
+                    topos(CFrame.new(skull.Position))
+                    getgenv().TweenPrehistoric = false
+                end
+            end
+        end
+    end
+end)
+Toggle = Volcanic:AddToggle("Toggle", {
+    Title = "Auto Event Volcano Island Defense",
+    Default = false
+})
+Toggle:OnChanged(function(value)
+    getgenv().AutoDefendVolcano = value
+end)
+local function pressKey(key)
+    game:GetService("VirtualInputManager"):SendKeyEvent(true, key, false, game)
+    wait(0.1)
+    game:GetService("VirtualInputManager"):SendKeyEvent(false, key, false, game)
+end
+local function removeLava()
+    pcall(function()
+        local lavaModel = game.Workspace.Map.PrehistoricIsland.Core:FindFirstChild("InteriorLava")
+        if lavaModel and lavaModel:IsA("Model") then
+            lavaModel:Destroy()
+        end
+        local prehistoricIsland = game.Workspace.Map:FindFirstChild("PrehistoricIsland")
+        if prehistoricIsland then
+            for _, obj in pairs(prehistoricIsland:GetDescendants()) do
+                if obj:IsA("Part") and obj.Name:lower():find("lava") then
+                    obj:Destroy()
+                end
+                if obj:IsA("MeshPart") and obj.Name:lower():find("lava") then
+                    obj:Destroy()
+                end
+            end
+        end
+    end)
+end
+local function findVolcanoRock()
+    local volcanoRocks = game.Workspace.Map.PrehistoricIsland.Core:FindFirstChild("VolcanoRocks")
+    if not volcanoRocks then return nil end
+    for _, model in pairs(volcanoRocks:GetChildren()) do
+        if model:IsA("Model") then
+            local rock = model:FindFirstChild("volcanorock")
+            if rock and rock:IsA("MeshPart") then
+                local rockColor = rock.Color
+                if rockColor == Color3.fromRGB(185, 53, 56) or rockColor == Color3.fromRGB(185, 53, 57) then
+                    return rock
+                end
+            end
+        end
+    end
+    return nil
+end
+local function equipAndUseWeapon(weaponType)
+    local player = game.Players.LocalPlayer
+    local backpack = player:FindFirstChild("Backpack")
+    if not backpack then return end
+    for _, tool in pairs(backpack:GetChildren()) do
+        if tool:IsA("Tool") and tool.ToolTip == weaponType then
+            tool.Parent = player.Character
+            for _, key in ipairs({"Z", "X", "C", "V", "F"}) do
+                wait(0.1)
+                pcall(function()
+                    pressKey(key)
+                end)
+            end
+            tool.Parent = backpack
+            break
+        end
+    end
+end
+spawn(function()
+    while wait(0.1) do
+        if getgenv().AutoDefendVolcano then
+            if typeof(AutoHaki) == "function" then AutoHaki() end
+            removeLava()
+            local rock = findVolcanoRock()
+            if rock then
+                local targetPosition = CFrame.new(rock.Position)
+                if typeof(topos) == "function" then topos(targetPosition) end
+                if rock.Color == Color3.fromRGB(185, 53, 56) or rock.Color == Color3.fromRGB(185, 53, 57) then
+                    local player = game.Players.LocalPlayer.Character
+                    local rootPart = player and player:FindFirstChild("HumanoidRootPart")
+                    if rootPart then
+                        local distance = (rootPart.Position - rock.Position).Magnitude
+                        if distance <= 1 then
+                            if getgenv().UseMelee then equipAndUseWeapon("Melee") end
+                            if getgenv().UseSword then equipAndUseWeapon("Sword") end
+                            if getgenv().UseGun then equipAndUseWeapon("Gun") end
+                        end
+                    end
+                    getgenv().TweenToPrehistoric = false
+                else
+                    rock = findVolcanoRock()
+                end
+            else
+                getgenv().TweenToPrehistoric = true
+            end
+        end
+    end
+end)
+Toggle = Volcanic:AddToggle("Toggle", {
+    Title = "Auto Kill Aura Golems",
+    Default = false
+})
+Toggle:OnChanged(function(v413)
+    getgenv().KillAura = v413
+end)
+spawn(function()
+    while wait(0.1) do
+        if getgenv().KillAura then
+            pcall(function()
+                sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", math.huge)
+                for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                    local humanoid = enemy:FindFirstChild("Humanoid")
+                    local rootPart = enemy:FindFirstChild("HumanoidRootPart")
+                    if humanoid and rootPart and humanoid.Health > 0 then
+                        humanoid.Health = 0
+                        rootPart.CanCollide = false
+                    end
+                end
+            end)
+        end
+    end
+end)
+Toggle = Volcanic:AddToggle("Toggle", {Title = "Auto Collect Bone", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().CollectBone = Value
+end)
+spawn(function()
+    while wait(0.1) do
+        if getgenv().AutoCollectBone and World3 then
+            local bones = {}
+            for _, obj in ipairs(workspace:GetDescendants()) do
+                if obj:IsA("BasePart") and obj.Name == "DinoBone" then
+                    table.insert(bones, obj)
+                end
+            end
+            for _, bone in ipairs(bones) do
+                if typeof(topos) == "function" then
+                    topos(CFrame.new(bone.Position))
+                    repeat
+                        wait(0.2)
+                        local playerPos = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                        if not playerPos then break end
+                        local bonePos = bone.Position
+                        local distance = (playerPos - bonePos).Magnitude
+                    until distance <= 1
+                end
+            end
+        end
+    end
+end)
+Toggle = Volcanic:AddToggle("Toggle", {Title = "Auto Collect Egg", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().CollectEgg = Value
+end)
+spawn(function()
+    while wait(0.1) do
+        if getgenv().CollectEgg and World3 and workspace:FindFirstChild("Map") and workspace.Map:FindFirstChild("PrehistoricIsland") and workspace.Map.PrehistoricIsland.Core:FindFirstChild("SpawnedDragonEggs") then
+            local eggs = workspace.Map.PrehistoricIsland.Core.SpawnedDragonEggs:GetChildren()
+            if #eggs > 0 then
+                local targetEgg = eggs[math.random(1, #eggs)]
+                if targetEgg:IsA("Model") and targetEgg.PrimaryPart and typeof(topos) == "function" then
+                    topos(targetEgg.PrimaryPart.CFrame)
+                    repeat
+                        wait(0.2)
+                        local playerPos = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                        if not playerPos then break end
+                        local eggPos = targetEgg.PrimaryPart.Position
+                        local distance = (playerPos - eggPos).Magnitude
+                    until distance <= 1                    
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true, "E", false, game)
+                    wait(1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false, "E", false, game)
+                end
+            end
+        end
+    end
+end)
+Volcanic:AddParagraph({
+    Title = "Setting Skill Volcano Island",
+    Content = string.rep("-", 21)
+})
+Toggle = Volcanic:AddToggle("Toggle", {
+    Title = "Auto Use Skill Melee",
+    Default = false
+})
+Toggle:OnChanged(function(v402)
+    getgenv().UseMelee = v402
+end)
+Toggle = Volcanic:AddToggle("Toggle", {
+    Title = "Auto Use Skill Sword",
+    Default = false
+})
+Toggle:OnChanged(function(v403)
+    getgenv().UseSword = v403
+end)
+Toggle = Volcanic:AddToggle("Toggle", {
+    Title = "Auto Use Skill Gun",
+    Default = false
+})
+Toggle:OnChanged(function(v404)
+    getgenv().UseGun = v404
+end)
+Race = Window:AddTab({ Title = "Tab Upgrade Race", Icon = "" })
+Race:AddParagraph({
+    Title = "Race Draco",
+    Content = string.rep("-", 21)
+})
+local RunService = game:GetService("RunService")
+Toggle = Race:AddToggle("Toggle", {Title = "Teleport To The Draco Clan Trial Door", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().TrialTeleportDraco = Value
+end)
+local function safeTeleport(targetCFrame)
+    if topos and typeof(targetCFrame) == "CFrame" then
+        topos(targetCFrame)
+    end
+end
+spawn(function()
+    local trialPart = workspace:WaitForChild("Map"):FindFirstChild("PrehistoricIsland")
+    if trialPart then
+        trialPart = trialPart:FindFirstChild("TrialTeleport")
+    end
+    while task.wait(0.5) do
+        if getgenv().TrialTeleportDraco and trialPart and trialPart:IsA("Part") then
+            safeTeleport(CFrame.new(trialPart.Position))
+        end
+    end
+end)
+Race:AddParagraph({
+    Title = "Race Normal",
+    Content = string.rep("-", 21)
+})
+Toggle = Race:AddToggle("Toggle", {Title = "Auto Upgrade Race V2", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().UpgradeRaceV2 = Value
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.2) do
+            if not getgenv().UpgradeRaceV2 or not World2 then
+                continue
+            end            
+            local player = game:GetService("Players").LocalPlayer
+            local humanoidRootPart = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+            local backpack = player.Backpack
+            local raceData = player.Data.Race            
+            if raceData:FindFirstChild("Evolved") then
+                continue
+            end
+            local alchemistStatus = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","1")
+            if alchemistStatus == 0 then
+                local targetPos = CFrame.new(-2779.83521, 72.9661407, -3574.02002)
+                if humanoidRootPart and (targetPos.Position - humanoidRootPart.Position).Magnitude > 4 then
+                    topos(targetPos)
+                else
+                    task.wait(1.1)
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","2")
+                end
+            elseif alchemistStatus == 1 then
+                if not (backpack:FindFirstChild("Flower 1") or player.Character:FindFirstChild("Flower 1")) then
+                    topos(game:GetService("Workspace").Flower1.CFrame)
+                elseif not (backpack:FindFirstChild("Flower 2") or player.Character:FindFirstChild("Flower 2")) then
+                    topos(game:GetService("Workspace").Flower2.CFrame)
+                elseif not (backpack:FindFirstChild("Flower 3") or player.Character:FindFirstChild("Flower 3")) then
+                    local zombie = game:GetService("Workspace").Enemies:FindFirstChild("Zombie")
+                    if zombie then
+                        for _, v in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if v.Name == "Zombie" and v:FindFirstChild("HumanoidRootPart") and v:FindFirstChild("Humanoid") then
+                                repeat
+                                    task.wait()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    AutoHaki()
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                until backpack:FindFirstChild("Flower 3") or v.Humanoid.Health <= 0 or not v.Parent or not getgenv().UpgradeRaceV2
+                            end
+                        end
+                    else
+                        topos(CFrame.new(-5685.923, 48.48, -853.237))
+                    end
+                end
+            elseif alchemistStatus == 2 then
+                game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Alchemist","3")
+            end
+        end
+    end)
+end)
+Toggle = Race:AddToggle("Toggle", {Title = "Auto Get Cyborg", Description = "Buy Chip And Kill Order", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoCyborg = Value
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.5) do
+            if getgenv().AutoCyborg then
+                if not game:GetService("Players").LocalPlayer.Character:FindFirstChild("Microchip") 
+                and not game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Microchip") 
+                and not game:GetService("Workspace").Enemies:FindFirstChild("Order") 
+                and not game:GetService("ReplicatedStorage"):FindFirstChild("Order") then
+                    wait(0.3)
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Microchip", "1")
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("BlackbeardReward", "Microchip", "2")
+                end
+            end
+        end
+    end)
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.5) do
+            if getgenv().AutoCyborg then
+                if not game:GetService("Workspace").Enemies:FindFirstChild("Order") 
+                and not game:GetService("ReplicatedStorage"):FindFirstChild("Order") then
+                    if game:GetService("Players").LocalPlayer.Character:FindFirstChild("Microchip") 
+                    or game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Microchip") then
+                        fireclickdetector(
+                            game:GetService("Workspace").Map.CircleIsland.RaidSummon.Button.Main.ClickDetector
+                        )
+                    end
+                end                
+                if game:GetService("ReplicatedStorage"):FindFirstChild("Order") 
+                or game:GetService("Workspace").Enemies:FindFirstChild("Order") then
+                    if game:GetService("Workspace").Enemies:FindFirstChild("Order") then
+                        for _, i in pairs(game:GetService("Workspace").Enemies:GetChildren()) do
+                            if i.Name == "Order" then
+                                repeat 
+                                    task.wait(0.1)
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    topos(i.HumanoidRootPart.CFrame * Pos)
+                                    i.HumanoidRootPart.CanCollide = false
+                                    i.HumanoidRootPart.Size = Vector3.new(120, 120, 120)
+                                until not i.Parent or i.Humanoid.Health <= 0 or getgenv().AutoCyborg == false
+                            end
+                        end
+                    elseif game:GetService("ReplicatedStorage"):FindFirstChild("Order") then
+                        topos(CFrame.new(-6217.2021484375, 28.047645568848, -5053.1357421875))
+                    end
+                end
+            end
+        end
+    end)
+end)
+Toggle = Race:AddToggle("Toggle", {Title = "Auto Get Ghoul", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoGhoul = Value
+end)
+spawn(function()
+    while task.wait(0.1) do
+        if not getgenv().AutoGhoul then break end
+        local enemies = game:GetService("Workspace").Enemies
+        local cursedCaptain = enemies:FindFirstChild("Cursed Captain")
+        if cursedCaptain and cursedCaptain:FindFirstChild("Humanoid") and cursedCaptain:FindFirstChild("HumanoidRootPart") then
+            local humanoid = cursedCaptain.Humanoid
+            local rootPart = cursedCaptain.HumanoidRootPart
+            if humanoid.Health > 0 then
+                rootPart.CanCollide = false
+                humanoid.WalkSpeed = 0
+                rootPart.Size = Vector3.new(50,50,50)
+                repeat
+                    task.wait(0.05)
+                    AutoHaki()
+                    EquipWeapon(getgenv().SelectWeapon)
+                    topos(rootPart.CFrame * CFrame.new(0, 10, 0))
+                    sethiddenproperty(game:GetService("Players").LocalPlayer, "SimulationRadius", 1000)
+                until not getgenv().AutoGhoul or humanoid.Health <= 0 or not cursedCaptain.Parent
+            end
+        else
+            local storageCaptain = game:GetService("ReplicatedStorage"):FindFirstChild("Cursed Captain")
+            if storageCaptain then
+                topos(storageCaptain.HumanoidRootPart.CFrame * CFrame.new(5,10,2))
+            end
+        end
+    end
+end)
+Race:AddParagraph({
+    Title = "Race V4",
+    Content = string.rep("-", 21)
+})
+Toggle = Race:AddToggle("Toggle", {Title = "No Frog", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().NoFrog = Value
+end)
+spawn(function()
+    while true do
+        if getgenv().NoFrog then
+            pcall(function()
+                local lighting = game:GetService("Lighting")
+                if lighting:FindFirstChild("LightingLayers") then
+                    lighting.LightingLayers:Destroy()
+                end
+                if lighting:FindFirstChild("Sky") then
+                    lighting.Sky:Destroy()
+                end
+            end)
+        end
+        wait(1)
+        while not getgenv().NoFrog do
+            wait(1)
+        end
+    end
+end)
+Toggle = Race:AddToggle("Toggle", {Title = "Teleport Ancient Clock", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().TeleportAcientClock = Value
+    StopTween(getgenv().TeleportAcientClock)
+end)
+spawn(function()
+    while true do
+        wait(0.5)
+        if getgenv().TeleportAcientClock then
+            topos(CFrame.new(29549, 15069, -88))
+        end
+    end
+end)
+Toggle = Race:AddToggle("Toggle", {Title = "Auto Buy Gear", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoBuyGear = Value    
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.1) do
+            if getgenv().AutoBuyGear and World3 then
+                local args = {"UpgradeRace", "Buy"}
+                game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("CommF_"):InvokeServer(unpack(args))
+            else
+                repeat task.wait(1) until getgenv().AutoBuyGear
+            end
+        end
+    end)
+end)
+local Toggle = Race:AddToggle("Toggle", {Title = "Auto Finish Train Quest", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().Race_1 = Value
+    getgenv().QuestTrain_2 = Value
+    if not Value then
+        StopTween(getgenv().QuestTrain_2)
+    end
+end)
+task.spawn(function()
+    while task.wait(0.5) do
+        pcall(function()
+            if getgenv().Race_1 and game.Players.LocalPlayer.Character then
+                local char = game.Players.LocalPlayer.Character
+                if char:FindFirstChild("RaceTransformed") and char.RaceTransformed.Value then
+                    getgenv().QuestTrain_2 = false
+                    topos(CFrame.new(-9507.03125, 713.654968, 6186.39453))
+                end
+            end
+        end)
+    end
+end)
+task.spawn(function()
+    while task.wait(0.5) do 
+        pcall(function()
+            if getgenv().QuestTrain_2 and World3 and game.Players.LocalPlayer.Character then
+                local enemies = workspace:FindFirstChild("Enemies")
+                if enemies then
+                    for _, v in pairs(enemies:GetChildren()) do
+                        if v:IsA("Model") and (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") then
+                            if v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                                repeat
+                                    task.wait(0.1)
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    v.HumanoidRootPart.CanCollide = false
+                                    v.Humanoid.WalkSpeed = 0
+                                    v.Head.CanCollide = false
+                                    topos(v.HumanoidRootPart.CFrame * Pos)
+                                    getgenv().BonesBring = true
+                                until not getgenv().QuestTrain_2 or v.Parent == nil or v.Humanoid.Health <= 0
+                            end
+                        end
+                    end
+                end
+                if BypassTP then
+                    local playerPos = game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                    local distance = (playerPos - BonePos.Position).Magnitude
+                    if distance > 1500 then
+                        BTP(BonePos)
+                    else
+                        topos(BonePos)
+                    end
+                else
+                    topos(BonePos)
+                end
+                UnEquipWeapon(getgenv().SelectWeapon)
+                getgenv().BonesBring = false
+                topos(CFrame.new(-9507.03125, 713.654968, 6186.39453))
+                local replicated = game:GetService("ReplicatedStorage")
+                for _, v in pairs(replicated:GetChildren()) do 
+                    if v:IsA("Model") and (v.Name == "Reborn Skeleton" or v.Name == "Living Zombie" or v.Name == "Demonic Soul" or v.Name == "Posessed Mummy") then
+                        if v:FindFirstChild("HumanoidRootPart") then
+                            topos(v.HumanoidRootPart.CFrame * CFrame.new(2, 20, 2))
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+task.spawn(function()
+    while task.wait(0.5) do
+        pcall(function()
+            if getgenv().Race_1 and game.Players.LocalPlayer.Character then
+                local char = game.Players.LocalPlayer.Character
+                if char:FindFirstChild("RaceTransformed") and not char.RaceTransformed.Value then
+                    getgenv().QuestTrain_2 = true
+                end
+            end
+        end)
+    end
+end)
+task.spawn(function()
+    while task.wait(0.5) do
+        pcall(function()
+            if getgenv().Race_1 and game.Players.LocalPlayer.Character then
+                local char = game.Players.LocalPlayer.Character
+                if char:FindFirstChild("RaceEnergy") and char.RaceEnergy.Value >= 1 and not char.RaceTransformed.Value then
+                    local be = game:GetService("VirtualInputManager")
+                    be:SendKeyEvent(true, "Y", false, game)
+                    task.wait(0.1)
+                    be:SendKeyEvent(false, "Y", false, game)
+                end
+            end
+        end)
+    end
+end)
+Pullever = Race:AddParagraph({
+    Title = "Pull Lever Done",
+    Content = "Status: "
+})
+spawn(function()
+    local previousStatus = ""
+    while task.wait(1) do
+        local success, result = pcall(function()
+            return game.ReplicatedStorage.Remotes.CommF_:InvokeServer("templedoorcheck")
+        end)
+        if success then
+            local currentStatus = result and "✅" or "❌"
+            if currentStatus ~= previousStatus then
+                Pullever:SetDesc("Status: " .. currentStatus)
+                previousStatus = currentStatus
+            end
+        end
+    end
+end)
+Toggle = Race:AddToggle("Toggle", { Title = "Teleport To Migare Island", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().TeleportMigare = Value
+    StopTween(getgenv().TeleportMigare)
+end)
+spawn(function()
+    pcall(function()
+        while wait(0.5) do
+            if getgenv().TeleportMigare and World3 then
+                local island = game:GetService("Workspace").Map:FindFirstChild("MysticIsland")
+                if island and island:FindFirstChild("Center") then
+                    local targetPos = island.Center.Position
+                    local currentPos = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                    if currentPos and (Vector3.new(targetPos.X, 500, targetPos.Z) - currentPos).magnitude > 5 then
+                        topos(CFrame.new(targetPos.X, 500, targetPos.Z))
+                    end
+                end
+            end
+        end
+    end)
+end)
+Toggle = Race:AddToggle("Toggle", { Title = "Teleport To Highest Point", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().Tweentohighestpoint = Value
+    if not Value then
+        return
+    end
+    spawn(function()
+        while getgenv().Tweentohighestpoint do
+            local HighestPoint = tweento_highestpoint()
+            if HighestPoint and HighestPoint:FindFirstChild("CFrame") then
+                local targetPos = HighestPoint.CFrame * CFrame.new(0, 211.88, 0)
+                local currentPos = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                if currentPos and (targetPos.Position - currentPos).magnitude > 5 then
+                    topos(targetPos)
+                end
+            end
+            wait(0.5)
+        end
+    end)
+end)
+Toggle = Race:AddToggle("Toggle", { Title = "Teleport To Advanced Fruit Dealer", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().TeleportAdvancedFruitDealer = Value
+    if not Value then
+        return
+    end
+    spawn(function()
+        while getgenv().TeleportAdvancedFruitDealer and wait(0.5) do
+            local MysticIsland = game:GetService("Workspace").Map:FindFirstChild("MysticIsland")
+            if MysticIsland then
+                local AllNPCs = {}
+                for _, v in pairs(game:GetService("Workspace").NPCs:GetChildren()) do
+                    table.insert(AllNPCs, v)
+                end
+                for _, v in pairs(AllNPCs) do
+                    if v.Name == "Advanced Fruit Dealer" and v:FindFirstChild("HumanoidRootPart") then
+                        local targetPos = v.HumanoidRootPart.CFrame
+                        local currentPos = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChild("HumanoidRootPart") and game.Players.LocalPlayer.Character.HumanoidRootPart.Position
+                        if currentPos and (targetPos.Position - currentPos).magnitude > 5 then
+                            topos(targetPos)
+                        end
+                        break
+                    end
+                end
+            end
+        end
+    end)
+end)
+Toggle = Race:AddToggle("Toggle", { Title = "Lock Moon And On Race V3", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().LockMoonAndOnRaceV3 = Value
+    if not Value then
+        return
+    end
+    spawn(function()
+        while getgenv().LockMoonAndOnRaceV3 and wait(0.5) do
+            pcall(function()
+                if World3 then
+                    local moonDir = game.Lighting:GetMoonDirection()
+                    if moonDir and moonDir.Magnitude > 0 then
+                        local lookAtPos = game.Workspace.CurrentCamera.CFrame.p + moonDir * 100
+                        game.Workspace.CurrentCamera.CFrame = CFrame.lookAt(game.Workspace.CurrentCamera.CFrame.p, lookAtPos)
+                    end
+                end
+            end)
+        end
+    end)
+    spawn(function()
+        while getgenv().LockMoonAndOnRaceV3 and wait(3) do
+            pcall(function()
+                if World3 then
+                    game:GetService("VirtualInputManager"):SendKeyEvent(true, "T", false, game)
+                    wait(0.1)
+                    game:GetService("VirtualInputManager"):SendKeyEvent(false, "T", false, game)
+                end
+            end)
+        end
+    end)
+end)
+Toggle = Race:AddToggle("Toggle", { Title = "Teleport To Blue Gear", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().TeleportToGear = Value
+    StopTween(getgenv().TeleportToGear)
+end)
+spawn(function()
+    while task.wait(0.1) do
+        if not getgenv().TeleportToGear or not World3 then continue end
+        local MysticIsland = game:GetService("Workspace").Map:FindFirstChild("MysticIsland")
+        if not MysticIsland then continue end
+        for _, v in ipairs(MysticIsland:GetChildren()) do
+            if v:IsA("MeshPart") and v.Material == Enum.Material.Neon then
+                topos(v.CFrame)
+                break
+            end
+        end
+    end
+end)
+Race:AddButton({
+    Title = "Teleport To Trial Door",
+    Callback = function()
+        local player = game:GetService("Players").LocalPlayer
+        if not player or not player:FindFirstChild("Data") or not player.Data:FindFirstChild("Race") then
+            return
+        end
+        local race = player.Data.Race.Value
+        local positions = {
+            Human  = CFrame.new(29221.822, 14890.975, -205.991),
+            Skypiea = CFrame.new(28960.158, 14919.624, 235.039),
+            Fishman = CFrame.new(28231.175, 14890.975, -211.641),
+            Cyborg  = CFrame.new(28502.681, 14895.975, -423.727),
+            Ghoul   = CFrame.new(28674.244, 14890.676, 445.431),
+            Mink    = CFrame.new(29012.341, 14890.975, -380.149)
+        }
+        if positions[race] and typeof(topos) == "function" then
+            topos(positions[race])
+        end
+    end
+})
+Toggle = Race:AddToggle("Toggle", {Title = "Auto Trial Race", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoTrialRace = Value
+    StopTween(getgenv().AutoTrialRace)
+end)
+spawn(function()
+    local player = game:GetService("Players").LocalPlayer
+    local race = player.Data.Race
+    local virtualInput = game:GetService("VirtualInputManager")
+    while getgenv().AutoTrialRace do
+        wait(0.5)
+        if race.Value == "Human" then
+            for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                if enemy:FindFirstChild("Humanoid") and enemy:FindFirstChild("HumanoidRootPart") and enemy.Humanoid.Health > 0 then
+                    pcall(function()
+                        repeat
+                            wait()
+                            enemy.Humanoid.Health = 0
+                            enemy.HumanoidRootPart.CanCollide = false
+                            sethiddenproperty(player, "SimulationRadius", math.huge)
+                        until not getgenv().AutoTrialRace or not enemy.Parent or enemy.Humanoid.Health <= 0
+                    end)
+                end
+            end
+        elseif race.Value == "Skypiea" then
+            local skyTrial = game:GetService("Workspace").Map.SkyTrial.Model
+            if skyTrial then
+                for _, obj in pairs(skyTrial:GetDescendants()) do
+                    if obj.Name == "snowisland_Cylinder.081" then
+                        BTPZ(obj.CFrame)
+                        break
+                    end
+                end
+            end
+        elseif race.Value == "Fishman" then
+            local seaBeast = game:GetService("Workspace").SeaBeasts:FindFirstChild("SeaBeast1")
+            if seaBeast then
+                local root = seaBeast:FindFirstChild("HumanoidRootPart")
+                if root then
+                    topos(root.CFrame)
+                    local backpack = player.Backpack
+                    local function equipTool(toolType)
+                        for _, tool in pairs(backpack:GetChildren()) do
+                            if tool:IsA("Tool") and tool.ToolTip == toolType then
+                                player.Character.Humanoid:EquipTool(tool)
+                                wait(0.2)
+                                virtualInput:SendKeyEvent(true, 122, false, game)
+                                virtualInput:SendKeyEvent(false, 122, false, game)
+                                wait(0.2)
+                                virtualInput:SendKeyEvent(true, 120, false, game)
+                                virtualInput:SendKeyEvent(false, 120, false, game)
+                                wait(0.2)
+                                virtualInput:SendKeyEvent(true, 99, false, game)
+                                virtualInput:SendKeyEvent(false, 99, false, game)
+                            end
+                        end
+                    end
+                    equipTool("Melee")
+                    equipTool("Blox Fruit")
+                    equipTool("Sword")
+                    equipTool("Gun")
+                end
+            end
+        elseif race.Value == "Cyborg" then
+            topos(CFrame.new(28654, 14898.7832, -30))
+        elseif race.Value == "Ghoul" then
+            for _, enemy in pairs(game.Workspace.Enemies:GetChildren()) do
+                if enemy:FindFirstChild("Humanoid") and enemy:FindFirstChild("HumanoidRootPart") and enemy.Humanoid.Health > 0 then
+                    pcall(function()
+                        repeat
+                            wait()
+                            enemy.Humanoid.Health = 0
+                            enemy.HumanoidRootPart.CanCollide = false
+                            sethiddenproperty(player, "SimulationRadius", math.huge)
+                        until not getgenv().AutoTrialRace or not enemy.Parent or enemy.Humanoid.Health <= 0
+                    end)
+                end
+            end
+        elseif race.Value == "Mink" then
+            for _, obj in pairs(game:GetService("Workspace"):GetDescendants()) do
+                if obj.Name == "StartPoint" then
+                    topos(obj.CFrame * CFrame.new(0, 10, 0))
+                    break
+                end
+            end
+        end
+    end
+end)
+Toggle = Race:AddToggle("Toggle", {Title = "Auto Kill Player After Trial V4", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoKillPlayerAfterTrial = Value
+    StopTween(getgenv().AutoKillPlayerAfterTrial)
+end)
+spawn(function()
+    while task.wait(0.2) do
+        if getgenv().AutoKillPlayerAfterTrial and World3 then
+            pcall(function()
+                local player = game.Players.LocalPlayer
+                local char = player.Character
+                if not char or not char:FindFirstChild("HumanoidRootPart") then return end                
+                for _, v in ipairs(game.Workspace.Characters:GetChildren()) do
+                    if v.Name ~= player.Name and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") then
+                        local humanoid = v.Humanoid
+                        local rootPart = v.HumanoidRootPart
+                        if humanoid.Health > 0 and (char.HumanoidRootPart.Position - rootPart.Position).Magnitude <= 230 then
+                            task.spawn(function()
+                                AutoHaki()
+                                EquipWeapon(getgenv().SelectWeapon)
+                                topos(rootPart.CFrame * CFrame.new(1, 1, 2))
+                                rootPart.Size = Vector3.new(60, 60, 60)
+                                rootPart.CanCollide = false
+                                if v:FindFirstChild("Head") then
+                                    v.Head.CanCollide = false
+                                end
+                                humanoid.WalkSpeed = 0
+                                sethiddenproperty(player, "SimulationRadius", math.huge)
+                                while getgenv().AutoKillPlayerAfterTrial and humanoid.Health > 0 and v.Parent and rootPart and humanoid do
+                                    task.wait(0.1)
+                                end
+                            end)
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+Get = Window:AddTab({ Title = "Tab Get Items And Buy", Icon = "" })
+Toggle = Get:AddToggle("Toggle", {Title = "Auto Trade Bone", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoTradeBone = Value
+end)
+spawn(function()
+    local canSendRequest = true
+    local debounceTime = 1
+    while task.wait(0.5) do
+        if getgenv().AutoTradeBone and World3 and canSendRequest then
+            canSendRequest = false
+            local args = {
+                [1] = "Bones",
+                [2] = "Buy",
+                [3] = 1,
+                [4] = 1
+            }
+            local commF = game:GetService("ReplicatedStorage").Remotes.CommF_
+            if commF then
+                local success, result = pcall(function()
+                    commF:InvokeServer(unpack(args))
+                end)
+                if not success then
+                end
+            end
+            wait(debounceTime)
+            canSendRequest = true
+        end
+    end
+end)
+Toggle = Get:AddToggle("Toggle", {Title = "Auto Buy Legendary Sword", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoBuyLegendarySword = Value
+end)
+spawn(function()
+    local lastCallTime = 0
+    while task.wait(1) do
+        if getgenv().AutoBuyLegendarySword and World2 then
+            local currentTime = tick()            
+            if currentTime - lastCallTime >= 2 then
+                lastCallTime = currentTime                
+                pcall(function()
+                    local args1 = { "LegendarySwordDealer", "1" }
+                    local args2 = { "LegendarySwordDealer", "2" }
+                    local args3 = { "LegendarySwordDealer", "3" }                    
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args1))
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args2))
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args3))                    
+                end)
+            end
+        end
+    end
+end)
+Toggle = Get:AddToggle("Toggle", {
+    Title = "Auto Buy Haki Color",
+    Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().Auto_Buy_Enchancement = Value
+end)
+spawn(function()
+    local lastCallTime = 0
+    while true do
+        if getgenv().Auto_Buy_Enchancement then
+            local currentTime = tick()
+            if currentTime - lastCallTime >= 2 then
+                lastCallTime = currentTime
+                local args = {
+                    [1] = "ColorsDealer",
+                    [2] = "2"
+                }
+                pcall(function()
+                    game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+                end)
+            end
+        end
+        wait(0.1)
+    end
+end)
+local isHopping = false
+Toggle = Get:AddToggle("Toggle", {
+    Title = "Hop Server [ Haki color or Legendary Sword]",
+    Default = false
+})
+Toggle:OnChanged(function(state)
+    isHopping = state
+    if isHopping then
+        Hop()
+    end
+end)
+Toggle = Get:AddToggle("Toggle", {Title = "Auto Get Rainbow Haki", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoRainbowHaki = Value
+end)
+spawn(function()
+    pcall(function()
+        while task.wait(0.2) do
+            if getgenv().AutoRainbowHaki and World3 then
+                local player = game:GetService("Players").LocalPlayer
+                local char = player.Character
+                local hrp = char and char:FindFirstChild("HumanoidRootPart")
+                local questGui = player.PlayerGui.Main.Quest
+                if not hrp then continue end                
+                if not questGui.Visible then
+                    local targetPos = Vector3.new(-11892.0703125, 930.57672119141, -8760.1591796875)
+                    if (targetPos - hrp.Position).Magnitude > 30 then
+                        topos(CFrame.new(targetPos))
+                    else
+                        task.wait(1.1)
+                        game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("HornedMan", "Bet")
+                    end
+                else
+                    local questTitle = questGui.Container.QuestTitle.Title.Text
+                    local enemyNames = {
+                        ["Stone"] = Vector3.new(-1175, 53, 6811),
+                        ["Island Empress"] = Vector3.new(5887, 1019, -114),
+                        ["Kilo Admiral"] = Vector3.new(3014, 509, -7354),
+                        ["Captain Elephant"] = Vector3.new(-13485.0283, 331.709259, -8012.4873),
+                        ["Beautiful Pirate"] = Vector3.new(5377, 22, -62)
+                    }
+                    for enemyName, teleportPos in pairs(enemyNames) do
+                        if string.find(questTitle, enemyName) then
+                            local enemy = game:GetService("Workspace").Enemies:FindFirstChild(enemyName)
+                            if enemy and enemy:FindFirstChild("HumanoidRootPart") then
+                                local oldCFrame = enemy.HumanoidRootPart.CFrame
+                                repeat
+                                    task.wait()
+                                    AutoHaki()
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                    topos(enemy.HumanoidRootPart.CFrame * Pos)
+                                    enemy.HumanoidRootPart.CanCollide = false
+                                    enemy.HumanoidRootPart.Size = Vector3.new(50, 50, 50)
+                                    enemy.HumanoidRootPart.CFrame = oldCFrame
+                                    game:GetService("VirtualUser"):CaptureController()
+                                    game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                until not getgenv().AutoRainbowHaki or enemy.Humanoid.Health <= 0 or not enemy.Parent or not questGui.Visible
+                            else
+                                topos(CFrame.new(teleportPos))
+                            end
+                            break
+                        end
+                    end
+                end
+            end
+        end
+    end)
+end)
+Toggle = Get:AddToggle("Toggle", {Title = "Auto Skull Guitar", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoSkullGuitar = Value
+end)
+spawn(function()
+    while task.wait() do
+        if getgenv().AutoSkullGuitar then
+            pcall(function()
+                if not GetWeaponInventory("Skull Guitar") then
+                    local player = game:GetService("Players").LocalPlayer
+                    local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+                    if hrp then
+                        local targetPos = Vector3.new(-9681.458, 6.139, 6341.372)
+                        if (targetPos - hrp.Position).Magnitude <= 5000 then
+                            local skeletonMachine = game:GetService("Workspace").NPCs:FindFirstChild("Skeleton Machine")
+                            if skeletonMachine then
+                                game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("soulGuitarBuy", true)
+                            else
+                                local hauntedCastle = game:GetService("Workspace").Map:FindFirstChild("Haunted Castle")
+                                if hauntedCastle and hauntedCastle.Candle1.Transparency == 0 then
+                                    local placard1 = hauntedCastle:FindFirstChild("Placard1")
+                                    if placard1 and placard1.Left.Part.Transparency == 0 then
+                                        Quest2 = true
+                                        topos(CFrame.new(-8762.691, 176.847, 6171.308))
+                                        task.wait(1)
+                                        for i = 7, 1, -1 do
+                                            local placard = hauntedCastle:FindFirstChild("Placard" .. i)
+                                            if placard and placard:FindFirstChild("Left") and placard.Left:FindFirstChild("ClickDetector") then
+                                                fireclickdetector(placard.Left.ClickDetector)
+                                                task.wait(0.5)
+                                            end
+                                        end
+                                    end
+                                elseif hauntedCastle and hauntedCastle.Tablet and hauntedCastle.Tablet:FindFirstChild("Segment1") then
+                                    local labPuzzle = hauntedCastle:FindFirstChild("Lab Puzzle")
+                                    if labPuzzle and labPuzzle.ColorFloor.Model.Part1:FindFirstChild("ClickDetector") then
+                                        Quest4 = true
+                                        topos(CFrame.new(-9553.599, 65.623, 6041.588))
+                                        task.wait(1)
+                                        local partsToClick = {3, 4, 4, 4, 6, 6, 8, 10, 10, 10}
+                                        for _, num in ipairs(partsToClick) do
+                                            local part = labPuzzle.ColorFloor.Model:FindFirstChild("Part" .. num)
+                                            if part and part:FindFirstChild("ClickDetector") then
+                                                topos(part.CFrame)
+                                                task.wait(1)
+                                                fireclickdetector(part.ClickDetector)
+                                                task.wait(0.5)
+                                            end
+                                        end
+                                    else
+                                        Quest3 = true
+                                    end
+                                else
+                                    local ghost = game:GetService("Workspace").NPCs:FindFirstChild("Ghost")
+                                    if ghost then
+                                        game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("GuitarPuzzleProgress", "Ghost")
+                                    end
+                                    local enemies = game.Workspace:FindFirstChild("Enemies")
+                                    if enemies and enemies:FindFirstChild("Living Zombie") then
+                                        for _, enemy in pairs(enemies:GetChildren()) do
+                                            if enemy:FindFirstChild("HumanoidRootPart") and enemy:FindFirstChild("Humanoid") and enemy.Humanoid.Health > 0 and enemy.Name == "Living Zombie" then
+                                                AutoHaki()
+                                                EquipWeapon(getgenv().SelectWeapon)
+                                                enemy.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                                                enemy.HumanoidRootPart.Transparency = 1
+                                                enemy.Humanoid.JumpPower = 0
+                                                enemy.Humanoid.WalkSpeed = 0
+                                                enemy.HumanoidRootPart.CanCollide = false
+                                                enemy.HumanoidRootPart.CFrame = hrp.CFrame * CFrame.new(0, 20, 0)                                                
+                                                topos(CFrame.new(-10160.787, 138.662, 5955.031))
+                                                task.wait(0.5)
+                                                local virtualUser = game:GetService("VirtualUser")
+                                                virtualUser:CaptureController()
+                                                virtualUser:Button1Down(Vector2.new(1280, 672))
+                                            end
+                                        end
+                                    else
+                                        topos(CFrame.new(-10160.787, 138.662, 5955.031))
+                                    end
+                                end
+                            end
+                        end
+                    end
+                elseif string.find(game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("gravestoneEvent", 2), "Error") then
+                    topos(CFrame.new(-8653.206, 140.985, 6160.033))
+                elseif string.find(game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("gravestoneEvent", 2), "Nothing") then
+                    topos("Wait Full Moon")
+                else
+                    game:GetService("ReplicatedStorage").Remotes.CommF:InvokeServer("gravestoneEvent", 2, true)
+                end
+            end)
+        end
+    end
+end)
+Toggle = Get:AddToggle("Toggle", {Title = "Auto Get CDK", Description = "Teleport To Claim CDK", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AutoGetCDK = Value
+end)
+task.spawn(function()
+    repeat task.wait() until getgenv().AutoGetCDK    
+    local hasNotified = false
+    local player = game.Players.LocalPlayer
+    local replicatedStorage = game:GetService("ReplicatedStorage")
+    local workspace = game:GetService("Workspace")
+    local enemies = workspace.Enemies
+    while getgenv().AutoGetCDK do
+        task.wait(0.2)
+        pcall(function()
+            replicatedStorage.Remotes.CommF_:InvokeServer("CDKQuest", "Progress", "Good")
+            task.wait(0.2)
+            replicatedStorage.Remotes.CommF_:InvokeServer("CDKQuest", "Progress", "Evil")
+            task.wait(0.2)
+            replicatedStorage.Remotes.CommF_:InvokeServer("CDKQuest", "StartTrial", "Boss")
+            task.wait(0.2)            
+            local boss = enemies:FindFirstChild("Cursed Skeleton Boss")
+            if boss then
+                for _, v in pairs(enemies:GetChildren()) do
+                    if v.Name == "Cursed Skeleton Boss" and v:FindFirstChild("Humanoid") and v:FindFirstChild("HumanoidRootPart") and v.Humanoid.Health > 0 then
+                        local char = player.Character
+                        local backpack = player.Backpack
+                        if char:FindFirstChild("Yama") or backpack:FindFirstChild("Yama") then
+                            EquipWeapon("Yama")
+                        elseif char:FindFirstChild("Tushita") or backpack:FindFirstChild("Tushita") then
+                            EquipWeapon("Tushita")
+                        elseif not hasNotified then
+                            game.StarterGui:SetCore("SendNotification", {
+                                Title = "Hiru Hub",
+                                Text = "Use! - Yama or Tushita",
+                                con = "rbxassetid://11995210995",
+                                Duration = 10,
+                            })
+                            hasNotified = true
+                        end
+                        Buso()
+                        v.HumanoidRootPart.CanCollide = false
+                        v.Humanoid.WalkSpeed = 0
+                        topos(v.HumanoidRootPart.CFrame * CFrame.new(0,30,0))
+                        if syn and not getgenv().SimulationSet then
+                            sethiddenproperty(player, "SimulationRadius", math.huge)
+                            getgenv().SimulationSet = true
+                        end
+                        repeat
+                            task.wait()
+                        until not getgenv().AutoGetCDK or not v.Parent or v.Humanoid.Health <= 0
+                    end
+                end
+            else
+                topos(CFrame.new(-12318.193, 601.951, -6538.662))
+                task.wait(0.5)
+                topos(workspace.Map.Turtle.Cursed.BossDoor.CFrame)
+            end
+        end)
+    end
+end)
+Toggle = Get:AddToggle("Toggle", {Title = "Auto Yama", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoYama = Value
+end)
+spawn(function()
+    while task.wait(1) do
+        pcall(function()
+            if getgenv().AutoYama then
+                local progress = game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("EliteHunter", "Progress")
+                if progress and progress >= 30 then
+                    local player = game:GetService("Players").LocalPlayer
+                    local yamaInBackpack = player.Backpack:FindFirstChild("Yama")
+                    local sealedKatana = game:GetService("Workspace").Map:FindFirstChild("Waterfall")                    
+                    if not yamaInBackpack and sealedKatana and sealedKatana:FindFirstChild("SealedKatana") then
+                        local clickDetector = sealedKatana.SealedKatana.Handle:FindFirstChild("ClickDetector")
+                        if clickDetector then
+                            repeat
+                                task.wait(0.5)
+                                fireclickdetector(clickDetector)
+                            until player.Backpack:FindFirstChild("Yama") or not getgenv().AutoYama
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+Toggle = Get:AddToggle("Toggle", {Title = "Auto Tushita", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoTushita = Value
+end)
+spawn(function()
+    while task.wait(0.5) do
+        if getgenv().AutoTushita and World3 then
+            pcall(function()
+                local enemies = game:GetService("Workspace").Enemies
+                local longma = enemies:FindFirstChild("Longma")
+                local player = game.Players.LocalPlayer
+                local character = player.Character
+                local hrp = character and character:FindFirstChild("HumanoidRootPart")
+                if longma and hrp then
+                    for _, enemy in pairs(enemies:GetChildren()) do
+                        if enemy.Name == "Longma" and enemy.Parent and enemy:FindFirstChild("Humanoid") and enemy:FindFirstChild("HumanoidRootPart") then
+                            local humanoid = enemy.Humanoid
+                            local rootPart = enemy.HumanoidRootPart
+                            if humanoid.Health > 0 then
+                                if not character:FindFirstChild("Haki") then
+                                    AutoHaki()
+                                end
+                                if getgenv().SelectWeapon and not character:FindFirstChild(getgenv().SelectWeapon) then
+                                    EquipWeapon(getgenv().SelectWeapon)
+                                end
+                                repeat
+                                    task.wait(0.1)
+                                    rootPart.CanCollide = false
+                                    humanoid.WalkSpeed = 0
+                                    if (rootPart.Position - hrp.Position).Magnitude > 5 then
+                                        topos(rootPart.CFrame * Pos)
+                                    end
+                                    pcall(function()
+                                        sethiddenproperty(player, "SimulationRadius", math.huge)
+                                    end)
+                                until not getgenv().AutoTushita or not enemy.Parent or humanoid.Health <= 0
+                            end
+                        end
+                    end
+                else
+                    topos(CFrame.new(-10238.876, 389.791, -9549.794))
+                    local storedLongma = game:GetService("ReplicatedStorage"):FindFirstChild("Longma")
+                    if storedLongma and storedLongma:FindFirstChild("HumanoidRootPart") then
+                        TP(storedLongma.HumanoidRootPart.CFrame * CFrame.new(2, 20, 2))
+                    end
+                end
+            end)
+        end
+    end
+end)
+Toggle = Get:AddToggle("Toggle", {Title = "Auto Saber", Default = false})
+Toggle:OnChanged(function(Value)
+    getgenv().AutoSaber = Value
+end)
+spawn(function()
+    while task.wait(0.5) do
+        if getgenv().AutoSaber and game.Players.LocalPlayer.Data.Level.Value >= 200 then
+            pcall(function()
+                local player = game.Players.LocalPlayer
+                local char = player.Character
+                local hrp = char and char:FindFirstChild("HumanoidRootPart")
+                if not hrp then return end
+                local jungle = game:GetService("Workspace").Map.Jungle
+                local desert = game:GetService("Workspace").Map.Desert
+                local relicPos = CFrame.new(-1404.91, 29.97, 3.80)                
+                if jungle.Final.Part.Transparency == 0 then
+                    if jungle.QuestPlates.Door.Transparency == 0 then
+                        local saberPos = CFrame.new(-1612.55, 36.97, 148.71)
+                        if (saberPos.Position - hrp.Position).Magnitude <= 100 then
+                            for i = 1, 5 do
+                                local plate = jungle.QuestPlates:FindFirstChild("Plate" .. i)
+                                if plate and plate:FindFirstChild("Button") then
+                                    hrp.CFrame = plate.Button.CFrame
+                                    task.wait(0.5)
+                                end
+                            end
+                        else
+                            topos(saberPos)
+                        end
+                    else
+                        if desert.Burn.Part.Transparency == 0 then
+                            if player.Backpack:FindFirstChild("Torch") or char:FindFirstChild("Torch") then
+                                EquipWeapon("Torch")
+                                topos(CFrame.new(1114.61, 5.04, 4350.22))
+                            else
+                                topos(CFrame.new(-1610.00, 11.50, 164.00))
+                            end
+                        else
+                            local commF = game:GetService("ReplicatedStorage").Remotes.CommF_
+                            if commF:InvokeServer("ProQuestProgress", "SickMan") ~= 0 then
+                                commF:InvokeServer("ProQuestProgress", "GetCup")
+                                task.wait(0.1)
+                                EquipWeapon("Cup")
+                                task.wait(0.1)
+                                commF:InvokeServer("ProQuestProgress", "FillCup", char:FindFirstChild("Cup"))
+                                task.wait(0.1)
+                                commF:InvokeServer("ProQuestProgress", "SickMan")
+                            else
+                                if commF:InvokeServer("ProQuestProgress", "RichSon") == nil then
+                                    commF:InvokeServer("ProQuestProgress", "RichSon")
+                                elseif commF:InvokeServer("ProQuestProgress", "RichSon") == 0 then
+                                    local mobLeader = game:GetService("Workspace").Enemies:FindFirstChild("Mob Leader")
+                                    if not mobLeader then
+                                        mobLeader = game:GetService("ReplicatedStorage"):FindFirstChild("Mob Leader")
+                                    end                                    
+                                    if mobLeader then
+                                        topos(mobLeader.HumanoidRootPart.CFrame)
+                                        repeat
+                                            task.wait()
+                                            AutoHaki()
+                                            EquipWeapon(getgenv().SelectWeapon)
+                                            mobLeader.HumanoidRootPart.CanCollide = false
+                                            mobLeader.Humanoid.WalkSpeed = 0
+                                            topos(mobLeader.HumanoidRootPart.CFrame)
+                                            game:GetService("VirtualUser"):CaptureController()
+                                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                                            sethiddenproperty(player, "SimulationRadius", math.huge)
+                                        until mobLeader.Humanoid.Health <= 0 or not getgenv().AutoSaber
+                                    end
+                                elseif commF:InvokeServer("ProQuestProgress", "RichSon") == 1 then
+                                    commF:InvokeServer("ProQuestProgress", "RichSon")
+                                    task.wait(0.1)
+                                    EquipWeapon("Relic")
+                                    task.wait(0.1)
+                                    topos(relicPos)
+                                end
+                            end
+                        end
+                    end
+                else
+                    local saberExpert = game:GetService("Workspace").Enemies:FindFirstChild("Saber Expert")
+                    if not saberExpert then
+                        saberExpert = game:GetService("ReplicatedStorage"):FindFirstChild("Saber Expert")
+                    end                    
+                    if saberExpert then
+                        repeat
+                            task.wait()
+                            EquipWeapon(getgenv().SelectWeapon)
+                            topos(saberExpert.HumanoidRootPart.CFrame)
+                            saberExpert.HumanoidRootPart.Size = Vector3.new(60, 60, 60)
+                            saberExpert.HumanoidRootPart.Transparency = 1
+                            saberExpert.Humanoid.JumpPower = 0
+                            saberExpert.Humanoid.WalkSpeed = 0
+                            saberExpert.HumanoidRootPart.CanCollide = false
+                            game:GetService("VirtualUser"):CaptureController()
+                            game:GetService("VirtualUser"):Button1Down(Vector2.new(1280, 672))
+                        until saberExpert.Humanoid.Health <= 0 or not getgenv().AutoSaber                        
+                        if saberExpert.Humanoid.Health <= 0 then
+                            game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("ProQuestProgress", "PlaceRelic")
+                        end
+                    end
+                end
+            end)
+        end
+    end
+end)
+ESP = Window:AddTab({ Title = "Tab ESP", Icon = "" })
+local RunService = game:GetService("RunService")
+local player = game:GetService("Players").LocalPlayer
+local IslandESP = false
+local updateConnection
+function UpdateIslandESP()
+    if not player or not player.Character or not player.Character:FindFirstChild("Head") then return end
+    local headPosition = player.Character.Head.Position
+    local locations = game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()
+    for _, v in ipairs(locations) do
+        if v.Name ~= "Sea" then
+            if IslandESP then
+                local bill = v:FindFirstChild("NameEsp")
+                if not bill then
+                    bill = Instance.new("BillboardGui")
+                    bill.Name = "NameEsp"
+                    bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                    bill.Size = UDim2.new(1, 200, 1, 30)
+                    bill.Adornee = v
+                    bill.AlwaysOnTop = true
+                    bill.Parent = v
+                    local name = Instance.new("TextLabel", bill)
+                    name.Font = Enum.Font.GothamBold
+                    name.TextSize = 14
+                    name.TextWrapped = true
+                    name.Size = UDim2.new(1, 0, 1, 0)
+                    name.TextYAlignment = Enum.TextYAlignment.Top
+                    name.BackgroundTransparency = 1
+                    name.TextStrokeTransparency = 0.5
+                    name.TextColor3 = Color3.fromRGB(255, 255, 255)
+                    name.Parent = bill
+                end                
+                local textLabel = bill:FindFirstChildOfClass("TextLabel")
+                if textLabel then
+                    local distance = (headPosition - v.Position).Magnitude / 3
+                    textLabel.Text = string.format("%s\n%d Distance", v.Name, math.floor(distance + 0.5))
+                end
+            else
+                local existingBill = v:FindFirstChild("NameEsp")
+                if existingBill then
+                    existingBill:Destroy()
+                end
+            end
+        end
+    end
+end
+Toggle = ESP:AddToggle("Toggle", {Title = "ESP Island", Default = false })
+Toggle:OnChanged(function(Value)
+    IslandESP = Value
+    if IslandESP then
+        if not updateConnection then
+            updateConnection = RunService.Heartbeat:Connect(UpdateIslandESP)
+        end
+    else
+        if updateConnection then
+            updateConnection:Disconnect()
+            updateConnection = nil
+        end
+        for _, v in ipairs(game:GetService("Workspace")["_WorldOrigin"].Locations:GetChildren()) do
+            local existingBill = v:FindFirstChild("NameEsp")
+            if existingBill then
+                existingBill:Destroy()
+            end
+        end
+    end
+end)
+local RunService = game:GetService("RunService")
+local player = game:GetService("Players").LocalPlayer
+local DevilFruitESP = false
+local updateConnection
+local Number = math.random(1, 1000000)
+function UpdateDevilChams()
+    if not player or not player.Character or not player.Character:FindFirstChild("Head") then return end
+    local headPosition = player.Character.Head.Position
+    for _, v in ipairs(game.Workspace:GetChildren()) do
+        pcall(function()
+            if v:IsA("Model") and string.find(v.Name, "Fruit") and v:FindFirstChild("Handle") then
+                local handle = v.Handle
+                if DevilFruitESP then
+                    local bill = handle:FindFirstChild("NameEsp" .. Number)
+                    if not bill then
+                        bill = Instance.new("BillboardGui")
+                        bill.Name = "NameEsp" .. Number
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1, 200, 1, 30)
+                        bill.Adornee = handle
+                        bill.AlwaysOnTop = true
+                        bill.Parent = handle
+                        local name = Instance.new("TextLabel", bill)
+                        name.Font = Enum.Font.GothamSemibold
+                        name.TextSize = 14
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1, 0, 1, 0)
+                        name.TextYAlignment = Enum.TextYAlignment.Top
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.TextColor3 = Color3.fromRGB(255, 255, 255)
+                        name.Parent = bill
+                    end
+                    local textLabel = bill:FindFirstChildOfClass("TextLabel")
+                    if textLabel then
+                        local distance = (headPosition - handle.Position).Magnitude / 3
+                        textLabel.Text = string.format("%s\n%d Distance", v.Name, math.floor(distance + 0.5))
+                    end
+                else
+                    local existingBill = handle:FindFirstChild("NameEsp" .. Number)
+                    if existingBill then
+                        existingBill:Destroy()
+                    end
+                end
+            end
+        end)
+    end
+end
+Toggle = ESP:AddToggle("Toggle", {Title = "ESP Fruit", Default = false })
+Toggle:OnChanged(function(Value)
+    DevilFruitESP = Value
+    if DevilFruitESP then
+        if not updateConnection then
+            updateConnection = RunService.Heartbeat:Connect(UpdateDevilChams)
+        end
+    else
+        if updateConnection then
+            updateConnection:Disconnect()
+            updateConnection = nil
+        end
+        for _, v in ipairs(game.Workspace:GetChildren()) do
+            if v:IsA("Model") and string.find(v.Name, "Fruit") and v:FindFirstChild("Handle") then
+                local handle = v.Handle
+                local existingBill = handle:FindFirstChild("NameEsp" .. Number)
+                if existingBill then
+                    existingBill:Destroy()
+                end
+            end
+        end
+    end
+end)
+local RunService = game:GetService("RunService")
+local player = game:GetService("Players").LocalPlayer
+local ESPPlayer = false
+local updateConnection
+local Number = math.random(1, 1000000)
+function UpdatePlayerChams()
+    if not player or not player.Character or not player.Character:FindFirstChild("Head") then return end
+    local headPosition = player.Character.Head.Position
+    for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
+        pcall(function()
+            if v ~= player and v.Character and v.Character:FindFirstChild("Head") and v.Character:FindFirstChild("Humanoid") then
+                local head = v.Character.Head
+                local humanoid = v.Character.Humanoid
+                local bill = head:FindFirstChild("NameEsp" .. Number)
+                if ESPPlayer then
+                    if not bill then
+                        bill = Instance.new("BillboardGui")
+                        bill.Name = "NameEsp" .. Number
+                        bill.ExtentsOffset = Vector3.new(0, 1, 0)
+                        bill.Size = UDim2.new(1, 200, 1, 30)
+                        bill.Adornee = head
+                        bill.AlwaysOnTop = true
+                        bill.Parent = head
+                        local name = Instance.new("TextLabel", bill)
+                        name.Font = Enum.Font.GothamSemibold
+                        name.TextSize = 14
+                        name.TextWrapped = true
+                        name.Size = UDim2.new(1, 0, 1, 0)
+                        name.TextYAlignment = Enum.TextYAlignment.Top
+                        name.BackgroundTransparency = 1
+                        name.TextStrokeTransparency = 0.5
+                        name.Parent = bill
+                    end
+                    local textLabel = bill:FindFirstChildOfClass("TextLabel")
+                    if textLabel then
+                        local distance = math.floor((headPosition - head.Position).Magnitude / 3 + 0.5)
+                        local healthPercent = math.floor((humanoid.Health / humanoid.MaxHealth) * 100 + 0.5)
+                        textLabel.Text = string.format("%s\n%d Distance\nHealth: %d%%", v.Name, distance, healthPercent)
+                        if v.Team == player.Team then
+                            textLabel.TextColor3 = Color3.fromRGB(0, 255, 0)
+                        else
+                            textLabel.TextColor3 = Color3.fromRGB(255, 0, 0)
+                        end
+                    end
+                else
+                    if bill then
+                        bill:Destroy()
+                    end
+                end
+            end
+        end)
+    end
+end
+Toggle = ESP:AddToggle("Toggle", {Title = "ESP Player", Default = false })
+Toggle:OnChanged(function(Value)
+    ESPPlayer = Value
+    if ESPPlayer then
+        if not updateConnection then
+            updateConnection = RunService.Heartbeat:Connect(UpdatePlayerChams)
+        end
+    else
+        if updateConnection then
+            updateConnection:Disconnect()
+            updateConnection = nil
+        end
+        for _, v in ipairs(game:GetService("Players"):GetPlayers()) do
+            if v ~= player and v.Character and v.Character:FindFirstChild("Head") then
+                local head = v.Character.Head
+                local existingBill = head:FindFirstChild("NameEsp" .. Number)
+                if existingBill then
+                    existingBill:Destroy()
+                end
+            end
+        end
+    end
+end)
+PVP = Window:AddTab({ Title = "Tab PVP", Icon = "" })
+local Playerslist = {}
+for i, player in ipairs(game.Players:GetPlayers()) do
+    Playerslist[i] = player.Name
+end    
+Dropdown = PVP:AddDropdown("Dropdown", {
+     Title = "Select Player PVP",
+     Values = Playerslist,
+     Multi = false,
+     Default = false,
+})
+Dropdown:OnChanged(function(Value)
+   getgenv().SelectPlayer = Value
+end)
+Toggle = PVP:AddToggle("MyToggle", {
+    Title = "Teleport Player",
+    Default = false
+})
+Toggle:OnChanged(function(Value)
+    getgenv().TeleportPlayer = Value
+    if getgenv().TeleportPlayer then
+        task.spawn(function()
+            while getgenv().TeleportPlayer do
+                local player = game:GetService("Players"):FindFirstChild(getgenv().SelectPlayer)
+                if player and player.Character then
+                    local hrp = player.Character:FindFirstChild("HumanoidRootPart")
+                    if hrp then
+                        topos(hrp.CFrame)
+                    end
+                end
+                task.wait(0.1)
+            end
+        end)
+    end
+end)
+Toggle = PVP:AddToggle("Toggle", {Title = "Auto Aimbot", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().Aimbot = Value
+end)        
+spawn(function()
+    pcall(function()
+        while task.wait(0.1) do
+            if getgenv().Aimbot and getgenv().SelectPlayer then
+                local player = game.Players:FindFirstChild(getgenv().SelectPlayer)
+                local localPlayer = game.Players.LocalPlayer
+                local character = localPlayer.Character
+                local tool = character and character:FindFirstChildOfClass("Tool")
+                if player and player.Character and tool then
+                    local remoteEvent = tool:FindFirstChild("RemoteEvent")
+                    local mousePos = tool:FindFirstChild("MousePos")
+                    local target = player.Character:FindFirstChild("HumanoidRootPart")
+                    if remoteEvent and mousePos and target then
+                        remoteEvent:FireServer(target.Position)
+                    end
+                end
+            end
+        end
+    end)
+end)
+Toggle = PVP:AddToggle("Toggle", {Title = "Auto Aimbot Gun", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().AimbotGun = Value
+end)        
+spawn(function()
+    while task.wait(0.1) do
+        if getgenv().AimbotGun and SelectWeaponGun then
+            local player = game:GetService("Players").LocalPlayer
+            local character = player and player.Character
+            local weapon = character and character:FindFirstChild(SelectWeaponGun)
+            local targetPlayer = game:GetService("Players"):FindFirstChild(getgenv().SelectPlayer)
+            local targetCharacter = targetPlayer and targetPlayer.Character
+            local targetHumanoidRootPart = targetCharacter and targetCharacter:FindFirstChild("HumanoidRootPart")
+            if weapon and targetHumanoidRootPart then
+                pcall(function()
+                    weapon.Cooldown.Value = 0
+                    local args = {
+                        [1] = targetHumanoidRootPart.Position,
+                        [2] = targetHumanoidRootPart
+                    }
+                    weapon.RemoteFunctionShoot:InvokeServer(unpack(args))
+                    local virtualUser = game:GetService("VirtualUser")
+                    virtualUser:Button1Down(Vector2.new(1280, 672))
+                end)
+            end
+        end
+    end
+end)
+Toggle = PVP:AddToggle("Toggle", {Title = "Safe Modes", Default = false })
+Toggle:OnChanged(function(Value)
+    getgenv().SafeMode = Value
+end)
+spawn(function()
+    while task.wait(0.1) do
+        pcall(function()
+            if getgenv().SafeMode then
+                local CharacterPlayer = game.Players.LocalPlayer.Character
+                if CharacterPlayer and CharacterPlayer:FindFirstChild("Humanoid") and CharacterPlayer:FindFirstChild("HumanoidRootPart") then
+                    local HealthMinPlayer = CharacterPlayer.Humanoid.MaxHealth * (getgenv().Safe / 100)
+                    if CharacterPlayer.Humanoid.Health <= HealthMinPlayer then
+                        while getgenv().SafeMode and CharacterPlayer.Humanoid.Health <= HealthMinPlayer do
+                            task.wait(0.1)
+                            CharacterPlayer.HumanoidRootPart.CFrame = CharacterPlayer.HumanoidRootPart.CFrame + Vector3.new(0, 50, 0)
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+Slider = PVP:AddSlider("Slider", {
+    Title = "Safe Mode At",
+    Default = 30,
+    Min = 0,
+    Max = 100,
+    Rounding = 5,
+    Callback = function(Value)
+        getgenv().Safe = Value
+    end
+})
+Toggle = PVP:AddToggle("Toggle", { Title = "Walk On Water", Default = true })
+Toggle:OnChanged(function(Value)
+    getgenv().WalkWater = Value    
+    local waterPlane = game:GetService("Workspace").Map["WaterBase-Plane"]
+    if getgenv().WalkWater then
+        waterPlane.Size = Vector3.new(1000, 112, 1000)
+    else
+        waterPlane.Size = Vector3.new(1000, 80, 1000)
+    end
+end)
+Toggle = PVP:AddToggle("Toggle", {Title = "No Clip", Default = false })
+Toggle:OnChanged(function(v)
+    getgenv().NoClip = v
+    if getgenv().NoClipConnection then getgenv().NoClipConnection:Disconnect() end
+    if v then
+        getgenv().NoClipConnection = game:GetService("RunService").Stepped:Connect(function()
+            for _, p in ipairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+                if p:IsA("BasePart") then p.CanCollide = false end
+            end
+        end)
+    else
+        for _, p in ipairs(game.Players.LocalPlayer.Character:GetDescendants()) do
+            if p:IsA("BasePart") then p.CanCollide = true end
+        end
+    end
+end)
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
+getgenv().WalkSpeed = 16
+Toggle = PVP:AddToggle("Toggle", {
+    Title = "Change WalkSpeed",
+    Default = false
+})
+local SpeedConnection
+local function ApplySpeed()
+    if not Toggle.Value then return end
+    local Character = Player.Character
+    if Character then
+        local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+        if Humanoid then
+            Humanoid.WalkSpeed = getgenv().WalkSpeed
+            if SpeedConnection then
+                SpeedConnection:Disconnect()
+            end
+            SpeedConnection = Humanoid:GetPropertyChangedSignal("WalkSpeed"):Connect(function()
+                if Toggle.Value then
+                    Humanoid.WalkSpeed = getgenv().WalkSpeed
+                end
+            end)
+        end
+    end
+end
+Toggle:OnChanged(function(Value)
+    if Value then
+        ApplySpeed()
+        Player.CharacterAdded:Connect(ApplySpeed)
+    else
+        if SpeedConnection then
+            SpeedConnection:Disconnect()
+            SpeedConnection = nil
+        end
+        local Character = Player.Character
+        if Character then
+            local Humanoid = Character:FindFirstChildOfClass("Humanoid")
+            if Humanoid then
+                Humanoid.WalkSpeed = 16
+            end
+        end
+    end
+end)
+Input = PVP:AddInput("Input", {
+     Title = "Input WalkSpeed",
+     Default = 100,
+     Placeholder = "Input",
+     Numeric = true,
+     Finished = true,
+     Callback = function(Value)
+         getgenv().WalkSpeed = Value
+     end
+})
+----------------------------------------------------------------------------------------------------
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Yes Or No";
+    Text = "U want reset Config?";
+    Icon = "rbxassetid://5009915795";
+    Duration = 1e5;
+	Button1 = "Yes";
+	Button2 = "No";
+})
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local ImageLabel = Instance.new("ImageLabel")
+local UICorner = Instance.new("UICorner")
+local TextButton = Instance.new("TextButton")
+
+ScreenGui.Parent = game:GetService("CoreGui")  
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+Frame.Parent = ScreenGui
+Frame.AnchorPoint = Vector2.new(0.1, 0.1)
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.BackgroundTransparency = 0
+Frame.BorderColor3 = Color3.fromRGB(27, 42, 53)
+Frame.BorderSizePixel = 1
+Frame.Position = UDim2.new(0, 20, 0.1, -6)  
+Frame.Size = UDim2.new(0, 50, 0, 50)
+Frame.Name = "dut dit"
+
+ImageLabel.Parent = Frame
+ImageLabel.Name = "Banana Test"
+ImageLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+ImageLabel.Position = UDim2.new(0.5, 0, 0.5, 0)
+ImageLabel.Size = UDim2.new(0, 40, 0, 40)
+ImageLabel.BackgroundColor3 = Color3.fromRGB(163, 162, 165)
+ImageLabel.BackgroundTransparency = 1
+ImageLabel.BorderSizePixel = 1
+ImageLabel.BorderColor3 = Color3.fromRGB(27, 42, 53)
+ImageLabel.ImageColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel.Image = "http://www.roblox.com/asset/?id= 5009915795"
+
+UICorner.CornerRadius = UDim.new(1, 0)
+UICorner.Parent = Frame
+
+TextButton.Name = "TextButton"
+TextButton.Parent = Frame
+TextButton.AnchorPoint = Vector2.new(0, 0)
+TextButton.Position = UDim2.new(0, 0, 0, 0)
+TextButton.Size = UDim2.new(1, 0, 1, 0)
+TextButton.BackgroundColor3 = Color3.fromRGB(163, 162, 165)
+TextButton.BackgroundTransparency = 1
+TextButton.BorderSizePixel = 1
+TextButton.BorderColor3 = Color3.fromRGB(27, 42, 53)
+TextButton.TextColor3 = Color3.fromRGB(27, 42, 53)
+TextButton.Text = ""
+TextButton.Font = Enum.Font.SourceSans
+TextButton.TextSize = 8
+TextButton.TextTransparency = 0
+
+local TweenService = game:GetService("TweenService")
+local VirtualInputManager = game:GetService("VirtualInputManager")
+
+local zoomedIn = false
+local originalSize = UDim2.new(0, 40, 0, 40)
+local zoomedSize = UDim2.new(0, 30, 0, 30)
+local tweenInfo = TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+
+local faded = false
+local fadeInTween = TweenService:Create(Frame, tweenInfo, {BackgroundTransparency = 0.25})
+local fadeOutTween = TweenService:Create(Frame, tweenInfo, {BackgroundTransparency = 0})
+
+TextButton.MouseButton1Down:Connect(function()
+
+    if zoomedIn then
+        TweenService:Create(ImageLabel, tweenInfo, {Size = originalSize}):Play()
+    else
+        TweenService:Create(ImageLabel, tweenInfo, {Size = zoomedSize}):Play()
+    end
+    zoomedIn = not zoomedIn
+
+    if faded then
+        fadeOutTween:Play()
+    else
+        fadeInTween:Play()
+    end
+    faded = not faded
+
+    VirtualInputManager:SendKeyEvent(true, "LeftControl", false, game)
+end)
+--\\ ♡VIP♡
+----------------------------------------------------------------------------------------------------
+print("--[[Hop Server If You Meet Game Admin]]--")
+local targetPlayers = {
+    ["red_game43"] = true,
+    ["rip_indra"] = true,
+    ["Axiore"] = true,
+    ["Polkster"] = true,
+    ["wenlocktoad"] = true,
+    ["Daigrock"] = true,
+    ["toilamvidamme"] = true,
+    ["oofficialnoobie"] = true,
+    ["Uzoth"] = true,
+    ["Azarth"] = true,
+    ["arlthmetic"] = true,
+    ["Death_King"] = true,
+    ["Lunoven"] = true,
+    ["TheGreateAced"] = true,
+    ["rip_fud"] = true,
+    ["drip_mama"] = true,
+    ["layandikit12"] = true,
+    ["Hingoi"] = true
+}
+spawn(function()
+    while true do
+        wait(1)
+        for _, v in pairs(game.Players:GetPlayers()) do
+            if targetPlayers[v.Name] then
+                Hop()
+                break
+            end
+        end
+    end
+end)
+local lastNotificationTime = 0
+local notificationCooldown = 10
+local currentTime = tick()
+if currentTime - lastNotificationTime >= notificationCooldown then
+    lastNotificationTime = currentTime
+end
