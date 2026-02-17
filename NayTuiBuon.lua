@@ -1,3 +1,12 @@
+--Chờ game load
+if not game:IsLoaded() then
+	game.Loaded:Wait()
+end
+--chọn team hải quân
+game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Marines")
+--fast attck pịa
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dev-AnhTuansitink/MainLoaderScript/refs/heads/main/%5B%20FAST%20ATTACK%20VIP%20%5D.lua"))()
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Workspace = game:GetService("Workspace")
@@ -3749,7 +3758,7 @@ end)
 
 Player:AddToggle("RemoveDamageTextToggle", {
     Title = "Remove Damage Text",
-    Default = true,
+    Default = false,
     Callback = function(v)
         if game:GetService("ReplicatedStorage").Assets.GUI:FindFirstChild("DamageCounter") then
             game:GetService("ReplicatedStorage").Assets.GUI.DamageCounter.Enabled = not v
@@ -3862,7 +3871,7 @@ SetAutoFarm = Settings:AddLeftGroupbox("Setting Farm")
 SetAutoFarm:AddDropdown("SelectWeapon", {
     Title = "Select Weapon",
     Values = {"Melee","Sword","Blox Fruit"},
-    Default = nil,
+    Default = "Melee",
     Callback = function(Value)
         _G.ChooseWP = Value
     end
@@ -4011,7 +4020,7 @@ end)
 
 SetAutoFarm:AddToggle("AntiAFK", {
     Title = "Anti AFK",
-    Default = false,
+    Default = true,
     Callback = function(Value)
         _G.AntiAFK = Value
     end
@@ -4128,7 +4137,7 @@ SelectMethodFarm = AutoModeFarm:AddLeftGroupbox("Setting Farm")
 SelectMethodFarm:AddDropdown("SelectMethodFarm", {
     Title = "Select Method Farm",
     Values = {"Level Farm", "Farm Bones", "Farm Katakuri", "Farm Tyrant of the Skies", "Aura Farm"},
-    Default = nil,
+    Default = "Level Farm",
     Callback = function(Value)
         _G.MethodSelect = Value
     end
