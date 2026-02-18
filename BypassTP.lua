@@ -1,16 +1,25 @@
 --[[ 
-    CẤU HÌNH LOGIC (FAST HOP) 
-    Phần này xử lý tính toán đường đi
+    -------------------------------------------------------
+    NIGHT MYSTIC HUB - SMART BYPASS & FAST HOP
+    -------------------------------------------------------
 ]]
-getgenv().PMT_MAX_STEP_DIST = 9000
-getgenv().PMT_HOLD_TIME = 0.5
-getgenv().PMT_HOLD_STEP = 0.03
-getgenv().PMT_RESPAWN_TIMEOUT = 7
-getgenv().PMT_SKIP_IF_NEAR = 200
+
+--/// CẤU HÌNH MẶC ĐỊNH ///--
+getgenv().Settings = {
+    MaxStep = 3500,        -- Khoảng cách tối đa để nhảy điểm
+    HoldTime = 3.5,        -- Thời gian chờ server lưu vị trí (Cho Bypass)
+    TweenSpeed = 300,      -- Tốc độ bay (Studs/s) cho chế độ Smart
+    SmartMode = true,      -- Tự động chọn Tween hoặc Bypass
+    SafeDistance = 3000,   -- Khoảng cách ranh giới: Dưới mức này sẽ Tween, trên mức này sẽ Reset
+    StopDistance = 350,    -- Khoảng cách để xác nhận đã đến nơi
+}
 
 local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local RunService = game:GetService("RunService")
 local LP = Players.LocalPlayer
 
+--/// DATA ĐẢO (ISLANDS) ///--
 local IslandCF = {
     -- Sea 1
     ["WindMill"] = CFrame.new(979.799, 16.516, 1429.047),
@@ -73,13 +82,13 @@ local WorldIslands = {
     World3 = {"Sea castle","Mini Sky Island","Great Tree","Port Town","Hydra Island","Mansion","Haunted Castle","Ice Cream Island","Peanut Island","Cake Island","Cocoa Island","Candy Island","Tiki Outpost","Dragon Dojo"},
 }
 
--- Hàm xác định Sea hiện tại
+--/// HÀM HỖ TRỢ (UTILITIES) ///--
 local function getWorldKey()
-    local placeId = game.PlaceId
-    if placeId == 2753915549 then return "World1" end
-    if placeId == 4442272183 then return "World2" end
-    if placeId == 7449423635 then return "World3" end
-    return "World1" -- Mặc định
+    local pid = game.PlaceId
+    if pid == 2753915549 then return "World1" end
+    if pid == 4442272183 then return "World2" end
+    if pid == 7449423635 then return "World3" end
+    return "World1"
 end
 
 local function normName(name)
@@ -89,16 +98,102 @@ local function normName(name)
     return name
 end
 
-local function dist(a, b) return (a - b).Magnitude end
-
 local function GetChar()
     local c = LP.Character or LP.CharacterAdded:Wait()
     local hrp = c:WaitForChild("HumanoidRootPart", 10)
     local hum = c:FindFirstChildOfClass("Humanoid")
-    if not (hrp and hum) then return end
     return c, hrp, hum
 end
 
+local function ActivateNoclip()
+    local c = LP.Character
+    if c then
+        for _, v in pairs(c:GetDescendants()) do
+            if v:IsA("BasePart") and v.CanCollide then
+                v.CanCollide = false
+            end
+        end
+    end
+end
+
+--/// LOGIC DI CHUYỂN (MOVEMENT ENGINE) ///--
+
+local _STOP, _RUN = false, false
+local NoclipLoop
+
+-- 1. Phương pháp Tween (Bay mượt)
+local function TweenMove(targetCF)
+    local c, hrp, hum = GetChar()
+    if not hrp then return false end
+
+    local dist = (hrp.Position - targetCF.Position).Magnitude
+    local info = TweenInfo.new(dist / getgenv().Settings.TweenSpeed, Enum.EasingStyle.Linear)
+    
+    -- Bật Noclip
+    if NoclipLoop then NoclipLoop:Disconnect() end
+    NoclipLoop = RunService.Stepped:Connect(ActivateNoclip)
+
+    local tween = TweenService:Create(hrp, info, {CFrame = targetCF})
+    tween:Play()
+
+    -- Chờ Tween xong hoặc bị hủy
+    local completed = false
+    tween.Completed:Connect(function() completed = true end)
+    
+    while not completed do
+        if _STOP then 
+            tween:Cancel()
+            if NoclipLoop then NoclipLoop:Disconnect() end
+            return false
+        end
+        if not LP.Character or not LP.Character:FindFirstChild("HumanoidRootPart") then
+            if NoclipLoop then NoclipLoop:Disconnect() end
+            return false
+        end
+        -- Giữ vận tốc bằng 0 để tránh bị game kick
+        hrp.AssemblyLinearVelocity = Vector3.zero
+        task.wait()
+    end
+    
+    if NoclipLoop then NoclipLoop:Disconnect() end
+    return true
+end
+
+-- 2. Phương pháp Bypass (Reset)
+local function BypassMove(targetPos)
+    local c, hrp, hum = GetChar()
+    if not c then return false end
+    local cf = CFrame.new(targetPos)
+
+    -- Đóng băng nhân vật tại đích
+    local t0 = os.clock()
+    while os.clock() - t0 < getgenv().Settings.HoldTime do
+        if _STOP then return false end
+        if not (hrp and hrp.Parent and hum and hum.Parent and hum.Health > 0) then break end
+        pcall(function()
+            hrp.CFrame = cf
+            hrp.AssemblyLinearVelocity = Vector3.zero
+        end)
+        task.wait(0.03)
+    end
+
+    if _STOP then return false end
+    -- Reset nhân vật để server load vị trí mới
+    pcall(function() hum.Health = 0 end)
+    
+    -- Chờ hồi sinh
+    local tRespawn = os.clock()
+    while os.clock() - tRespawn < 10 do
+        if LP.Character and LP.Character:FindFirstChild("HumanoidRootPart") and 
+           LP.Character:FindFirstChildOfClass("Humanoid").Health > 0 then
+            return true
+        end
+        task.wait(0.5)
+    end
+    return false
+end
+
+--/// LOGIC TÌM ĐƯỜNG (PATHFINDING) ///--
 local function buildNodes()
     local wk = getWorldKey()
     local list = WorldIslands[wk] or {}
@@ -109,11 +204,10 @@ local function buildNodes()
     return nodes
 end
 
--- Tính toán đường đi (Dijkstra)
 local function nearestIsland(pos, nodes)
     local best, bestD
     for _, n in ipairs(nodes) do
-        local d = dist(pos, IslandCF[n].Position)
+        local d = (pos - IslandCF[n].Position).Magnitude
         if not bestD or d < bestD then bestD, best = d, n end
     end
     return best, bestD or math.huge
@@ -129,7 +223,7 @@ local function dijkstra(nodes, startName, goalName, maxStep)
         for j=i+1,#nodes do
             local bj = nodes[j]
             local bp = IslandCF[bj].Position
-            local d = dist(ap, bp)
+            local d = (ap - bp).Magnitude
             if d <= maxStep then
                 adj[ai][bj] = d
                 adj[bj][ai] = d
@@ -165,81 +259,56 @@ local function dijkstra(nodes, startName, goalName, maxStep)
     return path
 end
 
-local _STOP, _RUN = false, false
-
-local function HoldTPAndReset(pos)
-    local c, hrp, hum = GetChar()
-    if not c then return false end
-    local cf = CFrame.new(pos)
-
-    pcall(function()
-        hrp.CFrame = cf
-        hrp.AssemblyLinearVelocity = Vector3.zero
-        hrp.AssemblyAngularVelocity = Vector3.zero
-    end)
-
-    local t0 = os.clock()
-    while os.clock() - t0 < getgenv().PMT_HOLD_TIME do
-        if _STOP then break end
-        if not (hrp and hrp.Parent and hum and hum.Parent and hum.Health > 0) then break end
-        pcall(function()
-            hrp.CFrame = cf
-            hrp.AssemblyLinearVelocity = Vector3.zero
-            hrp.AssemblyAngularVelocity = Vector3.zero
-        end)
-        task.wait(getgenv().PMT_HOLD_STEP)
-    end
-
-    if _STOP then return false end
-    pcall(function() hum.Health = 0 end)
-    return true
-end
-
-local function WaitRespawn()
-    local t0 = os.clock()
-    while os.clock() - t0 < getgenv().PMT_RESPAWN_TIMEOUT do
-        if _STOP then return false end
-        local c = LP.Character
-        local hrp = c and c:FindFirstChild("HumanoidRootPart")
-        local hum = c and c:FindFirstChildOfClass("Humanoid")
-        if hrp and hum and hum.Health > 0 then return true end
-        task.wait(0.15)
-    end
-    return false
-end
-
+--/// HÀM CHÍNH (MAIN FUNCTION) ///--
 function PMT_FastHopTo(targetName)
     targetName = normName(targetName)
     if not (targetName and IslandCF[targetName]) then return false end
 
-    local nodes = buildNodes()
-    if #nodes == 0 then return false end
-
-    local hrp = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
-    if not hrp then
-        if not WaitRespawn() then return false end
-        hrp = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
+    -- Check xem đã đến nơi chưa trước khi làm bất cứ thứ gì
+    local c, hrp = GetChar()
+    if hrp and (hrp.Position - IslandCF[targetName].Position).Magnitude < getgenv().Settings.StopDistance then
+        return true -- Đã ở đích
     end
-    if not hrp then return false end
 
+    local nodes = buildNodes()
     local startIsland = nearestIsland(hrp.Position, nodes)
-    local path = dijkstra(nodes, startIsland, targetName, getgenv().PMT_MAX_STEP_DIST)
-    if not path then return false end
+    
+    -- Nếu đảo hiện tại là đích thì return luôn
+    if startIsland == targetName and (hrp.Position - IslandCF[targetName].Position).Magnitude < getgenv().Settings.StopDistance then
+        return true
+    end
+
+    local path = dijkstra(nodes, startIsland, targetName, getgenv().Settings.MaxStep)
+    if not path then return false end -- Không tìm thấy đường
 
     _RUN, _STOP = true, false
 
-    for _, name in ipairs(path) do
+    for i, name in ipairs(path) do
         if _STOP then break end
-        local pos = IslandCF[name].Position
-        local ch = LP.Character
-        local hrp2 = ch and ch:FindFirstChild("HumanoidRootPart")
-        if hrp2 and dist(hrp2.Position, pos) <= getgenv().PMT_SKIP_IF_NEAR then
+        
+        -- Refresh Character
+        local ch = LP.Character or LP.CharacterAdded:Wait()
+        local myHrp = ch:WaitForChild("HumanoidRootPart", 10)
+        local destPos = IslandCF[name].Position
+        local distToDest = (myHrp.Position - destPos).Magnitude
+        
+        -- Logic Smart Bypass
+        if distToDest < getgenv().Settings.StopDistance then
+            -- Đã ở điểm này, bỏ qua
             task.wait(0.1)
         else
-            if not HoldTPAndReset(pos) or _STOP then break end
-            if not WaitRespawn() or _STOP then break end
+            -- QUYẾT ĐỊNH: TWEEN HAY RESET?
+            if getgenv().Settings.SmartMode and distToDest <= getgenv().Settings.SafeDistance then
+                -- Cách đích gần -> Bay (Tween)
+                TweenMove(CFrame.new(destPos))
+            else
+                -- Cách đích xa -> Reset (Bypass)
+                BypassMove(destPos)
+            end
         end
-        task.wait(0.2)
+        
+        -- Sau khi thực hiện 1 bước, chờ 1 chút
+        task.wait(0.5)
     end
 
     _RUN = false
@@ -248,129 +317,26 @@ end
 
 function PMT_StopFastHop()
     _STOP = true
+    if NoclipLoop then NoclipLoop:Disconnect() end
+    -- Hủy Tween nếu đang bay
+    local c = LP.Character
+    if c and c:FindFirstChild("HumanoidRootPart") then
+        local hrp = c.HumanoidRootPart
+        -- Hủy quán tính
+        hrp.AssemblyLinearVelocity = Vector3.zero
+    end
 end
 
--- Vòng lặp kiểm tra lệnh từ UI
+-- Vòng lặp giám sát (Daemon)
 task.spawn(function()
     while task.wait(0.5) do
-        if _G.Tpfast and not _RUN then
+        if _G.Tpfast then
             local target = _G.Islandtp
-            if target and target ~= "" then
-                _STOP = false
-                PMT_FastHopTo(target)
-            end
-        end
-    end
-end)
-
--- Tạo danh sách đảo cho UI
-local function BuildIslandOptions()
-    local wk = getWorldKey()
-    local list = WorldIslands[wk] or {}
-    local out, seen = {}, {}
-    for _, name in ipairs(list) do
-        if Alias and Alias[name] then name = Alias[name] end
-        if IslandCF[name] and not seen[name] then
-            seen[name] = true
-            out[#out+1] = name
-        end
-    end
-    table.sort(out)
-    return out
-end
-
---[[ 
-    -------------------------------------------
-    GIAO DIỆN UI (NIGHT MYSTIC)
-    -------------------------------------------
-]]
-
-local Library = loadstring(game:HttpGet("https://luacrack.site/index.php/araujozwx/raw/SourceBananaUi"))()
-
-local Window = Library:CreateWindow({
-    Title = "Night Mystic Hub",
-    Desc = "Fast Hop & Teleport",
-    Image = "rbxassetid://105245380363493"
-})
-
--- TAB 1: Main (Chức năng chính)
-local Tab1 = Window:AddTab("Main", "rbxassetid://7733960981") 
-local Section1 = Tab1:AddLeftGroupbox("Teleport")
-
-local Islands = BuildIslandOptions()
-local DefaultIsland = Islands[1] or ""
-
--- Dropdown chọn đảo
-Section1:AddDropdown("IslandSelect", {
-    Title = "Chọn Đảo (Select Island)",
-    Values = Islands,
-    Default = DefaultIsland,
-    Search = true,
-    Callback = function(Value)
-        _G.Islandtp = Value
-    end
-})
-
--- Toggle Bật/Tắt
-Section1:AddToggle("ToggleTp", {
-    Title = "Bật Fast Hop (Enable Teleport)",
-    Default = false,
-    Callback = function(Value)
-        _G.Tpfast = Value
-        if Value then
-            Library:Notify({Title = "Started", Desc = "Đang dịch chuyển đến " .. (_G.Islandtp or "..."), Duration = 3})
-        else
-            PMT_StopFastHop()
-            Library:Notify({Title = "Stopped", Desc = "Đã dừng dịch chuyển", Duration = 3})
-        end
-    end
-})
-
-Section1:AddButton({
-    Title = "Dừng Ngay Lập Tức (Emergency Stop)",
-    Callback = function()
-        _G.Tpfast = false
-        PMT_StopFastHop()
-    end
-})
-
--- TAB 2: Settings (Cài đặt)
-local Tab2 = Window:AddTab("Settings", "rbxassetid://7733954611")
-local Section2 = Tab2:AddRightGroupbox("Configuration")
-
-Section2:AddLabel("Chỉ chỉnh nếu bạn biết cách dùng!")
-
-Section2:AddSlider({
-    Title = "Khoảng cách nhảy (Max Step)",
-    Min = 1000,
-    Max = 15000,
-    Default = 9000,
-    Precise = false,
-    Callback = function(Value)
-        getgenv().PMT_MAX_STEP_DIST = Value
-    end
-})
-
-Section2:AddSlider({
-    Title = "Thời gian chờ (Hold Time)",
-    Min = 0,
-    Max = 5,
-    Default = 1, -- Đã chỉnh lại cho mượt hơn
-    Precise = true,
-    Callback = function(Value)
-        getgenv().PMT_HOLD_TIME = Value
-    end
-})
-
--- TAB 3: Misc
-local Tab3 = Window:AddTab("Misc", "rbxassetid://7733920644")
-local Section3 = Tab3:AddLeftGroupbox("System")
-
-Section3:AddLabel("Status: Running")
-
-Section3:AddButton({
-    Title = "Tắt UI (Unload)",
-    Callback = function()
-        Library:DestroyUI()
-    end
-})
+            local cf = IslandCF[target]
+            
+            if cf and LP.Character and LP.Character:FindFirstChild("HumanoidRootPart") then
+                local dist = (LP.Character.HumanoidRootPart.Position - cf.Position).Magnitude
+                
+                if dist < getgenv().Settings.StopDistance then
+                    -- ĐẾN NƠI -> DỪNG
+                    
