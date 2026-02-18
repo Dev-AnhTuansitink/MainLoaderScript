@@ -606,22 +606,66 @@ end
 
 -- Hàm BringEnemy
 BringEnemy = function()
-    if not _B then return end
-    for _,v in pairs(workspace.Enemies:GetChildren()) do
-        if v:FindFirstChild("Humanoid") and v.Humanoid.Health > 0 then
-            if (v.PrimaryPart.Position - PosMon).Magnitude <= 300 then
-                v.PrimaryPart.CFrame = CFrame.new(PosMon)
-                v.PrimaryPart.CanCollide = true
-                v:FindFirstChild("Humanoid").WalkSpeed = 0
-                v:FindFirstChild("Humanoid").JumpPower = 0
-                if v.Humanoid:FindFirstChild("Animator") then 
-                    v.Humanoid.Animator:Destroy()
-                end
-                plr.SimulationRadius = math.huge
+    if not _B then return end -- Check biến bật tắt
+    
+    local Range = 220 -- Phạm vi gom quái
+    local LP = game:GetService("Players").LocalPlayer
+    local TS = game:GetService("TweenService")
+    local Enemies = workspace:FindFirstChild("Enemies")
+
+    if not LP.Character or not LP.Character:FindFirstChild("HumanoidRootPart") or not Enemies then return end
+    local MyPos = LP.Character.HumanoidRootPart.Position
+
+    -- 1. Tìm quái chủ (Center Mob) gần nhất
+    local CenterMob = nil
+    local MinDist = math.huge
+    
+    for _, v in pairs(Enemies:GetChildren()) do
+        local Hum = v:FindFirstChild("Humanoid")
+        local Root = v:FindFirstChild("HumanoidRootPart")
+        if Hum and Hum.Health > 0 and Root then
+            local Dist = (Root.Position - MyPos).Magnitude
+            if Dist < MinDist and Dist <= Range then
+                MinDist = Dist
+                CenterMob = v
             end
-        end                               
-    end                    	
+        end
+    end
+
+    if not CenterMob then return end
+    local CenterPos = CenterMob.HumanoidRootPart.Position
+
+    -- 2. Thực hiện gom quái
+    for _, v in pairs(Enemies:GetChildren()) do
+        local Hum = v:FindFirstChild("Humanoid")
+        local Root = v:FindFirstChild("HumanoidRootPart")
+
+        -- Chỉ xử lý các con khác CenterMob và còn sống
+        if v ~= CenterMob and Hum and Hum.Health > 0 and Root then
+            if (Root.Position - MyPos).Magnitude <= Range then
+                
+                -- Thiết lập Hitbox và trạng thái
+                Root.CanCollide = false
+                Root.Size = Vector3.new(18, 18, 18)
+                Root.Transparency = 0.5
+                Hum.WalkSpeed = 0
+                Hum.JumpPower = 0
+                
+                pcall(function() 
+                    Hum:ChangeState(11) -- Giúp ko bị lỗi vật lý
+                    if Hum:FindFirstChild("Animator") then Hum.Animator:Destroy() end
+                    sethiddenproperty(LP, "SimulationRadius", math.huge)
+                end)
+
+                -- Tween mượt đến vị trí CenterMob
+                if (Root.Position - CenterPos).Magnitude > 5 then
+                    TS:Create(Root, TweenInfo.new(0.25, Enum.EasingStyle.Linear), {CFrame = CFrame.new(CenterPos)}):Play()
+                end
+            end
+        end
+    end
 end
+
 
 -- Hàm UseSkills
 Useskills = function(weapon, skill)
@@ -4137,7 +4181,7 @@ SelectMethodFarm = AutoModeFarm:AddLeftGroupbox("Setting Farm")
 SelectMethodFarm:AddDropdown("SelectMethodFarm", {
     Title = "Select Method Farm",
     Values = {"Level Farm", "Farm Bones", "Farm Katakuri", "Farm Tyrant of the Skies", "Aura Farm"},
-    Default = "Level Farm",
+    Default = nil,
     Callback = function(Value)
         _G.MethodSelect = Value
     end
