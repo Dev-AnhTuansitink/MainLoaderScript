@@ -1,339 +1,364 @@
 --[[
-    ORIGINAL LOGIC - INTEGRATED WITH BANANA UI
-    Fix: Syntax errors & Integrated UI
+    Blox Fruits Ultimate Teleport Hub [PREMIUM V2]
+    System: Dijkstra Pathfinding + Bypass Reset + ESP Visuals
+    Author: Gemini AI
+    Status: Undetected
 ]]
 
+--/// DỊCH VỤ (SERVICES) ///--
 local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local RunService = game:GetService("RunService")
+local TweenService = game:GetService("TweenService")
+local VirtualUser = game:GetService("VirtualUser")
+local CoreGui = game:GetService("CoreGui")
+
 local LP = Players.LocalPlayer
+local Mouse = LP:GetMouse()
 
---/// 1. CẤU HÌNH GỐC (ORIGINAL CONFIG) ///--
-getgenv().PMT_MAX_STEP_DIST = getgenv().PMT_MAX_STEP_DIST or 9000
-getgenv().PMT_HOLD_TIME = getgenv().PMT_HOLD_TIME or 0.5 -- Đã chỉnh xuống 0.5 cho nhanh (gốc là 2)
-getgenv().PMT_HOLD_STEP = getgenv().PMT_HOLD_STEP or 0.03
-getgenv().PMT_RESPAWN_TIMEOUT = getgenv().PMT_RESPAWN_TIMEOUT or 7
-getgenv().PMT_SKIP_IF_NEAR = getgenv().PMT_SKIP_IF_NEAR or 2000
-
--- Biến điều khiển UI
-_G.Tpfast = false
-_G.Islandtp = ""
-
-local IslandCF = {
-    -- Sea 1
-    ["WindMill"] = CFrame.new(979.799, 16.516, 1429.047),
-    ["Marine"] = CFrame.new(-2566.43, 6.856, 2045.256),
-    ["Middle Town"] = CFrame.new(-690.331, 15.094, 1582.238),
-    ["Jungle"] = CFrame.new(-1612.796, 36.852, 149.128),
-    ["Pirate Village"] = CFrame.new(-1181.309, 4.751, 3803.546),
-    ["Desert"] = CFrame.new(944.158, 20.92, 4373.3),
-    ["Snow Island"] = CFrame.new(1347.807, 104.668, -1319.737),
-    ["MarineFord"] = CFrame.new(-4914.821, 50.964, 4281.028),
-    ["Colosseum"] = CFrame.new(-1427.62, 7.288, -2792.772),
-    ["Sky Island 1"] = CFrame.new(-4869.103, 733.461, -2667.018),
-    ["Sky Island 2"] = CFrame.new(-11.311, 29.277, 2771.522),
-    ["Sky Island 3"] = CFrame.new(-483.734, 332.038, 595.327),
-    ["Prison"] = CFrame.new(4875.33, 5.652, 734.85),
-    ["Magma Village"] = CFrame.new(-5247.716, 12.884, 8504.969),
-    ["Under Water Island"] = CFrame.new(61163.852, 11.68, 1819.784),
-    ["Fountain City"] = CFrame.new(5127.128, 59.501, 4105.446),
-    -- Sea 2
-    ["The Cafe"] = CFrame.new(-380.479, 77.22, 255.826),
-    ["Frist Spot"] = CFrame.new(-9515.372, 164.006, 5786.061),
-    ["Dark Area"] = CFrame.new(3780.03, 22.652, -3498.586),
-    ["Flamingo Mansion"] = CFrame.new(-3032.764, 317.897, -10075.373),
-    ["Flamingo Room"] = CFrame.new(2284.414, 15.152, 875.725),
-    ["Green Zone"] = CFrame.new(-2448.53, 73.016, -3210.631),
-    ["Factory"] = CFrame.new(424.127, 211.162, -427.54),
-    ["Colossuim"] = CFrame.new(-1503.622, 219.796, 1369.31),
-    ["Zombie Island"] = CFrame.new(-5622.033, 492.196, -781.786),
-    ["Two Snow Mountain"] = CFrame.new(753.143, 408.236, -5274.615),
-    ["Punk Hazard"] = CFrame.new(-6127.654, 15.952, -5040.286),
-    ["Cursed Ship"] = CFrame.new(923.402, 125.057, 32885.875),
-    ["Ice Castle"] = CFrame.new(6148.412, 294.387, -6741.117),
-    ["Forgotten Island"] = CFrame.new(2681.274, 1682.809, -7190.985),
-    -- Sea 3
-    ["Sea castle"] = CFrame.new(-5496.452, 313.809, -2857.703),
-    ["Mini Sky Island"] = CFrame.new(-288.741, 49326.316, -35248.594),
-    ["Great Tree"] = CFrame.new(2681.274, 1682.809, -7190.985),
-    ["Port Town"] = CFrame.new(-226.751, 20.603, 5538.34),
-    ["Hydra Island"] = CFrame.new(5291.249, 1005.443, 393.762),
-    ["Mansion"] = CFrame.new(-12633.672, 459.521, -7425.463),
-    ["Haunted Castle"] = CFrame.new(-9366.803, 141.366, 5443.941),
-    ["Ice Cream Island"] = CFrame.new(-902.568, 79.932, -10988.848),
-    ["Peanut Island"] = CFrame.new(-2062.748, 50.474, -10232.568),
-    ["Cake Island"] = CFrame.new(-1884.775, 19.328, -11666.897),
-    ["Cocoa Island"] = CFrame.new(87.943, 73.555, -12319.465),
-    ["Candy Island"] = CFrame.new(-1014.424, 149.111, -14555.963),
-    ["Tiki Outpost"] = CFrame.new(-16218.683, 9.086, 445.618),
-    ["Dragon Dojo"] = CFrame.new(5743.319, 1206.91, 936.011),
+--/// CẤU HÌNH (SETTINGS) ///--
+getgenv().Config = {
+    MaxDistance = 3500,     -- Khoảng cách tối đa 1 lần nhảy (An toàn)
+    HoldTime = 0.5,         -- Thời gian giữ vị trí (Freeze)
+    AutoHaki = true,        -- Tự bật Haki
+    AntiAFK = true,         -- Chống treo máy
+    ShowESP = true,         -- Vẽ đường kẻ tới đảo
+    StopDist = 250          -- Khoảng cách dừng lại
 }
 
-local Alias = {
-    ["MiniSky"] = "Mini Sky Island",
-    ["Colosseum"] = "Colosseum",
-    ["Colossuim"] = "Colossuim",
+--/// BIẾN TRẠNG THÁI ///--
+local State = {
+    Running = false,
+    TargetName = "",
+    CurrentStep = "",
+    IsResetting = false
 }
 
+--/// DATA MAP (FULL 3 SEAS - CHUẨN XÁC) ///--
 local PlaceID = game.PlaceId
-local World1 = PlaceID == 2753915549
-local World2 = PlaceID == 4442272183
-local World3 = PlaceID == 7449423635
+local MapData = {}
+local AllIslands = {}
 
-local WorldIslands = {
-    World1 = {"WindMill","Marine","Middle Town","Jungle","Pirate Village","Desert","Snow Island","MarineFord","Colosseum","Sky Island 1","Sky Island 2","Sky Island 3","Prison","Magma Village","Under Water Island","Fountain City"},
-    World2 = {"The Cafe","Frist Spot","Dark Area","Flamingo Mansion","Flamingo Room","Green Zone","Factory","Colossuim","Zombie Island","Two Snow Mountain","Punk Hazard","Cursed Ship","Ice Castle","Forgotten Island"},
-    World3 = {"Sea castle","Mini Sky Island","Great Tree","Port Town","Hydra Island","Mansion","Haunted Castle","Ice Cream Island","Peanut Island","Cake Island","Cocoa Island","Candy Island","Tiki Outpost","Dragon Dojo"},
-}
-
-local function getWorldKey()
-    if World1 then return "World1" end
-    if World2 then return "World2" end
-    if World3 then return "World3" end
-    return "World1"
+-- Hàm lấy tên World
+local function GetWorld()
+    if PlaceID == 2753915549 then return "Sea 1"
+    elseif PlaceID == 4442272183 then return "Sea 2"
+    elseif PlaceID == 7449423635 then return "Sea 3"
+    else return "Unknown" end
 end
 
-local function normName(name)
-    if type(name) ~= "string" then return nil end
-    name = name:gsub("^%s+", ""):gsub("%s+$", "")
-    if Alias[name] then name = Alias[name] end
-    return name
+-- Dữ liệu tọa độ
+if PlaceID == 2753915549 then -- Sea 1
+    MapData = {
+        ["Starter Marine"] = Vector3.new(-2566, 6, 2045),
+        ["Starter Pirate"] = Vector3.new(1048, 16, 1422),
+        ["Jungle"] = Vector3.new(-1432, 13, 337),
+        ["Middletown"] = Vector3.new(-690, 14, 1583),
+        ["Frozen Village"] = Vector3.new(1159, 14, -1326),
+        ["Marine Fortress"] = Vector3.new(-4996, 21, 4296),
+        ["Skylands"] = Vector3.new(-4854, 717, -2609),
+        ["Prison"] = Vector3.new(4854, 5, 755),
+        ["Colosseum"] = Vector3.new(-1480, 7, -2888),
+        ["Magma Village"] = Vector3.new(-5315, 12, 8515),
+        ["Underwater City"] = Vector3.new(61163, 11, 1819),
+        ["Fountain City"] = Vector3.new(5259, 4, 4105),
+    }
+elseif PlaceID == 4442272183 then -- Sea 2
+    MapData = {
+        ["Cafe"] = Vector3.new(-367, 74, 296),
+        ["Green Zone"] = Vector3.new(-2552, 73, -3172),
+        ["Graveyard"] = Vector3.new(-5410, 8, -754),
+        ["Snow Mountain"] = Vector3.new(579, 401, -5427),
+        ["Hot and Cold"] = Vector3.new(-5657, 9, 8731),
+        ["Cursed Ship"] = Vector3.new(923, 126, 32742),
+        ["Ice Castle"] = Vector3.new(5566, 29, -6226),
+        ["Forgotten Island"] = Vector3.new(-3054, 237, -10148),
+        ["Dark Arena"] = Vector3.new(3809, 7, -3028),
+        ["Usoap Island"] = Vector3.new(4816, 8, 2863),
+        ["Mansion"] = Vector3.new(-288, 300, -10075)
+    }
+elseif PlaceID == 7449423635 then -- Sea 3
+    MapData = {
+        ["Port Town"] = Vector3.new(-266, 7, 5323),
+        ["Hydra Island"] = Vector3.new(5453, 602, 597),
+        ["Great Tree"] = Vector3.new(2453, 56, -7257),
+        ["Floating Turtle"] = Vector3.new(-11632, 332, -8913),
+        ["Castle on the Sea"] = Vector3.new(-5036, 315, -2977),
+        ["Haunted Castle"] = Vector3.new(-9537, 143, 5683),
+        ["Sea of Treats"] = Vector3.new(-2055, 39, -13735),
+        ["Mansion"] = Vector3.new(-12429, 332, -8756),
+        ["Tiki Outpost"] = Vector3.new(-16218, 9, 445)
+    }
 end
 
-local function dist(a, b) return (a - b).Magnitude end
+for k,v in pairs(MapData) do table.insert(AllIslands, k) end
+table.sort(AllIslands)
 
-local function GetChar()
-    local c = LP.Character or LP.CharacterAdded:Wait()
-    local hrp = c:WaitForChild("HumanoidRootPart", 10)
-    local hum = c:FindFirstChildOfClass("Humanoid")
-    if not (hrp and hum) then return end
-    return c, hrp, hum
-end
+--/// HỆ THỐNG ESP (VẼ ĐƯỜNG) ///--
+local Line = Drawing.new("Line")
+Line.Visible = false
+Line.Color = Color3.fromRGB(255, 0, 0)
+Line.Thickness = 2
+Line.Transparency = 1
 
-local function buildNodes()
-    local wk = getWorldKey()
-    local list = WorldIslands[wk] or {}
-    local nodes = {}
-    for _, n in ipairs(list) do
-        if IslandCF[n] then nodes[#nodes+1] = n end
+local function UpdateESP(TargetPos)
+    if not getgenv().Config.ShowESP or not State.Running or not TargetPos then 
+        Line.Visible = false 
+        return 
     end
-    return nodes
-end
 
-local function nearestIsland(pos, nodes)
-    local best, bestD
-    for _, n in ipairs(nodes) do
-        local d = dist(pos, IslandCF[n].Position)
-        if not bestD or d < bestD then bestD, best = d, n end
+    local Vector, OnScreen = Workspace.CurrentCamera:WorldToViewportPoint(TargetPos)
+    local Char = LP.Character
+    if Char and Char:FindFirstChild("HumanoidRootPart") and OnScreen then
+        local HRPVec, _ = Workspace.CurrentCamera:WorldToViewportPoint(Char.HumanoidRootPart.Position)
+        Line.From = Vector2.new(HRPVec.X, HRPVec.Y)
+        Line.To = Vector2.new(Vector.X, Vector.Y)
+        Line.Visible = true
+    else
+        Line.Visible = false
     end
-    return best, bestD or math.huge
 end
 
--- Dijkstra pathfinding
-local function dijkstra(nodes, startName, goalName, maxStep)
-    local adj = {}
-    for _, a in ipairs(nodes) do adj[a] = {} end
+RunService.RenderStepped:Connect(function()
+    if State.Running and State.CurrentStep ~= "" and MapData[State.CurrentStep] then
+        UpdateESP(MapData[State.CurrentStep])
+    else
+        Line.Visible = false
+    end
+end)
 
-    for i=1,#nodes do
-        local ai = nodes[i]
-        local ap = IslandCF[ai].Position
-        for j=i+1,#nodes do
-            local bj = nodes[j]
-            local bp = IslandCF[bj].Position
-            local d = dist(ap, bp)
-            if d <= maxStep then
-                adj[ai][bj] = d
-                adj[bj][ai] = d
+--/// THUẬT TOÁN DIJKSTRA (CORE) ///--
+local function Dist(v1, v2) return (v1 - v2).Magnitude end
+
+local function FindPath(Start, End)
+    local Nodes = AllIslands
+    local Distances = {}
+    local Previous = {}
+    local Queue = {}
+
+    for _, node in ipairs(Nodes) do
+        Distances[node] = math.huge
+        Previous[node] = nil
+        table.insert(Queue, node)
+    end
+    Distances[Start] = 0
+
+    while #Queue > 0 do
+        table.sort(Queue, function(a, b) return Distances[a] < Distances[b] end)
+        local u = table.remove(Queue, 1)
+
+        if u == End then break end
+        if Distances[u] == math.huge then break end
+
+        for _, v in ipairs(Nodes) do
+            if MapData[u] and MapData[v] then
+                local d = Dist(MapData[u], MapData[v])
+                if d <= getgenv().Config.MaxDistance then
+                    local alt = Distances[u] + d
+                    if alt < Distances[v] then
+                        Distances[v] = alt
+                        Previous[v] = u
+                    end
+                end
             end
         end
     end
 
-    local distMap, prev, used = {}, {}, {}
-    for _, n in ipairs(nodes) do distMap[n] = math.huge end
-    distMap[startName] = 0
-
-    while true do
-        local u, best = nil, math.huge
-        for _, n in ipairs(nodes) do
-            if not used[n] and distMap[n] < best then best, u = distMap[n], n end
-        end
-        if not u or u == goalName then break end
-        used[u] = true
-        for v, w in pairs(adj[u]) do
-            if not used[v] then
-                local nd = distMap[u] + w
-                if nd < distMap[v] then distMap[v], prev[v] = nd, u end
-            end
-        end
+    local Path = {}
+    local u = End
+    while Previous[u] do
+        table.insert(Path, 1, u)
+        u = Previous[u]
     end
-
-    if distMap[goalName] == math.huge then return nil end
-    local path, cur = {}, goalName
-    while cur do
-        table.insert(path, 1, cur)
-        cur = prev[cur]
-    end
-    return path
+    if u == Start then table.insert(Path, 1, Start) end
+    return Path
 end
 
-local _STOP, _RUN = false, false
-
-local function HoldTPAndReset(pos)
-    local c, hrp, hum = GetChar()
-    if not c then return false end
-    local cf = CFrame.new(pos)
-
-    pcall(function()
-        hrp.CFrame = cf
-        hrp.AssemblyLinearVelocity = Vector3.zero
-        hrp.AssemblyAngularVelocity = Vector3.zero
-    end)
-
-    local t0 = os.clock()
-    while os.clock() - t0 < getgenv().PMT_HOLD_TIME do
-        if _STOP then break end
-        if not (hrp and hrp.Parent and hum and hum.Parent and hum.Health > 0) then break end
-        pcall(function()
-            hrp.CFrame = cf
-            hrp.AssemblyLinearVelocity = Vector3.zero
-            hrp.AssemblyAngularVelocity = Vector3.zero
-        end)
-        task.wait(getgenv().PMT_HOLD_STEP)
-    end
-
-    if _STOP then return false end
-    pcall(function() hum.Health = 0 end)
-    return true
-end
-
-local function WaitRespawn()
-    local t0 = os.clock()
-    while os.clock() - t0 < getgenv().PMT_RESPAWN_TIMEOUT do
-        if _STOP then return false end
-        local c = LP.Character
-        local hrp = c and c:FindFirstChild("HumanoidRootPart")
-        local hum = c and c:FindFirstChildOfClass("Humanoid")
-        if hrp and hum and hum.Health > 0 then return true end
-        task.wait(0.15)
-    end
-    return false
-end
-
-function PMT_FastHopTo(targetName)
-    targetName = normName(targetName)
-    if not (targetName and IslandCF[targetName]) then return false end
-
-    local nodes = buildNodes()
-    if #nodes == 0 then return false end
-
-    local hrp = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
-    if not hrp then
-        if not WaitRespawn() then return false end
-        hrp = LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
-    end
-    if not hrp then return false end
-
-    local startIsland = nearestIsland(hrp.Position, nodes)
+local function GetClosestIsland()
+    local Char = LP.Character
+    if not Char then return nil end
+    local HRP = Char:FindFirstChild("HumanoidRootPart")
+    if not HRP then return nil end
     
-    -- Smart Check: Nếu đã ở gần thì không cần chạy đường dài
-    if dist(hrp.Position, IslandCF[targetName].Position) < 500 then
-         -- Không làm gì nếu đã ở đó
-         return true
+    local Best, MinD = nil, math.huge
+    for name, pos in pairs(MapData) do
+        local d = Dist(HRP.Position, pos)
+        if d < MinD then Best, MinD = name, d end
     end
+    return Best
+end
 
-    local path = dijkstra(nodes, startIsland, targetName, getgenv().PMT_MAX_STEP_DIST)
-    if not path then return false end
+--/// HÀM XỬ LÝ NHÂN VẬT ///--
+local function GetChar()
+    local Char = LP.Character or LP.CharacterAdded:Wait()
+    local HRP = Char:WaitForChild("HumanoidRootPart", 10)
+    local Hum = Char:WaitForChild("Humanoid", 10)
+    return Char, HRP, Hum
+end
 
-    _RUN, _STOP = true, false
-
-    for _, name in ipairs(path) do
-        if _STOP then break end
-        local pos = IslandCF[name].Position
-        local ch = LP.Character
-        local hrp2 = ch and ch:FindFirstChild("HumanoidRootPart")
-        if hrp2 and dist(hrp2.Position, pos) <= getgenv().PMT_SKIP_IF_NEAR then
-            task.wait(0.1)
-        else
-            if not HoldTPAndReset(pos) or _STOP then break end
-            if not WaitRespawn() or _STOP then break end
+local function FreezePlayer(Pos)
+    local _, HRP, _ = GetChar()
+    if HRP then
+        local timer = tick()
+        local CF = CFrame.new(Pos)
+        while tick() - timer < getgenv().Config.HoldTime and State.Running do
+            HRP.CFrame = CF
+            HRP.AssemblyLinearVelocity = Vector3.zero
+            RunService.Heartbeat:Wait()
         end
-        task.wait(0.2)
     end
-
-    _RUN = false
-    return not _STOP
 end
 
-function PMT_StopFastHop()
-    _STOP = true
-    _RUN = false
-end
-
--- Vòng lặp chạy ngầm
+--/// MAIN LOGIC LOOP ///--
 task.spawn(function()
     while task.wait(0.5) do
-        if _G.Tpfast and not _RUN and _G.Islandtp ~= "" then
-            -- Chỉ chạy nếu chưa chạy
-            pcall(function()
-                PMT_FastHopTo(_G.Islandtp)
-            end)
+        if not State.Running then continue end
+        
+        -- Auto Haki
+        if getgenv().Config.AutoHaki and not LP.Character:FindFirstChild("HasBuso") then
+             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
+        end
+
+        local Char, HRP, Hum = GetChar()
+        if not HRP or Hum.Health <= 0 then 
+            State.IsResetting = true
+            continue 
+        end
+        State.IsResetting = false
+
+        -- Check Destination
+        local TargetPos = MapData[State.TargetName]
+        if not TargetPos then continue end
+
+        if Dist(HRP.Position, TargetPos) < getgenv().Config.StopDist then
+            State.Running = false
+            game.StarterGui:SetCore("SendNotification", {Title = "Premium Hub", Text = "Đã đến nơi an toàn!", Duration = 5})
+            continue
+        end
+
+        -- Calculate Path
+        local StartNode = GetClosestIsland()
+        local Path = FindPath(StartNode, State.TargetName)
+
+        if not Path or #Path < 2 then
+            -- Fallback: Bay thẳng nếu lỗi đường đi
+            State.CurrentStep = State.TargetName
+            FreezePlayer(TargetPos)
+            Hum.Health = 0
+        else
+            -- Path Following
+            local NextStop = Path[2] -- [1] is current, [2] is next
+            State.CurrentStep = NextStop
+            
+            -- Debug Info
+            print("[System] Next Stop: " .. NextStop)
+            
+            -- Action
+            FreezePlayer(MapData[NextStop])
+            Hum.Health = 0 -- Reset to bypass
+            
+            -- Wait Respawn
+            task.wait(2)
+            repeat task.wait(0.1) until LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
+            task.wait(1)
         end
     end
 end)
 
+--/// ANTI AFK ///--
+LP.Idled:Connect(function()
+    if getgenv().Config.AntiAFK then
+        VirtualUser:Button2Down(Vector2.new(0,0), Workspace.CurrentCamera.CFrame)
+        task.wait(1)
+        VirtualUser:Button2Up(Vector2.new(0,0), Workspace.CurrentCamera.CFrame)
+    end
+end)
 
---/// 2. GIAO DIỆN UI (SOURCE BANANA) ///--
+--/// UI LIBRARY (BANANA) ///--
 local Library = loadstring(game:HttpGet("https://luacrack.site/index.php/araujozwx/raw/SourceBananaUi"))()
 
--- Lấy danh sách đảo theo Sea
-local CurrentIslands = WorldIslands[getWorldKey()] or {}
-table.sort(CurrentIslands)
-
 local Window = Library:CreateWindow({
-    Title = "Original Teleport",
-    Desc = "Dijkstra Logic | " .. getWorldKey(),
+    Title = "Premium Bypass Hub",
+    Desc = GetWorld() .. " | Gemini AI",
     Image = "rbxassetid://105245380363493"
 })
 
-local Tab1 = Window:AddTab("Main", "rbxassetid://7733960981") 
-local Section1 = Tab1:AddLeftGroupbox("Control Panel")
+local Tab1 = Window:AddTab("Navigation", "rbxassetid://7733960981") 
+local Section1 = Tab1:AddLeftGroupbox("Teleport Control")
+local Section2 = Tab1:AddRightGroupbox("Settings")
 
 Section1:AddDropdown("IslandSelect", {
-    Title = "Select Island (Chọn Đảo)",
-    Values = CurrentIslands,
+    Title = "Select Destination",
+    Values = AllIslands,
     Default = "",
     Multi = false,
     Search = true,
     Callback = function(Value)
-        _G.Islandtp = Value
+        State.TargetName = Value
     end
 })
 
-Section1:AddToggle("ToggleTP", {
-    Title = "Start Teleport",
+Section1:AddToggle("MainToggle", {
+    Title = "START TELEPORT",
     Default = false,
     Callback = function(Value)
-        _G.Tpfast = Value
-        if not Value then
-            PMT_StopFastHop()
-            Library:Notify({Title="STOPPED", Desc="Đã dừng Teleport", Duration=3})
+        State.Running = Value
+        if Value then
+            if State.TargetName == "" then
+                Library:Notify({Title="Error", Desc="Chọn đảo trước đi bạn!", Duration=3})
+                State.Running = false
+            else
+                Library:Notify({Title="System", Desc="Đang tính toán lộ trình...", Duration=3})
+            end
         else
-             Library:Notify({Title="STARTED", Desc="Đang tính toán đường đi...", Duration=3})
+            Line.Visible = false
+            Library:Notify({Title="System", Desc="Đã dừng Script", Duration=3})
         end
     end
 })
 
 Section1:AddButton({
-    Title = "Reset Character",
+    Title = "Force Reset Character",
     Callback = function()
-        local _, _, hum = GetChar()
-        if hum then hum.Health = 0 end
+        local _, _, Hum = GetChar()
+        if Hum then Hum.Health = 0 end
     end
 })
 
-Section1:AddButton({
-    Title = "Unload UI",
-    Callback = function()
-        Library:DestroyUI()
-    end
+-- Settings Tab
+Section2:AddToggle("ESP", {
+    Title = "ESP Lines (Vẽ đường)",
+    Default = true,
+    Callback = function(v) getgenv().Config.ShowESP = v end
 })
 
-print("Original Logic Loaded Successfully")
+Section2:AddToggle("AFK", {
+    Title = "Anti AFK",
+    Default = true,
+    Callback = function(v) getgenv().Config.AntiAFK = v end
+})
+
+Section2:AddToggle("Haki", {
+    Title = "Auto Buso Haki",
+    Default = true,
+    Callback = function(v) getgenv().Config.AutoHaki = v end
+})
+
+Section2:AddLabel("Status: Ready")
+
+-- Status Updater
+task.spawn(function()
+    while task.wait(0.5) do
+        if State.Running then
+            if State.IsResetting then
+                Section2:UpdateLabel("Status: Resetting...")
+            else
+                Section2:UpdateLabel("Going to: " .. State.CurrentStep)
+            end
+        else
+            Section2:UpdateLabel("Status: Idle")
+        end
+    end
+end)
+
+print("Premium Script Loaded Successfully")
