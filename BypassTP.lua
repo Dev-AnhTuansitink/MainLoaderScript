@@ -1,53 +1,41 @@
 --[[
-    Blox Fruits Ultimate Teleport Hub [PREMIUM V2]
-    System: Dijkstra Pathfinding + Bypass Reset + ESP Visuals
-    Author: Gemini AI
-    Status: Undetected
+    BLOX FRUITS ULTIMATE BYPASS V4 (NO TWEEN)
+    Upgrade: Smart Anchor + Auto Unsit + Fast Respawn
+    Support: Sea 1, 2, 3
 ]]
 
---/// DỊCH VỤ (SERVICES) ///--
 local Players = game:GetService("Players")
-local Workspace = game:GetService("Workspace")
 local RunService = game:GetService("RunService")
-local TweenService = game:GetService("TweenService")
-local VirtualUser = game:GetService("VirtualUser")
-local CoreGui = game:GetService("CoreGui")
-
+local StarterGui = game:GetService("StarterGui")
 local LP = Players.LocalPlayer
-local Mouse = LP:GetMouse()
 
---/// CẤU HÌNH (SETTINGS) ///--
+--/// CẤU HÌNH TỐI ƯU ///--
 getgenv().Config = {
-    MaxDistance = 3500,     -- Khoảng cách tối đa 1 lần nhảy (An toàn)
-    HoldTime = 0.5,         -- Thời gian giữ vị trí (Freeze)
-    AutoHaki = true,        -- Tự bật Haki
-    AntiAFK = true,         -- Chống treo máy
-    ShowESP = true,         -- Vẽ đường kẻ tới đảo
-    StopDist = 250          -- Khoảng cách dừng lại
+    MaxStep = 2000,       -- Khoảng cách tối đa (Giữ thấp để bắt buộc đi qua đảo trung gian)
+    AnchorTime = 0.6,     -- Thời gian ghim vị trí (Tăng lên 0.8 nếu mạng lag)
+    StopDist = 200,       -- Khoảng cách dừng khi đến đích
 }
 
---/// BIẾN TRẠNG THÁI ///--
 local State = {
     Running = false,
-    TargetName = "",
-    CurrentStep = "",
-    IsResetting = false
+    TargetIsland = "",
+    Status = "Chờ lệnh..."
 }
 
---/// DATA MAP (FULL 3 SEAS - CHUẨN XÁC) ///--
+--/// DATA MAP (CHUẨN HÓA 3 SEA) ///--
 local PlaceID = game.PlaceId
 local MapData = {}
 local AllIslands = {}
 
--- Hàm lấy tên World
-local function GetWorld()
+-- Hàm lấy tên Sea để hiển thị
+local function GetSeaName()
     if PlaceID == 2753915549 then return "Sea 1"
     elseif PlaceID == 4442272183 then return "Sea 2"
     elseif PlaceID == 7449423635 then return "Sea 3"
     else return "Unknown" end
 end
 
--- Dữ liệu tọa độ
+-- Data Tọa độ
 if PlaceID == 2753915549 then -- Sea 1
     MapData = {
         ["Starter Marine"] = Vector3.new(-2566, 6, 2045),
@@ -94,42 +82,20 @@ end
 for k,v in pairs(MapData) do table.insert(AllIslands, k) end
 table.sort(AllIslands)
 
---/// HỆ THỐNG ESP (VẼ ĐƯỜNG) ///--
-local Line = Drawing.new("Line")
-Line.Visible = false
-Line.Color = Color3.fromRGB(255, 0, 0)
-Line.Thickness = 2
-Line.Transparency = 1
-
-local function UpdateESP(TargetPos)
-    if not getgenv().Config.ShowESP or not State.Running or not TargetPos then 
-        Line.Visible = false 
-        return 
-    end
-
-    local Vector, OnScreen = Workspace.CurrentCamera:WorldToViewportPoint(TargetPos)
-    local Char = LP.Character
-    if Char and Char:FindFirstChild("HumanoidRootPart") and OnScreen then
-        local HRPVec, _ = Workspace.CurrentCamera:WorldToViewportPoint(Char.HumanoidRootPart.Position)
-        Line.From = Vector2.new(HRPVec.X, HRPVec.Y)
-        Line.To = Vector2.new(Vector.X, Vector.Y)
-        Line.Visible = true
-    else
-        Line.Visible = false
-    end
+--/// SYSTEM FUNCTIONS ///--
+local function Notify(Title, Text, Time)
+    StarterGui:SetCore("SendNotification", {Title = Title, Text = Text, Duration = Time or 3})
 end
 
-RunService.RenderStepped:Connect(function()
-    if State.Running and State.CurrentStep ~= "" and MapData[State.CurrentStep] then
-        UpdateESP(MapData[State.CurrentStep])
-    else
-        Line.Visible = false
-    end
-end)
+local function GetChar()
+    local Char = LP.Character
+    if not Char then return nil, nil, nil end
+    return Char, Char:FindFirstChild("HumanoidRootPart"), Char:FindFirstChild("Humanoid")
+end
 
---/// THUẬT TOÁN DIJKSTRA (CORE) ///--
 local function Dist(v1, v2) return (v1 - v2).Magnitude end
 
+--/// LOGIC TÌM ĐƯỜNG (DIJKSTRA) ///--
 local function FindPath(Start, End)
     local Nodes = AllIslands
     local Distances = {}
@@ -138,7 +104,6 @@ local function FindPath(Start, End)
 
     for _, node in ipairs(Nodes) do
         Distances[node] = math.huge
-        Previous[node] = nil
         table.insert(Queue, node)
     end
     Distances[Start] = 0
@@ -146,14 +111,13 @@ local function FindPath(Start, End)
     while #Queue > 0 do
         table.sort(Queue, function(a, b) return Distances[a] < Distances[b] end)
         local u = table.remove(Queue, 1)
-
         if u == End then break end
-        if Distances[u] == math.huge then break end
+        if Distances[u] == math.huge then break end 
 
         for _, v in ipairs(Nodes) do
             if MapData[u] and MapData[v] then
                 local d = Dist(MapData[u], MapData[v])
-                if d <= getgenv().Config.MaxDistance then
+                if d <= getgenv().Config.MaxStep then
                     local alt = Distances[u] + d
                     if alt < Distances[v] then
                         Distances[v] = alt
@@ -165,21 +129,20 @@ local function FindPath(Start, End)
     end
 
     local Path = {}
-    local u = End
-    while Previous[u] do
-        table.insert(Path, 1, u)
-        u = Previous[u]
+    local curr = End
+    if Distances[End] == math.huge then return nil end
+
+    while Previous[curr] do
+        table.insert(Path, 1, curr)
+        curr = Previous[curr]
     end
-    if u == Start then table.insert(Path, 1, Start) end
+    if curr == Start then table.insert(Path, 1, Start) end
     return Path
 end
 
 local function GetClosestIsland()
-    local Char = LP.Character
-    if not Char then return nil end
-    local HRP = Char:FindFirstChild("HumanoidRootPart")
+    local _, HRP, _ = GetChar()
     if not HRP then return nil end
-    
     local Best, MinD = nil, math.huge
     for name, pos in pairs(MapData) do
         local d = Dist(HRP.Position, pos)
@@ -188,177 +151,169 @@ local function GetClosestIsland()
     return Best
 end
 
---/// HÀM XỬ LÝ NHÂN VẬT ///--
-local function GetChar()
-    local Char = LP.Character or LP.CharacterAdded:Wait()
-    local HRP = Char:WaitForChild("HumanoidRootPart", 10)
-    local Hum = Char:WaitForChild("Humanoid", 10)
-    return Char, HRP, Hum
-end
+--/// BYPASS CORE ACTION (UPGRADED) ///--
+local function PerformBypass(TargetPos)
+    local _, HRP, Hum = GetChar()
+    if not HRP or not Hum then return end
 
-local function FreezePlayer(Pos)
-    local _, HRP, _ = GetChar()
-    if HRP then
-        local timer = tick()
-        local CF = CFrame.new(Pos)
-        while tick() - timer < getgenv().Config.HoldTime and State.Running do
-            HRP.CFrame = CF
-            HRP.AssemblyLinearVelocity = Vector3.zero
-            RunService.Heartbeat:Wait()
+    -- 1. Auto Unsit (Nhảy khỏi ghế)
+    if Hum.Sit then Hum.Sit = false task.wait(0.1) end
+
+    -- 2. Smart Anchor (Ghim vị trí chặt hơn)
+    local Timer = tick()
+    local TargetCF = CFrame.new(TargetPos)
+    
+    -- Vòng lặp này vừa TP vừa khóa vận tốc liên tục
+    local AnchorConnection
+    AnchorConnection = RunService.Heartbeat:Connect(function()
+        if HRP and State.Running then
+            HRP.CFrame = TargetCF
+            HRP.AssemblyLinearVelocity = Vector3.zero 
+            HRP.AssemblyAngularVelocity = Vector3.zero
         end
+    end)
+
+    -- Giữ trong thời gian quy định
+    repeat task.wait() until tick() - Timer > getgenv().Config.AnchorTime or not State.Running
+    
+    if AnchorConnection then AnchorConnection:Disconnect() end
+
+    -- 3. Reset (Kill)
+    if State.Running and Hum then
+        Hum.Health = 0
     end
 end
 
---/// MAIN LOGIC LOOP ///--
+--/// MAIN THREAD ///--
 task.spawn(function()
     while task.wait(0.5) do
-        if not State.Running then continue end
-        
-        -- Auto Haki
-        if getgenv().Config.AutoHaki and not LP.Character:FindFirstChild("HasBuso") then
-             game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("Buso")
-        end
+        if State.Running and State.TargetIsland ~= "" then
+            pcall(function()
+                local _, HRP, Hum = GetChar()
+                
+                -- Check Dead
+                if not HRP or not Hum or Hum.Health <= 0 then
+                    State.Status = "Đang hồi sinh..."
+                    task.wait(0.5)
+                    return 
+                end
 
-        local Char, HRP, Hum = GetChar()
-        if not HRP or Hum.Health <= 0 then 
-            State.IsResetting = true
-            continue 
-        end
-        State.IsResetting = false
+                -- Check Arrival
+                local FinalDest = MapData[State.TargetIsland]
+                if Dist(HRP.Position, FinalDest) < getgenv().Config.StopDist then
+                    State.Running = false
+                    State.Status = "ĐÃ ĐẾN NƠI!"
+                    Notify("Thành Công", "Chào mừng tới " .. State.TargetIsland, 5)
+                    return
+                end
 
-        -- Check Destination
-        local TargetPos = MapData[State.TargetName]
-        if not TargetPos then continue end
+                -- Pathfinding
+                local StartNode = GetClosestIsland()
+                local Path = FindPath(StartNode, State.TargetIsland)
 
-        if Dist(HRP.Position, TargetPos) < getgenv().Config.StopDist then
-            State.Running = false
-            game.StarterGui:SetCore("SendNotification", {Title = "Premium Hub", Text = "Đã đến nơi an toàn!", Duration = 5})
-            continue
-        end
-
-        -- Calculate Path
-        local StartNode = GetClosestIsland()
-        local Path = FindPath(StartNode, State.TargetName)
-
-        if not Path or #Path < 2 then
-            -- Fallback: Bay thẳng nếu lỗi đường đi
-            State.CurrentStep = State.TargetName
-            FreezePlayer(TargetPos)
-            Hum.Health = 0
+                if Path and #Path >= 2 then
+                    local NextStop = Path[2]
+                    
+                    -- Preview Route log
+                    if State.Status ~= "Đi tới: " .. NextStop then
+                        print("Next Stop: " .. NextStop)
+                    end
+                    
+                    State.Status = "Đi tới: " .. NextStop
+                    Notify("Bypass V4", "Trạm kế: " .. NextStop, 1.5)
+                    
+                    -- Execute
+                    PerformBypass(MapData[NextStop])
+                    
+                    -- Smart Wait Respawn
+                    local WaitTimer = 0
+                    repeat 
+                        task.wait(0.2) -- Check nhanh hơn
+                        WaitTimer = WaitTimer + 0.2
+                    until (LP.Character and LP.Character:FindFirstChild("HumanoidRootPart") and LP.Character.Humanoid.Health > 0) or WaitTimer > 15
+                    
+                    task.wait(1.2) -- Đợi load map ổn định
+                else
+                    State.Status = "Lỗi đường đi (Quá xa)"
+                    Notify("Lỗi", "Không có đường nối đến đảo này!", 3)
+                    State.Running = false
+                end
+            end)
         else
-            -- Path Following
-            local NextStop = Path[2] -- [1] is current, [2] is next
-            State.CurrentStep = NextStop
-            
-            -- Debug Info
-            print("[System] Next Stop: " .. NextStop)
-            
-            -- Action
-            FreezePlayer(MapData[NextStop])
-            Hum.Health = 0 -- Reset to bypass
-            
-            -- Wait Respawn
-            task.wait(2)
-            repeat task.wait(0.1) until LP.Character and LP.Character:FindFirstChild("HumanoidRootPart")
-            task.wait(1)
+            if not State.Running then State.Status = "Đang tắt" end
         end
     end
 end)
 
---/// ANTI AFK ///--
-LP.Idled:Connect(function()
-    if getgenv().Config.AntiAFK then
-        VirtualUser:Button2Down(Vector2.new(0,0), Workspace.CurrentCamera.CFrame)
-        task.wait(1)
-        VirtualUser:Button2Up(Vector2.new(0,0), Workspace.CurrentCamera.CFrame)
-    end
-end)
-
---/// UI LIBRARY (BANANA) ///--
+--/// UI INTERFACE (Banana Style) ///--
 local Library = loadstring(game:HttpGet("https://luacrack.site/index.php/araujozwx/raw/SourceBananaUi"))()
 
 local Window = Library:CreateWindow({
-    Title = "Premium Bypass Hub",
-    Desc = GetWorld() .. " | Gemini AI",
+    Title = "Bypass V4 Pro",
+    Desc = GetSeaName() .. " | No Tween",
     Image = "rbxassetid://105245380363493"
 })
 
-local Tab1 = Window:AddTab("Navigation", "rbxassetid://7733960981") 
-local Section1 = Tab1:AddLeftGroupbox("Teleport Control")
-local Section2 = Tab1:AddRightGroupbox("Settings")
+local Tab1 = Window:AddTab("Dashboard", "rbxassetid://7733960981") 
+local Section1 = Tab1:AddLeftGroupbox("Điều Khiển")
+local Section2 = Tab1:AddRightGroupbox("Thông Tin")
 
 Section1:AddDropdown("IslandSelect", {
-    Title = "Select Destination",
+    Title = "Chọn Đảo Đích (Destination)",
     Values = AllIslands,
     Default = "",
     Multi = false,
     Search = true,
     Callback = function(Value)
-        State.TargetName = Value
-    end
-})
-
-Section1:AddToggle("MainToggle", {
-    Title = "START TELEPORT",
-    Default = false,
-    Callback = function(Value)
-        State.Running = Value
-        if Value then
-            if State.TargetName == "" then
-                Library:Notify({Title="Error", Desc="Chọn đảo trước đi bạn!", Duration=3})
-                State.Running = false
-            else
-                Library:Notify({Title="System", Desc="Đang tính toán lộ trình...", Duration=3})
-            end
-        else
-            Line.Visible = false
-            Library:Notify({Title="System", Desc="Đã dừng Script", Duration=3})
+        State.TargetIsland = Value
+        -- Preview Lộ trình ngay khi chọn
+        local Start = GetClosestIsland()
+        local Path = FindPath(Start, Value)
+        if Path then
+            local str = ""
+            for i,v in pairs(Path) do str = str .. v .. " > " end
+            print("Lộ trình dự kiến: " .. str)
+            Notify("Lộ trình", "Check F9 để xem đường đi", 2)
         end
     end
 })
 
+Section1:AddToggle("ToggleTP", {
+    Title = "BẮT ĐẦU (START)",
+    Default = false,
+    Callback = function(Value)
+        State.Running = Value
+        if Value then Notify("System", "Bắt đầu hành trình...", 2) end
+    end
+})
+
+Section1:AddSlider("DelaySlider", {
+    Title = "Thời gian Ghim (Anchor Time)",
+    Default = 6, -- Chia 10 = 0.6s
+    Min = 4,
+    Max = 15,
+    Rounding = 0,
+    Callback = function(Value)
+        getgenv().Config.AnchorTime = Value / 10
+    end
+})
+
 Section1:AddButton({
-    Title = "Force Reset Character",
+    Title = "Force Reset (Sửa kẹt)",
     Callback = function()
         local _, _, Hum = GetChar()
         if Hum then Hum.Health = 0 end
     end
 })
 
--- Settings Tab
-Section2:AddToggle("ESP", {
-    Title = "ESP Lines (Vẽ đường)",
-    Default = true,
-    Callback = function(v) getgenv().Config.ShowESP = v end
-})
+-- Realtime Status
+Section2:AddLabel("Trạng thái: ...")
+Section2:AddLabel("Đảo hiện tại: ...")
 
-Section2:AddToggle("AFK", {
-    Title = "Anti AFK",
-    Default = true,
-    Callback = function(v) getgenv().Config.AntiAFK = v end
-})
-
-Section2:AddToggle("Haki", {
-    Title = "Auto Buso Haki",
-    Default = true,
-    Callback = function(v) getgenv().Config.AutoHaki = v end
-})
-
-Section2:AddLabel("Status: Ready")
-
--- Status Updater
 task.spawn(function()
     while task.wait(0.5) do
-        if State.Running then
-            if State.IsResetting then
-                Section2:UpdateLabel("Status: Resetting...")
-            else
-                Section2:UpdateLabel("Going to: " .. State.CurrentStep)
-            end
-        else
-            Section2:UpdateLabel("Status: Idle")
-        end
+        Section2:UpdateLabel("Trạng thái: " .. State.Status)
+        local cur = GetClosestIsland() or "Unknown"
+        Section2:UpdateLabel("Đảo hiện tại: " .. cur)
     end
 end)
-
-print("Premium Script Loaded Successfully")
