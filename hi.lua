@@ -4,55 +4,46 @@ if not game:IsLoaded() then
 end
 --chọn team hải quân
 game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer("SetTeam", "Marines")
-task.wait(1
-)
--- // Cấu hình màu sắc (BLUE THEME) \\ --
-local THEME_BLUE = Color3.fromRGB(0, 150, 255)      -- Xanh dương chính
-local THEME_BLUE_LIGHT = Color3.fromRGB(100, 210, 255) -- Xanh dương nhạt
-local TEXT_COLOR = Color3.fromRGB(80, 180, 233)     -- Màu chữ xanh nhạt
+task.wait(1)
 
--- // UI Top (Gọn nhẹ) \\ --
+-- // Cấu hình màu sắc (BLUE THEME) \\ --
+local THEME_BLUE = Color3.fromRGB(0, 140, 255)       -- Xanh dương đậm
+local THEME_BLUE_TEXT = Color3.fromRGB(80, 200, 233) -- Xanh dương sáng (cho chữ)
+
+-- // UI Top (Thanh trạng thái phía trên) \\ --
 local Status = Instance.new("ScreenGui")
-Status.Name = "Status"
+Status.Name = "Status_UI_Blue"
 Status.Parent = game:GetService("CoreGui")
 Status.ResetOnSpawn = false
 Status.DisplayOrder = 10
 
 local DropShadow2Holder2_1 = Instance.new("Frame")
-DropShadow2Holder2_1.Name = "DropShadow2Holder2"
+DropShadow2Holder2_1.Name = "Holder"
 DropShadow2Holder2_1.Parent = Status
 DropShadow2Holder2_1.AnchorPoint = Vector2.new(0.5, 0.5)
-DropShadow2Holder2_1.BackgroundColor3 = Color3.fromRGB(163,163,163)
 DropShadow2Holder2_1.BackgroundTransparency = 1
-DropShadow2Holder2_1.BorderSizePixel = 0
 DropShadow2Holder2_1.Position = UDim2.new(0.5, 0, 0.05, 0)
 DropShadow2Holder2_1.Size = UDim2.new(0, 320, 0, 68)
-DropShadow2Holder2_1.ZIndex = 0
 
 local DropShadow2_1 = Instance.new("ImageLabel")
-DropShadow2_1.Name = "DropShadow2"
+DropShadow2_1.Name = "Shadow"
 DropShadow2_1.Parent = DropShadow2Holder2_1
 DropShadow2_1.AnchorPoint = Vector2.new(0.5, 0.5)
-DropShadow2_1.BackgroundColor3 = Color3.fromRGB(163,162,165)
 DropShadow2_1.BackgroundTransparency = 1
-DropShadow2_1.BorderSizePixel = 0
 DropShadow2_1.Position = UDim2.new(0.5, 0, 0.35, 0)
 DropShadow2_1.Size = UDim2.new(1, 47, 1, 47)
-DropShadow2_1.ZIndex = 0
 DropShadow2_1.Image = "rbxassetid://6015897843"
-DropShadow2_1.ImageColor3 = Color3.fromRGB(0,0,0)
+DropShadow2_1.ImageColor3 = Color3.fromRGB(0, 0, 0)
 DropShadow2_1.ImageTransparency = 0.5
 DropShadow2_1.ScaleType = Enum.ScaleType.Slice
 DropShadow2_1.SliceCenter = Rect.new(49, 49, 450, 450)
 
 local Main_1 = Instance.new("Frame")
-Main_1.Name = "Main"
+Main_1.Name = "MainBoard"
 Main_1.Parent = DropShadow2_1
 Main_1.AnchorPoint = Vector2.new(0.5, 0.5)
-Main_1.BackgroundColor3 = Color3.fromRGB(0,0,0)
+Main_1.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 Main_1.BackgroundTransparency = 0.5
-Main_1.BorderColor3 = Color3.fromRGB(0,0,0)
-Main_1.BorderSizePixel = 0
 Main_1.Position = UDim2.new(0.5, 0, 0.5, 0)
 Main_1.Size = UDim2.new(1, -50, 1, -55)
 
@@ -61,89 +52,50 @@ UIStroke_1.Parent = Main_1
 UIStroke_1.Color = THEME_BLUE -- Viền xanh dương
 UIStroke_1.Thickness = 2.5
 
--- [DÒNG TRÊN: HIỂN THỊ TRẠNG THÁI]
 local Top2_1 = Instance.new("TextLabel")
-Top2_1.Name = "Top2"
+Top2_1.Name = "Title"
 Top2_1.Parent = Main_1
 Top2_1.AnchorPoint = Vector2.new(0.5, 0)
-Top2_1.BackgroundColor3 = Color3.fromRGB(163,162,165)
 Top2_1.BackgroundTransparency = 1
 Top2_1.Position = UDim2.new(0.5, 0, 0, 10)
 Top2_1.Size = UDim2.new(0, 300, 0, 18)
 Top2_1.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-Top2_1.Text = "Status: SẴN SÀNG... 💤" 
-Top2_1.TextColor3 = TEXT_COLOR
+Top2_1.Text = "NatAov Hub Farm Chest Vip"
+Top2_1.TextColor3 = THEME_BLUE_TEXT
 Top2_1.TextSize = 16
-Top2_1.TextWrapped = true
 
--- [DÒNG DƯỚI: HIỂN THỊ SỐ RƯƠNG]
 local Under_1 = Instance.new("TextLabel")
-Under_1.Name = "Under"
+Under_1.Name = "Subtitle"
 Under_1.Parent = Main_1
 Under_1.AnchorPoint = Vector2.new(0.5, 0)
-Under_1.BackgroundColor3 = Color3.fromRGB(255,255,255)
 Under_1.BackgroundTransparency = 1
 Under_1.Position = UDim2.new(0.5, 0, 0, 30)
 Under_1.Size = UDim2.new(0, 450, 0, 18)
 Under_1.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-Under_1.Text = "Rương đã nhặt: 0"
-Under_1.TextColor3 = TEXT_COLOR
-Under_1.TextSize = 14
+Under_1.Text = "Status: [ Farming ]"
+Under_1.TextColor3 = THEME_BLUE_TEXT
+Under_1.TextSize = 16
 
-local TextLabel_1 = Instance.new("TextLabel")
-TextLabel_1.Parent = Status
-TextLabel_1.AnchorPoint = Vector2.new(0.5, 0.5)
-TextLabel_1.BackgroundColor3 = Color3.fromRGB(163,162,165)
-TextLabel_1.BackgroundTransparency = 1
-TextLabel_1.Position = UDim2.new(0.5, 0, -0.025, 0)
-TextLabel_1.Size = UDim2.new(0, 210, 0, 50)
-TextLabel_1.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-TextLabel_1.Text = "https://discord.gg/FNns5gAb2b"
-TextLabel_1.TextColor3 = TEXT_COLOR
-TextLabel_1.TextSize = 16
+-- // LOGIC FARM & SERVICES \\ --
 
-local UIStroke_2 = Instance.new("UIStroke")
-UIStroke_2.Parent = TextLabel_1
-UIStroke_2.Thickness = 1
-UIStroke_2.Color = THEME_BLUE
-
--- ================= SERVICES =================
 local Players = game:GetService("Players")
 local TeleportService = game:GetService("TeleportService")
 local HttpService = game:GetService("HttpService")
 local LocalPlayer = Players.LocalPlayer
 local PlaceId = game.PlaceId
+local RunService = game:GetService("RunService")
+local VirtualUser = game:GetService("VirtualUser") -- Service dùng cho Anti Kick
 
--- ================= BIẾN & LOGIC MỚI =================
 local Farming = false
-local UncheckedChests, FirstRun = {}, true
-local ChestCount = 0
+local UncheckedChests = {}
+local FirstRun = true
 
--- [BIẾN CỦA BẠN]
-local CountedChests = {} 
-local CurrentTarget = nil
-
--- Hàm kiểm tra rương biến mất (Logic của bạn)
-local function IsChestGone(chest)
-    return not chest 
-        or not chest.Parent 
-        or not chest:IsDescendantOf(workspace)
-end
-
--- Hàm cập nhật text lên Status UI
-local function UpdateStatus(mode)
-    -- Cập nhật số rương (luôn giống nhau ở mọi trạng thái)
-    Under_1.Text = "Rương đã nhặt: " .. ChestCount
-
-    -- Cập nhật trạng thái (ở dòng trên)
-    if mode == "Run" then
-        Top2_1.Text = "Status: ĐANG CHẠY 🟢"
-    elseif mode == "Stop" then
-        Top2_1.Text = "Status: ĐÃ DỪNG 🔴"
-    elseif mode == "Hop" then
-        Top2_1.Text = "Status: ĐỔI SERVER 🔄"
-    end
-end
+-- ================= ANTI KICK / ANTI AFK =================
+LocalPlayer.Idled:Connect(function()
+    VirtualUser:CaptureController()
+    VirtualUser:ClickButton2(Vector2.new())
+    warn("Anti-Kick: Đã kích hoạt giả lập thao tác để không bị disconnect.")
+end)
 
 -- ================= CHARACTER =================
 local function getCharacter()
@@ -155,18 +107,20 @@ end
 
 -- ================= SORT CHEST =================
 local function DistanceFromPlrSort(list)
-    local hrp = getCharacter().HumanoidRootPart
+    local hrp = getCharacter():FindFirstChild("HumanoidRootPart")
+    if not hrp then return end
+    
     table.sort(list, function(a, b)
-        return (hrp.Position - a.Position).Magnitude <
-               (hrp.Position - b.Position).Magnitude
+        return (hrp.Position - a.Position).Magnitude < (hrp.Position - b.Position).Magnitude
     end)
 end
 
 local function getChestsSorted()
+    -- Lấy danh sách rương (chỉ quét map 1 lần đầu để tối ưu)
     if FirstRun then
         FirstRun = false
-        for _, obj in pairs(game:GetDescendants()) do
-            if obj:IsA("Part") and obj.Name:find("Chest") then
+         for _, obj in pairs(game:GetDescendants()) do
+            if obj:IsA("Part") and (obj.Name:find("Chest") or obj.Name == "Chest1" or obj.Name == "Chest2" or obj.Name == "Chest3") then
                 table.insert(UncheckedChests, obj)
             end
         end
@@ -174,9 +128,9 @@ local function getChestsSorted()
 
     local Chests = {}
     for _, chest in pairs(UncheckedChests) do
-        -- Lọc những rương còn TouchInterest và chưa bị đếm (hoặc chưa mất)
-        if chest:FindFirstChild("TouchInterest") then
-            table.insert(Chests, chest)
+        -- Kiểm tra rương còn tồn tại và chưa bị nhặt
+        if chest and chest.Parent and chest:FindFirstChild("TouchInterest") then
+             table.insert(Chests, chest)
         end
     end
 
@@ -186,31 +140,35 @@ end
 
 -- ================= NOCLIP + TP =================
 local function toggleNoclip(on)
-    for _, v in pairs(getCharacter():GetChildren()) do
-        if v:IsA("BasePart") then
-            v.CanCollide = not on
+    local char = getCharacter()
+    if char then
+        for _, v in pairs(char:GetChildren()) do
+            if v:IsA("BasePart") then
+                v.CanCollide = not on
+            end
         end
     end
 end
 
 local function Teleport(cf)
-    local hrp = getCharacter().HumanoidRootPart
-    toggleNoclip(true)
-    hrp.CFrame = cf + Vector3.new(0, 3, 0)
-    toggleNoclip(false)
+    local char = getCharacter()
+    if char and char:FindFirstChild("HumanoidRootPart") then
+        toggleNoclip(true)
+        char.HumanoidRootPart.CFrame = cf
+        toggleNoclip(false)
+    end
 end
 
 -- ================= SERVER HOP =================
 local function ServerHop()
-    UpdateStatus("Hop")
-    
+    warn("Đang tìm server mới...")
     local servers = HttpService:JSONDecode(
         game:HttpGet("https://games.roblox.com/v1/games/" .. PlaceId .. "/servers/Public?sortOrder=Asc&limit=100")
     )
 
     local available = {}
     for _, s in pairs(servers.data) do
-        if s.playing < s.maxPlayers then
+        if s.playing < s.maxPlayers and s.id ~= game.JobId then
             table.insert(available, s.id)
         end
     end
@@ -221,97 +179,115 @@ local function ServerHop()
             available[math.random(1, #available)],
             LocalPlayer
         )
+    else
+        warn("Không tìm thấy server, thử lại sau...")
     end
 end
 
--- ================= FARM (LOGIC MỚI CỦA BẠN) =================
+-- ================= LOGIC LOOP =================
 local function StartFarm()
     if Farming then return end
     Farming = true
-    CurrentTarget = nil
-    CountedChests = {} -- Reset danh sách đếm mỗi lần bật lại
-    UpdateStatus("Run")
-
+    
+    -- Vòng lặp Farm
     task.spawn(function()
         while Farming do
-            task.wait(0.2)
-
+            task.wait() -- Tốc độ nhanh nhất có thể
+            
             local Chests = getChestsSorted()
-
-            -- Nếu đang có target cũ → kiểm tra nó đã biến mất chưa
-            if CurrentTarget then
-                if IsChestGone(CurrentTarget) then
-                    if not CountedChests[CurrentTarget] then
-                        CountedChests[CurrentTarget] = true
-                        ChestCount = ChestCount + 1 -- Luau support += but explicit is safe
-                        UpdateStatus("Run")
-                    end
-                    CurrentTarget = nil
-                end
-            end
-
             if #Chests > 0 then
-                local newTarget = Chests[1]
-
-                -- Nếu đổi target → chỉ đổi khi target cũ đã biến mất hoặc chưa có target
-                if not CurrentTarget then
-                    CurrentTarget = newTarget
-                end
-
-                if CurrentTarget then
-                    Teleport(CurrentTarget.CFrame)
+                local targetChest = Chests[1]
+                -- TP tới rương
+                Teleport(targetChest.CFrame)
+                
+                -- Đợi 1 chút để game nhận diện đã nhặt (tuỳ mạng)
+                if (getCharacter().HumanoidRootPart.Position - targetChest.Position).Magnitude < 5 then
+                    firetouchinterest(getCharacter().HumanoidRootPart, targetChest, 0)
+                    firetouchinterest(getCharacter().HumanoidRootPart, targetChest, 1)
                 end
             else
-                -- Không còn rương
-                if not CurrentTarget then
-                    warn("HẾT RƯƠNG → AUTO HOP SERVER")
-                    task.wait(1)
-                    ServerHop()
-                    return
-                end
+                warn("HẾT RƯƠNG → AUTO HOP SERVER")
+                task.wait(1.5)
+                ServerHop()
+                return
             end
         end
+    end)
+    
+    -- Giữ Noclip liên tục khi farm để không bị kẹt
+    task.spawn(function()
+        while Farming do
+            toggleNoclip(true)
+            task.wait(0.1)
+        end
+        toggleNoclip(false)
     end)
 end
 
 local function StopFarm()
     Farming = false
-    UpdateStatus("Stop")
+    toggleNoclip(false)
 end
 
--- ================= GUI CONTROL =================
+-- ================= CONTROL GUI (Bảng điều khiển nhỏ) =================
 local gui = Instance.new("ScreenGui", game.CoreGui)
-gui.Name = "ChestFarmGUI"
+gui.Name = "ChestFarmControl"
 
 local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0, 200, 0, 170)
-frame.Position = UDim2.new(0, 20, 0.35, 0)
-frame.BackgroundColor3 = Color3.fromRGB(30,30,30)
+frame.Size = UDim2.new(0, 200, 0, 130) -- Thu nhỏ lại cho gọn
+frame.Position = UDim2.new(0, 20, 0.4, 0)
+frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+frame.BorderSizePixel = 0
 frame.Active = true
 frame.Draggable = true
 
+-- Viền xanh cho bảng điều khiển
+local stroke = Instance.new("UIStroke", frame)
+stroke.Color = THEME_BLUE
+stroke.Thickness = 2
+
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 25)
+title.BackgroundTransparency = 1
+title.Text = "MENU FARM"
+title.TextColor3 = THEME_BLUE_TEXT
+title.Font = Enum.Font.GothamBold
+title.TextSize = 14
+
 local function makeBtn(text, y, color)
     local b = Instance.new("TextButton", frame)
-    b.Size = UDim2.new(1, -20, 0, 40)
+    b.Size = UDim2.new(1, -20, 0, 30)
     b.Position = UDim2.new(0, 10, 0, y)
     b.Text = text
     b.BackgroundColor3 = color
     b.TextColor3 = Color3.new(1,1,1)
+    b.Font = Enum.Font.GothamBold
+    b.TextSize = 12
+    
+    local corner = Instance.new("UICorner", b)
+    corner.CornerRadius = UDim.new(0, 6)
     return b
 end
 
-local startBtn = makeBtn("▶ START FARM", 10, Color3.fromRGB(0,170,0))
-local stopBtn  = makeBtn("⛔ STOP FARM", 60, Color3.fromRGB(170,0,0))
-local hopBtn   = makeBtn("🔁 HOP SERVER", 110, Color3.fromRGB(0,120,170))
+local startBtn = makeBtn("▶ START FARM", 35, Color3.fromRGB(0, 140, 255)) -- Nút xanh dương
+local stopBtn  = makeBtn("⛔ STOP FARM", 70, Color3.fromRGB(200, 50, 50))
+local hopBtn   = makeBtn("🔁 HOP SERVER", 105, Color3.fromRGB(80, 80, 80)) -- Nút xám
 
-startBtn.MouseButton1Click:Connect(StartFarm)
-stopBtn.MouseButton1Click:Connect(StopFarm)
+startBtn.MouseButton1Click:Connect(function()
+    startBtn.Text = "Farming..."
+    StartFarm()
+end)
+
+stopBtn.MouseButton1Click:Connect(function()
+    startBtn.Text = "▶ START FARM"
+    StopFarm()
+end)
+
 hopBtn.MouseButton1Click:Connect(function()
-    warn("HOP SERVER THỦ CÔNG")
     ServerHop()
 end)
 
--- ================= RESPAWN SAFE =================
+-- ================= RESPAWN FIX =================
 LocalPlayer.CharacterAdded:Connect(function()
     task.wait(1)
     if Farming then
