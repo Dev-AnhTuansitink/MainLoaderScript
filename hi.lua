@@ -60,7 +60,7 @@ Top2_1.BackgroundTransparency = 1
 Top2_1.Position = UDim2.new(0.5, 0, 0, 10)
 Top2_1.Size = UDim2.new(0, 300, 0, 18)
 Top2_1.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-Top2_1.Text = "NatAov Hub Farm Chest Vip"
+Top2_1.Text = "Status: NaNa ON TOP Chest vip"
 Top2_1.TextColor3 = THEME_BLUE_TEXT
 Top2_1.TextSize = 16
 
@@ -72,7 +72,7 @@ Under_1.BackgroundTransparency = 1
 Under_1.Position = UDim2.new(0.5, 0, 0, 30)
 Under_1.Size = UDim2.new(0, 450, 0, 18)
 Under_1.FontFace = Font.new("rbxasset://fonts/families/GothamSSm.json", Enum.FontWeight.Bold, Enum.FontStyle.Normal)
-Under_1.Text = "Status: [ Farming ]"
+Under_1.Text = "Auto Farm Running..."
 Under_1.TextColor3 = THEME_BLUE_TEXT
 Under_1.TextSize = 16
 
@@ -84,7 +84,7 @@ local HttpService = game:GetService("HttpService")
 local LocalPlayer = Players.LocalPlayer
 local PlaceId = game.PlaceId
 local RunService = game:GetService("RunService")
-local VirtualUser = game:GetService("VirtualUser") -- Service dùng cho Anti Kick
+local VirtualUser = game:GetService("VirtualUser")
 
 local Farming = false
 local UncheckedChests = {}
@@ -94,7 +94,7 @@ local FirstRun = true
 LocalPlayer.Idled:Connect(function()
     VirtualUser:CaptureController()
     VirtualUser:ClickButton2(Vector2.new())
-    warn("Anti-Kick: Đã kích hoạt giả lập thao tác để không bị disconnect.")
+    warn("Anti-Kick: Đã kích hoạt giả lập thao tác.")
 end)
 
 -- ================= CHARACTER =================
@@ -116,7 +116,6 @@ local function DistanceFromPlrSort(list)
 end
 
 local function getChestsSorted()
-    -- Lấy danh sách rương (chỉ quét map 1 lần đầu để tối ưu)
     if FirstRun then
         FirstRun = false
          for _, obj in pairs(game:GetDescendants()) do
@@ -128,7 +127,6 @@ local function getChestsSorted()
 
     local Chests = {}
     for _, chest in pairs(UncheckedChests) do
-        -- Kiểm tra rương còn tồn tại và chưa bị nhặt
         if chest and chest.Parent and chest:FindFirstChild("TouchInterest") then
              table.insert(Chests, chest)
         end
@@ -189,18 +187,13 @@ local function StartFarm()
     if Farming then return end
     Farming = true
     
-    -- Vòng lặp Farm
     task.spawn(function()
         while Farming do
-            task.wait() -- Tốc độ nhanh nhất có thể
-            
+            task.wait() 
             local Chests = getChestsSorted()
             if #Chests > 0 then
                 local targetChest = Chests[1]
-                -- TP tới rương
                 Teleport(targetChest.CFrame)
-                
-                -- Đợi 1 chút để game nhận diện đã nhặt (tuỳ mạng)
                 if (getCharacter().HumanoidRootPart.Position - targetChest.Position).Magnitude < 5 then
                     firetouchinterest(getCharacter().HumanoidRootPart, targetChest, 0)
                     firetouchinterest(getCharacter().HumanoidRootPart, targetChest, 1)
@@ -214,7 +207,6 @@ local function StartFarm()
         end
     end)
     
-    -- Giữ Noclip liên tục khi farm để không bị kẹt
     task.spawn(function()
         while Farming do
             toggleNoclip(true)
@@ -229,19 +221,18 @@ local function StopFarm()
     toggleNoclip(false)
 end
 
--- ================= CONTROL GUI (Bảng điều khiển nhỏ) =================
+-- ================= CONTROL GUI =================
 local gui = Instance.new("ScreenGui", game.CoreGui)
 gui.Name = "ChestFarmControl"
 
 local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0, 200, 0, 130) -- Thu nhỏ lại cho gọn
+frame.Size = UDim2.new(0, 200, 0, 130)
 frame.Position = UDim2.new(0, 20, 0.4, 0)
 frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 frame.BorderSizePixel = 0
 frame.Active = true
 frame.Draggable = true
 
--- Viền xanh cho bảng điều khiển
 local stroke = Instance.new("UIStroke", frame)
 stroke.Color = THEME_BLUE
 stroke.Thickness = 2
@@ -249,7 +240,7 @@ stroke.Thickness = 2
 local title = Instance.new("TextLabel", frame)
 title.Size = UDim2.new(1, 0, 0, 25)
 title.BackgroundTransparency = 1
-title.Text = "MENU FARM"
+title.Text = "MENU FARM (AUTO START)"
 title.TextColor3 = THEME_BLUE_TEXT
 title.Font = Enum.Font.GothamBold
 title.TextSize = 14
@@ -263,15 +254,14 @@ local function makeBtn(text, y, color)
     b.TextColor3 = Color3.new(1,1,1)
     b.Font = Enum.Font.GothamBold
     b.TextSize = 12
-    
     local corner = Instance.new("UICorner", b)
     corner.CornerRadius = UDim.new(0, 6)
     return b
 end
 
-local startBtn = makeBtn("▶ START FARM", 35, Color3.fromRGB(0, 140, 255)) -- Nút xanh dương
+local startBtn = makeBtn("Farming...", 35, Color3.fromRGB(0, 140, 255))
 local stopBtn  = makeBtn("⛔ STOP FARM", 70, Color3.fromRGB(200, 50, 50))
-local hopBtn   = makeBtn("🔁 HOP SERVER", 105, Color3.fromRGB(80, 80, 80)) -- Nút xám
+local hopBtn   = makeBtn("🔁 HOP SERVER", 105, Color3.fromRGB(80, 80, 80))
 
 startBtn.MouseButton1Click:Connect(function()
     startBtn.Text = "Farming..."
@@ -287,10 +277,18 @@ hopBtn.MouseButton1Click:Connect(function()
     ServerHop()
 end)
 
--- ================= RESPAWN FIX =================
 LocalPlayer.CharacterAdded:Connect(function()
     task.wait(1)
-    if Farming then
+    if Farming then StartFarm() end
+end)
+
+-- ================= AUTO START HERE =================
+-- Tự động chạy ngay lập tức khi load script
+task.spawn(function()
+    task.wait(1) -- Đợi 1 xíu để load nhân vật
+    if not Farming then
+        warn("AUTO STARTING FARM...")
+        startBtn.Text = "Farming..."
         StartFarm()
     end
 end)
