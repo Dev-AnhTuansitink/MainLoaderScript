@@ -63,7 +63,7 @@ BtnCorner.Parent = Button
 -- Copy link (setclipboard)
 Button.MouseButton1Click:Connect(function()
     if setclipboard then
-        setclipboard("https://discord.gg/h3jnnm7W")
+        setclipboard("https://discord.gg/YQerP9y7")
         Button.Text = "SAO CHÉP!"
     else
         Button.Text = "KHÔNG HỖ TRỢ!"
